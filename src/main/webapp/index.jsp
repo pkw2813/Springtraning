@@ -9,7 +9,7 @@
 	</jsp:include>
 
 <div class="container-fluid">
-	인덱스 페이지 123
+	aaddssh
 </div>
 
 	<jsp:include page = "/WEB-INF/views/common/footer.jsp"/>
