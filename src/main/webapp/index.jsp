@@ -9,7 +9,7 @@
 	</jsp:include>
 
 <div class="container-fluid">
-	aaddssh
+	aaddsshㅁㄴㅇㅁㄴㅇ
 </div>
 
 	<jsp:include page = "/WEB-INF/views/common/footer.jsp"/>
