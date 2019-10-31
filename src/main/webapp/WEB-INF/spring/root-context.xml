@@ -64,6 +64,24 @@
 		<aop:pointcut expression="execution(* com.kh.spring..*ServiceImpl.*(..))" id="txpoint"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txpoint"/> <!-- 위에 메소드에 해당하는 애 -->
 	</aop:config>
+	
+	<!-- 메일 전송 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"></property>
+		<property name="port" value="587"></property>
+		<property name="username" value="lgwan840@gmail.com"></property>
+		<property name="password" value="odo919?!"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>			
+				<prop key="mail.smtp.auth">true</prop>							
+				<prop key="mail.smtp.starttls.enable">true</prop>			
+				<prop key="mail,debug">true</prop>							
+			</props>
+		</property>
+	</bean>
+	
+	
 </beans>
 
 
