@@ -84,7 +84,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Course Information</h6>
-            <a class="collapse-item" href="#">개설과목입력</a>
+            <a class="collapse-item" href="${path }/login">개설과목입력</a>
             <a class="collapse-item" href="#">개설과목조회</a>
             <a class="collapse-item" href="#">강의계획서</a>
             <a class="collapse-item" href="#">주별강의계획서</a>
