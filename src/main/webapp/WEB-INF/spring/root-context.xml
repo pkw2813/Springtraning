@@ -1,10 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	
+	<!-- DB설정 with mybatis-->
+	<bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver"/>
+			<!-- BasicDataSource객체의 멤버변수인 driverClassName에 setter로 매개변수를 집어넣는 구조이다. 이 객체를 spring한테 주는것이다. -->
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="spring"/>
+		<property name="password" value="spring"/>
+	</bean>
+	<!-- log를 출력하기 위한 proxy객체를 등록, proxy객체를 등록하여 실체 객체인척한다.-->
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="realDataSource"/> <!-- 생성할때 값을 넣는것 -->
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE"/> <!-- MULTI_LINE : log를 찍을떄 밑으로 내려가게한다. -->
+				<property name="sqlPrefix" value="[SQL]" />
+				<!-- 템플릿이 직접 dataSource를 가져와서 생성했었는데
+				중간에 프록시를 넣어서 로그 찍는걸 넣어놨다. (중간에 프록시가 처리할수 있게 구현)-->
+			</bean>
+		</property> 
+	</bean>
+	<!-- mybatis에서 이용하는 SessionFactory만들기 -->
+	<bean id="sessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- environments에 설정했던 값이 담겨있다. -->
+		<property name="dataSource" ref="dataSource"/>
+		<!-- 이미 생성된 객체의 주소값을 가져온다. 위에 bean에 id값으로 dataSource 설정된 애를 불러온다.  -->
+		<property name="mapperLocations" value="classpath*:mapper/**/*.xml"/>
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+		<!-- mapper.xml파일은 여러개지만 mybatis-config하나라서 그냥 넣어주면 된다. -->
+	</bean>
+	<!-- 실제로 SqlSession을 생성하는 template객체를 등록 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sessionFactoryBean"/>
+		<!-- 매개변수가 있는 생성자로 생성을 하면서 첫번째 매개변수에 sessionFactoryBean객체를 집어넣어 sqlSessionTemplate만든다.  -->
+	</bean>
+	
+	<!-- 트랜잭션 매니져등록 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
 		
-		</bean>
+	<!-- 선언적 방식의 트랜잭션처리 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" rollback-for="Exception"/>
+			<tx:method name="update*"/>
+			<tx:method name="delete*"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- aop기능 활용 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.kh.spring..*ServiceImpl.*(..))" id="txpoint"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txpoint"/> <!-- 위에 메소드에 해당하는 애 -->
+	</aop:config>
 </beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
