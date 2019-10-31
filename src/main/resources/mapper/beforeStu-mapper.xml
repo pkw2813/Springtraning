@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="beforeStu">
+
+
+
+
+
+
+
+
+
+
+
+	<resultMap type="map" id="selectMap">
+		<result column="BEFORE_STU" property="beforeNo"/>
+		<result column="BEFORE_NAME" property="beforeName"/>
+		<result column="BEFORE_TYPE" property="beforeType"/>
+		<result column="BEFORE_PHONE" property="beforePhone"/>
+		<result column="BEFORE_EMAIL" property="beforeEmail"/>
+		<result column="BEFORE_ADDRESS" property="beforeAddr"/>
+		<result column="BEFORE_DEPT" property="beforeDeptName"/>
+	</resultMap>
+</mapper>
