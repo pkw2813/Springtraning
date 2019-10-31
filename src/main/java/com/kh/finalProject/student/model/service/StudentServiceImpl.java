@@ -18,8 +18,8 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student selectOne(String loginId, String loginPwd) {
-		// TODO Auto-generated method stub
-		return null;
+		Student stu=dao.selectOne(session, loginId, loginPwd);
+		return stu;
 	}
 
 	

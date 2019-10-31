@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
-<configuration></configuration>
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.kh.finalProject.professor.model.vo" alias="professor"/>
+		<typeAlias type="com.kh.finalProject.employee.model.vo" alias="employee"/>
+		<typeAlias type="com.kh.finalProject.student.model.vo" alias="student"/>
+	</typeAliases>
+</configuration>
