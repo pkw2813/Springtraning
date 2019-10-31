@@ -1,5 +1,6 @@
 package com.kh.finalProject.student.model.service;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Autowired
 	private StudentDao dao;
+	@Autowired
+	private SqlSessionTemplate session;
 	
 
 	@Override
