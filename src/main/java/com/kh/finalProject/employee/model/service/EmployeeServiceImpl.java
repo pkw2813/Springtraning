@@ -17,8 +17,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee selectOne(String loginId, String loginPwd) {
-		// TODO Auto-generated method stub
-		return null;
+		Employee emp=dao.selectOne(session,loginId,loginPwd);
+		return emp;
 	}
 	
 	
