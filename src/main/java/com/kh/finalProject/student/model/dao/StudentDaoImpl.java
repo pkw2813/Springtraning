@@ -10,10 +10,9 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public Student selectOne(SqlSessionTemplate session, String loginId, String loginPwd) {
-		Student s=null;
+		Student s=new Student();
 		s.setStuNo(loginId);
 		s.setStuPw(loginPwd);
-		
 		return session.selectOne("student.selectOne", s);
 	}
 	

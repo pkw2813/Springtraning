@@ -15,8 +15,8 @@
 			value="oracle.jdbc.driver.OracleDriver"/>
 			<!-- BasicDataSource객체의 멤버변수인 driverClassName에 setter로 매개변수를 집어넣는 구조이다. 이 객체를 spring한테 주는것이다. -->
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="spring"/>
-		<property name="password" value="spring"/>
+		<property name="username" value="final"/>
+		<property name="password" value="final"/>
 	</bean>
 	<!-- log를 출력하기 위한 proxy객체를 등록, proxy객체를 등록하여 실체 객체인척한다.-->
 	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">

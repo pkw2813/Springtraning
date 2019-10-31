@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="student">
+	<select id="selectOne" parameterType="student" resultMap="studentResult">
+  		SELECT * FROM HD_STUDENT_TB WHERE stu_No=#{stuNo} AND stu_Pw=#{stuPw}
+  	</select>
+  	
+  	<resultMap id="studentResult" type="student">
+		<result column="STU_NO" property="stuNo" />
+		<result column="STU_NAME" property="stuName" />
+		<result column="STU_PW" property="stuPw" />
+		<result column="STU_SSN" property="stuSsn" />
+		<result column="STU_TEL" property="stuTel" />	
+		<result column="STU_ADDR" property="stuAddr" />	
+		<result column="GENDER" property="gender" />	
+		<result column="DEPT_CODE" property="deptCode" />	
+		<result column="ENTER_DATE" property="enterDate" />	
+		<result column="STU_EMAIL" property="stuEmail" />
+		<result column="REG_STATUS" property="regStatus" />	
+		<result column="PROF_ID" property="profId" />	
+		<result column="STU_YEAR_SEM" property="stuYearSem" />	
+		<result column="CON_SEMESTER" property="conSemester" />	
+		<result column="STU_IMG" property="stuImg" />	
+		<result column="STU_ACCOUNT" property="stuAccount" />	
+	</resultMap>
+
   
 </mapper>

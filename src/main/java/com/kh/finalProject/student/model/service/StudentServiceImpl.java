@@ -18,6 +18,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student selectOne(String loginId, String loginPwd) {
+		System.out.println(loginId+"@@"+loginPwd);
 		Student stu=dao.selectOne(session, loginId, loginPwd);
 		return stu;
 	}

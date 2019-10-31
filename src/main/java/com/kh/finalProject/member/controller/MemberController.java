@@ -42,18 +42,21 @@ public class MemberController {
 		
 		String msg="";
 		String loc="/";
-		
+		System.out.println(loginId+"@@"+loginPwd);
 		if(loginNo.equals("s")) {
+			System.out.println("1");
 			Student stu=stuService.selectOne(loginId,loginPwd);
 			session.setAttribute("loginMember", stu);
 		}else if(loginNo.equals("p")){
+			System.out.println("2");
 			Professor pro=proService.selectOne(loginId,loginPwd);
 			session.setAttribute("loginMember", pro);
 		}else{
+			System.out.println("3");
 			Employee emp=empService.selectOne(loginId,loginPwd);
 			session.setAttribute("loginMember", emp);
 		}
-		
+		System.out.println(session);
 		if(session!=null) {
 			msg="로그인 되었습니다.";
 			loc="index.jsp";
@@ -65,7 +68,7 @@ public class MemberController {
 		req.setAttribute("msg", msg);
 		req.setAttribute("loc", loc);
 		
-		return "msg";
+		return "common/msg";
 	}
 	
 	

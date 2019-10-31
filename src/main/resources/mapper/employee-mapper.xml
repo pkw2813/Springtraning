@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="employee">
-  
+	<select id="selectOne" parameterType="employee" resultMap="employeeResult">
+  		SELECT * FROM HD_PROFESSOR_TB WHERE empId=#{empId} AND empPw=#{empPw} AND 'P'=(SELECT SUBSTR(empId,1,1) FROM HD_PROFESSOR_TB)
+	</select>
+	
+	<resultMap id="employeeResult" type="employee">
+		<result column="PROF_ID" property="empId" />
+		<result column="PROF_PW" property="empPw" />
+		<result column="PROF_NAME" property="empName" />
+		<result column="PROF_SSN" property="empSsn" />
+		<result column="DEPT_CODE" property="deptCode" />	
+		<result column="EMAIL" property="email" />	
+		<result column="PHONE" property="phone" />	
+		<result column="ADDRESS" property="address" />	
+		<result column="GENDER" property="gender" />	
+		<result column="PROF_ENROLL" property="empEnroll" />	
+	</resultMap>
 </mapper>

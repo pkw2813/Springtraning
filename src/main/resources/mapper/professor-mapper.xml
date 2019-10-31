@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="professor">
-  
+	<select id="selectOne" parameterType="professor" resultMap="professorResult">
+		SELECT * FROM HD_PROFESSOR_TB WHERE profId=#{profId} AND profPw=#{profPw} AND 'P'=(SELECT SUBSTR(profId,1,1) FROM HD_PROFESSORT_TB)
+	</select>
+
+
+
+  <resultMap id="professorResult" type="professor">
+		<result column="PROF_ID" property="profId" />
+		<result column="PROF_PW" property="profPw" />
+		<result column="PROF_NAME" property="profName" />
+		<result column="PROF_SSN" property="profSsn" />
+		<result column="DEPT_CODE" property="deptCode" />	
+		<result column="EMAIL" property="email" />	
+		<result column="PHONE" property="phone" />	
+		<result column="ADDRESS" property="address" />	
+		<result column="GENDER" property="gender" />	
+		<result column="PROF_ENROLL" property="profEnroll" />	
+	</resultMap>
 </mapper>

@@ -10,7 +10,7 @@ public class ProfessorDaoImpl implements ProfessorDao {
 
 	@Override
 	public Professor selectOne(SqlSessionTemplate session, String loginId, String loginPwd) {
-		Professor pro=null;
+		Professor pro=new Professor();
 		pro.setProfId(loginId);
 		pro.setProfPw(loginPwd);
 		return session.selectOne("professor.selectOne", pro);

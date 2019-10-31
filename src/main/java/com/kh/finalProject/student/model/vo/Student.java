@@ -26,7 +26,7 @@ public class Student {
 	private String regStatus;
 	private String profId;
 	private String stuYearSem;
-	private String conSemster;
+	private String conSemester;
 	private String stuImg;
 	private String stuAcount;
 

@@ -2,8 +2,8 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.kh.finalProject.professor.model.vo" alias="professor"/>
-		<typeAlias type="com.kh.finalProject.employee.model.vo" alias="employee"/>
-		<typeAlias type="com.kh.finalProject.student.model.vo" alias="student"/>
+		<typeAlias type="com.kh.finalProject.professor.model.vo.Professor" alias="professor"/>
+		<typeAlias type="com.kh.finalProject.employee.model.vo.Employee" alias="employee"/>
+		<typeAlias type="com.kh.finalProject.student.model.vo.Student" alias="student"/>
 	</typeAliases>
 </configuration>
