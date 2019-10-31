@@ -118,7 +118,6 @@ $(function(){
 					그런데 다음과 같이 job의 값에 &가 포함된다면 시스템은 job의 값을 제대로 인식할수 없게 된다. */
 					success : function(data){
 						alert("사용가능한 이메일입니다. 인증번호를 입력해주세요.");
-					}
 					},
 					error: function(data){
 						alert("에러가 발생했습니다.");

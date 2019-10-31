@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<%@ page import="com.kh.finalProject.student.model.vo.Student" %>
+<%@ page import="com.kh.finalProject.employee.model.vo.Employee" %>
+<%@ page import="com.kh.finalProject.professor.model.vo.Professor" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +20,7 @@
   <title>Haxa Direct</title>
 
   <!-- Custom fonts for this template-->
-  <link href="${pageContext.request.contextPath }/resources/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="${path }/resources/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
@@ -69,7 +72,8 @@
 
       Divider -->
       <hr class="sidebar-divider">
-
+		<%if(session.getAttribute("loginMember") instanceof Professor){%>
+		
       <!-- Heading -->
       <div class="sidebar-heading">
         교수
@@ -144,9 +148,9 @@
           </div>
         </div>
       </li>
-
       <!-- Divider -->
       <hr class="sidebar-divider">
+	<% } else if(session.getAttribute("loginMember") instanceof Student){%> 
 
       <!-- Heading -->
       <div class="sidebar-heading">
@@ -205,7 +209,7 @@
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 	
-		
+		<% } else if(session.getAttribute("loginMember") instanceof Employee){%> 
 		<div class="sidebar-heading">
         	관리자
       </div>
@@ -258,7 +262,7 @@
           </div>
         </div>
       </li>
-      
+      <%} %>
       <!-- Sidebar Toggler (Sidebar) -->
       <!-- <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

@@ -42,10 +42,11 @@ public class MemberController {
 		
 		String msg="";
 		String loc="/";
-		System.out.println(loginId+"@@"+loginPwd);
+
 		if(loginNo.equals("s")) {
 			System.out.println("1");
 			Student stu=stuService.selectOne(loginId,loginPwd);
+			System.out.println(stu);
 			session.setAttribute("loginMember", stu);
 		}else if(loginNo.equals("p")){
 			System.out.println("2");
@@ -57,9 +58,10 @@ public class MemberController {
 			session.setAttribute("loginMember", emp);
 		}
 		System.out.println(session);
-		if(session!=null) {
+		if(session.getAttribute("loginMember")!=null) {
 			msg="로그인 되었습니다.";
-			loc="index.jsp";
+			loc="/index.jsp";
+			System.out.println(session.getAttribute("loginMember"));
 		}else {
 			msg="학/사번 또는 비밀번호를 확인해주세요.";
 			loc="/";
