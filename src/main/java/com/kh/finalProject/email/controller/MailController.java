@@ -38,6 +38,8 @@ public class MailController {
 	@RequestMapping(value="/login/createEmailCheck.do", method = RequestMethod.GET)
 	public boolean createEmailCheck(@RequestParam String userEmail, @RequestParam String random, HttpServletRequest request) {
 		System.out.println("createEmailCheck");
+		System.out.println("userEmail :" +userEmail );
+		System.out.println("random : " + random);
 		int ran = new Random().nextInt(900000) + 100000;
 		HttpSession session = request.getSession(true);
 		String authCode = String.valueOf(ran);
