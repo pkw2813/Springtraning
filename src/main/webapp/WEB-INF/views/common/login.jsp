@@ -180,7 +180,7 @@ $(function(){
 					<button type="button" class="btn btn-info" id="emailBtn">이메일 발송</button>
 					<button type="button" class="btn btn-info" id="emailAuthBtn">이메일 인증</button>
 			</div>
-			<input type="hidden" path="random" id="random" value="${random }" />
+			<input type="hidden" path="random" id="random" name="random1" value="${random}" />
 		</div>
 	</div>	
 	
@@ -198,8 +198,9 @@ function enrollStudent() {
    $.ajax({
 	   url : "<c:url value='/email.do'/>",
 		success : function(data) {
-			console.log(data);
-			$("#random").val() = data;
+			console.log(data.random);
+		console.log("이건 랜덤값");
+	 $('input[name=random1]').attr('value',data.random); 
 		}
    });
 }
@@ -210,6 +211,7 @@ $(function(){
 		$(".modal").css("display","none");
 	});
 });
+/* 
 $(function() {
 window.on("click",function() {
 	if(event.target == $("#mymodal")) {
@@ -217,7 +219,7 @@ window.on("click",function() {
 	}
 }) 
 });
-
+ */
 $(function(){
 	/*이메일 인증 버튼 클릭시 발생하는 이벤트	*/
 	$(document).on("click", "#emailBtn", function(){
@@ -226,20 +228,25 @@ $(function(){
 		/* beforeSend: function(){
 		loadingBarStart();
 		}, */
-			type:"get",
-			url : "<c:url value='/login/createEmailCheck.do'/>",
-			data : "userEmail=" + $("#email").val() + "&random=" + $("#random").val(),
-				//data: "userEmail="+encodeURIComponent($('#userEmail').val()),
-				/* encodeURIComponent
+			type:"post",
+			url : "${pageContext.request.contextPath}/login/createEmailCheck.do",
+			data : {"userEmail":$("#email").val(),"random":$("#random").val()},
+			/*//data: "userEmail="+encodeURIComponent($('#userEmail').val()),
+				 encodeURIComponent
 				예를들어, http://a.com?name=egoing&job=programmer 에서 &job=programmer
 				중 '&'는 하나의 파라미터가 끝나고 다음 파라미터가 온다는 의미이다.
 				그런데 다음과 같이 job의 값에 &가 포함된다면 시스템은 job의 값을 제대로 인식할수 없게 된다. */
 				success : function(data){
-					alert("사용가능한 이메일입니다. 인증번호를 입력해주세요.");
-				},
-				error: function(data){
-					alert("에러가 발생했습니다.");
+
 					console.log(data);
+					alert("사용가능한 이메일입니다. 인증번호를 입력해주세요.");
+					
+				},
+				error: function(e,s,a){
+					alert("에러가 발생했습니다.");
+					console.log(e);
+					console.log(s);
+					console.log(a);
 					return false;
 				}
 			})
@@ -252,18 +259,19 @@ $(function(){
 			/* beforeSend: function(){
 			loadingBarStart();
 			}, */
-				type:"get",
-				url:"<c:url value='/login/emailAuth.do'/>",
-				data:"authCode=" + $('#emailAuth').val() + "&random=" + $("#random").val(),
+				type:"post",
+				url:"${pageContext.request.contextPath}/emailAuth.do",
+				data:{"authCode":$('#email').val(),"random":$("#random").val()},
 				success:function(data){
-					if(data=="complete"){
+					if(data == "complete"){
 					alert("인증이 완료되었습니다.");
 					}else if(data == "false"){
 					alert("인증번호를 잘못 입력하셨습니다.")
 					}
 					},
 				complete: function(){
-					loadingBarEnd();
+					/* loadingBarEnd(); */
+					console.log("완료");
 					},
 				error:function(data){
 					alert("에러가 발생했습니다.");

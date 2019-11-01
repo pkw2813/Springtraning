@@ -1,8 +1,9 @@
 package com.kh.finalProject.email.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.email.service.MailService;
 
@@ -25,18 +25,19 @@ public class MailController {
 	MailService mailService;
 	
 	@RequestMapping(value="/email.do")
-	public ModelAndView checkEmail() {
-		ModelAndView mv = new ModelAndView();
+	@ResponseBody
+	public Map checkEmail() {
+		Map m = new HashMap();
 		int ran = new Random().nextInt(900000) + 100000;
-		mv.setViewName("enroll/enrollStudent");
-		mv.addObject("random",ran);
+		m.put("random",ran);
 		System.out.println("checkEmail");
 		System.out.println("랜덤 값 : " + ran);
-		return mv;
+		return m;
 	}
 	
-	@RequestMapping(value="/login/createEmailCheck.do", method = RequestMethod.GET)
-	public boolean createEmailCheck(@RequestParam String userEmail, @RequestParam String random, HttpServletRequest request) {
+	@RequestMapping(value="/login/createEmailCheck.do")
+	@ResponseBody
+	public String createEmailCheck(@RequestParam String userEmail, @RequestParam String random, HttpServletRequest request) {
 		System.out.println("createEmailCheck");
 		System.out.println("userEmail :" +userEmail );
 		System.out.println("random : " + random);
@@ -48,20 +49,24 @@ public class MailController {
 		String subject ="회원가입 인증 코드 발급 안내 입니다.";
 		StringBuilder sb = new StringBuilder();
 		sb.append("귀하의 인증 코드는 "+ authCode + "입니다.");
-		
-		return mailService.send(subject, sb.toString(), "lgwan840@gmail.com", userEmail);
+		boolean flag = mailService.send(subject, sb.toString(), "lgwan840@gmail.com", userEmail)?true:false;
+		System.out.println(flag);
+		return String.valueOf(flag);
  		
 	}
 	
-	@RequestMapping(value="emailAuth.do", method = RequestMethod.GET)
+	@RequestMapping(value="/emailAuth.do")
 	@ResponseBody
-	public ResponseEntity<String> emailAuth(@RequestParam String authCode, @RequestParam String random, HttpSession session) {
+	public String emailAuth(@RequestParam String authCode, @RequestParam String random, HttpSession session) {
 		System.out.println("emailAuth");
+		System.out.println("authCode : " +authCode);
+		System.out.println("random : " + random);
 		String originaljoinCode = (String)session.getAttribute("authCode");
-		String originalRandom = Integer.toString((int)session.getAttribute("random"));
-		if(originaljoinCode.equals(authCode) && originalRandom.equals(random))
-			return new ResponseEntity<String>("complete", HttpStatus.OK);
-		else return new ResponseEntity<String>("false", HttpStatus.OK);
+		String originalRandom = (String)session.getAttribute("random");
+		if(originaljoinCode.equals(authCode) && originalRandom.equals(random)) {
+			return "complete";
+		}
+			return "false";
 	}
 	
 }
