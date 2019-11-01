@@ -24,24 +24,24 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="${pageContext.request.contextPath }/resources/css/sb-admin-2.min.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath }/resources/js/jquery-3.4.1.min.js"></script>
+  <link href="${path }/resources/css/sb-admin-2.min.css" rel="stylesheet">
+<script src="${path }/resources/js/jquery-3.4.1.min.js"></script>
   <!-- Bootstrap core JavaScript-->
-  <script src="${pageContext.request.contextPath }/resources/jquery/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="${path }/resources/jquery/jquery.min.js"></script>
+  <script src="${path }/resources/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="${pageContext.request.contextPath }/resources/jquery-easing/jquery.easing.min.js"></script>
+  <script src="${path }/resources/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="${pageContext.request.contextPath }/resources/js/sb-admin-2.min.js"></script>
+  <script src="${path }/resources/js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="${pageContext.request.contextPath }/resources/chart.js/Chart.min.js"></script>
+  <script src="${path }/resources/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-area-demo.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/js/demo/chart-pie-demo.js"></script>
+  <script src="${path }/resources/js/demo/chart-area-demo.js"></script>
+  <script src="${path }/resources/js/demo/chart-pie-demo.js"></script>
 </head>
 
 <body id="page-top">
@@ -161,16 +161,12 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
-          <span>학생정보</span>
+          <span>개인 정보</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">My Info</h6>
-            <a class="collapse-item" href="#">개인정보</a>
-            <a class="collapse-item" href="#">수강신청</a>
-            <a class="collapse-item" href="#">성적 조회</a>
-			<a class="collapse-item" href="#">강의시간표 조회</a>
-			<a class="collapse-item" href="#">시간표</a>
+            <a class="collapse-item" href="${path}/student/studentInfo.hd">기본 정보</a>
           </div>
         </div>
       </li>
@@ -179,13 +175,13 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages4" aria-expanded="true" aria-controls="collapsePages4">
           <i class="fas fa-fw fa-folder"></i>
-          <span>등록금/장학금</span>
+          <span>성적 정보</span>
         </a>
           <div id="collapsePages4" class="collapse" aria-labelledby="headingPages4" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">University Tuition</h6>
-            <a class="collapse-item" href="#">장학금 내역</a>
-            <a class="collapse-item" href="#">등록금 납입 증명확인</a>
+            <a class="collapse-item" href="${path }/student/gradeSearchAll.hd">전체 성적조회</a>
+            <a class="collapse-item" href="${path }/student/gradeSearchNow.hd">이번학기 성적조회</a>
           </div>
         </div>
       </li>
@@ -194,14 +190,47 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages5" aria-expanded="true" aria-controls="collapsePages5">
           <i class="fas fa-fw fa-folder"></i>
-          <span>졸업</span>
+          <span>수업 정보</span>
         </a>
           
            <div id="collapsePages5" class="collapse" aria-labelledby="headingPages5" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Graduated</h6>
-            <a class="collapse-item" href="#">졸업조건 조회</a>
-            <a class="collapse-item" href="#">학정변동 신청</a>
+            <a class="collapse-item" href="${path }/student/applyClass.hd">강의조회 및 수강신청</a>
+            <a class="collapse-item" href="${path }/student/myClassInfo.hd">수강신청 내역</a>
+            <a class="collapse-item" href="${path }/student/allClassInfo.hd">전체 시간표 조회</a>
+            <a class="collapse-item" href="${path }/student/mySchedule.hd">개인 시간표 조회</a>
+            <a class="collapse-item" href="${path }/student/myAttendance.hd">개인 출석부 조회</a>
+            <a class="collapse-item" href="${path }/student/classBoard.hd">강의게시판</a>
+          </div>
+        </div>
+      </li>
+      
+       <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages10" aria-expanded="true" aria-controls="collapsePages10">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>등록금 정보</span>
+        </a>
+          <div id="collapsePages10" class="collapse" aria-labelledby="headingPages10" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">University Tuition</h6>
+            <a class="collapse-item" href="${path }/student/tuitionBill.hd">등록금 고지서</a>
+            <a class="collapse-item" href="${path }/student/tuitionCert.hd">등록금 납입 증명서</a>
+          </div>
+        </div>
+      </li>
+      
+       <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages9" aria-expanded="true" aria-controls="collapsePages9">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>졸업 정보</span>
+        </a>
+          <div id="collapsePages9" class="collapse" aria-labelledby="headingPages9" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">University Tuition</h6>
+            <a class="collapse-item" href="${path }/student/myGraduation.hd">졸업인정 학점조회</a>
           </div>
         </div>
       </li>
