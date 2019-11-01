@@ -73,6 +73,12 @@ public class MemberController {
 		return "common/msg";
 	}
 	
+	@RequestMapping("/req.hd")
+	public String req() {
+		
+		return "";
+	}
+	
 	
 
 }
