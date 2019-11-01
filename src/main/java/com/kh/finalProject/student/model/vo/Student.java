@@ -26,8 +26,10 @@ public class Student {
 	private String regStatus;
 	private String profId;
 	private String stuYearSem;
+	private int maxPsbCr;
 	private String conSemester;
-	private String stuImg;
+	private String stuImgOriname;
+	private String stuImgrename;
 	private String stuAcount;
 
 }
