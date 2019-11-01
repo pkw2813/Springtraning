@@ -29,7 +29,7 @@ public class Student {
 	private int maxPsbCr;
 	private String conSemester;
 	private String stuImgOriname;
-	private String stuImgrename;
-	private String stuAcount;
+	private String stuImgRename;
+	private String stuAccount;
 
 }

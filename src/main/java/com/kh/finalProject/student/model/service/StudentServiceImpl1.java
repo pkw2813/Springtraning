@@ -15,13 +15,14 @@ public class StudentServiceImpl1 implements StudentService1 {
 	@Autowired
 	private SqlSessionTemplate session;
 	
-
+	
 	@Override
-	public Student selectOne(String loginId, String loginPwd) {
-		System.out.println(loginId+"@@"+loginPwd);
-		Student stu=dao.selectOne(session, loginId, loginPwd);
-		return stu;
+	public Student selectStudent(String studentNo) {
+		
+		return dao.selectStudent(session,studentNo);
 	}
+	
+
 
 	
 	

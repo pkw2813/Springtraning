@@ -6,5 +6,5 @@ import com.kh.finalProject.student.model.vo.Student;
 
 public interface StudentDao1 {
 	
-	Student selectOne(SqlSessionTemplate session,String loginId, String loginPwd);
+	Student selectStudent(SqlSessionTemplate session,String studentNo);
 }
