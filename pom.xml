@@ -226,11 +226,10 @@
 		</dependency>
 				
 		<!-- 메일 인증 / 발송 -->
-		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
 		    <groupId>javax.mail</groupId>
-		    <artifactId>javax.mail-api</artifactId>
-		    <version>1.5.4</version>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
 		<dependency>
