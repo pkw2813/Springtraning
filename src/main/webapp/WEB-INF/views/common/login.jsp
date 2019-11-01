@@ -175,10 +175,49 @@ $(function(){
 			<span class="close">&times;</span>
 			<p>입학 신청</p>
 			<div class="form-group">
-				<label class="control-label">EMAIL</label>
+			<label class="control-label">이름</label>
+					<input type="text" id="beforeName" name="beforeName" placeholder="이름 을 입력하세요" class="form-control" />
+			<hr>
+			<label class="control-label">입학 유형</label>
+			<select>
+				<option value="수시" class="enrollType">수시</option>
+				<option value="정시" class="enrollType">정시</option>
+				<option value="편입" class="enrollType">편입</option>				
+			</select>		
+				<br>
+				<hr>
+			<label class="control-label">연락처</label>
+					<input type="tel" id="beforePhone" name="beforePhone" placeholder=" '-' 제외 입력" class="form-control" />
+
+			<label class="control-label">E-mail</label>					
 					<input type="text" id="email" name="email" placeholder="이메일을 입력하세요" class="form-control" />
-					<button type="button" class="btn btn-info" id="emailBtn">이메일 발송</button>
+					<button type="button" class="btn btn-info" id="emailBtn" style="display:inline">이메일 발송</button>
 					<button type="button" class="btn btn-info" id="emailAuthBtn">이메일 인증</button>
+					
+					<br>
+			
+				
+			<label class="control-label">학과 코드</label>				
+					<input type="text" id="deptCode" name="deptCode" placeholder="이건 셀렉트랑 체크박스로 해야되나?" class="form-control" />
+
+			<label class="control-label">주민 등록 번호</label>	
+					<input type="text" id="jumin" name="jumin" placeholder="주민등록번호 13자리를 입력하세요" class="form-control" onkeyup="setJumin(this)"/>
+					<br>														
+					<br>
+			<fieldset style="board:1px black">
+			<legend><label class="control-label">주소 / 상세 주소</label></legend>
+			<div id="postcodify">
+							
+			</div>
+				
+			</fieldset>
+				<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+				<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+				<script type="text/javascript">
+				        $("#postcodify").postcodify();
+				</script>	
+
+
 			</div>
 			<input type="hidden" path="random" id="random" name="random1" value="${random}" />
 		</div>
@@ -190,6 +229,22 @@ $(function(){
 </body>
 
 <script>
+
+
+function setJumin(obj) {
+	ju = obj.value;
+	ju = ju.replace("-","");
+		if(ju.length > 6) {
+			ju1 = ju.substring(0,6);
+			ju2 = ju.substring(6,7);
+		for(i=1; i<ju.substring(6).length && i < 7; i++) {
+			ju2 = ju2 + "*";
+		}
+		obj.value = ju1+"-"+ju2;
+		}
+	
+	}
+
 
 
 function enrollStudent() {
