@@ -72,7 +72,7 @@
 
       Divider -->
       <hr class="sidebar-divider">
-		<%if(session.getAttribute("loginMember") instanceof Professor){%>
+		<%-- <%if(session.getAttribute("loginMember") instanceof Professor){%> --%>
 		
       <!-- Heading -->
       <div class="sidebar-heading">
@@ -150,7 +150,7 @@
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
-	<% } else if(session.getAttribute("loginMember") instanceof Student){%> 
+	<%-- <% } else if(session.getAttribute("loginMember") instanceof Student){%>  --%>
 
       <!-- Heading -->
       <div class="sidebar-heading">
@@ -209,7 +209,7 @@
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 	
-		<% } else if(session.getAttribute("loginMember") instanceof Employee){%> 
+		<%-- <% } else if(session.getAttribute("loginMember") instanceof Employee){%>  --%>
 		<div class="sidebar-heading">
         	관리자
       </div>
@@ -262,7 +262,7 @@
           </div>
         </div>
       </li>
-      <%} %>
+     <%--  <%} %> --%>
       <!-- Sidebar Toggler (Sidebar) -->
       <!-- <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
