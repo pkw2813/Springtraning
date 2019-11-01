@@ -57,7 +57,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">서울대학교 <sup></sup></div>
       </a>
 
       <!-- Divider 대쉬보드 navtop-->
@@ -88,7 +88,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Course Information</h6>
-            <a class="collapse-item" href="${path }/login">개설과목입력</a>
+            <a class="collapse-item" href="#">개설과목입력</a>
             <a class="collapse-item" href="#">개설과목조회</a>
             <a class="collapse-item" href="#">강의계획서</a>
             <a class="collapse-item" href="#">주별강의계획서</a>
@@ -464,7 +464,7 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="${path }/login">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
@@ -477,7 +477,7 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="${path }/req.hd" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>

@@ -18,9 +18,11 @@
 		<result column="STU_EMAIL" property="stuEmail" />
 		<result column="REG_STATUS" property="regStatus" />	
 		<result column="PROF_ID" property="profId" />	
-		<result column="STU_YEAR_SEM" property="stuYearSem" />	
+		<result column="STU_YEAR_SEM" property="stuYearSem" />
+		<result column="MAX_PSB_CR" property="maxPsbCr"/>
 		<result column="CON_SEMESTER" property="conSemester" />	
-		<result column="STU_IMG" property="stuImg" />	
+		<result column="STU_IMG_ORINAME" property="stuImgOriname" />
+		<result column="STU_IMG_RENAME" property="stuImgRename" />
 		<result column="STU_ACCOUNT" property="stuAccount" />	
 	</resultMap>
 
