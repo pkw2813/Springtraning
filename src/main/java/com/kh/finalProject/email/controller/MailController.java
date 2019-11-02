@@ -46,7 +46,7 @@ public class MailController {
 		String authCode = String.valueOf(ran);
 		session.setAttribute("authCode", authCode);
 		session.setAttribute("random", random);
-		String subject ="회원가입 인증 코드 발급 안내 입니다.";
+		String subject ="KH대학교 입학 신청 이메일 인증 코드 발급 안내 입니다.";
 		StringBuilder sb = new StringBuilder();
 		sb.append("귀하의 인증 코드는 "+ authCode + "입니다.");
 		boolean flag = mailService.send(subject, sb.toString(), "lgwan840@gmail.com", userEmail)?true:false;
