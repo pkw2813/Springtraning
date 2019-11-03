@@ -44,10 +44,11 @@
 		}
 	
 	</style>
+	<form method="get" action="${path }/student/studentInfoUpdateEnd.hd">
 	<table class="table table-warning table-hover">
 	<thead class="thead-dark">
       <tr>
-        <th colspan="9" style="font-size:25px;font-family:arial">${student.stuName} 님의 학적 기본정보</th><br/>
+        <th colspan="9" style="font-size:25px;font-family:arial">${student.stuName} 님의 학적 기본정보 변경</th><br/>
       </tr>
     </thead>
 		<tr>
@@ -55,7 +56,10 @@
 				<image height="200px" src="${path }/resources/images/image/${student.stuImgOriname}"/>
 			</tr>
 			<th>학생번호</th>
-			<td><input type="text" value="${student.stuNo}" style="width:130px" required disabled/></td>
+			<td><input type="text" value="${student.stuNo}" style="width:130px" required disabled/>
+				<input type="hidden" name="stuNo" value="${student.stuNo}"/>
+			</td>
+			
 			<th>성명</th>
 			<td><input type="text" value="${student.stuName}" required disabled/></td>
 			<th>주민등록번호(외국인등록번호)</th>
@@ -63,11 +67,11 @@
 		</tr>
 		<tr>
 			<th>휴대폰번호</th>
-			<td><input type="text" value="${student.stuTel}" style="width:120px" required disabled/></td>
+			<td><input type="text" name="stuTel" value="${student.stuTel}" style="width:120px" required/></td>
 			<th>성별</th>
 			<td><input type="text" value="${student.gender}" required disabled/></td>
 			<th>메일주소</th>
-			<td><input type="text" value="${student.stuEmail}" style="width:200px" style="width:200px" required disabled/></td>
+			<td><input type="text" name="stuEamil"value="${student.stuEmail}" style="width:200px" style="width:200px" required/></td>
 		</tr>
 		<tr>
 			<th>입학년월</th>
@@ -75,7 +79,7 @@
 			<th>학적상태</th>
 			<td><input type="text" value="${student.regStatus}" required disabled/></td>
 			<th>주소</th>
-			<td><input type="text" value="${student.stuAddr}" style="width:200px" required disabled/></td>
+			<td><input type="text" name="stuStuAddr" value="${student.stuAddr}" style="width:200px" required/></td>
 		</tr>
 			<tr>
 				<td id="imageButton"></td>
@@ -84,7 +88,7 @@
 				<th>학과코드</th>
 				<td><input type="text" value="${student.deptCode}" required disabled/></td>
 				<th>계좌번호</th>
-				<td><input type="text" value="${student.stuAccount}"  style="width:200px" required disabled/></td>
+				<td><input type="text" name="stuAccount" value="${student.stuAccount}"  style="width:200px" required/></td>
 			</tr>
 			<tr>
 				<td></td>
@@ -97,9 +101,18 @@
 			</tr>
 			
 	</table>
-	 <a class="collapse-item" href="${path }/student/studentInfoUpdate.hd">개인정보수정</a>
-		
+	 <input type="submit" value="수정완료">
+	</form>
 	
+	
+	
+	<script>
+	
+	
+	
+	
+	
+	</script>
 
 
 	<jsp:include page = "/WEB-INF/views/common/footer.jsp"/>
