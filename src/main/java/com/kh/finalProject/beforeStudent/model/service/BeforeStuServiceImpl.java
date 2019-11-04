@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.beforeStudent.model.dao.BeforeStuDao;
+import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 
 @Service
 public class BeforeStuServiceImpl implements BeforeStuService{
@@ -26,6 +27,15 @@ public class BeforeStuServiceImpl implements BeforeStuService{
 	public List selectDeptList(String result) {
 		return dao.selectDeptList(session, result);
 	}
+
+	@Override
+	public int insertBeforeStudent(BeforeStu s) {
+		int result = dao.insertBeforeStudent(session, s);
+		if(result > 0) session.commit();
+		else session.rollback();
+		return result;
+	}
+	
 	
 	
 	

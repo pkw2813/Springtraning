@@ -251,65 +251,63 @@ $(function(){
 	$('#enrollBtn').click(function() {
 
     // //전화번호 정규표현식
-    // let regPhone = /^\d{3}\d{3,4}\d{4}$/;
- 	// let phone = $('#beforePhone');
-    //         if (!phone.val()) {
-    //             alert('전화번호를 입력해주세요.');
-    //             phone.focus();
-    //             return false;
-    //         } else {
-    //             if (!regPhone.test(phone.val().trim())) {
-    //                 alert('전화번호 형식이 유효하지 않습니다.');
-    //                 phone.focus();
-    //                 return false;
-    //             }
-    //         }
+    let regPhone = /^\d{3}\d{3,4}\d{4}$/;
+ 	let phone = $('#beforePhone');
+            if (!phone.val()) {
+                alert('전화번호를 입력해주세요.');
+                phone.focus();
+                return false;
+            } else {
+                if (!regPhone.test(phone.val().trim())) {
+                    alert('전화번호 형식이 유효하지 않습니다.');
+                    phone.focus();
+                    return false;
+                }
+            }
 
 	// //이메일 인증을 완료했는지 확인
 
-	// 		let checkEmail = $('.flagEmail').val();
-	// 		console.log(checkEmail);
-	// 		if(checkEmail == 'false') {
-	// 			alert("이메일 인증을 완료해주세요.");
-	// 			   return false;
-	// 		}
+			let checkEmail = $('.flagEmail').val();
+			console.log(checkEmail);
+			if(checkEmail == 'false') {
+				alert("이메일 인증을 완료해주세요.");
+				   return false;
+			}
 
 
-	// 		// 학과 선택
-	// 		let chooseDept = $(".selectdep").val();
-	// 		if(chooseDept == 'select') {
-	// 			alert("학과를 선택해 주세요.");
-	// 			return false;
-	// 		}
+			// 학과 선택
+			let chooseDept = $(".selectdep").val();
+			if(chooseDept == 'select') {
+				alert("학과를 선택해 주세요.");
+				return false;
+			}
 
 
 
 			//주민등록 번호
-			// let jumin = document.getElementById('jumin').value;
-			// console.log(jumin)
-			// console.log();
-			// if(jumin == "") {
-			// 	alert("주민번호를 입력해주세요");
-			// 	return false;
-			// }else if($('#jumin').length < 13){
-			// 	alert("정확한 주민번호를 입력해 주세요.");
-			// 	return false;
-			// }
+			let jumin = document.getElementById('jumin').value;
+			if(jumin == "") {
+				alert("주민번호를 입력해주세요");
+				return false;
+			}else if($('#jumin').length < 13){
+				alert("정확한 주민번호를 입력해 주세요.");
+				return false;
+			}
 
 	// //주소
-	// let postcode = $('#sample6_postcode');
-    //         //상세주소
-    //         let detailAddress = $('#sample6_detailAddress');
-    //         if (!postcode.val()) {
-    //             alert('주소를 입력해주세요.');
-    //             postcode.focus();
-    //             return false;
-    //         }
-    //         if (!detailAddress.val()) {
-    //             alert('상세주소를 입력해주세요.');
-    //             detailAddress.focus();
-    //             return false;
-    //         }
+	let postcode = $('#sample6_postcode');
+            //상세주소
+            let detailAddress = $('#sample6_detailAddress');
+            if (!postcode.val()) {
+                alert('주소를 입력해주세요.');
+                postcode.focus();
+                return false;
+            }
+            if (!detailAddress.val()) {
+                alert('상세주소를 입력해주세요.');
+                detailAddress.focus();
+                return false;
+            }
 
 
 
@@ -320,7 +318,10 @@ $(function(){
 
 
 function setJumin(obj) {
+	let ju3="";
+	ju3 = +obj.value;
 	ju = obj.value;
+	console.log(ju3);
 	ju = ju.replace("-","");
 		if(ju.length > 6) {
 			ju1 = ju.substring(0,6);
@@ -328,6 +329,7 @@ function setJumin(obj) {
 		for(i=1; i<ju.substring(6).length && i < 7; i++) {
 			ju2 = ju2 + "*";
 		}
+		
 		obj.value = ju1+"-"+ju2;
 		}
 	
