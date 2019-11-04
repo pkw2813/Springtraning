@@ -8,7 +8,7 @@ public interface BeforeStuDao {
 
 	public List selectColList(SqlSessionTemplate session);
 	
-	
+	public List selectDeptList(SqlSessionTemplate session, String result);
 	
 	
 }

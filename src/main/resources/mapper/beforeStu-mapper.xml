@@ -4,11 +4,13 @@
   
 
 
-	<select id="selectColList" resultType="list">
+	<select id="selectColList" resultType="map">
 	SELECT COL_NAME, COL_CODE FROM HD_COLLEGE_TB
 	</select>
 
-
+	<select id="selectDeptList" parameterType="string" resultType="map">
+	SELECT DEPT_CODE, DEPT_NAME FROM HD_DEPARTMENT_TB WHERE COL_CODE = #{result}
+	</select>
 
 
 

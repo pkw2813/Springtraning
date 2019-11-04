@@ -205,11 +205,13 @@ $(function(){
 			<label class="control-label">학과 코드</label>				
 					<!-- <input type="text" id="deptCode" name="deptCode" placeholder="이건 셀렉트랑 체크박스로 해야되나?" class="form-control" /> -->
 						<select class="form-control selectCol">
-								<option value="select" id="selCol">대학 선택</option>
+								
 						</select>
-						<select class="form-control selectDept">
-							<option value="" class="selDep"></option>
+						<!-- 여기에 학과 선택 넣어야함 .selectCol -->
+						<select class="form-control selectdep">
+
 						</select>
+						<br>
 						<label class="control-label">주민 등록 번호</label>	
 					<input type="text" id="jumin" name="jumin" placeholder="주민등록번호 13자리를 입력하세요" class="form-control" onkeyup="setJumin(this)"/>
 					<br>														
@@ -323,18 +325,76 @@ window.on("click",function() {
 });
  */
 
+// 로딩이 되엇을때 db에서 대학의 정보를 가져와 만들어줌
 $(function() {
-	$(".selectCol").focus(function(){
-		console.log("function 실행됨");
+	$(document).ready(function(){
+
 		$.ajax({
 			type : "post",
 			url: "${pageContext.request.contextPath}/selectColList.do",
-			success: function(date) {
-				console.log("data");
+			success: function(data) {
+	
+				let colListHtml = "";
+				
+				colListHtml = "<option value='select' id='selCol' name='selCol'>대학 선택</option>";
+				for(let i = 0; i < data.list.length; i++) {
+					let cols = data.list[i];
+					console.log(cols['COL_CODE']);
+
+					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList' name ='colList'>"+cols['COL_NAME']+"</option>";
+				}
+				
+				$('.selectCol').html(colListHtml);
+					$('.selectCol').change(function(){
+					$("#selCol").attr('disabled',true);
+			
+		
+	})
+			
+			},
+			error: function(error) {
+				console.log(error)
 			}
 		})
 	})
 });
+
+
+
+//대학이 선택 되었을때 해당 대학에 포함되어 있는 학과를 리스트로 가져옴
+ $(function(){
+ 	$('.selectCol').change(function(){
+ 		let val = $('.selectCol').val();
+
+		console.log(val);
+
+		$.ajax({
+			type : "post",
+			url: "${pageContext.request.contextPath}/selectDeptList.do",
+			data: {"result" : $('.selectCol').val()},
+			success: function(data) {
+				console.log(data);
+				console.log(data.list);
+				let deptListHtml = "<option value='select' id='selDept' name='selDept'>학과 선택</option>";
+				for(let i = 0; i < data.list.length; i++) {
+					let depts = data.list[i];
+					console.log(depts);
+					console.log(depts['DEPT_CODE']);
+
+					deptListHtml += "<option value='"+depts['DEPT_CODE']+"'  class='deptList'>"+depts['DEPT_NAME']+"</option>";
+				}
+				
+				$('.selectdep').html(deptListHtml);
+					$('.selectdep').change(function(){
+					$("#selDept").attr('disabled',true);
+		});
+ 	}
+ });
+	 });
+ });
+
+
+
 
 
 $(function(){
@@ -372,9 +432,7 @@ if (emailVal.match(regExp) != null) {
 				},
 				error: function(e,s,a){
 					alert("에러가 발생하였습니다.");
-					console.log(e);
-					console.log(s);
-					console.log(a);
+				
 					return false;
 				}
 			})

@@ -13,6 +13,12 @@ public class BeforeStuDaoImpl implements BeforeStuDao{
 		return session.selectList("beforeStu.selectColList");
 	}
 
+	@Override
+	public List selectDeptList(SqlSessionTemplate session, String result) {
+		return session.selectList("beforeStu.selectDeptList", result);
+	}
+
+	
 	
 	
 	
