@@ -7,6 +7,7 @@
 
 <div class="main-panel">
 	<div class="content-wrapper">
+<!-- Body section Start -->	
 		<div class="row">
 			<div class="col-md-12 grid-margin">
 				<div class="d-flex justify-content-between align-items-center">
@@ -16,79 +17,21 @@
 				</div>
 			</div>
 			</div>
+<!-- Main Content start -->	
 			<div class="row">
 				<div class="col-md-8 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body">
-						<div class="table-responsive">
-							<table class="table table-hover table-striped">
-								<thead class="thead-dark">
-									<tr>
-										<th>1</th>
-										<th>2</th>
-										<th>3</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td>2</td>
-										<td>3</td>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>2</td>
-										<td>3</td>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>2</td>
-										<td>3</td>
-									</tr>
-								</tbody>
-							</table>
-							</div>
+						
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 grid-margin stretch-card">
-					<div class="card">
-						<div class="card-body">
-						<div class="table-responsive">
-							<table class="table table-hover table-striped">
-								<thead class="thead-dark">
-									<tr>
-										<th>1</th>
-										<th>2</th>
-										<th>3</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td>2</td>
-										<td>3</td>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>2</td>
-										<td>3</td>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>2</td>
-										<td>3</td>
-									</tr>
-								</tbody>
-							</table>
-							</div>
-						</div>
-					</div>
-				</div>
-				
+
+
+
+
+<!-- Main-content End -->			
+
+<!-- Body section End -->	
 			</div>
-			
-		
-
-
 			<jsp:include page="/WEB-INF/views/common/n_footer.jsp" />

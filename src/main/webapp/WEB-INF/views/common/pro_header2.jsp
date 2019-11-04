@@ -199,7 +199,7 @@
             </div>
           </li>
           
-          <!-- 교수정보 -->
+          <!-- 학생정보 -->
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#stu_info" aria-expanded="false" aria-controls="auth">
               <i class="ti-user menu-icon"></i>
@@ -216,6 +216,22 @@
               </ul>
             </div>
           </li>
+          
+          <!-- 교수정보 -->
+              <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="prof_info" aria-expanded="false" aria-controls="auth">
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">교수정보</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="prof_info">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="#">교수정보 조회</a></li>
+              </ul>
+            </div>
+          </li>
+          
+          
           
         <!-- 이의신청 처리 -->
           <li class="nav-item">
