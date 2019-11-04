@@ -172,7 +172,7 @@ $(function(){
 	<!-- 모달창  -->
 	<div id="myModal" class="modal">
 		<div class="modal-content">
-			<form action="${path}/beforeStudent/enroll.hd">
+			<form action="${path}/beforeStudent/enroll.hd" method="POST">
 			<span class="close">&times;</span>
 			<p>입학 신청</p>
 			<div class="form-group">
@@ -250,61 +250,66 @@ $(function(){
 $(function(){
 	$('#enrollBtn').click(function() {
 
-    //전화번호 정규표현식
-    let regPhone = /^\d{3}\d{3,4}\d{4}$/;
- 	let phone = $('#beforePhone');
-            if (!phone.val()) {
-                alert('전화번호를 입력해주세요.');
-                phone.focus();
-                return false;
-            } else {
-                if (!regPhone.test(phone.val().trim())) {
-                    alert('전화번호 형식이 유효하지 않습니다.');
-                    phone.focus();
-                    return false;
-                }
-            }
+    // //전화번호 정규표현식
+    // let regPhone = /^\d{3}\d{3,4}\d{4}$/;
+ 	// let phone = $('#beforePhone');
+    //         if (!phone.val()) {
+    //             alert('전화번호를 입력해주세요.');
+    //             phone.focus();
+    //             return false;
+    //         } else {
+    //             if (!regPhone.test(phone.val().trim())) {
+    //                 alert('전화번호 형식이 유효하지 않습니다.');
+    //                 phone.focus();
+    //                 return false;
+    //             }
+    //         }
 
-	//이메일 인증을 완료했는지 확인
+	// //이메일 인증을 완료했는지 확인
 
-			let checkEmail = $('.flagEmail').val();
-			console.log(checkEmail);
-			if(checkEmail == 'false') {
-				alert("이메일 인증을 완료해주세요.");
-				   return false;
-			}
+	// 		let checkEmail = $('.flagEmail').val();
+	// 		console.log(checkEmail);
+	// 		if(checkEmail == 'false') {
+	// 			alert("이메일 인증을 완료해주세요.");
+	// 			   return false;
+	// 		}
 
 
-			// 학과 선택
-			let chooseDept = $(".selectdep").val();
-			if(chooseDept == 'select') {
-				alert("학과를 선택해 주세요.");
-				return false;
-			}
+	// 		// 학과 선택
+	// 		let chooseDept = $(".selectdep").val();
+	// 		if(chooseDept == 'select') {
+	// 			alert("학과를 선택해 주세요.");
+	// 			return false;
+	// 		}
 
 
 
 			//주민등록 번호
-			let jumin = $('#jumin').val();
-			if(!jumin.val().length == 14) {
-				alert("주민번호를 입력해주세요");
-				return false;
-			}
+			// let jumin = document.getElementById('jumin').value;
+			// console.log(jumin)
+			// console.log();
+			// if(jumin == "") {
+			// 	alert("주민번호를 입력해주세요");
+			// 	return false;
+			// }else if($('#jumin').length < 13){
+			// 	alert("정확한 주민번호를 입력해 주세요.");
+			// 	return false;
+			// }
 
-	//주소
-	let postcode = $('#sample6_postcode');
-            //상세주소
-            let detailAddress = $('#sample6_detailAddress');
-            if (!postcode.val()) {
-                alert('주소를 입력해주세요.');
-                postcode.focus();
-                return false;
-            }
-            if (!detailAddress.val()) {
-                alert('상세주소를 입력해주세요.');
-                detailAddress.focus();
-                return false;
-            }
+	// //주소
+	// let postcode = $('#sample6_postcode');
+    //         //상세주소
+    //         let detailAddress = $('#sample6_detailAddress');
+    //         if (!postcode.val()) {
+    //             alert('주소를 입력해주세요.');
+    //             postcode.focus();
+    //             return false;
+    //         }
+    //         if (!detailAddress.val()) {
+    //             alert('상세주소를 입력해주세요.');
+    //             detailAddress.focus();
+    //             return false;
+    //         }
 
 
 
