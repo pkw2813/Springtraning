@@ -29,7 +29,7 @@
   
     <!-- 웹소켓 js파일 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.js"></script>
-  
+  <%-- <% } else if(session.getAttribute("loginMember") instanceof Student){%>  --%>
   
 </head>
 <body>
