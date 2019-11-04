@@ -172,39 +172,45 @@ $(function(){
 	<!-- 모달창  -->
 	<div id="myModal" class="modal">
 		<div class="modal-content">
-			<form>
+			<form action="${path}/beforeStudent/enroll.hd">
 			<span class="close">&times;</span>
 			<p>입학 신청</p>
 			<div class="form-group">
-			<label class="control-label">이름</label>
+			<hr>
+				<label class="control-label">이름</label>
 					<input type="text" id="beforeName" name="beforeName" placeholder="이름 을 입력하세요" class="form-control" required />
 			<hr>
 			<label class="control-label">입학 유형</label>
-			<select>
+			<select class="form-control">
 				<option value="정시" class="enrollType" >정시</option>
 				<option value="수시" class="enrollType">수시</option>
 				<option value="편입" class="enrollType">편입</option>				
 			</select>		
-				<br>
 				<hr>
 			<label class="control-label">연락처</label>
 					<input type="tel" id="beforePhone" name="beforePhone" placeholder=" '-' 제외 입력" autocomplete=off class="form-control" />
 				
 					<input type="hidden" class="saveEmail" id="saveEmail" value="">
 					
+					<br>
 					<label class="control-label">E-mail</label>					
 					<div class="emailCheck">
 					<input type="email" id="email" name="email" placeholder="이메일을 입력하세요" class="form-control" required >
 					<button type="button" class="btn btn-info" id="emailBtn">이메일 발송</button>
 					</div>
-					
+	
 					<br>
 			
 				
 			<label class="control-label">학과 코드</label>				
-					<input type="text" id="deptCode" name="deptCode" placeholder="이건 셀렉트랑 체크박스로 해야되나?" class="form-control" />
-
-			<label class="control-label">주민 등록 번호</label>	
+					<!-- <input type="text" id="deptCode" name="deptCode" placeholder="이건 셀렉트랑 체크박스로 해야되나?" class="form-control" /> -->
+						<select class="form-control selectCol">
+								<option value="select" id="selCol">대학 선택</option>
+						</select>
+						<select class="form-control selectDept">
+							<option value="" class="selDep"></option>
+						</select>
+						<label class="control-label">주민 등록 번호</label>	
 					<input type="text" id="jumin" name="jumin" placeholder="주민등록번호 13자리를 입력하세요" class="form-control" onkeyup="setJumin(this)"/>
 					<br>														
 					<br>
@@ -223,7 +229,7 @@ $(function(){
 			</div>
 			<input type="hidden" path="random" id="random" name="random1" value="${random}" />
 			<input type="button" class="btn btn-info" value="취소" style="float: right; margin: 7px;">
-			<input type="button" class="btn btn-info" value="입학 신청" style="float: right; margin: 7px;">
+			<input type="submit" class="btn btn-info" value="입학 신청" style="float: right; margin: 7px;">
 			<br>
 			<br>
 		</form>
@@ -316,6 +322,21 @@ window.on("click",function() {
 }) 
 });
  */
+
+$(function() {
+	$(".selectCol").focus(function(){
+		console.log("function 실행됨");
+		$.ajax({
+			type : "post",
+			url: "${pageContext.request.contextPath}/selectColList.do",
+			success: function(date) {
+				console.log("data");
+			}
+		})
+	})
+});
+
+
 $(function(){
 	/*이메일 인증 버튼 클릭시 발생하는 이벤트	*/
 	$(document).on("click", "#emailBtn", function(){

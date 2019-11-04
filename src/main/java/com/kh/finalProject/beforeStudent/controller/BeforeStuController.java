@@ -1,5 +1,9 @@
 package com.kh.finalProject.beforeStudent.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +18,15 @@ public class BeforeStuController {
 	
 	
 	
-	@RequestMapping("/beforeStudent/enroll.hd")
-	public String enrollStudent() {
+	@RequestMapping("/selectColList.do")
+	public Map enrollStudent() {
+		Map map = new HashedMap();
+		List list = service.selectColList();
+		System.out.println("넘어옴");
+		System.out.println(list);
+		map.put("list", list);
 		
-		
-		
-		
-		return "";
+		return map;
 	}
 	
 	

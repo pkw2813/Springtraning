@@ -4,7 +4,9 @@
 
 
 
-
+	<select id="selectColList" resultType="list">
+	SELECT COL_NAME, COL_CODE FROM HD_COLLEGE_TB
+	</select>
 
 
 
