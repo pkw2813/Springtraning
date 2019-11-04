@@ -1,77 +1,88 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="{$pageContext.request.contextPath}"/>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
+<jsp:include page="/WEB-INF/views/common/pro_header2.jsp" />
 
-	<jsp:include page = "/WEB-INF/views/common/sool_header.jsp">
-		<jsp:param name="pageTitle" value=""/>
-	</jsp:include>
-
-<div class="container-fluid">
-	수강생 조회
-	<h3> 검색 입력 </h3>
-  <form action="" method="post">
-	  <table class="table table-bordered table-hover col-md-10" style="text-align : center;">
-		  <thead class="thead-dark">
-		  	<tr>
-		  		<th>개설년도</th>
-		  		<th>강의명</th>
-		  		<th>학번</th>
-		  		<th>이름</th>
-		  		<th>학년</th>
-		  		<th>학과</th>
-		  		<th>검색하기</th>
-		  	</tr>
-		  </thead>
-		  
-		  <tbody>
-		  	<tr>
-		  		<td>
-		  		<select name="openYear">
-			  				<option value="#" selected>개설기간 선택</option>
-			  				<option value="2019">2019</option>
-						    <option value="2018">2018</option>
-						    <option value="2017">2017</option>
-						    <option value="2016">2016</option>
-					</select>
-		  		</td>
-		  		<td>
-			  		<select name="subjectName">
-			  				<option value="*" selected>과목선택</option>
-			  				<option value="E1203">영어영문학</option>
-						    <option value="J123">자바프로그래밍</option>
-						    <option value="chul">철학입문1</option>
-						    <option value="Muyeok">무역영어</option>
-					</select>
-		  		</td>
-		  		<td><input type="text" placeholder="학번검색(미입력시 전체)" value="" name="studentNo"/></td>
-		  		<td><input type="text" placeholder="이름검색(미입력시 전체)" value="" name="studentName"/></td>
-		  		<td>
-		  			<select name="grade">
-		  				<option value="*" selected>학년검색</option>
-		  				<option value="1">1학년</option>
-					    <option value="2">2학년</option>
-					    <option value="3">3학년</option>
-					    <option value="4">4학년</option>
-					</select>
-				</td>
-		  		<td>
-		  			<input type="text" placeholder="학과검색" value="" name="major"/>
-		  		</td>
-		  		<td><input type="submit" value="검색"></td>
-		  		
-		  	</tr>
-		 	
-		  </tbody>
-		  
-	  </table>
-  </form>
-	<!-- 수강생 정보 출력 끝 -->
-	
-	
-	  <!-- 수업 정보 출력  -->
-  <table class="table table-bordered table-hover" style="text-align : center;" >
+<div class="main-panel">
+	<div class="content-wrapper">
+<!-- Body section Start -->	
+		<div class="row">
+			<div class="col-md-12 grid-margin">
+				<div class="d-flex justify-content-between align-items-center">
+					<div>
+						<h4 class="font-weight-bold mb-0">수강생 조회</h4>
+					</div>
+				</div>
+			</div>
+			</div>
+<!-- Main Content start -->	
+			<div class="row">
+				<div class="col-md-12 grid-margin stretch-card">
+					<div class="card">
+						<div class="card-header">
+						 <form action="" method="post">
+						  <table class="table table-bordered table-hover col-md-10" style="text-align : center;">
+							  <thead class="thead-dark">
+							  	<tr>
+							  		<th>개설년도</th>
+							  		<th>강의명</th>
+							  		<th>학번</th>
+							  		<th>이름</th>
+							  		<th>학년</th>
+							  		<th>학과</th>
+							  		<th>검색하기</th>
+							  	</tr>
+							  </thead>
+							  
+							  <tbody>
+							  	<tr>
+							  		<td>
+							  		<select name="openYear">
+								  				<option value="#" selected>개설기간 선택</option>
+								  				<option value="2019">2019</option>
+											    <option value="2018">2018</option>
+											    <option value="2017">2017</option>
+											    <option value="2016">2016</option>
+										</select>
+							  		</td>
+							  		<td>
+								  		<select name="subjectName">
+								  				<option value="*" selected>과목선택</option>
+								  				<option value="E1203">영어영문학</option>
+											    <option value="J123">자바프로그래밍</option>
+											    <option value="chul">철학입문1</option>
+											    <option value="Muyeok">무역영어</option>
+										</select>
+							  		</td>
+							  		<td><input type="text" placeholder="학번검색(미입력시 전체)" value="" name="studentNo"/></td>
+							  		<td><input type="text" placeholder="이름검색(미입력시 전체)" value="" name="studentName"/></td>
+							  		<td>
+							  			<select name="grade">
+							  				<option value="*" selected>학년검색</option>
+							  				<option value="1">1학년</option>
+										    <option value="2">2학년</option>
+										    <option value="3">3학년</option>
+										    <option value="4">4학년</option>
+										</select>
+									</td>
+							  		<td>
+							  			<input type="text" placeholder="학과검색" value="" name="major"/>
+							  		</td>
+							  		<td>
+										<button type="submit" class="btn btn-outline-primary">검색</button>
+									</td>
+							  		
+							  	</tr>
+							 	
+							  </tbody>
+							  
+						  </table>
+					  </form>
+					</div>
+					<div class="card-body">
+					<table class="table table-bordered table-hover" style="text-align : center;" >
   	<thead class="thead-dark">
   		<tr>
   			<th>
@@ -139,12 +150,10 @@
   		</tr>
   	</thead>
   	</table>
-  
-  <!-- 수업 정보 출력 끝 -->
-	
-	
-	<!-- 수강생 출력 테이블 시작 -->	
-	 <table class="table table-bordered table-hover" style="text-align : center;">
+					</div>
+					
+					<div class="card-footer">
+					 <table class="table table-bordered table-hover" style="text-align : center;">
   	<thead class="thead-dark">
   		<tr>
   			<th>학번</th>
@@ -215,24 +224,16 @@
   		
   		</tbody>
   </table>
+					
+					</div>
+				</div>
+			</div>
+		</div>
 
-	<ul class="pagination" style="justify-content: center;">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</div>
-  
-	
 
-	<jsp:include page = "/WEB-INF/views/common/sool_footer.jsp"/>
+
+
+<!-- Main-content End -->			
+
+<!-- Body section End -->	
+			<jsp:include page="/WEB-INF/views/common/n_footer.jsp" />

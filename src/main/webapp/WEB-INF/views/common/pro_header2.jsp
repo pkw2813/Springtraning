@@ -208,18 +208,18 @@
             </a>
             <div class="collapse" id="stu_info">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">학과생 조회</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">수강생 조회</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">수강생 출결관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">수강생 성적관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewInMajor.hd">학과생 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewInClass.hd">수강생 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewClassAttend.hd">수강생 출결관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/editClassResult.hd">수강생 성적관리</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">강의 평가 조회</a></li>
               </ul>
             </div>
           </li>
           
           <!-- 교수정보 -->
-              <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="prof_info" aria-expanded="false" aria-controls="auth">
+           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#prof_info" aria-expanded="false" aria-controls="auth">
               <i class="ti-user menu-icon"></i>
               <span class="menu-title">교수정보</span>
               <i class="menu-arrow"></i>
