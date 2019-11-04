@@ -39,9 +39,9 @@ public class StudentController1 {
 		return "student/studentInfoUpdate";
 	}
 	
-	@RequestMapping(value = "/student/studentInfoUpdateEnd.hd",method=RequestMethod.GET)
-	public String studentInfoUpdateEnd(HttpServletRequest req) {
-		Student s = null;
+	@RequestMapping(value = "/student/studentInfoUpdateEnd.hd",method=RequestMethod.POST)
+	public String studentInfoUpdateEnd(HttpServletRequest req, Model m) {
+		Student s =new Student();
 		String stuNo=req.getParameter("stuNo");
 		String stuEmail=req.getParameter("stuEmail");
 		String stuTel=req.getParameter("stuTel");
@@ -55,8 +55,19 @@ public class StudentController1 {
 		s.setStuTel(stuTel);
 		s.setStuAddr(stuAddr);
 		s.setStuAccount(stuAccount);
+		String msg;
+		String loc;
 		int result=service.studentInfoUpdate(s);
-		return "student/studentInfo";
+		if(result==1) {
+			msg="수정완료";
+			loc="common/";
+		}else {
+			msg="수정실패 다시시도하세요";
+		}
+		
+		m.addAttribute("msg","수정완료");
+		return "redirect:/student/studentInfo.hd";
+		
 	}
 	
 	
