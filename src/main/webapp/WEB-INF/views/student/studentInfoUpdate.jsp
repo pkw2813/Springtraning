@@ -38,20 +38,12 @@
 	
 	</style>
 	
-	<script type="text/javascript">
-		function LoadImg(value){
-			if(value.files && value.files[0]){
-				var reader=new FileReader();
-				reader.onload=function(e){
-					$('#LoadImg').attr('src',e.target.result);
-				}
-				reader.readAsDataURL(value.files[0]);
-			}
-		}
-	</script>
+
 	
 	<div class="main-panel">
 	<div class="content-wrapper">
+	
+				
 		<!-- 시작 -->
 		<div class="row">
 			<div class="col-md-12 grid-margin stretch-card">
@@ -62,8 +54,7 @@
 	<thead class="thead-dark">
 	<tr>
 	<td colspan="8">
-			<input type="file" id="imgAttach" name="imgAttach" onchange="LoadImg(this);"><!-- 파일업로드되는곳 -->
-				<img id="LoadImg" height="300px">
+			
 	</td>
 	</tr>
       <tr>
@@ -72,9 +63,9 @@
     </thead>
 				<tr> 
 					<th style="text-align:center;font-size:20px;" rowspan="6"  width="200px">
-						<img height="200px" src="${path }/resources/images/image/${student.stuImgOriname}"/>
+						<img id="LoadImg" height="200px" width="150px" src="${path }/resources/images/image/${student.stuImgOriname}">
 						<br><br>
-							<input type="file" name="up_file" id="up_file">
+							<input type="file" id="imgAttach" name="imgAttach"  enctype="multipart/form-data">
 								</tr>
 			<th>학생번호</th>
 			<td><input type="text" value="${student.stuNo}" style="width:130px" required disabled/>
@@ -130,8 +121,22 @@
 	</div>
 	</div>
 	
-	
-	
+	<script type="text/javascript">
+		
+		function LoadImg(value){
+			
+			if(value.files && value.files[0]){
+				var reader=new FileReader();
+				reader.onload=function(e){
+					$('#LoadImg').attr('src',e.target.result);
+				}
+				reader.readAsDataURL(value.files[0]);
+			}
+		}
+		$("#imgAttach").change(function(){
+			LoadImg(this);
+		})
+	</script>
 
 
 	<jsp:include page = "/WEB-INF/views/common/footer.jsp"/>
