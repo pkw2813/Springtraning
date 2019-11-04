@@ -43,6 +43,8 @@
   <script src="${path }/resources/js/demo/chart-area-demo.js"></script>
   <script src="${path }/resources/js/demo/chart-pie-demo.js"></script>
 </head>
+  <!-- 웹소켓 js파일 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.js"></script>
 
 <body id="page-top">
 

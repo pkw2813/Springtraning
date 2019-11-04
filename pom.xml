@@ -244,6 +244,13 @@
 		    <artifactId>spring-context-support</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
+		
+		<!-- 웹 소켓 -->
+		<dependency>
+		        <groupId>org.springframework</groupId>
+		        <artifactId>spring-websocket</artifactId>
+		        <version>${org.springframework-version}</version>
+		</dependency>
 
 
 				
