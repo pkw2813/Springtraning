@@ -21,6 +21,13 @@ public class StudentServiceImpl1 implements StudentService1 {
 		
 		return dao.selectStudent(session,studentNo);
 	}
+
+
+	@Override
+	public int studentInfoUpdate(Student s) {
+		
+		return dao.studentInfoUpdate(session, s);
+	}
 	
 
 

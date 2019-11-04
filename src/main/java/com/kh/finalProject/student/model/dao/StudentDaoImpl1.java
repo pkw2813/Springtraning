@@ -14,6 +14,12 @@ public class StudentDaoImpl1 implements StudentDao1 {
 		return session.selectOne("student1.selectStudent",studentNo);
 	}
 
+	@Override
+	public int studentInfoUpdate(SqlSessionTemplate session, Student s) {
+		// TODO Auto-generated method stub
+		return session.update("student1.studentInfoUpdate",s);
+	}
+
 	
 	
 

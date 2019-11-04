@@ -6,6 +6,9 @@
   		SELECT * FROM HD_STUDENT_TB WHERE STU_NO=#{studentNo}
   	</select>
   	
+  	<update id="studentInfoUpdate" parameterType="student">
+  		UPDATE HD_STUDENT_TB SET STU_TEL=#{s.stuName},STU_ADDR=#{s.stuName},STU_EMAIL=#{s.stuEmail},STU_ACCOUNT=#{s.stuAccount} where STU_NO=#{s.stuNo}
+  	</update>
   	
   	
   	<resultMap id="studentResult" type="student">
