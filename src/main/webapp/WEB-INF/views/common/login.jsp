@@ -191,7 +191,7 @@ $(function(){
 					<input type="tel" id="beforePhone" name="beforePhone" placeholder=" '-' 제외 입력" autocomplete=off class="form-control" />
 				
 					<input type="hidden" class="saveEmail" id="saveEmail" value="">
-					
+					<input type="hidden" class="flagEmail" id="flagEmail" name="flagEmail" value="false">
 					<br>
 					<label class="control-label">E-mail</label>					
 					<div class="emailCheck">
@@ -203,12 +203,12 @@ $(function(){
 			
 				
 			<label class="control-label">학과 코드</label>				
-					<!-- <input type="text" id="deptCode" name="deptCode" placeholder="이건 셀렉트랑 체크박스로 해야되나?" class="form-control" /> -->
+				
 						<select class="form-control selectCol">
 								
 						</select>
 						<!-- 여기에 학과 선택 넣어야함 .selectCol -->
-						<select class="form-control selectdep">
+						<select class="form-control selectdep" required>
 
 						</select>
 						<br>
@@ -230,8 +230,8 @@ $(function(){
 
 			</div>
 			<input type="hidden" path="random" id="random" name="random1" value="${random}" />
-			<input type="button" class="btn btn-info" value="취소" style="float: right; margin: 7px;">
-			<input type="submit" class="btn btn-info" value="입학 신청" style="float: right; margin: 7px;">
+			<input type="button"  class="btn btn-info btn_close" value="취소" style="float: right; margin: 7px;">
+			<input type="submit" class="btn btn-info" id="enrollBtn" value="입학 신청" style="float: right; margin: 7px;">
 			<br>
 			<br>
 		</form>
@@ -245,12 +245,14 @@ $(function(){
 
 <script>
 
-    //전화번호 정규표현식
-    var regPhone = /^\d{3}\d{3,4}\d{4}$/;
 
 	// 입학 신청 완료할때 유효성 검사해야함 함수 쓰기
+$(function(){
+	$('#enrollBtn').click(function() {
 
-/* 	var phone = $('#phone');
+    //전화번호 정규표현식
+    let regPhone = /^\d{3}\d{3,4}\d{4}$/;
+ 	let phone = $('#beforePhone');
             if (!phone.val()) {
                 alert('전화번호를 입력해주세요.');
                 phone.focus();
@@ -263,10 +265,36 @@ $(function(){
                 }
             }
 
+	//이메일 인증을 완료했는지 확인
+
+			let checkEmail = $('.flagEmail').val();
+			console.log(checkEmail);
+			if(checkEmail == 'false') {
+				alert("이메일 인증을 완료해주세요.");
+				   return false;
+			}
+
+
+			// 학과 선택
+			let chooseDept = $(".selectdep").val();
+			if(chooseDept == 'select') {
+				alert("학과를 선택해 주세요.");
+				return false;
+			}
+
+
+
+			//주민등록 번호
+			let jumin = $('#jumin').val();
+			if(!jumin.val().length == 14) {
+				alert("주민번호를 입력해주세요");
+				return false;
+			}
+
 	//주소
-	var postcode = $('#sample6_postcode');
+	let postcode = $('#sample6_postcode');
             //상세주소
-            var detailAddress = $('#sample6_detailAddress');
+            let detailAddress = $('#sample6_detailAddress');
             if (!postcode.val()) {
                 alert('주소를 입력해주세요.');
                 postcode.focus();
@@ -278,7 +306,13 @@ $(function(){
                 return false;
             }
 
- */
+
+
+	})
+});
+
+
+
 
 function setJumin(obj) {
 	ju = obj.value;
@@ -302,13 +336,17 @@ function enrollStudent() {
    $.ajax({
 	   url : "<c:url value='/email.do'/>",
 		success : function(data) {
-			console.log(data.random);
-		console.log("이건 랜덤값");
+
 	 $('input[name=random1]').attr('value',data.random); 
 		}
    });
 }
 
+$(function(){
+	$(".btn_close").click(function(){
+		$(".modal").css("display","none");
+	});
+});
 
 $(function(){
 	$(".close").click(function(){
@@ -351,9 +389,6 @@ $(function() {
 		
 	})
 			
-			},
-			error: function(error) {
-				console.log(error)
 			}
 		})
 	})
@@ -365,9 +400,6 @@ $(function() {
  $(function(){
  	$('.selectCol').change(function(){
  		let val = $('.selectCol').val();
-
-		console.log(val);
-
 		$.ajax({
 			type : "post",
 			url: "${pageContext.request.contextPath}/selectDeptList.do",
@@ -458,7 +490,9 @@ if (emailVal.match(regExp) != null) {
 						let emailHtml = "<input type='text' id='email' name='email' value="+checkEmail+" class='form-control' readonly >";
 					$('.emailCheck').children().remove();
 					 $('.emailCheck').append(emailHtml);
-					
+
+					 $('input[name=flagEmail]').attr('value','true'); 
+		
 					}else if(data == "false"){
 					alert("인증번호를 잘못 입력하셨습니다.")
 					}
