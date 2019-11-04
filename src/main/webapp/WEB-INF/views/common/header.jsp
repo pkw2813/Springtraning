@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%@ page import="com.kh.finalProject.student.model.vo.Student" %>
@@ -10,482 +10,360 @@
 <html lang="en">
 
 <head>
-
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
   <title>Haxa Direct</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="${path }/resources/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="${path }/resources/css/sb-admin-2.min.css" rel="stylesheet">
-<script src="${path }/resources/js/jquery-3.4.1.min.js"></script>
-  <!-- Bootstrap core JavaScript-->
-  <script src="${path }/resources/jquery/jquery.min.js"></script>
-  <script src="${path }/resources/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="${path }/resources/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="${path }/resources/js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <script src="${path }/resources/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="${path }/resources/js/demo/chart-area-demo.js"></script>
-  <script src="${path }/resources/js/demo/chart-pie-demo.js"></script>
-</head>
-  <!-- 웹소켓 js파일 -->
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="${path }/resources/assets/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="${path }/resources/assets/vendors/base/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="${path }/resources/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="${path }/resources/assets/images/favicon.png" />
+  
+  <script src="${path }/resources/js/jquery-3.4.1.min.js"></script>
+  
+    <!-- 웹소켓 js파일 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.js"></script>
-
-<body id="page-top">
-
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath }/index.jsp">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">서울대학교 <sup></sup></div>
-      </a>
-
-      <!-- Divider 대쉬보드 navtop-->
-      <!-- <hr class="sidebar-divider my-0">
-
-      Nav Item - Dashboard
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-
-      Divider -->
-      <hr class="sidebar-divider">
-		<%-- <%if(session.getAttribute("loginMember") instanceof Professor){%> --%>
-		
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        교수
+  
+  
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="${path }/resources/assets/images/logo.svg" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="${path }/resources/assets/images/logo-mini.svg" alt="logo"/></a>
       </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>강의정보</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Course Information</h6>
-            <a class="collapse-item" href="#">개설과목입력</a>
-            <a class="collapse-item" href="#">개설과목조회</a>
-            <a class="collapse-item" href="#">강의계획서</a>
-            <a class="collapse-item" href="#">주별강의계획서</a>
-            <a class="collapse-item" href="#">강의자료업로드</a>
-            <a class="collapse-item" href="#">강의내역</a>
-            <a class="collapse-item" href="#">담당교수별 강의시간표</a>
-            <a class="collapse-item" href="#">결/보강 신청</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>학생정보</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Students Information</h6>
-            <a class="collapse-item" href="#">학생수강신청관리</a>
-            <a class="collapse-item" href="#">학생시험관리</a>
-            <a class="collapse-item" href="#">학생과제관리</a>
-            <a class="collapse-item" href="#">학생출결관리</a>
-            <a class="collapse-item" href="#">학생출석부</a>
-            <a class="collapse-item" href="#">학생성적관리(성적입력)</a>
-            <a class="collapse-item" href="#">과목별 학생수강 평가조회</a>
-          </div>
-        </div>
-      </li>
-      
-       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1" aria-expanded="true" aria-controls="#collapseTwo1">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>교수정보</span>
-        </a>
-        <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo1" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Propessor Information</h6>
-            <a class="collapse-item" href="utilities-color.html">교수 정보보기</a>
-          </div>
-        </div>
-      </li>
-      
-       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="true" aria-controls="#collapseTwo2">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>상담</span>
-        </a>
-        <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo2" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Student Consultion</h6>
-            <a class="collapse-item" href="#">건의사항처리</a>
-            <a class="collapse-item" href="#">진로및질문, 면담신청 처리</a>
-            <a class="collapse-item" href="#">출결이의 신청처리</a>
-            <a class="collapse-item" href="#">성적이의 신청처리</a>
-          </div>
-        </div>
-      </li>
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-	<%-- <% } else if(session.getAttribute("loginMember") instanceof Student){%>  --%>
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-      	  학생
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>개인 정보</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">My Info</h6>
-            <a class="collapse-item" href="${path}/student/studentInfo.hd">기본 정보</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages4" aria-expanded="true" aria-controls="collapsePages4">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>성적 정보</span>
-        </a>
-          <div id="collapsePages4" class="collapse" aria-labelledby="headingPages4" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">University Tuition</h6>
-            <a class="collapse-item" href="${path }/student/gradeSearchAll.hd">전체 성적조회</a>
-            <a class="collapse-item" href="${path }/student/gradeSearchNow.hd">이번학기 성적조회</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages5" aria-expanded="true" aria-controls="collapsePages5">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>수업 정보</span>
-        </a>
-          
-           <div id="collapsePages5" class="collapse" aria-labelledby="headingPages5" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Graduated</h6>
-            <a class="collapse-item" href="${path }/student/applyClass.hd">강의조회 및 수강신청</a>
-            <a class="collapse-item" href="${path }/student/myClassInfo.hd">수강신청 내역</a>
-            <a class="collapse-item" href="${path }/student/allClassInfo.hd">전체 시간표 조회</a>
-            <a class="collapse-item" href="${path }/student/mySchedule.hd">개인 시간표 조회</a>
-            <a class="collapse-item" href="${path }/student/myAttendance.hd">개인 출석부 조회</a>
-            <a class="collapse-item" href="${path }/student/classBoard.hd">강의게시판</a>
-          </div>
-        </div>
-      </li>
-      
-       <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages10" aria-expanded="true" aria-controls="collapsePages10">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>등록금 정보</span>
-        </a>
-          <div id="collapsePages10" class="collapse" aria-labelledby="headingPages10" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">University Tuition</h6>
-            <a class="collapse-item" href="${path }/student/tuitionBill.hd">등록금 고지서</a>
-            <a class="collapse-item" href="${path }/student/tuitionCert.hd">등록금 납입 증명서</a>
-          </div>
-        </div>
-      </li>
-      
-       <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages9" aria-expanded="true" aria-controls="collapsePages9">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>졸업 정보</span>
-        </a>
-          <div id="collapsePages9" class="collapse" aria-labelledby="headingPages9" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">University Tuition</h6>
-            <a class="collapse-item" href="${path }/student/myGraduation.hd">졸업인정 학점조회</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-	
-		<%-- <% } else if(session.getAttribute("loginMember") instanceof Employee){%>  --%>
-		<div class="sidebar-heading">
-        	관리자
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages6" aria-expanded="true" aria-controls="collapsePages6">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>총괄 관리자</span>
-        </a>
-        <div id="collapsePages6" class="collapse" aria-labelledby="headingPages6" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="#">입학관리</a>
-            <a class="collapse-item" href="#">교수관리</a>
-            <a class="collapse-item" href="#">직원관리</a>
-          </div>
-        </div>
-      </li>
-      
-       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages7" aria-expanded="true" aria-controls="collapsePages7">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>대학 행정관리자</span>
-        </a>
-        <div id="collapsePages7" class="collapse" aria-labelledby="headingPages7" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="#">기타</a>
-            <a class="collapse-item" href="#">행사관리</a>
-            <a class="collapse-item" href="#">학과관리</a>
-            <a class="collapse-item" href="#">리스트</a>
-            <a class="collapse-item" href="#">기자재</a>
-          </div>
-        </div>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages8" aria-expanded="true" aria-controls="collapsePages8">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>학과 행정관리자</span>
-        </a>
-        <div id="collapsePages8" class="collapse" aria-labelledby="headingPages8" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="#">기자재 신청</a>
-            <a class="collapse-item" href="#">행사신청</a>
-            <a class="collapse-item" href="#">학과 리스트</a>
-            <a class="collapse-item" href="#">학생조회</a>
-          </div>
-        </div>
-      </li>
-     <%--  <%} %> --%>
-      <!-- Sidebar Toggler (Sidebar) -->
-      <!-- <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div> -->
-
-    </ul>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-      <!-- Main Content -->
-      <div id="content">
-
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="ti-view-list"></span>
+        </button> -->
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item nav-search d-none d-lg-block">
             <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
+              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                <span class="input-group-text" id="search">
+                  <i class="ti-search"></i>
+                </span>
               </div>
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
             </div>
-          </form>
-
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown mr-1">
+            <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
+              <i class="ti-email mx-0"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="messageDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+              <a class="dropdown-item">
+                <div class="item-thumbnail">
+                    <img src="${path }/resources/assets/images/faces/face4.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="item-content flex-grow">
+                  <h6 class="ellipsis font-weight-normal">David Grey
+                  </h6>
+                  <p class="font-weight-light small-text text-muted mb-0">
+                    The meeting is cancelled
+                  </p>
+                </div>
               </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-
-            <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+              <a class="dropdown-item">
+                <div class="item-thumbnail">
+                    <img src="${path }/resources/assets/images/faces/face2.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="item-content flex-grow">
+                  <h6 class="ellipsis font-weight-normal">Tim Cook
+                  </h6>
+                  <p class="font-weight-light small-text text-muted mb-0">
+                    New product launch
+                  </p>
+                </div>
               </a>
-              <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Alerts Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-              </div>
-            </li>
-
-            <!-- Nav Item - Messages -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
+              <a class="dropdown-item">
+                <div class="item-thumbnail">
+                    <img src="${path }/resources/assets/images/faces/face3.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="item-content flex-grow">
+                  <h6 class="ellipsis font-weight-normal"> Johnson
+                  </h6>
+                  <p class="font-weight-light small-text text-muted mb-0">
+                    Upcoming board meeting
+                  </p>
+                </div>
               </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
-                  Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+              <i class="ti-bell mx-0"></i>
+              <span class="count"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <a class="dropdown-item">
+                <div class="item-thumbnail">
+                  <div class="item-icon bg-success">
+                    <i class="ti-info-alt mx-0"></i>
                   </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-              </div>
-            </li>
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                </div>
+                <div class="item-content">
+                  <h6 class="font-weight-normal">Application Error</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Just now
+                  </p>
+                </div>
               </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="${path }/login">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="${path }/req.hd" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
-              </div>
-            </li>
-
-          </ul>
-
-        </nav>
+              <a class="dropdown-item">
+                <div class="item-thumbnail">
+                  <div class="item-icon bg-warning">
+                    <i class="ti-settings mx-0"></i>
+                  </div>
+                </div>
+                <div class="item-content">
+                  <h6 class="font-weight-normal">Settings</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Private message
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item">
+                <div class="item-thumbnail">
+                  <div class="item-icon bg-info">
+                    <i class="ti-user mx-0"></i>
+                  </div>
+                </div>
+                <div class="item-content">
+                  <h6 class="font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    2 days ago
+                  </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+              <img src="${path }/resources/assets/images/faces/face28.jpg" alt="profile"/>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item">
+                <i class="ti-settings text-primary"></i>
+                Settings
+              </a>
+              <a class="dropdown-item" href="${path }/login">
+                <i class="ti-settings text-primary"></i>
+                Login
+              </a>
+              <a class="dropdown-item">
+                <i class="ti-power-off text-primary"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="ti-view-list"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas sidebar1" id="sidebar">
+        <ul class="nav">
+       	  <div class="sidebar-heading">
+	      	 교수
+	      </div>
+          <li class="nav-item">
+            <a class="nav-link"data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic1">
+              <i class="ti-shield menu-icon"></i>
+              <span class="menu-title">강의정보</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic1">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">개설과목 입력</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">개설과목 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">강의 계획서</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">주별 강의계획서</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">강의자료 업로드</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">강의 내역</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">담당교수별 강의시간표</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">결/보강 신청</a></li>
+              </ul>
+            </div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="ti-palette menu-icon"></i>
+              <span class="menu-title">학생정보</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">학생수강 신청관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생 시험관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생 과제관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생 출결관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생 출석부</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생성적 관리(성적입력)</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">과목별 학생수강 평가조회</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
+              <i class="ti-layout-list-post menu-icon"></i>
+              <span class="menu-title">교수 정보</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic2">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">교수 정보보기</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic3">
+              <i class="ti-pie-chart menu-icon"></i>
+              <span class="menu-title">상담</span>
+            <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic3">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">건의사항</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">진로및질문, 면담신청</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">출결이의 신청</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">성적이의 신청</a></li>
+              </ul>
+            </div>
+          </li>
+          <div class="sidebar-heading">
+	      	 학생
+	      </div>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic4" aria-expanded="false" aria-controls="ui-basic4">
+              <i class="ti-layout-list-post menu-icon"></i>
+              <span class="menu-title">학생 정보</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic4">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="${path}/student/studentInfo.hd">기본 정보</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+			<a class="nav-link" data-toggle="collapse" href="#ui-basic5" aria-expanded="false" aria-controls="ui-basic5">
+              <i class="ti-layout-list-post menu-icon"></i>
+              <span class="menu-title">성적 정보</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic5">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/gradeSearchAll.hd">전체 성적조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/gradeSearchNow.hd">현재학기 성적조회</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">수업 정보</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/applyClass.hd"> 강의조회 및 수강신청 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/myClassInfo.hd"> 수강신청 내역 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/allClassInfo.hd"> 전체 시간표조회 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/mySchedule.hd"> 개인 시간표조회 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/classBoard.hd"> 강의게시판 </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth1" aria-expanded="false" aria-controls="auth1">
+              <i class="ti-write menu-icon"></i>
+              <span class="menu-title">등록금 정보</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth1">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/tuitionBill.hd">등록금 고지서</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/tuitionCert.hd">등록금 납입 증명서</a></li>
+              </ul>
+            </div>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth2" aria-expanded="false" aria-controls="auth2">
+              <i class="ti-write menu-icon"></i>
+              <span class="menu-title">졸업 정보</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth2">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/myGraduation.hd">졸업인정 학점조회</a></li>
+               </ul>
+            </div>
+          </li>
+          <div class="sidebar-heading">
+	      	 관리자
+	      </div>
+	      <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth5" aria-expanded="false" aria-controls="auth5">
+              <i class="ti-write menu-icon"></i>
+              <span class="menu-title">총괄 관리자</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth5">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">입학 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">교수 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">직원 관리</a></li>
+               </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth3" aria-expanded="false" aria-controls="auth3">
+              <i class="ti-write menu-icon"></i>
+              <span class="menu-title">대학 관리자</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth3">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기타</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">행사 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">학과 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">리스트</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기자재</a></li>
+               </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth4" aria-expanded="false" aria-controls="auth4">
+              <i class="ti-write menu-icon"></i>
+              <span class="menu-title">학과 관리자</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth4">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기자재 신청</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">행사 신청</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">학과 리스트</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">학생 조회</a></li>
+               </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>

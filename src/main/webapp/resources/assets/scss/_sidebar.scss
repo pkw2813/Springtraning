@@ -3,6 +3,7 @@
 .sidebar {
   min-height: calc(100vh - #{$navbar-height});
   background: $sidebar-light-bg;
+  background-color: #343a40;
   font-family: $type;
   font-weight: 500;
   padding: 0;

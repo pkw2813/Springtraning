@@ -20624,9 +20624,17 @@ dl li {
 }
 
 /* Sidebar */
+.sidebar-heading{
+	padding: 0 1rem;
+    font-weight: 800;
+    font-size: .65rem;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.5);
+    margin:10px 0;
+}
 .sidebar {
   min-height: calc(100vh - 70px);
-  background: #dddce1;
+  background: #ffffff;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   padding: 0;
@@ -20797,9 +20805,10 @@ dl li {
   margin-bottom: 0;
   margin-top: 0;
   list-style: none;
-  padding: 0.25rem 0 0 3.07rem;
+  padding: 1px 30px;
   background: #e8e7ec;
   padding-bottom: 12px;
+  padding-left:-5px;
 }
 
 .sidebar .nav.sub-menu .nav-item {
