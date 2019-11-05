@@ -10,5 +10,5 @@ public interface BeforeStuService {
 	
 	public List selectDeptList(String result);
 	
-	public int insertBeforeStudent(BeforeStu s);
+	public int insertBeforeStudent(BeforeStu s) throws Exception;
 }

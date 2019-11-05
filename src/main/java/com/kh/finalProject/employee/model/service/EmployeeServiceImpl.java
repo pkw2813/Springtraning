@@ -1,5 +1,7 @@
 package com.kh.finalProject.employee.model.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee emp=dao.selectOne(session,loginId,loginPwd);
 		return emp;
 	}
+
+	@Override
+	public List enrollStuList() {
+		return dao.enrollStuList(session);
+	}
+	
+	
+	
 	
 	
 

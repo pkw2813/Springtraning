@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.finalProject.beforeStudent.model.dao.BeforeStuDao;
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
@@ -29,10 +30,12 @@ public class BeforeStuServiceImpl implements BeforeStuService{
 	}
 
 	@Override
-	public int insertBeforeStudent(BeforeStu s) {
+	@Transactional(rollbackFor = Exception.class)
+	public int insertBeforeStudent(BeforeStu s) throws Exception {
 		int result = dao.insertBeforeStudent(session, s);
-		if(result > 0) session.commit();
-		else session.rollback();
+		if(result == 0) {
+				new Exception();
+				} 
 		return result;
 	}
 	

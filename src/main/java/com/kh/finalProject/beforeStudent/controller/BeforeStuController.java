@@ -48,13 +48,18 @@ public class BeforeStuController {
 	}
 	
 	@RequestMapping("/beforeStudent/enroll.hd")
-	@ResponseBody
-	public String insertBeforeStudent(BeforeStu s, HttpServletRequest req) {
-		int result = service.insertBeforeStudent(s);
-		String msg = result>0?"입학 신청 완료!":"입학 신청 실패";
+	public String insertBeforeStudent(BeforeStu s, Model model) {
+		System.out.println(s);
+		String msg ="";
 		String loc = "/";
-		req.setAttribute("msg", msg);
-		req.setAttribute("loc", loc);
+		try {
+			int result = service.insertBeforeStudent(s);
+			msg = "입학 신청 완료!";
+		}catch(Exception e){
+			msg = "입학 신청 실패";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("loc", loc);
 		return "common/msg";
 	}
 	
