@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="student3">
+	
+	<select id="selectTuitionOne" parameterType="string" resultMap="tuitionResult">
+  		SELECT * FROM HD_TUITION_TB WHERE STU_NO=#{studentNo}
+  	</select>
+  	
+  	
+  	<resultMap id="tuitionResult" type="tuition">
+		<result column="STU_NO" property="stuNo" />
+		<result column="ACA_YEAR_SEM" property="acaYearSem" />
+		<result column="TUITION" property="tuition" />
+		<result column="PAYMENT_STAT" property="paymentStat" />
+		<result column="PAYMENT_DATE" property="paymentDate" />	
+		<result column="DUE_DATE" property="dueDate" />	
+		<result column="REDUCTION_STAT" property="reductionStat" />	
+	</resultMap>
+
+  
+</mapper>
