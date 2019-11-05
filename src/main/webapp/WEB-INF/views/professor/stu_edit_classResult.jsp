@@ -30,7 +30,7 @@
 					<div class="card-header">
 						<div class="col-md-8 row"
 							style="display: block; text-align: center;">
-							<table class="table table-bordered table-hover"
+							<table class="table table-condensed table-bordered table-hover"
 								style="text-align: center;">
 								<thead class="thead-dark">
 									<tr>
@@ -78,7 +78,7 @@
 					</div>
 					<div class="card-body">
 						<div class="col-md-12">
-							<table class="table table-bordered table-hover"
+							<table class="table table-condensed table-bordered table-hover"
 								style="text-align: center;">
 								<thead class="thead-dark">
 									<tr>

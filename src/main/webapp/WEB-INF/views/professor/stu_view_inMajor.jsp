@@ -13,7 +13,7 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<table class="table table-bordered table-hover"
+						<table class="table table-bordered table-hover table-condensed"
 							style="text-align: center;">
 							<thead class="thead-dark">
 								<tr>
@@ -75,7 +75,7 @@
 					<div class="card-body">
 						<h3>검색 입력</h3>
 						<form action="" method="post">
-							<table class="table table-bordered table-hover col-md-6">
+							<table class="table table-bordered table-hover col-md-6 table-condensed">
 								<thead class="thead-dark">
 									<tr>
 										<th>학번</th>
@@ -135,7 +135,7 @@
 					<div class="card-body">
 						<div class="row col-md-12">
 							<!-- 학생 정보 출력 테이블 시작 -->
-							<table class="table table-bordered table-hover"
+							<table class="table table-bordered table-hover table-condensed"
 								style="text-align: center;">
 								<thead class="thead-dark">
 									<tr>

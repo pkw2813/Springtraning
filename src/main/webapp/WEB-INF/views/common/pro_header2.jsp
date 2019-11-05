@@ -179,7 +179,7 @@
         
         <!-- 강의정보 -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#class_info" aria-expanded="false" aria-controls="class_info">
+            <a class="nav-link" data-toggle="collapse" href="#class_info" aria-expanded="false" aria-controls="ui-basic">
               <i class="ti-palette menu-icon"></i>
               <span class="menu-title">강의정보</span>
               <i class="menu-arrow"></i>
@@ -188,17 +188,25 @@
             
             <div class="collapse" id="class_info">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">개설과목입력</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">개설과목조회</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">강의계획서</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/insertSubject"">개설과목입력</a></li>
+                <li class="nav-item"> <a class="nav-link" href="javascript:popupSubject()">개설과목조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lecturePlan"">강의계획서</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">주별강의계획서</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">강의자료업로드</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lectureData">강의자료업로드</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">강의내역</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">담당교수별 강의시간표</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">결/보강 신청</a></li>
               </ul>
             </div>
           </li>
+          <script>
+            function popupSubject(){
+               var url="${pageContext.request.contextPath }/professor/subjectView";
+               var name="subject";
+               var option="width=660,height=635,top=50,left=400,resizable=no";
+               window.open(url,name,option);
+            }
+          </script>
           
           <!-- 학생정보 -->
           <li class="nav-item">
@@ -218,16 +226,16 @@
             </div>
           </li>
           
-          <!-- 교수정보 -->
-           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#prof_info" aria-expanded="false" aria-controls="prof_info">
+           <!-- 교수정보 -->
+              <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#prof_info" aria-expanded="false" aria-controls="auth">
               <i class="ti-user menu-icon"></i>
               <span class="menu-title">교수정보</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="prof_info">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">교수정보 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/professorView">교수정보 조회</a></li>
               </ul>
             </div>
           </li>
@@ -252,7 +260,7 @@
           
           
           
-             <!-- 이의신청 처리 -->
+             <!-- 과제관리-->
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#assign" aria-expanded="false" aria-controls="assign">
               <i class="ti-user menu-icon"></i>
@@ -266,11 +274,5 @@
               </ul>
             </div>
           </li>
-        <!--   <li class="nav-item">
-            <a class="nav-link" href="documentation/documentation.html">
-              <i class="ti-write menu-icon"></i>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li> -->
         </ul>
       </nav>
