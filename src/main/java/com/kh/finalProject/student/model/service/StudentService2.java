@@ -1,9 +1,11 @@
 package com.kh.finalProject.student.model.service;
 
-import com.kh.finalProject.student.model.vo.Student;
+import java.util.List;
+
+import com.kh.finalProject.student.model.vo.Grade;
 
 public interface StudentService2 {
 	
-	Student selectOne(String loginId,String loginPwd);
+	List<Grade> selectGradeAll(String stuNo);
 
 }
