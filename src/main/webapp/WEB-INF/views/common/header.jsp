@@ -8,7 +8,13 @@
 <%@ page import="com.kh.finalProject.professor.model.vo.Professor" %>
 <!DOCTYPE html>
 <html lang="en">
-
+<% if(session.getAttribute("loginMember") instanceof Professor){%>
+<c:set var="userId" value="${loginMember.profId }"/>
+<%} else if(session.getAttribute("loginMember") instanceof Student){%>
+<c:set var="userId" value="${loginMember.stuNo }"/>
+<%} else if(session.getAttribute("loginMember") instanceof Employee){%> 
+<c:set var="userId" value="${loginMember.empId }"/>
+<%} %>
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -22,6 +28,7 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="${path }/resources/assets/css/style.css">
+  <link rel="stylesheet" href="${path }/resources/css/modal.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="${path }/resources/assets/images/favicon.png" />
   
@@ -54,9 +61,14 @@
               </div>
               <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
             </div>
-          </li>
+            </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
+        <li class="nav-item dropdown mr-1">
+        	<button id="myBtn" class="btn btn-inverse-info btn-fw">
+            	건의
+            </button>
+        </li>
           <li class="nav-item dropdown mr-1">
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
               <i class="ti-email mx-0"></i>
@@ -328,9 +340,10 @@
             </a>
             <div class="collapse" id="auth5">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">입학 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/enrollStudent.hd">입학 관리</a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">교수 관리</a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">직원 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/reqList.hd">건의사항 관리</a></li>
                </ul>
             </div>
           </li>
@@ -367,3 +380,66 @@
           </li>
         </ul>
       </nav>
+      
+      <div id="myModal" class="modal">
+ 
+      <!-- Modal content -->
+      <div class="modal-content">
+        <form action="${path}/req.hd">
+			<span class="close" id="close">&times;</span>
+			<p>건의사항</p>
+			<div class="form-group">
+			<hr>
+			<label class="control-label">제목</label>
+			<input type="text" id="reqTitle" name="reqTitle" placeholder="제목을 입력하세요" class="form-control" required />
+			<hr>
+			<input type="hidden" id="toName" name="toName" value="${userId }"/>
+			<label class="control-label">받는사람</label>
+			<input type="hidden" id="fromName" name="fromName" value="EA000000000"/>
+			<input type="text" class="form-control" value="관리자" readonly/>
+			
+			<hr>
+			<label class="control-label">내용</label>
+			<textarea name="reqContents" cols="40" rows="8" class="form-control" placeholder="내용을 입력하세요" ></textarea>
+			</div>
+			<input type="button" class="btn btn-inverse-info btn-fw" id="close1" value="취소" style="float: right; margin: 7px;">
+			<input type="submit" class="btn btn-inverse-info btn-fw" value="보내기" style="float: right; margin: 7px;">
+			<br>
+			<br>
+		</form>
+      </div>
+ 
+    </div>
+    
+    <script>
+     // Get the modal
+        var modal = document.getElementById('myModal');
+ 
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+ 
+        // Get the <span> element that closes the modal
+        var close = document.getElementById("close");                                          
+        var close1 = document.getElementById("close1");  
+        // When the user clicks on the button, open the modal 
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+ 
+        // When the user clicks on <span> (x), close the modal
+        close.onclick = function() {
+            modal.style.display = "none";
+        }
+        close1.onclick = function() {
+            modal.style.display = "none";
+        }
+ 
+        // When the user clicks anywhere outside of the modal, close it
+        /* window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        } */
+
+        </script>
+      

@@ -10,7 +10,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class EchoHandler extends TextWebSocketHandler {
 	//웹 소켓 세션을 저장할 리스트 생성
-
     private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
  
 	//※클라이언트 연결 된 후
@@ -20,6 +19,7 @@ public class EchoHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessionList.add(session);
+        // onopen을 처리하는 메소드
     }
  
 	//※클라이언트와 연결이 끊어진 경우
@@ -27,6 +27,7 @@ public class EchoHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessionList.remove(session);
+     // onclose을 처리하는 메소드
     }
  
 	// 웹 소켓 서버로 데이터를 전송했을 경우

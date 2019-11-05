@@ -7,5 +7,6 @@
 		<typeAlias type="com.kh.finalProject.student.model.vo.Student" alias="student"/>
 		<typeAlias type="com.kh.finalProject.beforeStudent.model.vo.BeforeStu" alias="beforeStudent"/>
 		<typeAlias type="com.kh.finalProject.student.model.vo.Tuition" alias="tuition"/>
+		<typeAlias type="com.kh.finalProject.req.model.vo.Req" alias="req"/>
 	</typeAliases>
 </configuration>

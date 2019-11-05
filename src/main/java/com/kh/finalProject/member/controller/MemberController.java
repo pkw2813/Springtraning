@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,6 +12,7 @@ import com.kh.finalProject.employee.model.service.EmployeeService;
 import com.kh.finalProject.employee.model.vo.Employee;
 import com.kh.finalProject.professor.model.service.ProfessorService;
 import com.kh.finalProject.professor.model.vo.Professor;
+import com.kh.finalProject.req.model.vo.Req;
 import com.kh.finalProject.student.model.service.StudentService;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -41,7 +41,7 @@ public class MemberController {
 			) {
 		
 		String msg="";
-		String loc="/";
+		String loc="";
 
 		if(loginNo.equals("s")) {
 			Student stu=stuService.selectOne(loginId,loginPwd);
@@ -66,11 +66,7 @@ public class MemberController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("/req.hd")
-	public String req() {
-		
-		return "";
-	}
+	
 	
 	
 
