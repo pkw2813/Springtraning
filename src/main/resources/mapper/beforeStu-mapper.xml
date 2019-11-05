@@ -12,11 +12,20 @@
 	SELECT DEPT_CODE, DEPT_NAME FROM HD_DEPARTMENT_TB WHERE COL_CODE = #{result}
 	</select>
 
+	<select id="selectDCList" resultType="map">
+	SELECT COL_CODE, COL_NAME, DEPT_CODE, DEPT_NAME FROM HD_COLLEGE_TB JOIN hd_department_tb USING(COL_CODE)
+	</select>
 
 	<insert id="insertBeforeStudent" parameterType="beforeStudent">
-	INSERT INTO hd_admission_tb VALUES(BEFORE_STU_SEQ.NEXTVAL() , #{beforeName},#{beforeType},#{beforePhone},#{beforeEmail},#{beforeAddr},#{beforeDeptName})
+	INSERT INTO hd_admission_tb VALUES(BEFORE_STU_SEQ.NEXTVAL , #{beforeName}, #{beforeType}, #{beforePhone}, #{beforeEmail}, #{beforeAddr}, #{beforeNo}, #{beforeDeptCode}, #{beforeColCode})
 	</insert>
 
+	<select id="selectList" resultMap="selectMap">	
+SELECT * FROM
+  (SELECT  COL_CODE, COL_NAME, DEPT_CODE AS D, DEPT_NAME FROM HD_COLLEGE_TB 
+  	JOIN hd_department_tb USING(COL_CODE))
+  		JOIN hd_admission_tb A USING(COL_CODE) WHERE D = A.DEPT_CODE 
+	</select>
 
 	<resultMap type="map" id="selectMap">
 		<result column="BEFORE_STU_SEQ" property="beforeStu"/>
@@ -28,5 +37,7 @@
 		<result column="BEFORE_NO" property="beforeNo"/>
 		<result column="DEPT_CODE" property="beforeDeptCode"/>
 		<result column="COL_CODE" property="beforeColCode"/>
+		<result column="DEPT_NAME" property="beforeDeptName"/>
+		<result column="COL_NAME" property="beforeColName"/>
 	</resultMap>
 </mapper>

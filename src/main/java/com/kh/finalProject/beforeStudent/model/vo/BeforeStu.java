@@ -18,5 +18,9 @@ public class BeforeStu {
 	private String beforeNo;
 	private String beforeDeptCode;
 	private String beforeColCode;
+	private String beforeDeptName;
+	private String beforeColName;
+	
+	
 
 }

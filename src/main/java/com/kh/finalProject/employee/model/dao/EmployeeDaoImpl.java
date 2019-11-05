@@ -1,5 +1,7 @@
 package com.kh.finalProject.employee.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		emp.setEmpId(loginId);
 		emp.setEmpPw(loginPwd);
 		return session.selectOne("employee.selectOne",emp);
+	}
+
+	@Override
+	public List enrollStuList(SqlSessionTemplate session) {
+		return session.selectList("beforeStu.selectList");
 	}
 	
 	
