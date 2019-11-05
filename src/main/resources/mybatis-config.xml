@@ -5,5 +5,6 @@
 		<typeAlias type="com.kh.finalProject.professor.model.vo.Professor" alias="professor"/>
 		<typeAlias type="com.kh.finalProject.employee.model.vo.Employee" alias="employee"/>
 		<typeAlias type="com.kh.finalProject.student.model.vo.Student" alias="student"/>
+		<typeAlias type="com.kh.finalProject.beforeStudent.model.vo.BeforeStu" alias="beforeStudent"/>
 	</typeAliases>
 </configuration>

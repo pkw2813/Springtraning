@@ -172,7 +172,7 @@ $(function(){
 	<!-- 모달창  -->
 	<div id="myModal" class="modal">
 		<div class="modal-content">
-			<form action="${path}/beforeStudent/enroll.hd">
+			<form action="${path}/beforeStudent/enroll.hd" method="POST">
 			<span class="close">&times;</span>
 			<p>입학 신청</p>
 			<div class="form-group">
@@ -191,7 +191,7 @@ $(function(){
 					<input type="tel" id="beforePhone" name="beforePhone" placeholder=" '-' 제외 입력" autocomplete=off class="form-control" />
 				
 					<input type="hidden" class="saveEmail" id="saveEmail" value="">
-					
+					<input type="hidden" class="flagEmail" id="flagEmail" name="flagEmail" value="false">
 					<br>
 					<label class="control-label">E-mail</label>					
 					<div class="emailCheck">
@@ -203,13 +203,15 @@ $(function(){
 			
 				
 			<label class="control-label">학과 코드</label>				
-					<!-- <input type="text" id="deptCode" name="deptCode" placeholder="이건 셀렉트랑 체크박스로 해야되나?" class="form-control" /> -->
+				
 						<select class="form-control selectCol">
-								<option value="select" id="selCol">대학 선택</option>
+								
 						</select>
-						<select class="form-control selectDept">
-							<option value="" class="selDep"></option>
+						<!-- 여기에 학과 선택 넣어야함 .selectCol -->
+						<select class="form-control selectdep" required>
+
 						</select>
+						<br>
 						<label class="control-label">주민 등록 번호</label>	
 					<input type="text" id="jumin" name="jumin" placeholder="주민등록번호 13자리를 입력하세요" class="form-control" onkeyup="setJumin(this)"/>
 					<br>														
@@ -228,8 +230,8 @@ $(function(){
 
 			</div>
 			<input type="hidden" path="random" id="random" name="random1" value="${random}" />
-			<input type="button" class="btn btn-info" value="취소" style="float: right; margin: 7px;">
-			<input type="submit" class="btn btn-info" value="입학 신청" style="float: right; margin: 7px;">
+			<input type="button"  class="btn btn-info btn_close" value="취소" style="float: right; margin: 7px;">
+			<input type="submit" class="btn btn-info" id="enrollBtn" value="입학 신청" style="float: right; margin: 7px;">
 			<br>
 			<br>
 		</form>
@@ -243,12 +245,14 @@ $(function(){
 
 <script>
 
-    //전화번호 정규표현식
-    var regPhone = /^\d{3}\d{3,4}\d{4}$/;
 
 	// 입학 신청 완료할때 유효성 검사해야함 함수 쓰기
+$(function(){
+	$('#enrollBtn').click(function() {
 
-/* 	var phone = $('#phone');
+    // //전화번호 정규표현식
+    let regPhone = /^\d{3}\d{3,4}\d{4}$/;
+ 	let phone = $('#beforePhone');
             if (!phone.val()) {
                 alert('전화번호를 입력해주세요.');
                 phone.focus();
@@ -261,10 +265,39 @@ $(function(){
                 }
             }
 
-	//주소
-	var postcode = $('#sample6_postcode');
+	// //이메일 인증을 완료했는지 확인
+
+			let checkEmail = $('.flagEmail').val();
+			console.log(checkEmail);
+			if(checkEmail == 'false') {
+				alert("이메일 인증을 완료해주세요.");
+				   return false;
+			}
+
+
+			// 학과 선택
+			let chooseDept = $(".selectdep").val();
+			if(chooseDept == 'select') {
+				alert("학과를 선택해 주세요.");
+				return false;
+			}
+
+
+
+			//주민등록 번호
+			let jumin = document.getElementById('jumin').value;
+			if(jumin == "") {
+				alert("주민번호를 입력해주세요");
+				return false;
+			}else if($('#jumin').length < 13){
+				alert("정확한 주민번호를 입력해 주세요.");
+				return false;
+			}
+
+	// //주소
+	let postcode = $('#sample6_postcode');
             //상세주소
-            var detailAddress = $('#sample6_detailAddress');
+            let detailAddress = $('#sample6_detailAddress');
             if (!postcode.val()) {
                 alert('주소를 입력해주세요.');
                 postcode.focus();
@@ -276,10 +309,19 @@ $(function(){
                 return false;
             }
 
- */
+
+
+	})
+});
+
+
+
 
 function setJumin(obj) {
+	let ju3="";
+	ju3 = +obj.value;
 	ju = obj.value;
+	console.log(ju3);
 	ju = ju.replace("-","");
 		if(ju.length > 6) {
 			ju1 = ju.substring(0,6);
@@ -287,6 +329,7 @@ function setJumin(obj) {
 		for(i=1; i<ju.substring(6).length && i < 7; i++) {
 			ju2 = ju2 + "*";
 		}
+		
 		obj.value = ju1+"-"+ju2;
 		}
 	
@@ -300,13 +343,17 @@ function enrollStudent() {
    $.ajax({
 	   url : "<c:url value='/email.do'/>",
 		success : function(data) {
-			console.log(data.random);
-		console.log("이건 랜덤값");
+
 	 $('input[name=random1]').attr('value',data.random); 
 		}
    });
 }
 
+$(function(){
+	$(".btn_close").click(function(){
+		$(".modal").css("display","none");
+	});
+});
 
 $(function(){
 	$(".close").click(function(){
@@ -323,18 +370,70 @@ window.on("click",function() {
 });
  */
 
+// 로딩이 되엇을때 db에서 대학의 정보를 가져와 만들어줌
 $(function() {
-	$(".selectCol").focus(function(){
-		console.log("function 실행됨");
+	$(document).ready(function(){
+
 		$.ajax({
 			type : "post",
 			url: "${pageContext.request.contextPath}/selectColList.do",
-			success: function(date) {
-				console.log("data");
+			success: function(data) {
+	
+				let colListHtml = "";
+				
+				colListHtml = "<option value='select' id='selCol' name='selCol'>대학 선택</option>";
+				for(let i = 0; i < data.list.length; i++) {
+					let cols = data.list[i];
+					console.log(cols['COL_CODE']);
+
+					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList' name ='colList'>"+cols['COL_NAME']+"</option>";
+				}
+				
+				$('.selectCol').html(colListHtml);
+					$('.selectCol').change(function(){
+					$("#selCol").attr('disabled',true);
+			
+		
+	})
+			
 			}
 		})
 	})
 });
+
+
+
+//대학이 선택 되었을때 해당 대학에 포함되어 있는 학과를 리스트로 가져옴
+ $(function(){
+ 	$('.selectCol').change(function(){
+ 		let val = $('.selectCol').val();
+		$.ajax({
+			type : "post",
+			url: "${pageContext.request.contextPath}/selectDeptList.do",
+			data: {"result" : $('.selectCol').val()},
+			success: function(data) {
+				console.log(data);
+				console.log(data.list);
+				let deptListHtml = "<option value='select' id='selDept' name='selDept'>학과 선택</option>";
+				for(let i = 0; i < data.list.length; i++) {
+					let depts = data.list[i];
+					console.log(depts);
+					console.log(depts['DEPT_CODE']);
+
+					deptListHtml += "<option value='"+depts['DEPT_CODE']+"'  class='deptList'>"+depts['DEPT_NAME']+"</option>";
+				}
+				
+				$('.selectdep').html(deptListHtml);
+					$('.selectdep').change(function(){
+					$("#selDept").attr('disabled',true);
+		});
+ 	}
+ });
+	 });
+ });
+
+
+
 
 
 $(function(){
@@ -372,9 +471,7 @@ if (emailVal.match(regExp) != null) {
 				},
 				error: function(e,s,a){
 					alert("에러가 발생하였습니다.");
-					console.log(e);
-					console.log(s);
-					console.log(a);
+				
 					return false;
 				}
 			})
@@ -400,7 +497,9 @@ if (emailVal.match(regExp) != null) {
 						let emailHtml = "<input type='text' id='email' name='email' value="+checkEmail+" class='form-control' readonly >";
 					$('.emailCheck').children().remove();
 					 $('.emailCheck').append(emailHtml);
-					
+
+					 $('input[name=flagEmail]').attr('value','true'); 
+		
 					}else if(data == "false"){
 					alert("인증번호를 잘못 입력하셨습니다.")
 					}

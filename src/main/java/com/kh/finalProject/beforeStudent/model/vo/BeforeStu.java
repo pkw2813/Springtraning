@@ -9,11 +9,14 @@ import lombok.NoArgsConstructor;
 @Data
 public class BeforeStu {
 
-	private int beforeNo;
+	private int beforeStu;
 	private String beforeName;
 	private String beforeType;
 	private String beforePhone;
 	private String beforeEmail;
 	private String beforeAddr;
-	private String beforeDeptName;
+	private String beforeNo;
+	private String beforeDeptCode;
+	private String beforeColCode;
+
 }

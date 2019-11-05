@@ -4,23 +4,29 @@
   
 
 
-	<select id="selectColList" resultType="list">
+	<select id="selectColList" resultType="map">
 	SELECT COL_NAME, COL_CODE FROM HD_COLLEGE_TB
 	</select>
 
+	<select id="selectDeptList" parameterType="string" resultType="map">
+	SELECT DEPT_CODE, DEPT_NAME FROM HD_DEPARTMENT_TB WHERE COL_CODE = #{result}
+	</select>
 
 
-
-
+	<insert id="insertBeforeStudent" parameterType="beforeStudent">
+	INSERT INTO hd_admission_tb VALUES(BEFORE_STU_SEQ.NEXTVAL() , #{beforeName},#{beforeType},#{beforePhone},#{beforeEmail},#{beforeAddr},#{beforeDeptName})
+	</insert>
 
 
 	<resultMap type="map" id="selectMap">
-		<result column="BEFORE_STU" property="beforeNo"/>
+		<result column="BEFORE_STU_SEQ" property="beforeStu"/>
 		<result column="BEFORE_NAME" property="beforeName"/>
 		<result column="BEFORE_TYPE" property="beforeType"/>
 		<result column="BEFORE_PHONE" property="beforePhone"/>
 		<result column="BEFORE_EMAIL" property="beforeEmail"/>
 		<result column="BEFORE_ADDRESS" property="beforeAddr"/>
-		<result column="BEFORE_DEPT" property="beforeDeptName"/>
+		<result column="BEFORE_NO" property="beforeNo"/>
+		<result column="DEPT_CODE" property="beforeDeptCode"/>
+		<result column="COL_CODE" property="beforeColCode"/>
 	</resultMap>
 </mapper>
