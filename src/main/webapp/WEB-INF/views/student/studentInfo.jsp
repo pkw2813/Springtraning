@@ -9,26 +9,19 @@
 	<jsp:param name="pageTitle" value="" />
 </jsp:include>
 <style>
-tr {
+tr, td, th {
 	text-align: left;
 	font-size: 13px;
-	border: 1px solid;
-}
+	cursor: auto;
 
-td {
-	text-align: left;
-	font-size: 13px;
-	border: 1px solid;
-}
-
-th {
-	text-align: left;
-	font-size: 13px;
-	border: 1px solid;
 }
 
 input {
 	width: 100px;
+}
+
+table {
+	width: 100%;
 }
 </style>
 
@@ -45,20 +38,33 @@ input {
 
 		<!-- 시작 -->
 		<div class="row">
-			<div class="col-md-12 grid-margin stretch-card">
+			<div class="col-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<table class="table table-warning table-hover">
-							<thead class="thead-dark">
-								<tr>
-									<th colspan="9" style="font-size: 25px; font-family: arial">${student.stuName}
-										님의 학적 기본정보</th>
-									<br/>
-								</tr>
-							</thead>
+					<div class="table-responsive">
+						<table class="table table-default table-hover table-striped"" >
+						<thead class="thead-dark">
+							<tr>
+								<td colspan="8">
+								</td>
+							</tr>
+						    <tr>
+						        <th colspan="9" style="font-size:25px;font-family:arial">${student.stuName}님의 기본정보 변경</th><br/>
+						     </tr>
+					    </thead>
 							<tr>
 								<th rowspan="6" style="text-align:center"  width="200px">
-								<image height="200px" src="${path }/resources/images/image/${student.stuImgOriname}"/>
+								
+								
+								<c:if test="${student.stuImgRename eq null }">
+						
+								<image height="200px" width="150px" src="${path }/resources/images/image/default.jpg"/>
+								</c:if>
+								<c:if test="${student.stuImgRename ne null }">
+						
+								<image height="200px" width="150px" src="${path }/resources/images/image/${student.stuImgRename}"/>
+								</c:if>
+								
 							</tr>
 							<tr>
 							<th>학생번호</th>
@@ -79,7 +85,7 @@ input {
 								<td><input type="text" value="${student.gender}" required
 									disabled /></td>
 								<th>메일주소</th>
-								<td><input type="text" value="${student.stuEmail}"
+								<td><input type="email" value="${student.stuEmail}"
 									style="width: 200px" style="width:200px" required disabled /></td>
 							</tr>
 							<tr>
@@ -119,16 +125,16 @@ input {
 									required disabled /></td>
 							</tr>
 						</table>
+						</div>
 						<div class="card-footer" style="text-align : center;">
-						<a class="collapse-item"
-							href="${path }/student/studentInfoUpdate.hd">개인정보수정</a>
+						<a class="btn btn-primary" href="${path }/student/studentInfoUpdate.hd">개인정보수정</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="row">
+	<!-- 	<div class="row">
 			<div class="col-md-8 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
@@ -149,10 +155,16 @@ input {
 				</div>
 			</div>
 		</div>
-		
+		 -->
 		<!-- main panel end -->
 
-
+		<!-- 테스트 -->
+		<!-- <script>
+		console.log('테스트');
+		console.log('${path }');
+			console.log('${student.stuImgRename}');
+		
+		</script> -->
 
 
 

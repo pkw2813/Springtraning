@@ -6,10 +6,21 @@
   		SELECT * FROM HD_STUDENT_TB WHERE STU_NO=#{studentNo}
   	</select>
   	
+  	
   	<update id="studentInfoUpdate" parameterType="student">
-  		UPDATE HD_STUDENT_TB SET STU_TEL=#{stuTel},STU_ADDR=#{stuAddr},STU_EMAIL=#{stuEmail},
-  		STU_IMG_ORINAME=#{stuImgOriname},STU_ACCOUNT=#{stuAccount} where STU_NO=#{stuNo}
+  		<choose>
+			<when test="stuImgRename == null">
+				UPDATE HD_STUDENT_TB SET STU_TEL=#{stuTel},STU_ADDR=#{stuAddr},STU_EMAIL=#{stuEmail},
+  				STU_ACCOUNT=#{stuAccount} where STU_NO=#{stuNo}
+			</when>
+			<when test="stuImgRename != null">
+				UPDATE HD_STUDENT_TB SET STU_TEL=#{stuTel},STU_ADDR=#{stuAddr},STU_EMAIL=#{stuEmail},
+  				STU_IMG_ORINAME=#{stuImgOriname},STU_IMG_RENAME=#{stuImgRename},STU_ACCOUNT=#{stuAccount} where STU_NO=#{stuNo}
+			</when>
+		</choose>
+  		
   	</update>
+  	
   	
   	
   	<resultMap id="studentResult" type="student">
