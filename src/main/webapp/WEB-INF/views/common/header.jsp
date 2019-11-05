@@ -36,7 +36,6 @@
   
     <!-- 웹소켓 js파일 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.js"></script>
-  <%-- <% } else if(session.getAttribute("loginMember") instanceof Student){%>  --%>
   
 </head>
 <body>
@@ -191,74 +190,108 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas sidebar1" id="sidebar">
         <ul class="nav">
+        <% if(session.getAttribute("loginMember") instanceof Professor){%>
        	  <div class="sidebar-heading">
 	      	 교수
 	      </div>
+            <!-- 강의정보 -->
           <li class="nav-item">
-            <a class="nav-link"data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic1">
-              <i class="ti-shield menu-icon"></i>
+            <a class="nav-link" data-toggle="collapse" href="#class_info" aria-expanded="false" aria-controls="ui-basic">
+              <i class="ti-palette menu-icon"></i>
               <span class="menu-title">강의정보</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic1">
+            
+            
+            <div class="collapse" id="class_info">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">개설과목 입력</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">개설과목 조회</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">강의 계획서</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">주별 강의계획서</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">강의자료 업로드</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">강의 내역</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">담당교수별 강의시간표</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">결/보강 신청</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/insertSubject"">개설과목입력</a></li>
+                <li class="nav-item"> <a class="nav-link" href="javascript:popupSubject()">개설과목조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lecturePlan"">강의계획서</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">주별강의계획서</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lectureData">강의자료업로드</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">강의내역</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">담당교수별 강의시간표</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">결/보강 신청</a></li>
               </ul>
             </div>
-            </a>
           </li>
+          <script>
+            function popupSubject(){
+               var url="${pageContext.request.contextPath }/professor/subjectView";
+               var name="subject";
+               var option="width=660,height=635,top=50,left=400,resizable=no";
+               window.open(url,name,option);
+            }
+          </script>
+          
+          <!-- 학생정보 -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="ti-palette menu-icon"></i>
+            <a class="nav-link" data-toggle="collapse" href="#stu_info" aria-expanded="false" aria-controls="stu_info">
+              <i class="ti-user menu-icon"></i>
               <span class="menu-title">학생정보</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div class="collapse" id="stu_info">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">학생수강 신청관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생 시험관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생 과제관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생 출결관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생 출석부</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">학생성적 관리(성적입력)</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">과목별 학생수강 평가조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewInMajor.hd">학과생 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewInClass.hd">수강생 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewClassAttend.hd">수강생 출결관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/editClassResult.hd">수강생 성적관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/view_evaluation.hd">강의 평가 조회</a></li>
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic2">
-              <i class="ti-layout-list-post menu-icon"></i>
-              <span class="menu-title">교수 정보</span>
+          
+           <!-- 교수정보 -->
+              <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#prof_info" aria-expanded="false" aria-controls="auth">
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">교수정보</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic2">
+            <div class="collapse" id="prof_info">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">교수 정보보기</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/professorView">교수정보 조회</a></li>
               </ul>
             </div>
           </li>
+          
+          
+          
+        <!-- 이의신청 처리 -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic3">
-              <i class="ti-pie-chart menu-icon"></i>
-              <span class="menu-title">상담</span>
-            <i class="menu-arrow"></i>
+            <a class="nav-link" data-toggle="collapse" href="#appeal" aria-expanded="false" aria-controls="appeal">
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">이의신청 처리</span>
+              <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic3">
+            <div class="collapse" id="appeal">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">건의사항</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">진로및질문, 면담신청</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">출결이의 신청</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">성적이의 신청</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewObjection.hd">성적 이의신청 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/resultObjection.hd">처리 결과 조회</a></li>
               </ul>
             </div>
           </li>
+          
+          
+          
+          
+             <!-- 과제관리-->
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#assign" aria-expanded="false" aria-controls="assign">
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">과제 관리</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="assign">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/upAssignment.hd">과제 등록하기</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewAssignment.hd">과제 제출현황 조회</a></li>
+              </ul>
+            </div>
+          </li>
+          <%} else if(session.getAttribute("loginMember") instanceof Student){%>
           <div class="sidebar-heading">
 	      	 학생
 	      </div>
@@ -329,6 +362,7 @@
                </ul>
             </div>
           </li>
+          <%} else if(session.getAttribute("loginMember") instanceof Employee){%>
           <div class="sidebar-heading">
 	      	 관리자
 	      </div>
@@ -379,6 +413,7 @@
             </div>
           </li>
         </ul>
+        <%} %>
       </nav>
       
       <div id="myModal" class="modal">
