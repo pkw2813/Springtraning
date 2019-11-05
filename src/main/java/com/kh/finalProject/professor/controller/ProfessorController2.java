@@ -39,6 +39,14 @@ public class ProfessorController2 {
 		return "professor/stu_edit_classResult";
 	}
 	
+	//강의평가조회
+	@RequestMapping("prof/view_evaluation.hd")
+	public String viewEvaluation() {
+		
+		return "professor/prof_view_evaluation";
+	}
+	
+	
 	//과제등록
 	@RequestMapping("prof/upAssignment.hd")
 	public String upAssignment() {
@@ -47,5 +55,21 @@ public class ProfessorController2 {
 		return "professor/up_assignment";
 	}
 	
+	//과제 제출 조회
+	@RequestMapping("prof/viewAssignment.hd")
+	public String viewAssignment () {
+		
+		
+		return "professor/view_assignment";
+	}
+	
+	
+	
+	//성적 이의신청 조회
+	@RequestMapping("prof/viewObjection.hd")
+	public String viewObjection () {
+		
+		return "professor/stu_view_objection";
+	}
 	
 }

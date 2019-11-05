@@ -1,61 +1,95 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="{$pageContext.request.contextPath}" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
+<jsp:include page="/WEB-INF/views/common/pro_header2.jsp" />
 
-<jsp:include page="/WEB-INF/views/common/sool_header.jsp">
-	<jsp:param name="pageTitle" value="" />
-</jsp:include>
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<div class="container col-md-12" style="text-align: center;">
-	<section style="background-color: white;">
-		<div class="row col-md-4"></div>
-		<div class="row col-md-4">
-
-				<ul class="nav nav-pills">
-					<li role="presentation" class="active"><a href="#">Home</a></li>
-					<li role="presentation"><a href="#">Profile</a></li>
-					<li role="presentation"><a href="#">Messages</a></li>
-				</ul>
+<!-- 달력 import start -->
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
+	rel="stylesheet" type="text/css" />
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"
+	type="text/javascript"></script>
+<!-- 달력 import end -->
 
 
-			<table class="table table-bordered table-hover"
-				style="text-align: center;">
-				<thead class="thead-dark">
-					<tr>
-						<th>
-							<div class="input-group input-group-sm">
-								<span class="input-group-addon" id="sizing-addon3">과제명
-									&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-									aria-describedby="sizing-addon3" value="" />
-							</div>
-						</th>
-						<th>
-							<div class="input-group input-group-sm">
-								<span class="input-group-addon" id="sizing-addon3">제출기한
-									&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-									aria-describedby="sizing-addon3" value="" />
-							</div>
-						</th>
-					</tr>
-				</thead>
-			</table>
+<div class="main-panel">
+	<div class="content-wrapper">
+		<!-- Body section Start -->
+		<div class="row">
+			<div class="col-md-12 grid-margin">
+				<div class="d-flex justify-content-between align-items-center">
+					<div>
+						<h3 class="font-weight-bold mb-0">과제등록</h3>
+					</div>
+				</div>
+			</div>
 		</div>
+		<!-- Main Content start -->
+		<div class="row">
+			<div class="col-12 grid-margin stretch-card">
+				<div class="card">
+					<form class="forms-sample">
+						<div class="card-header">
+							<h3 class="card-title">강의 설정</h3>
+							<div class="row">
+								<div class="col-md-3" id="choiceClass">
+								<label for="choiceClass" class="text-warning">강의선택</label>
+									<select class="form-control">
+										<option>강의1</option>
+										<option>강의12</option>
+										<option>강의13</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="card-body">
+							<div class="row">
+								<div class="form-group col-md-4">
+									<label for="exampleInputName1">과제 제목</label> <input type="text"
+										class="form-control" id="exampleInputName1" placeholder="Name">
+								</div>
+								<div class="form-group col-md-4">
+									<label>첨부파일</label> <input type="file" name="img[]"
+										class="file-upload-default">
+									<div class="input-group col-xs-12">
+										<input type="text" class="form-control file-upload-info"
+											disabled="" placeholder="Upload Image"> <span
+											class="input-group-append">
+											<button class="file-upload-browse btn btn-primary"
+												type="button">Upload</button>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleTextarea1">과제 설명</label>
+								<textarea class="form-control" id="exampleTextarea1" rows="25"></textarea>
+							</div>
+						</div>
+
+						<div class="card-footer" style="text-align: center;">
+							<button type="submit" class="btn btn-primary mr-2">Submit</button>
+							<button class="btn btn-light">Cancel</button>
+
+						</div>
+					</form>
+				</div>
+			</div>
 
 
 
-	</section>
+		</div>
+	</div>
 
 
 
-</div>
 
-
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<jsp:include page="/WEB-INF/views/common/sool_footer.jsp" />
+	<!-- Main-content End -->
+	<script>
+		
+	</script>
+	<!-- Body section End -->
+	<jsp:include page="/WEB-INF/views/common/n_footer.jsp" />
