@@ -19,6 +19,7 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="${path }/resources/assets/css/style.css">
+  <script src="${path }/resources/js/jquery-3.4.1.min.js"></script>
   <!-- endinject -->
   <link rel="shortcut icon" href="${path }/resources/assets/images/favicon.png" />
 </head>
@@ -178,7 +179,7 @@
         
         <!-- 강의정보 -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#class_info" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-toggle="collapse" href="#class_info" aria-expanded="false" aria-controls="class_info">
               <i class="ti-palette menu-icon"></i>
               <span class="menu-title">강의정보</span>
               <i class="menu-arrow"></i>
@@ -201,7 +202,7 @@
           
           <!-- 학생정보 -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#stu_info" aria-expanded="false" aria-controls="auth">
+            <a class="nav-link" data-toggle="collapse" href="#stu_info" aria-expanded="false" aria-controls="stu_info">
               <i class="ti-user menu-icon"></i>
               <span class="menu-title">학생정보</span>
               <i class="menu-arrow"></i>
@@ -212,14 +213,14 @@
                 <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewInClass.hd">수강생 조회</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewClassAttend.hd">수강생 출결관리</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/prof/editClassResult.hd">수강생 성적관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">강의 평가 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/view_evaluation.hd">강의 평가 조회</a></li>
               </ul>
             </div>
           </li>
           
           <!-- 교수정보 -->
            <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#prof_info" aria-expanded="false" aria-controls="auth">
+            <a class="nav-link" data-toggle="collapse" href="#prof_info" aria-expanded="false" aria-controls="prof_info">
               <i class="ti-user menu-icon"></i>
               <span class="menu-title">교수정보</span>
               <i class="menu-arrow"></i>
@@ -235,15 +236,15 @@
           
         <!-- 이의신청 처리 -->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#appeal" aria-expanded="false" aria-controls="auth">
+            <a class="nav-link" data-toggle="collapse" href="#appeal" aria-expanded="false" aria-controls="appeal">
               <i class="ti-user menu-icon"></i>
               <span class="menu-title">이의신청 처리</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="appeal">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="#">성적 이의신청 조회</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">처리 결과 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewObjection.hd">성적 이의신청 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/resultObjection.hd">처리 결과 조회</a></li>
               </ul>
             </div>
           </li>
@@ -251,18 +252,25 @@
           
           
           
-           <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
-              <i class="ti-layout-list-post menu-icon"></i>
-              <span class="menu-title">단일 메뉴바</span>
-            </a>
-          </li>
-          <hr style="color : black"/>
+             <!-- 이의신청 처리 -->
           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#assign" aria-expanded="false" aria-controls="assign">
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">과제 관리</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="assign">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/upAssignment.hd">과제 등록하기</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewAssignment.hd">과제 제출현황 조회</a></li>
+              </ul>
+            </div>
+          </li>
+        <!--   <li class="nav-item">
             <a class="nav-link" href="documentation/documentation.html">
               <i class="ti-write menu-icon"></i>
               <span class="menu-title">Documentation</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </nav>

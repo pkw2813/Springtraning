@@ -8,79 +8,70 @@
 <div class="main-panel">
 	<div class="content-wrapper">
 		<!-- Body section Start -->
-		<div class="row">
-			<div class="col-md-12 grid-margin">
-				<div class="d-flex justify-content-between align-items-center">
-					<div>
-						<h4 class="font-weight-bold mb-0">학과생 조회</h4>
-					</div>
-				</div>
-			</div>
-		</div>
 		<!-- Main Content start -->
 		<div class="row">
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
-					<div class="card-header">
-						<div class="col-md-8">
-							<table class="table table-bordered table-hover"
-								style="text-align: center;">
-								<thead class="thead-dark">
-									<tr>
-										<th>
-											<div class="input-group input-group-sm">
-												<span class="input-group-addon" id="sizing-addon3">대학명
-													&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-													aria-describedby="sizing-addon3" value="인문대학" readonly>
-											</div>
-										</th>
-										<th>
-											<div class="input-group input-group-sm">
-												<span class="input-group-addon" id="sizing-addon3">학과명
-													&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-													aria-describedby="sizing-addon3" value="철학과" readonly>
-											</div>
-										</th>
-										<th>
-											<div class="input-group input-group-sm">
-												<span class="input-group-addon" id="sizing-addon3">학과생
-													총원 &nbsp;&nbsp;&nbsp;</span> <input type="text"
-													class="form-control" aria-describedby="sizing-addon3"
-													value="486명" readonly>
-											</div>
-										</th>
-										<th>
-											<div class="input-group input-group-sm">
-												<span class="input-group-addon" id="sizing-addon3">학과
-													사무실위치 &nbsp;&nbsp;&nbsp;</span> <input type="text"
-													class="form-control" aria-describedby="sizing-addon3"
-													value="A-108" readonly>
-											</div>
-										</th>
-
-									</tr>
-									<tr>
-										<th>
-											<div class="input-group input-group-sm">
-												<span class="input-group-addon" id="sizing-addon3">교직원
-													총원&nbsp;&nbsp;&nbsp;</span> <input type="text"
-													class="form-control" aria-describedby="sizing-addon3"
-													value="49명" readonly>
-											</div>
-										</th>
-										<th>
-											<div class="input-group input-group-sm">
-												<span class="input-group-addon" id="sizing-addon3">사무실
-													번호 &nbsp;&nbsp;&nbsp;</span> <input type="text"
-													class="form-control" aria-describedby="sizing-addon3"
-													value="02-850-2884" readonly>
-											</div>
-										</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
+					<div class="card-body">
+						<table class="table table-bordered table-hover"
+							style="text-align: center;">
+							<thead class="thead-dark">
+								<tr>
+									<th>
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon" id="sizing-addon3">대학명
+												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
+												aria-describedby="sizing-addon3" value="인문대학" readonly>
+										</div>
+									</th>
+									<th>
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon" id="sizing-addon3">학과명
+												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
+												aria-describedby="sizing-addon3" value="철학과" readonly>
+										</div>
+									</th>
+									<th>
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon" id="sizing-addon3">학과생
+												총원 &nbsp;&nbsp;&nbsp;</span> <input type="text"
+												class="form-control" aria-describedby="sizing-addon3"
+												value="486명" readonly>
+										</div>
+									</th>
+									<th>
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon" id="sizing-addon3">학과
+												사무실위치 &nbsp;&nbsp;&nbsp;</span> <input type="text"
+												class="form-control" aria-describedby="sizing-addon3"
+												value="A-108" readonly>
+										</div>
+									</th>
+									<th>
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon" id="sizing-addon3">교직원
+												총원&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
+												aria-describedby="sizing-addon3" value="49명" readonly>
+										</div>
+									</th>
+									<th>
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon" id="sizing-addon3">사무실
+												번호 &nbsp;&nbsp;&nbsp;</span> <input type="text"
+												class="form-control" aria-describedby="sizing-addon3"
+												value="02-850-2884" readonly>
+										</div>
+									</th>
+								</tr>
+							</thead>
+						</table>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 grid-margin stretch-card">
+				<div class="card">
 					<div class="card-body">
 						<h3>검색 입력</h3>
 						<form action="" method="post">
@@ -224,4 +215,4 @@
 		<!-- Main-content End -->
 
 		<!-- Body section End -->
-		<jsp:include page="/WEB-INF/views/common/n_footer.jsp" />
+		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
