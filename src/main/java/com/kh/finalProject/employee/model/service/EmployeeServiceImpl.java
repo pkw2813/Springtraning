@@ -36,22 +36,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.selectBeforeStu(session, beforeStu);
 	}
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public int deleteBeforeStu(int beforeStu) throws Exception {
-		int result = dao.deleteBeforeStu(session, beforeStu);
-		if(result == 0) {
-			new Exception();
-		}
-		return result;
-	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int insertNewStu(Student s) throws Exception {
-		int result = dao.insertNewStu(session, s);
+	public int insertNewStu(Student s, int beforeStu) throws Exception {
+		int result = dao.deleteBeforeStu(session, beforeStu);
+		int result1 = dao.insertNewStu(session, s);
 		System.out.println("insert new :" + result);
-		if(result == 0) {
+		if(result == 0 || result1 == 0) {
 			new Exception();
 		}
 		return result;

@@ -2,7 +2,10 @@ package com.kh.finalProject.common.encrypt;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -10,6 +13,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
@@ -25,7 +29,9 @@ public class RSAEncrypto implements MyEncrypt {
 	public RSAEncrypto() {
 		String path = this.getClass().getResource("/").getPath();
 		path = path.substring(0, path.lastIndexOf("/target"));
-		File f = new File(path + "src/main/webapp/WEB-INF/keys.hd");
+		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hd");
+		System.out.println("pasth : " + path);
+		
 		if(f.exists()) {
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
 				Map<String, Object> keys = (Map)ois.readObject();
@@ -53,6 +59,17 @@ public class RSAEncrypto implements MyEncrypt {
 		KeyPair keypair = keygen.generateKeyPair();
 		publicKey = keypair.getPublic();
 		privateKey = keypair.getPrivate();
+		Map<String,Object> keys=new HashMap();
+		keys.put("public", publicKey);
+		keys.put("private", privateKey);
+		String path = this.getClass().getResource("/").getPath();
+		path = path.substring(0, path.lastIndexOf("/target"));
+		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hd");
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))) {
+			oos.writeObject(keys);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

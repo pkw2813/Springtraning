@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
+import com.kh.finalProject.common.encrypt.MyEncrypt;
 import com.kh.finalProject.employee.model.service.EmployeeService;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Controller
 public class EmployeeController {
 
-	
+	@Autowired
+	private MyEncrypt enc; 
 	@Autowired
 	private EmployeeService service;
 
@@ -37,13 +39,10 @@ public class EmployeeController {
 		@ResponseBody
 		public int insertNewStu(@RequestParam int beforeStu) {
 			BeforeStu bs = service.selectBeforeStu(beforeStu);
-			System.out.println("bs 확인" + bs);
 			Student s = settingNewStudent(bs);
-			System.out.println("세팅한 student : " + s);
+			System.out.println("s : " + s);
 			try {
-				System.out.println("try 문 내부");
-				int result = service.deleteBeforeStu(beforeStu);
-				int result2 = service.insertNewStu(s);
+				int result = service.insertNewStu(s, beforeStu);
 			}catch(Exception e) {
 				System.out.println("에러");
 				return 0;
@@ -53,7 +52,7 @@ public class EmployeeController {
 		return beforeStu;
 		}
 		
-	public static Student settingNewStudent(BeforeStu bs) {
+	public Student settingNewStudent(BeforeStu bs) {
 		
 		Student s = new Student();
 		Date date = new Date();
@@ -62,7 +61,18 @@ public class EmployeeController {
 		String stuNo = "S" +sysdate.substring(0, 4) + bs.getBeforeDeptCode() + String.format("%03d", bs.getBeforeStu());
 		s.setStuNo(stuNo);
 		s.setStuName(bs.getBeforeName());
-		s.setStuPw(bs.getBeforeNo().substring(0, 6));
+		try {
+			//암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
+			s.setStuPw(enc.decrypt(bs.getBeforeNo()).substring(0, 6));
+			//패스워드 초기 패스워드 암호화함 
+			s.setStuPw(enc.encrypt(s.getStuPw()));
+			// 로그인 matches 양식
+//			String su = "911010";
+//			System.out.println("매치 :" + s.getStuPw().matches(su));
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		s.setStuSsn(bs.getBeforeNo());
 		s.setStuTel(bs.getBeforePhone());
 		s.setStuAddr(bs.getBeforeAddr());
