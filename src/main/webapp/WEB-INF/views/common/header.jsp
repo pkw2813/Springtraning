@@ -64,7 +64,7 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item dropdown mr-1">
-        	<button id="myBtn" class="btn btn-inverse-info btn-fw">
+        	<button id="reqBtn" class="btn btn-inverse-info btn-fw">
             	건의
             </button>
         </li>
@@ -416,7 +416,7 @@
         <%} %>
       </nav>
       
-      <div id="myModal" class="modal">
+      <div id="reqModal" class="modal">
  
       <!-- Modal content -->
       <div class="modal-content">
@@ -448,10 +448,10 @@
     
     <script>
      // Get the modal
-        var modal = document.getElementById('myModal');
+        var modal = document.getElementById('reqModal');
  
         // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
+        var btn = document.getElementById("reqBtn");
  
         // Get the <span> element that closes the modal
         var close = document.getElementById("close");                                          

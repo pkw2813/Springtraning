@@ -33,6 +33,13 @@ public class ReqServiceImpl implements ReqService {
 		List<Req> list=dao.reqList(session);
 		return list;
 	}
+
+	@Override
+	public Req reqOne(int reqNo) {
+		Req req=dao.reqOne(session,reqNo);
+		return req;
+	}
+	
 	
 	
 	

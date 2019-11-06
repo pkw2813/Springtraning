@@ -2,8 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="{$pageContext.request.contextPath}"/>
-
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<style>
+	th{
+		text-align:center !important;
+	}
+	td{
+		heigth:20px !important;
+		text-align:center !important;
+	}
+</style>
 <jsp:include page = "/WEB-INF/views/common/header.jsp"/>
 
 <div class="main-panel">
@@ -18,26 +26,57 @@
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>번호</th>
+                          <th>번호 </th>
                           <th>제목</th>
-                          <th>내용</th>
                           <th>보낸 사람</th>
                           <th>보낸 시간</th>
                           <th>처리</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Photoshop</td>
-                          <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
-                          <td><label class="badge badge-danger">Pending</label></td>
-                          <td><button class="btn btn-inverse-info btn-fw" value="처리 완료"></button></td>
+                      <c:forEach items="${list }" var="l" varStatus="v">
+                        <tr class="reqOne">
+                          <td>${l.reqNo }<input type="hidden" value="${l.reqNo }" class="reqNo"/></td>
+                          <td>${l.reqTitle }</td>
+                          <td>${l.toName }</td>
+                          <td>${l.toTime }</td>
+                          <td><button class="btn btn-inverse-info btn-fw">처리 완료</button></td>
                         </tr>
+                        </c:forEach>
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
+       
+              <script>
+               $(".reqOne").click(function(){
+            	   console.log($($($(this).children())[0]).children().val());
+            	   location.href="${path}/reqOne.hd?reqNo="+$($($(this).children())[0]).children().val();
+               });
+              
+        </script>
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
            
 <jsp:include page = "/WEB-INF/views/common/footer.jsp"/>

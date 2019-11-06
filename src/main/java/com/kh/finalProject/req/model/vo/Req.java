@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Req {
 	
-	private String reqNo;
+	private int reqNo;
 	private String reqTitle;
 	private String reqContents;
 	private String fromName;
 	private String toName;
-	private Date toTime;
+	private String toTime;
 	private String reqRead;
 	
 

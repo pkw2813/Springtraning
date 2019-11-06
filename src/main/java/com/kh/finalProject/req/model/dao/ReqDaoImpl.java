@@ -19,6 +19,12 @@ public class ReqDaoImpl implements ReqDao {
 	public List<Req> reqList(SqlSessionTemplate session) {
 		return session.selectList("req.reqList");
 	}
+
+	@Override
+	public Req reqOne(SqlSessionTemplate session, int reqNo) {
+		return session.selectOne("req.reqOne",reqNo);
+	}
+	
 	
 	
 	
