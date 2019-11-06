@@ -9,11 +9,11 @@
   	
   	<update id="studentInfoUpdate" parameterType="student">
   		<choose>
-			<when test="stuImgRename == null">
+			<when test='stuImgRename eq "false"'>
 				UPDATE HD_STUDENT_TB SET STU_TEL=#{stuTel},STU_ADDR=#{stuAddr},STU_EMAIL=#{stuEmail},
   				STU_ACCOUNT=#{stuAccount} where STU_NO=#{stuNo}
 			</when>
-			<when test="stuImgRename != null">
+			<when test='stuImgRename != "false"'>
 				UPDATE HD_STUDENT_TB SET STU_TEL=#{stuTel},STU_ADDR=#{stuAddr},STU_EMAIL=#{stuEmail},
   				STU_IMG_ORINAME=#{stuImgOriname},STU_IMG_RENAME=#{stuImgRename},STU_ACCOUNT=#{stuAccount} where STU_NO=#{stuNo}
 			</when>

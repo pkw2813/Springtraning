@@ -8,6 +8,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="pageTitle" value="" />
 </jsp:include>
+
+    
 <style>
 tr, td, th {
 	text-align: left;
@@ -73,7 +75,7 @@ table {
 							<th>성명</th>
 							<td><input type="text" value="${student.stuName}" required
 								disabled /></td>
-							<th>주민등록번호(외국인등록번호)</th>
+							<th>주민등록번호<br>(외국인등록번호)</th>
 							<td><input type="text" value="${student.stuSsn}"
 								style="width: 130px" required disabled /></td>
 							</tr>
@@ -82,8 +84,12 @@ table {
 								<td><input type="text" value="${student.stuTel}"
 									style="width: 120px" required disabled /></td>
 								<th>성별</th>
-								<td><input type="text" value="${student.gender}" required
-									disabled /></td>
+								<td><select id="gender" name="gender" width="100px" disabled>
+								  	<option value=>선택없음</option>
+								    <option value="남">남</option>
+								    <option value="여">여</option>
+								
+								</select></td>
 								<th>메일주소</th>
 								<td><input type="email" value="${student.stuEmail}"
 									style="width: 200px" style="width:200px" required disabled /></td>
@@ -94,8 +100,19 @@ table {
 									value="<fmt:formatDate value="${student.enterDate}" pattern="yyyy-MM-dd"/>"
 									required disabled /></td>
 								<th>학적상태</th>
-								<td><input type="text" value="${student.regStatus}"
-									required disabled /></td>
+								<td>
+								
+								<select id="regStatus" name="regStatus" width="100px" disabled>
+								  	<option value=>선택없음</option>
+								    <option value="재학">재학</option>
+								    <option value="휴학">휴학</option>
+								    <option value="졸업">졸업</option>
+								    <option value="제적">제적</option>
+								</select>
+								</td>
+								
+								
+<%-- 								<td><input type="text" value="${student.regStatus}" required disabled /></td> --%>
 								<th>주소</th>
 								<td><input type="text" value="${student.stuAddr}"
 									style="width: 200px" required disabled /></td>
@@ -105,7 +122,7 @@ table {
 								<th>지도교수</th>
 								<td><input type="text" value="${student.profId}" required
 									disabled /></td>
-								<th>학과코드</th>
+								<th>학과명</th>
 								<td><input type="text" value="${student.deptCode}" required
 									disabled /></td>
 								<th>계좌번호</th>
@@ -165,6 +182,10 @@ table {
 			console.log('${student.stuImgRename}');
 		
 		</script> -->
+		<script>
+			$("#regStatus").val('${student.regStatus}');
+			$("#gender").val('${student.gender}');
+		</script>
 
 
 

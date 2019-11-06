@@ -26,20 +26,21 @@ public class StudentController1 {
 
 	@RequestMapping("/student/studentInfo.hd")
 	public String selectStudent(HttpSession session, Model m) {
-		/* Student s=(Student)session.getAttribute("loginMember"); */
-		String studentNo = "SA0012019001";
-		Student s = service.selectStudent(studentNo);
-		m.addAttribute("student", s);
+		Student s=(Student)session.getAttribute("loginMember");
+		String studentNo = s.getStuNo();
+		Student result = service.selectStudent(studentNo);
+		m.addAttribute("student", result);
 
 		return "student/studentInfo";
 
 	}
 
 	@RequestMapping("/student/studentInfoUpdate.hd")
-	public String studentInfoUpdate(Model m) {
-		String studentNo = "SA0012019001";
-		Student s = service.selectStudent(studentNo);
-		m.addAttribute("student", s);
+	public String studentInfoUpdate(HttpSession session,Model m) {
+		Student s=(Student)session.getAttribute("loginMember");
+		String studentNo = s.getStuNo();
+		Student result = service.selectStudent(studentNo);
+		m.addAttribute("student", result);
 		return "student/studentInfoUpdate";
 	}
 
@@ -51,27 +52,37 @@ public class StudentController1 {
 		String stuNo = req.getParameter("stuNo");
 		String stuEmail = req.getParameter("stuEmail");
 		String stuTel = req.getParameter("stuTel");
-		String stuAddr = req.getParameter("stuAddr");
+		String stuAddr = req.getParameter("totalAddress");
 		String stuAccount = req.getParameter("stuAccount");
-		String stuFile=req.getParameter("imgAttach");
+		String stuFile=req.getParameter("LoadImgStat");
 		System.out.println(stuFile);
 		int result=0;
-		if(stuFile==null) {
-			s.setStuImgRename(null);
+		
+		if(stuFile.equals("false")) {
+			s.setStuImgRename("false");
 		}
 		s.setStuNo(stuNo);
 		s.setStuEmail(stuEmail);
 		s.setStuTel(stuTel);
 		s.setStuAddr(stuAddr);
 		s.setStuAccount(stuAccount);
+		s.setStuImgRename(stuFile);
+		System.out.println(stuAddr);
 		String saveDir = req.getSession().getServletContext().getRealPath("/resources/images/image");
 		File dir = new File(saveDir);
 	
-		if (stuFile==null) {
+		if (stuFile.equals("false")) {
+			
 			result = service.studentInfoUpdate(s);
 
-		} else if (!stuFile.isEmpty()) {
+		} else {
 			// 파일명 설정(renamed)
+		
+			Student s1=service.selectStudent(stuNo);
+			String deleteFile=s1.getStuImgRename();
+			File del=new File(saveDir+"/"+deleteFile); 
+			del.delete();
+			
 			String oriFileName = upFile.getOriginalFilename();
 			// 파일에서 확장자빼기
 			String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
@@ -88,21 +99,21 @@ public class StudentController1 {
 			s.setStuImgOriname(oriFileName);
 			s.setStuImgRename(reName);
 			System.out.println(reName);
-		}
+			
+			 try { 
+				 result = service.studentInfoUpdate(s); 
+			 }catch (Exception e) { 
+				 // 파일삭제로직. 
+				 // 에러메세지 출력로직! 
+				 System.out.println("에러파일저장안됨");
 
-		try {
-			result = service.studentInfoUpdate(s);
-		}catch (Exception e) {
-			// 파일삭제로직.
-			// 에러메세지 출력로직!
-			System.out.println("에러파일저장안됨");
-			  if(!stuFile.isEmpty()) {
-				 
-					  File del=new File(saveDir+"/"+s.getStuImgRename());
-					  del.delete();
-					  }
-				  }
-	
+				  
+				 del=new File(saveDir+"/"+s.getStuImgRename());
+				 del.delete(); }
+				}
+
+		
+		
 	
 		return "redirect:/student/studentInfo.hd";
 
