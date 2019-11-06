@@ -30,6 +30,9 @@ public class StudentController1 {
 		String studentNo = s.getStuNo();
 		Student result = service.selectStudent(studentNo);
 		m.addAttribute("student", result);
+		String addr=result.getStuAddr();
+		String[] addrArr=addr.split("PSTC");
+		result.setStuAddr(addrArr[1]);
 
 		return "student/studentInfo";
 
@@ -55,7 +58,7 @@ public class StudentController1 {
 		String stuAddr = req.getParameter("totalAddress");
 		String stuAccount = req.getParameter("stuAccount");
 		String stuFile=req.getParameter("LoadImgStat");
-		System.out.println(stuFile);
+		System.out.println(stuAddr);
 		int result=0;
 		
 		if(stuFile.equals("false")) {

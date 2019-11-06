@@ -32,6 +32,8 @@
 		.marginLeft {
 			margin-left:10px;
 		}
+	
+	
 	</style>
 	
 
@@ -112,10 +114,10 @@
 			
 			<td>
 			주소 &nbsp;<input type="text" id="stuAddr" name="stuAddr" value="${student.stuAddr}" style="width:200px" readonly/>
-			<button  class="marginLeft"  type="button" onclick="sample6_execDaumPostcode()">주소변경</button><br><br>
+			<button  class="btn btn-primary small" id="stuAddrButton" type="button" onclick="sample6_execDaumPostcode()">주소변경</button><br><br>
 			(우)&nbsp;&nbsp;&nbsp;<input type="text" id="stuPostCode" name="stuPostCode" value="222222" style="width:70px" readonly />
 			<input type="text" id="stuAddrDt" name="stuAddr" style="width:130px" placeholder="상세주소입력" required/>
-			<input type="hidden" name="totalAddress"id="totalAddress"/>
+			<input type="hidden" class="totalAddress" name="totalAddress"id="totalAddress"/>
 	
 			</td>
 			
@@ -153,11 +155,11 @@
 	</div>
 	
 	<script>
-	$("#stuAddrDt").hide();
+	/* $("#stuAddrDt").hide(); */
 	$("#regStatus").val('${student.regStatus}');
 	$("#gender").val('${student.gender}');
-	
 	$("#imgAttach").hide();
+
 		function LoadImg(value){ // 변경된 그림을 보여주는 함수
 			console.log($("#LoadImgStat").val());
 			$("#LoadImgStat").val("true");
@@ -170,7 +172,7 @@
 				reader.readAsDataURL(value.files[0]);
 			}
 		}
-		
+	
 		$("#imgAttach").change(function(){ // 첨부파일이 변경되면
 			LoadImg(this); // 해당 이미지로 변경하기
 			console.log("loadImg가 변경됨!!!!!");
@@ -183,32 +185,9 @@
 		});
 		
 		
-			let postcode = $('#stuPostCode');
-            //상세주소
-            let detailAddress = $('#stuAddr');
-            if (!postcode.val()) {
-                alert('주소를 입력해주세요.');
-                postcode.focus();
-                return false;
-            }
-            if (!detailAddress.val()) {
-                alert('상세주소를 입력해주세요.');
-                detailAddress.focus();
-                return false;
-            }
 
-
-            let postCode = document.getElementById('stuPostCode').value;
-            let addrCode = document.getElementById("stuAddr").value;
-            let detailAddr = document.getElementById("stuAddrDt").value;
-			let beforeAddr = "<input type='hidden' name='beforeAddr' value='"+postCode+" PSTD "+addrCode+" "+detailAddr+"'/>"; 
-			document.getElementsByClassName("totalAddress")[0].innerHTML += beforeAddr;
-			
-			console.log("주소값 :"+beforeAddr);
-		
-		
-		
 		// 카카오 주소검색 서비스
+	
 	     function sample6_execDaumPostcode() {
 			$("#stuAddrDt").show();
             new daum.Postcode({
@@ -253,7 +232,13 @@
                     document.getElementById('stuPostCode').value = data.zonecode;
                     document.getElementById("stuAddr").value = addr;
                     // 커서를 상세주소 필드로 이동한다.
+                    
                     document.getElementById("stuAddrDt").focus();
+                    
+                    $("#stuAddrDt").blur(function(){
+                    	 $("#totalAddress").val($("#stuPostCode").val()+"PSTC"+$("#stuAddr").val()+" "+$("#stuAddrDt").val());
+                    });
+                    console.log($("#totalAddress").val())
                 }
             }).open();
         }
