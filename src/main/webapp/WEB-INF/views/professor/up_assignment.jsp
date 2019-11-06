@@ -50,16 +50,16 @@
 									<label for="exampleInputName1">과제 제목</label> <input type="text"
 										class="form-control" id="exampleInputName1" placeholder="Name">
 								</div>
-								<div class="form-group">
-                      <label>File upload</label>
-                      <input type="file" name="img[]" class="file-upload-default">
-                      <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
-                        <span class="input-group-append">
-                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
-                      </div>
-                    </div>
+								<div class="form-group col-md-4">
+			                      <label>File upload</label>
+			                      <input type="file" name="img[]" class="file-upload-default">
+			                      <div class="input-group col-xs-12">
+			                        <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+			                        <span class="input-group-append">
+			                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+			                        </span>
+			                      </div>
+			                    </div>
 							</div>
 
 							<div class="form-group">
