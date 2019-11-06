@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalProject.professor.model.dao.ProfessorDao1;
+import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
 import com.kh.finalProject.professor.model.vo.Subject;
@@ -29,7 +30,12 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		
 		return profName;
 	}
-
+	//페이징 토탈데이타
+	@Override
+	public int selectBoardCount() {
+		int totalData = dao.selectBoardCount(session);
+		return totalData;
+	}
 	//강의 개설
 	@Override
 	@Transactional
@@ -76,16 +82,29 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		
 		return result;
 	}
-	
+	//게시판뷰
+	@Override
+	public List<ProfessorBoard> boardView(int cPage,int numPerPage){
+		List<ProfessorBoard> list = dao.boardView(session,cPage,numPerPage);
+		return list;
+	}
 	//게시판 작성
 	@Override
 	@Transactional
-	public int insertBoardEnd(List<ProfessorBoard> list) throws RuntimeException {
+	public int insertBoardEnd(ProfessorBoard pb, List<ProfBoardAttachment> list) throws RuntimeException {
+		int result = 0;
 		
-		int result = dao.insertBoardEnd(session,list);
+		result = dao.insertBoardEnd(session,pb);
+		
+		for(ProfBoardAttachment pba : list) {
+			pba.setProfBoardNo(pb.getProfBoardNo());
+			result = dao.insertBoardAttachment(session, pba);
+			
+		}
 		if(result==0) {
 			throw new RuntimeException();
 		}
+		
 		return result;
 		
 	}
