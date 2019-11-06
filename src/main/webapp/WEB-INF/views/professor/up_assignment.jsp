@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
-<jsp:include page="/WEB-INF/views/common/pro_header2.jsp" />
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <!-- 달력 import start -->
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
@@ -84,4 +84,4 @@
 
 	<!-- Main-content End -->
 	<!-- Body section End -->
-	<jsp:include page="/WEB-INF/views/common/n_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
