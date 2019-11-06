@@ -8,5 +8,6 @@ public interface ReqService {
 	
 	int insertReq(Req req) throws Exception;
 	List<Req> reqList();
+	Req reqOne(int reqNo);
 
 }

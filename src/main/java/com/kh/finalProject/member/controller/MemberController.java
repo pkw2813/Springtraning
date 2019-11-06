@@ -26,7 +26,7 @@ public class MemberController {
 	@Autowired 
 	private ProfessorService proService;
 	
-	@RequestMapping("/main")
+	@RequestMapping("/main.hd")
 	public String main() {
 		return "common/main";
 	}
@@ -55,7 +55,7 @@ public class MemberController {
 		}
 		if(session.getAttribute("loginMember")!=null) {
 			msg="로그인 되었습니다.";
-			loc="/main";
+			loc="/main.hd";
 		}else {
 			msg="학/사번 또는 비밀번호를 확인해주세요.";
 			loc="/";

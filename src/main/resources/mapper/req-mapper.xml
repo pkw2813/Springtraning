@@ -6,7 +6,11 @@
   </insert>
   
   <select id="reqList" resultMap="reqResult">
-  	SELECT * FROM HD_REQ_TB WHERE REQ_READ='Y'
+  	SELECT REQ_NO, REQ_TITLE, REQ_CONTENTS, FROM_NAME, TO_NAME, to_char(TO_TIME, 'YYYY-MM-DD HH24:MI')AS TO_TIME FROM HD_REQ_TB WHERE REQ_READ='Y' AND FROM_NAME='EA000000000'
+  </select>
+  
+  <select id="reqOne" parameterType="_int" resultMap="reqResult">
+  	SELECT REQ_NO, REQ_TITLE, REQ_CONTENTS, TO_NAME, to_char(TO_TIME, 'YYYY-MM-DD HH24:MI')AS TO_TIME FROM HD_REQ_TB WHERE REQ_NO=#{reqNo}
   </select>
   
   

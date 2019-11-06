@@ -5,6 +5,12 @@
   		SELECT * FROM HD_STUDENT_TB WHERE stu_No=#{stuNo} AND stu_Pw=#{stuPw}
   	</select>
   	
+  	<insert id="insertNewStu" parameterType="student">
+  	INSERT INTO HD_STUDENT_TB VALUES(#{stuNo},#{stuName},#{stuPw},#{stuSsn},#{stuTel},#{stuAddr},#{gender},#{deptCode},sysdate,#{stuEmail},#{regStatus},NULL,#{stuYearSem},1,NULL,NULL)
+  	</insert>
+  	
+  	
+  	
   	<resultMap id="studentResult" type="student">
 		<result column="STU_NO" property="stuNo" />
 		<result column="STU_NAME" property="stuName" />
