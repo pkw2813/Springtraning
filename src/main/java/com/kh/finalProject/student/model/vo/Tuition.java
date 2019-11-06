@@ -17,4 +17,7 @@ public class Tuition {
 	private Date paymentDate;
 	private Date dueDate;
 	private char reductionStat;
+	private String stuName;
+	private String deptName;
+	private String birthday;
 }
