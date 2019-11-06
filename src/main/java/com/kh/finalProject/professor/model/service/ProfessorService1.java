@@ -26,6 +26,9 @@ public interface ProfessorService1 {
 	List<ProfessorBoard> boardView(int cPage,int numPerPage);
 	//게시판 작성
 	int insertBoardEnd(ProfessorBoard pb, List<ProfBoardAttachment> list) throws RuntimeException;
+	//게시판select
+	ProfessorBoard selectBoardView(int profBoardNo);
+	List<ProfBoardAttachment> selectProfAttachment(int profBoardNo);
 	//subject조회
 	List<Subject> subjectCodeView();
 	Map<String,String> selectSubject(String subCode);

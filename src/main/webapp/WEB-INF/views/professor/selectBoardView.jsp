@@ -4,7 +4,7 @@
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="{$pageContext.request.contextPath}"/>
 
-	<jsp:include page = "/WEB-INF/views/common/son_pro_header.jsp">
+	<jsp:include page = "/WEB-INF/views/common/header.jsp">
 		<jsp:param name="pageTitle" value=""/>
 	</jsp:include>
 
@@ -36,12 +36,7 @@
 								<tr>
 									<th>옵션</th>
 									<td>
-										<select id="selectContext" name="profBoardType" class="btn">
-											<option value="전체 공지">전체 공지</option>
-											<option value="학과 공지">학과 공지</option>
-											<option value="강의 자료">강의 자료</option>
-											<option value="기타 자료">기타 자료</option>
-										</select>
+										<input id="selectContext" name="profBoardType" class="btn"/>
 									</td>
 								</tr>
 								<tr>
@@ -56,9 +51,6 @@
 								<tr>
 									<th>첨부파일</th>
 									<td>
-										<input id="upFile" name="upFile" class="" type="file" value=""/>
-										<input type='button' id="creBtn" name="creBtn" class="btn btn-dark" value="추가"/>
-										<input type='button' id="delBtn" name="delBtn" class="btn btn-dark" value="삭제"/>
 									</td>
 								</tr>
 								<tr><td><br/></td></tr>
@@ -67,14 +59,21 @@
 									<td><textarea id="context" class="btn btn-default" name="profBoardContent" style="height:400px;width:800px;border:1px solid black;text-align:left;"></textarea></td>
 								</tr>
 							</table>
+									  <c:forEach items="profAttachment" var="file" varStatus="vs">
+										   <button type="button" class="btn btn-outline-success btn-block"
+								                  onclick="fileDownload('${file.originalFileName}','${file.renamedFileName }');">
+								             <c:out value="${file.originalFileName }"/>
+								           </button>
+							          </c:forEach>
 						</div>
 					</div><br/>
 					<div class="row">
-						<div class="col-4"></div>
-						<div class="col-4"></div>
-						<div class="col-4">&nbsp;
-							<input class="btn btn-dark" type='button' value=" 글 삭제 "/>&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 ">
+						<div class="col-3"></div>
+						<div class="col-3"></div>
+						<div class="col-6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type='button' id="updateBoard" class="btn btn-dark" value=" 글 수정 "/>
+							<input class="btn btn-dark" type='button' value=" 글 삭제 "/>
+							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 "/>
 						</div>
 					</div>
 			</div>
@@ -83,7 +82,11 @@
 </div>
 
 <script>
-	
+	/* 파일 다운로드 */
+	function fileDownload(oName, rName){
+		oName = encodeURIComponent(oName);
+		location.href="${pageContext.request.contextPath}/professor/fileDownload?oName="+oName+"rName="+rName;
+	}
 	$(function(){
 		$("#creBtn").one("click",function(){
 			var input=$("<input>").attr({"type":"file","name":"upFile"});
