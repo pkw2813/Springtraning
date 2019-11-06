@@ -12,7 +12,6 @@ import com.kh.finalProject.employee.model.service.EmployeeService;
 import com.kh.finalProject.employee.model.vo.Employee;
 import com.kh.finalProject.professor.model.service.ProfessorService;
 import com.kh.finalProject.professor.model.vo.Professor;
-import com.kh.finalProject.req.model.vo.Req;
 import com.kh.finalProject.student.model.service.StudentService;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -29,6 +28,11 @@ public class MemberController {
 	@RequestMapping("/main.hd")
 	public String main() {
 		return "common/main";
+	}
+	
+	@RequestMapping("login")
+	public String login() {
+		return "redirect:/index.jsp";
 	}
 	
 	@RequestMapping("/login.hd")
@@ -66,6 +70,11 @@ public class MemberController {
 		return "common/msg";
 	}
 	
+	@RequestMapping("/logout.hd")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/index.jsp";
+	}
 	
 	
 	

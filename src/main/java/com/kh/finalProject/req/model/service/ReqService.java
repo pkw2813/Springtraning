@@ -9,5 +9,7 @@ public interface ReqService {
 	int insertReq(Req req) throws Exception;
 	List<Req> reqList();
 	Req reqOne(int reqNo);
+	int answerUpdate(int reqNo);
+	int reqUpdate(int reqNo);
 
 }

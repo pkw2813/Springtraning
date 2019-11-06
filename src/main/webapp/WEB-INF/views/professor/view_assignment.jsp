@@ -13,6 +13,7 @@
 
 <div class="main-panel">
 	<div class="content-wrapper">
+	
 		<!-- Body section Start -->
 		<div class="row">
 			<div class="col-md-12 grid-margin">
@@ -93,28 +94,30 @@
 									<tr>
 										<td>박성술</td>
 										<td><button type="button" class="btn btn-success btn-toggle btn-block"
-												onclick="createModal('${boardTitle }','${boardContent}','${boardWriter }' );"
-												data-toggle="modal" data-target="#myModal"
+												onclick="popupBoard('${boardTitle2 }','${boardContent2}','${boardWriter2 }');"
 												>자바고찰1</button></td>
 										<td>2019/08/07</td>
 									</tr>
+									
+									
+									
 									<tr>
 										<td>박성술</td>
 										<td><button type="button" class="btn btn-success btn-toggle btn-block"
 										onclick="createModal('${boardTitle2 }','${boardContent2}','${boardWriter2 }' );"
-												data-toggle="modal" data-target="#myModal">자바고찰2</button></td>
+												data-toggle="modal" data-target="#boardModal">자바고찰2</button></td>
 										<td>2019/08/07</td>
 									</tr>
 									<tr>
 										<td>박성술</td>
 										<td><button type="button" class="btn btn-success btn-toggle btn-block"
-												data-toggle="modal" data-target="#myModal">자바고찰3</button></td>
+												data-toggle="modal" data-target="#boardModal">자바고찰3</button></td>
 										<td>2019/08/07</td>
 									</tr>
 									<tr>
 										<td>박성술</td>
 										<td><button type="button" class="btn btn-success btn-toggle btn-block"
-												data-toggle="modal" data-target="#myModal">자바고찰4</button></td>
+												data-toggle="modal" data-target="#boardModal">자바고찰4</button></td>
 										<td>2019/08/07</td>
 									</tr>
 								</tbody>
@@ -138,45 +141,38 @@
 		</div>
 		<!-- 본문 끝 -->
 		<!-- 게시판 내용 모달 시작  -->
-		<div id="showModal">
-			
-		</div>		
-				
-				
-	<!-- 	<div class="modal fade" id="myModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						
-					</div>
-					<div class="modal-body">
-				
-					</div>
-					<div class="modal-footer">
-			
-					</div>
-				</div>
-			</div>
-		</div> -->
+		
 		<!-- 게시판 내용 모달 끝  -->
 		<!-- 게시판 내용  스크립트 시작 -->
 			<script>
 			//모달  게시판 내용 삽입
-			function createModal(title, content, writer){ 
-				var string
+				
+				function popupBoard(title, content, writer){
+				
+				var url = "${path}/prof/popupBoard";
+				var width = 1176;
+				var height = 768;
+				var option = "width="+width+", height="+height+",top = 80 , left = 400, location = yes";
+				window.open(url,"test",option);
+				
+				
+				}
+			
+			/* function createModal(title, content, writer){ 
+				var string ="";
 				var showModal = document.getElementById("showModal");
 				
-				string += "<div class='modal fade' id='myModal'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'>"+title+"</div><div class='modal-body'>"+content+"</div><div class='modal-footer'>작성자 : "+writer+"</div></div></div></div>";
+				string += "<div class='modal fade' id='boardModal'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'>"+title+"</div><div class='modal-body'>"+content+"</div><div class='modal-footer'>작성자 : "+writer+"</div></div></div></div>";
 				string += "<script>";
 				string += "$(document).ready(function()";
 				string += "{$('head').append('<style type='text/css'>.modal .modal-body {max-height:"
-				string += "+ ($('body').height() * .7)";
-				string += "+ 'px;overflow-y: auto;}.modal-open .modal{overflow-y: hidden !important;}</style>');";
+				string += "+ ($('body').height() * 7)";
+				string += "+ 'px;overflow-y: center;}.modal-open .modal{overflow-y: hidden !important;}</style>');";
 				string += "});";
 				string += "<";
 				string += '/script>';
 				showModal.innerHTML = string;
-			}
+			} */
 			</script>
 		
 			

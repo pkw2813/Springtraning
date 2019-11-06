@@ -72,4 +72,10 @@ public class ProfessorController2 {
 		return "professor/stu_view_objection";
 	}
 	
+	
+	@RequestMapping("prof/popupBoard")
+	public String popupBoard() {
+		
+		return "professor/prof_view_subjectBoard";
+	}
 }

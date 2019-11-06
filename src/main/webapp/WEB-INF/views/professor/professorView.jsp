@@ -10,10 +10,10 @@
 
 <script>
 	function fn_updateProf(){
-		location.href="${pageContext.request.contextPath}/professor/updateProf?profId=${prof.profId}";
+		location.href="${pageContext.request.contextPath}/professor/updateProf?profId=${loginMember.profId}";
 	}
 	function fn_pwdUpdate(){
-		location.href="${pageContext.request.contextPath}/professor/updatePwd?profId=${prof.profId}";
+		location.href="${pageContext.request.contextPath}/professor/updatePwd?profId=${loginMember.profId}";
 	}
 </script>
 
@@ -57,39 +57,39 @@
 							<table class="table">
 								<tr>
 									<th>교번</th>
-									<td><c:out value="${prof.profId }"/></td>
+									<td><c:out value="${loginMember.profId }"/></td>
 								</tr>
 								<tr>
 									<th>이름</th>
-									<td><c:out value="${prof.profName }"/></td>
+									<td><c:out value="${loginMember.profName }"/></td>
 								</tr>
 								<tr>
 									<th>입사일</th>
-									<td><fmt:formatDate value="${prof.profEnroll }" pattern="yyyy년 MM월 dd일"/></td>
+									<td><fmt:formatDate value="${loginMember.profEnroll }" pattern="yyyy년 MM월 dd일"/></td>
 								</tr>
 								<tr>
 									<th>주민번호</th>
-									<td><c:out value="${prof.profSsn }"/></td>
+									<td><c:out value="${loginMember.profSsn }"/></td>
 								</tr>
 								<tr>
 									<th>학과번호</th>
-									<td><c:out value="${prof.deptCode }"/></td>
+									<td><c:out value="${loginMember.deptCode }"/></td>
 								</tr>
 								<tr>
 									<th>이메일</th>
-									<td><c:out value="${prof.email }"/></td>
+									<td><c:out value="${loginMember.email }"/></td>
 								</tr>
 								<tr>	
 									<th>전화번호</th>
-									<td><c:out value="${prof.phone }"/></td>
+									<td><c:out value="${loginMember.phone }"/></td>
 								</tr>
 								<tr>	
 									<th>주소</th>
-									<td><c:out value="${prof.address }"/></td>
+									<td><c:out value="${loginMember.address }"/></td>
 								</tr>
 								<tr>	
 									<th>성별</th>
-									<td><c:out value="${prof.gender }"/></td>
+									<td><c:out value="${loginMember.gender }"/></td>
 								</tr>
 								<%-- <tr>
 									<th>주/야</th>

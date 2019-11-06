@@ -26,45 +26,45 @@
 	<div class="col-12 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
-				<form action="${pageContext.request.contextPath }/professor/updateProfessorEnd?profId=${prof.profId}" method="post">
+				<form action="${pageContext.request.contextPath }/professor/updateProfessorEnd" method="post">
 					<div class="row">
 						<div class="col-10">
 							<table class="table">
 								<tr>
 									<th>교번</th>
-									<td><input name="profId" class="btn form-control" type="text" value="${prof.profId }" readonly/></td>
+									<td><input name="profId" class="btn form-control" type="text" value="${loginMember.profId }" readonly/></td>
 								</tr>
 								<tr>
 									<th>이름</th>
-									<td><input name="profName" class="btn form-control" type="text" value="${prof.profName }" readonly/></td>
+									<td><input name="profName" class="btn form-control" type="text" value="${loginMember.profName }" readonly/></td>
 								</tr>
 								<tr>
 									<th>입사일</th>
-									<td><input name="profEnroll" class="btn form-control" type="text" value='<fmt:formatDate value="${prof.profEnroll }" pattern="yyyy년 MM월 dd일"/>' readonly/></td>
+									<td><input class="btn form-control" type="text" value='<fmt:formatDate value="${loginMember.profEnroll }" pattern="yyyy년 MM월 dd일"/>' readonly/></td>
 								</tr>
 								<tr>
 									<th>주민번호</th>
-									<td><input name="profSsn" class="btn form-control" type="text" value="${prof.profSsn }" readonly/></td>
+									<td><input name="profSsn" class="btn form-control" type="text" value="${loginMember.profSsn }" readonly/></td>
 								</tr>
 								<tr>
 									<th>학과번호</th>
-									<td><input name="deptCode" class="btn form-control" type="text" value="${prof.deptCode }" readonly/></td>
+									<td><input name="deptCode" class="btn form-control" type="text" value="${loginMember.deptCode }" readonly/></td>
 								</tr>	
 								<tr>
 									<th>이메일</th>
-									<td><input name="email" class="btn form-control" type="email" value="${prof.email }"/></td>
+									<td><input name="email" class="btn form-control" type="email" value="${loginMember.email }"/></td>
 								</tr>
 								<tr>	
 									<th>전화번호</th>
-									<td><input name="phone" class="btn form-control" type="tel" value="${prof.phone }"/></td>
+									<td><input name="phone" class="btn form-control" type="tel" value="${loginMember.phone }"/></td>
 								</tr>
 								<tr>	
 									<th>주소</th>
-									<td><input name="address" class="btn form-control" type="text" value="${prof.address }"/></td>
+									<td><input name="address" class="btn form-control" type="text" value="${loginMember.address }"/></td>
 								</tr>
 								<tr>	
 									<th>성별</th>
-									<td><input name="gender" class="btn form-control" type="text" value="${prof.gender }" readonly/></td>
+									<td><input name="gender" class="btn form-control" type="text" value="${loginMember.gender }" readonly/></td>
 								</tr>
 								<!-- <tr>
 									<th>주/야</th>

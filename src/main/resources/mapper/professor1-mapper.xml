@@ -4,6 +4,10 @@
 	<select id="selectProfName" resultType="string">
 		SELECT PROF_NAME FROM HD_PROFESSOR_TB WHERE PROF_NAME='교수1'
 	</select>
+	<!-- 페이징 토탈데이타 -->
+	<select id="selectBoardCount" resultType="_int">
+		SELECT COUNT(*) FROM HD_PROF_BOARD_TB
+	</select>
 	<!-- 강의 개설 -->
 	<insert id="insertSubjectEnd" parameterType="map">
 		INSERT INTO HD_CLASS_TB VALUES('1',#{classYear},#{className},#{profId},#{openYn},#{capacity},#{classStart1},'15','15',#{classRoom},#{assignA},#{assignB},#{assignC},#{assignD},#{mTerm},#{fTerm},#{statusGrade},#{useBook},#{bookName},'유병승',#{evaStan},'한국어',#{openOther},#{oriFile},#{upFile})
@@ -14,7 +18,7 @@
 	</insert>
 	<!-- 교수 뷰 -->
 	<select id="professorView" resultType="professor" resultMap="professorResult1">
-		SELECT * FROM HD_PROFESSOR_TB WHERE PROF_ID = 'PROF01'
+		SELECT * FROM HD_PROFESSOR_TB WHERE PROF_ID = #{profId}
 	</select>
 	
 	<!-- 교수 정보수정 -->
@@ -30,10 +34,20 @@
 	<update id="profUpdatePwdEnd" parameterType="map">
 		UPDATE HD_PROFESSOR_TB SET PROF_PW=${profPwdUpdate} WHERE PROF_ID=#{profId} AND PROF_PW=#{profPw}
 	</update>
-	
+	<!-- 게시판뷰 -->
+	<select id="boardView" resultType="map">
+		SELECT B.PROF_BOARD_NO, B.PROF_NAME, B.PROF_BOARD_TYPE, B.PROF_BOARD_TITLE,B.PROF_BOARD_DATE,A.BOARD_REFILENAME FROM HD_PROF_BOARD_TB B, HD_PROF_ATTACHMENT_TB A WHERE B.PROF_BOARD_NO = A.PROF_BOARD_NO(+) ORDER BY B.PROF_BOARD_DATE DESC
+		<!-- SELECT A.*, (SELECT COUNT(*) FROM HD_PROF_ATTACHMENT_TB WHERE PROF_BOARD_NO = A.PROF_BOARD_NO) AS ATTACHCOUNT FROM HD_PROF_BOARD_TB A ORDER BY PROF_BOARD_DATE DESC -->
+	</select>
 	<!-- 게시판 작성 -->
-	<insert id="insertBoardEnd" parameterType="map">
-		INSERT INTO HD_PROF_BOARD_TB VALUES(SEQ_PROF_BOARD_NO.NEXTVAL,#{profName},#{profBoardType},#{profBoardTitle},#{profBoardContent},#{oriFileName},#{reName},SYSDATE)
+	<insert id="insertBoardEnd" parameterType="com.kh.finalProject.professor.model.vo.ProfessorBoard">
+		INSERT INTO HD_PROF_BOARD_TB VALUES(SEQ_PROF_BOARD_NO.NEXTVAL,#{profName},#{profBoardType},#{profBoardTitle},#{profBoardContent},SYSDATE)
+		<selectKey keyProperty="profBoardNo" resultType="_int" order="AFTER">
+			SELECT SEQ_PROF_BOARD_NO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<insert id="insertBoardAttachment" parameterType="com.kh.finalProject.professor.model.vo.ProfBoardAttachment">
+		INSERT INTO HD_PROF_ATTACHMENT_TB VALUES(SEQ_PROF_BOARD_FILENO.NEXTVAL,#{profBoardNo},#{boardOrifilename},#{boardRefilename},DEFAULT)
 	</insert>
 	<!-- subject -->
 	<select id="subjectCodeView" resultType="map">

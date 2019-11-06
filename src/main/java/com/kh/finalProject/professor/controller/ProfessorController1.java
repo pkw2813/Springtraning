@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService1;
+import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
 import com.kh.finalProject.professor.model.vo.Subject;
@@ -101,9 +104,9 @@ public class ProfessorController1 {
 	@RequestMapping("/professor/professorView")
 	public String professorView(Model model) {
 		
-		Professor p = service.professorView();
-		
-		model.addAttribute("prof",p);
+//		Professor p = service.professorView();
+//		
+//		model.addAttribute("prof",p);
 		
 		return "professor/professorView";
 	}
@@ -111,9 +114,9 @@ public class ProfessorController1 {
 	@RequestMapping("/professor/updateProf")
 	public String updateProfessor(Model model) {
 		
-		Professor p = service.professorView();
-		
-		model.addAttribute("prof",p);
+//		Professor p = service.professorView();
+//		
+//		model.addAttribute("prof",p);
 		
 		return "professor/updateProfessor";
 	}
@@ -167,10 +170,10 @@ public class ProfessorController1 {
 		
 		if(result>0) {
 			msg = "비밀번호 변경완료";
-			loc = "/son_n_index.jsp";
+			loc = "/index.jsp";
 		}else {
 			msg = "비밀번호가 다릅니다!";
-			loc = "/son_n_index.jsp";
+			loc = "/index.jsp";
 		}
 		
 		model.addAttribute("msg",msg);
@@ -180,11 +183,21 @@ public class ProfessorController1 {
 	}
 	//강의 자료 게시판
 	@RequestMapping("/professor/lectureData")
-	public String lecturePlan(Model model) {
+	public String lecturePlan(@RequestParam(value="cPage",required=false,defaultValue="1")int cPage ,Model model) {
+//		Professor p1 = (Professor)session.getAttribute("loginMember");
+//		String id = p1.getProfId();
+//		Professor p = service.professorView();
+//		
+//		model.addAttribute("prof",p);
 		
-		Professor p = service.professorView();
+		int numPerPage=10;
 		
-		model.addAttribute("prof",p);
+		List<ProfessorBoard> list = service.boardView(cPage, numPerPage);
+		int totalData = service.selectBoardCount();
+		
+		model.addAttribute("board",list);
+		model.addAttribute("totalCount",totalData);
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/lectureData"));
 		
 		return "professor/lectureData";
 	}
@@ -192,23 +205,29 @@ public class ProfessorController1 {
 	@RequestMapping("/professor/insertBoard")
 	public String insertBoard(Model model) {
 		
-		Professor p = service.professorView();
-		
-		model.addAttribute("prof",p);
+//		Professor p = service.professorView();
+//		
+//		model.addAttribute("prof",p);
 		
 		return "professor/insertBoard";
 	}
-	
+	//게시판 보기
+	@RequestMapping("/professor/selectBoardView")
+	public String selectBoardView(Model model) {
+		
+		return "professor/selectBoardView";
+	}
 	@RequestMapping("/professor/insertBoardEnd")
 	public ModelAndView insertBoardEnd(MultipartFile[] upFile, HttpServletRequest req, ProfessorBoard pb) {
-		System.out.println("asdfasdfsadfsadf 현태!");
-		logger.info("getProfName : "+pb.getProfName());
+
+		String msg = "";
+		String loc = "";
 		
 		ModelAndView mv = new ModelAndView();
 		
 		String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/SubjectProject");
 		
-		List<ProfessorBoard> list = new ArrayList<ProfessorBoard>();
+		List<ProfBoardAttachment> list = new ArrayList<ProfBoardAttachment>();
 		
 		File dir = new File(saveDir);
 		
@@ -231,26 +250,30 @@ public class ProfessorController1 {
 					e.printStackTrace();
 				}
 				
-//				ProfessorBoard pb = new ProfessorBoard();
-				pb.setProfOrifilename(oriFileName);
-				pb.setProfRefilename(reName);
+				ProfBoardAttachment pba = new ProfBoardAttachment();
+				pba.setBoardOrifilename(oriFileName);
+				pba.setBoardRefilename(reName);
 				
-				list.add(pb);
+				list.add(pba);
 			}
 			
 		}
 		
 		try {
-			service.insertBoardEnd(list);
+			service.insertBoardEnd(pb,list);
+			msg = "작성 완료";
+			loc = "/professor/lectureData";
 		}catch(RuntimeException e) {
 			e.printStackTrace();
+			msg = "작성 실패";
+			loc = "/professor/insertBoardEnd";
 			logger.info("생성불가");
 		}
 		
-		logger.info("mvmvmv"+mv);
-		logger.info("list : " + list);
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
 		
-		mv.setViewName("redirect:/");
+		mv.setViewName("common/msg");
 		
 		return mv;
 	}

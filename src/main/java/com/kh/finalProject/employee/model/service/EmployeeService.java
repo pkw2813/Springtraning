@@ -14,8 +14,6 @@ public interface EmployeeService {
 	
 	BeforeStu selectBeforeStu(int beforeStu);
 	
-	int deleteBeforeStu(int beforeStu) throws Exception;
-
-	int insertNewStu(Student s) throws Exception;
+	int insertNewStu(Student s, int beforeStu) throws Exception;
 
 	}
