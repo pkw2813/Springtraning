@@ -32,12 +32,12 @@
 			</div>
 		</div>
 		<!-- Main Content start -->
-		<div class="row">
+		<div class="row ">
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-header">
 						<form action="${path }/prof/viewClassAttend.hd" method="post">
-							<table class="table table-bordered table-hover col-md-10"
+							<table class="table table-bordered table-hover col-md-10 table-condensed"
 								style="text-align: center;">
 								<thead class="thead-dark">
 									<tr>
@@ -91,7 +91,7 @@
 
 					<div class="card-body">
 						<div class="col-md-12">
-							<table class="table table-bordered table-hover"
+							<table class="table table-bordered table-hover table-condensed"
 								style="text-align: center;">
 								<thead class="thead-dark">
 									<tr>
@@ -105,12 +105,10 @@
 										<th>조퇴</th>
 										<th>(금일 출결상태)2019-11-04</th>
 										<th>
-											<button type="button" class="btn btn-primary">금일
-												출석입력</button>
+											금일출석입력
 										</th>
 										<th>
-											<button type="button" class="btn btn-primary">전체
-												출석조회</button>
+											전체출석조회
 										</th>
 									</tr>
 								</thead>
@@ -144,7 +142,7 @@
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<table class="table table-bordered table-hover">
+											<table class="table table-bordered table-hover table-condensed">
 												<thead class="thead-dark">
 													<tr>
 														<th>철학 입문</th>
@@ -157,7 +155,7 @@
 											</table>
 										</div>
 										<div class="modal-body">
-											<table class="table table-bordered table-hover">
+											<table class="table table-bordered table-hover table-condensed">
 												<thead>
 													<tr>
 														<th>날짜</th>
@@ -206,7 +204,7 @@
 						</div>
 					</div>
 
-				<div class="card-footer">
+				<div class="card-footer" style="text-align : center;">
 					<button class="btn btn-info">등록</button>
 					<button class="btn btn-info">취소</button>
 				</div>

@@ -181,15 +181,13 @@ $(function(){
 					<input type="text" id="beforeName" name="beforeName" placeholder="이름 을 입력하세요" class="form-control" required />
 			<hr>
 			<label class="control-label">입학 유형</label>
-			<select class="form-control" name="beforeType">
-				<option value="정시" class="enrollType" >정시</option>
+			<select class="form-control" name="beforeType">				<option value="정시" class="enrollType" >정시</option>
 				<option value="수시" class="enrollType">수시</option>
 				<option value="편입" class="enrollType">편입</option>				
 			</select>		
 				<hr>
 			<label class="control-label">연락처</label>
 					<input type="tel" id="beforePhone" name="beforePhone" placeholder=" '-' 제외 입력" autocomplete=off class="form-control" />
-				
 					<input type="hidden" class="saveEmail" id="saveEmail" name="beforeEmail" value="">
 					<input type="hidden" class="flagEmail" id="flagEmail" name="flagEmail" value="false">
 					<br>
@@ -204,16 +202,14 @@ $(function(){
 				
 			<label class="control-label">학과 코드</label>				
 				
-						<select class="form-control selectCol" name ='beforeColCode'>
-								
+						<select class="form-control selectCol" name ='beforeColCode'>								
 						</select>
 						<!-- 여기에 학과 선택 넣어야함 .selectCol -->
 						<select class="form-control selectdep"  name='beforeDeptCode' required>
-
 						</select>
 						<br>
 						<label class="control-label">주민 등록 번호</label>	
-					<input type="text" id="jumin" name="jumin" placeholder="주민등록번호 13자리를 입력하세요" class="form-control" onblur="setJumin(this)" />
+						<input type="text" id="jumin" name="jumin" placeholder="주민등록번호 13자리를 입력하세요" class="form-control" onblur="setJumin(this)" />
 					<input type="hidden" id="beforeNo" value="" name="beforeNo">
 					<br>														
 					<br>
@@ -251,14 +247,16 @@ $(function(){
 $(function(){
 	$('#enrollBtn').click(function() {
 
-	// 이름 
-	let name = $("#beforeName").val();
+		//이름
+		let name = $("#beforeName").val();
 		if(name == null || name == '') {
 			alert("이름을 입력해 주세요.");
 		}
-
+		
+		
     // //전화번호 정규표현식
-     let regPhone = /^\d{3}\d{3,4}\d{4}$/;
+    let regPhone = /^\d{3}\d{3,4}\d{4}$/;
+    
  	let phone = $('#beforePhone');
             if (!phone.val()) {
                 alert('전화번호를 입력해주세요.');
@@ -290,12 +288,9 @@ $(function(){
 			}
 
 
+
 			//주민등록 번호
 			let jumin = document.getElementById('jumin').value;
-
-			console.log("주민" + jumin);
-			console.log("주민길이" + jumin.length);
-			
 			if(jumin == "") {
 				alert("주민번호를 입력해주세요");
 				return false;
@@ -318,16 +313,20 @@ $(function(){
                 detailAddress.focus();
                 return false;
             }
-			let postCode = document.getElementById('sample6_postcode').value;
+
+
+            let postCode = document.getElementById('sample6_postcode').value;
             let addrCode = document.getElementById("sample6_address").value;
             let detailAddr = document.getElementById("sample6_detailAddress").value;
 			let beforeAddr = "<input type='hidden' name='beforeAddr' value='"+postCode+" / "+addrCode+" / "+detailAddr+"'/>"; 
 			document.getElementsByClassName("inputAddress")[0].innerHTML += beforeAddr;
 			console.log("주소값 :"+beforeAddr);
-			
+            
+            
 
 	})
 });
+
 
 
 
@@ -395,8 +394,9 @@ $(function() {
 				colListHtml = "<option value='select' id='selCol'>대학 선택</option>";
 				for(let i = 0; i < data.list.length; i++) {
 					let cols = data.list[i];
+					console.log(cols['COL_CODE']);
 
-					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList' >"+cols['COL_NAME']+"</option>";
+					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
 				}
 				
 				$('.selectCol').html(colListHtml);
@@ -422,8 +422,6 @@ $(function() {
 			url: "${pageContext.request.contextPath}/selectDeptList.do",
 			data: {"result" : $('.selectCol').val()},
 			success: function(data) {
-				console.log(data);
-				console.log(data.list);
 				let deptListHtml = "<option value='select' id='selDept'>학과 선택</option>";
 				for(let i = 0; i < data.list.length; i++) {
 					let depts = data.list[i];
@@ -567,7 +565,6 @@ if (emailVal.match(regExp) != null) {
                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
                     document.getElementById('sample6_postcode').value = data.zonecode;
                     document.getElementById("sample6_address").value = addr;
-
                     // 커서를 상세주소 필드로 이동한다.
                     document.getElementById("sample6_detailAddress").focus();
                 }

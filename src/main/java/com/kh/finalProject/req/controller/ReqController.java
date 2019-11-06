@@ -1,6 +1,6 @@
 package com.kh.finalProject.req.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,5 +30,36 @@ public class ReqController {
 		model.addAttribute("loc", loc);
 		return "common/msg";
 	}
+	
+	@RequestMapping("/reqList.hd")
+	public String reqList(Model model) {
+		List<Req> list=service.reqList();
+		System.out.println(list);
+		return "req/reqList";
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

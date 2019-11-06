@@ -43,7 +43,7 @@ public class ProfessorController2 {
 	@RequestMapping("prof/view_evaluation.hd")
 	public String viewEvaluation() {
 		
-		return "professor/prof_view_evaluation";
+		return "professor/prof_view_classEvaluation";
 	}
 	
 	

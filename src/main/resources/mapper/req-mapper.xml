@@ -4,4 +4,20 @@
   <insert id="insertReq" parameterType="req">
   	INSERT INTO HD_REQ_TB VALUES(REQ_NO_SEQ.NEXTVAL,#{reqTitle}, #{reqContents}, #{fromName}, #{toName}, DEFAULT, DEFAULT) 
   </insert>
+  
+  <select id="reqList" resultMap="reqResult">
+  	SELECT * FROM HD_REQ_TB WHERE REQ_READ='Y'
+  </select>
+  
+  
+  <resultMap id="reqResult" type="req">
+		<result column="REQ_NO" property="reqNo" />
+		<result column="REQ_TITLE" property="reqTitle" />
+		<result column="REQ_CONTENTS" property="reqContents" />
+		<result column="FROM_NAME" property="fromName" />
+		<result column="TO_NAME" property="toName" />	
+		<result column="TO_TIME" property="toTime" />	
+		<result column="REQ_READ" property="reqRead" />	
+	</resultMap>
+  
 </mapper>

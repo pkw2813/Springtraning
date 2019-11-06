@@ -21,8 +21,36 @@
 			<div class="row">
 				<div class="col-md-12 grid-margin stretch-card">
 					<div class="card">
+						<div class="card-header">
+							<div class="col-md-3" id="choiceYear">
+								<label for="choiceClass" class="text-warning">연도선택</label> <select
+									class="form-control">
+									<option>2019</option>
+									<option>2018</option>
+									<option>2017</option>
+								</select>
+							</div>
+						</div>
 						<div class="card-body">
-						
+								<table class="table table-striped table-hover table-condensed">
+									<thead class="thead-dark">
+										<tr>
+											<th></th>
+											<th></th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+										
+										</tr>
+									
+									</tbody>
+								
+								</table>
 						</div>
 					</div>
 				</div>

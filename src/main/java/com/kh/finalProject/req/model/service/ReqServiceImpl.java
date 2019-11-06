@@ -1,5 +1,7 @@
 package com.kh.finalProject.req.model.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,30 @@ public class ReqServiceImpl implements ReqService {
 		}
 		return result;
 	}
+
+	@Override
+	public List<Req> reqList() {
+		List<Req> list=dao.reqList(session);
+		return list;
+	}
+	
 	
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
