@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="professor1">
+	<select id="selectProfName" resultType="string">
+		SELECT PROF_NAME FROM HD_PROFESSOR_TB WHERE PROF_NAME='교수1'
+	</select>
+	<!-- 강의 개설 -->
+	<insert id="insertSubjectEnd" parameterType="map">
+		INSERT INTO HD_CLASS_TB VALUES('1',#{classYear},#{className},#{profId},#{openYn},#{capacity},#{classStart1},'15','15',#{classRoom},#{assignA},#{assignB},#{assignC},#{assignD},#{mTerm},#{fTerm},#{statusGrade},#{useBook},#{bookName},'유병승',#{evaStan},'한국어',#{openOther},#{oriFile},#{upFile})
+	</insert>
+	
+	<insert id="insertClassEnd" parameterType="map">
+		INSERT INTO HD_SUBJECT_TB VALUES('1',#{subName},#{tSubject},#{tDept},#{tGrade},#{completePt},#{tSemester},#{subType},#{deptCode})
+	</insert>
+	<!-- 교수 뷰 -->
+	<select id="professorView" resultType="professor" resultMap="professorResult1">
+		SELECT * FROM HD_PROFESSOR_TB WHERE PROF_ID = 'PROF01'
+	</select>
+	
+	<!-- 교수 정보수정 -->
+<!-- 	<insert id="updateProfessor" parameterType="string">
+		UPDATE HD_PROFESSOR_TB SET EMAIL=#{email}, PHONE=#{phone}, ADDRESS=#{address} WHERE PROF_ID=#{profId}
+	</insert> -->
+	
+	<update id="updateProfessor" parameterType="professor">
+		UPDATE HD_PROFESSOR_TB SET EMAIL=#{email}, PHONE=#{phone}, ADDRESS=#{address} WHERE PROF_ID=#{profId}
+	</update>
+
+	<!-- 비번 -->
+	<update id="profUpdatePwdEnd" parameterType="map">
+		UPDATE HD_PROFESSOR_TB SET PROF_PW=${profPwdUpdate} WHERE PROF_ID=#{profId} AND PROF_PW=#{profPw}
+	</update>
+	
+	<!-- 게시판 작성 -->
+	<insert id="insertBoardEnd" parameterType="map">
+		INSERT INTO HD_PROF_BOARD_TB VALUES(SEQ_PROF_BOARD_NO.NEXTVAL,#{profName},#{profBoardType},#{profBoardTitle},#{profBoardContent},#{oriFileName},#{reName},SYSDATE)
+	</insert>
+	<!-- subject -->
+	<select id="subjectCodeView" resultType="map">
+		SELECT * FROM HD_SUBJECT_TB WHERE DEPT_CODE='D1'
+	</select>
+	<select id="selectSubject" resultType="map" parameterType="string">
+		SELECT * FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}
+	</select>
+	
+	
+	
+	
+	
+	
+ <resultMap id="professorResult1" type="professor">
+	<result column="PROF_ID" property="profId" />
+	<result column="PROF_PW" property="profPw" />
+	<result column="PROF_NAME" property="profName" />
+	<result column="PROF_SSN" property="profSsn" />
+	<result column="DEPT_CODE" property="deptCode" />	
+	<result column="EMAIL" property="email" />	
+	<result column="PHONE" property="phone" />	
+	<result column="ADDRESS" property="address" />	
+	<result column="GENDER" property="gender" />	
+	<result column="PROF_ENROLL" property="profEnroll" />	
+</resultMap>
+
+ <resultMap id="professorBoardResult1" type="professorBoard">
+	<result column="PROF_BOARD_NO" property="profBoardNo" />
+	<result column="PROF_NAME" property="profName" />
+	<result column="PROF_BOARD_TYPE" property="profBoardType" />
+	<result column="PROF_BOARD_TITLE" property="profBoardTitle" />
+	<result column="PROF_BOARD_CONTENT" property="profBoardContent" />	
+	<result column="PROF_ORIFILENAME" property="profOrifilename" />	
+	<result column="PROF_REFILENAME" property="profRefilename" />	
+	<result column="PROF_BOARD_DATE" property="profBoardTitle" />	
+</resultMap>
+	
+</mapper>
