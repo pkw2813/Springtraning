@@ -52,7 +52,6 @@ public class MailController {
 		boolean flag = mailService.send(subject, sb.toString(), "lgwan840@gmail.com", userEmail)?true:false;
 		System.out.println(flag);
 		return String.valueOf(flag);
- 		
 	}
 	
 	@RequestMapping(value="/emailAuth.do")
@@ -68,5 +67,17 @@ public class MailController {
 		}
 			return "false";
 	}
+	
+
+	public void forSendEmail(String userEmail, String title, String msg,  HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		String subject = title;
+		StringBuilder sb = new StringBuilder();
+		sb.append(msg);
+		mailService.send(subject, sb.toString(), "lgwan840@gmail.com", userEmail);
+	}
+	
+	
+	
 	
 }
