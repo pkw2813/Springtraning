@@ -16,7 +16,7 @@
 					</div>
 				</div>
 			</div>
-			</div>
+		</div>
 <!-- Main Content start -->	
 			<div class="row">
 				<div class="col-md-12 grid-margin stretch-card">

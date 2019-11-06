@@ -194,11 +194,11 @@
 																			+ 'px;overflow-y: auto;}.modal-open .modal{overflow-y: hidden !important;}</style>');
 												});
 
-								$('#myModal').modal("toggle");
+							/* 	$('#myModal').modal("toggle");
 								// 반대로 모달상태를 전환함
 								$('#myModal').modal("hide");
 								// 모달창 열기
-								$('#myModal').modal("show");
+								$('#myModal').modal("show"); */
 								// 모달창 닫음
 							</script>
 						</div>

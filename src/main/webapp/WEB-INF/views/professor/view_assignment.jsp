@@ -65,11 +65,20 @@
 			</div>
 		</div>
 		<!--  -->
+		<c:set var="boardTitle" value="자바고찰"/>
+		<c:set var="boardContent" value="자바는 어렵다"/>
+		<c:set var="boardWriter" value="박성술"/>
+		<c:set var="boardTitle2" value="자바고찰2"/>
+		<c:set var="boardContent2" value="자바는 어렵다2"/>
+		<c:set var="boardWriter2" value="박성술2"/>
+		
+		
+		
 		<div class="row" style="text-align : center;">
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-header">
-						<h2>#영문학기초 과제 제출 게시판</h2>
+						<h2>#영문학기초 과제 게시판</h2>
 					</div>
 					<div class="card-body">
 							<table class="table table-striped table-hover">
@@ -83,22 +92,29 @@
 								<tbody>
 									<tr>
 										<td>박성술</td>
-										<td><a class="form-control">자바에대한 고찰</a></td>	
+										<td><button type="button" class="btn btn-success btn-toggle btn-block"
+												onclick="createModal('${boardTitle }','${boardContent}','${boardWriter }' );"
+												data-toggle="modal" data-target="#myModal"
+												>자바고찰1</button></td>
 										<td>2019/08/07</td>
 									</tr>
 									<tr>
 										<td>박성술</td>
-										<td><a class="form-control">자바에대한 고찰</a></td>
+										<td><button type="button" class="btn btn-success btn-toggle btn-block"
+										onclick="createModal('${boardTitle2 }','${boardContent2}','${boardWriter2 }' );"
+												data-toggle="modal" data-target="#myModal">자바고찰2</button></td>
 										<td>2019/08/07</td>
 									</tr>
 									<tr>
 										<td>박성술</td>
-										<td><a class="form-control">자바에대한 고찰</a></td>
+										<td><button type="button" class="btn btn-success btn-toggle btn-block"
+												data-toggle="modal" data-target="#myModal">자바고찰3</button></td>
 										<td>2019/08/07</td>
 									</tr>
 									<tr>
 										<td>박성술</td>
-										<td><a class="form-control">자바에대한 고찰</a></td>
+										<td><button type="button" class="btn btn-success btn-toggle btn-block"
+												data-toggle="modal" data-target="#myModal">자바고찰4</button></td>
 										<td>2019/08/07</td>
 									</tr>
 								</tbody>
@@ -120,9 +136,89 @@
 				</div>
 			</div>
 		</div>
+		<!-- 본문 끝 -->
+		<!-- 게시판 내용 모달 시작  -->
+		<div id="showModal">
+			
+		</div>		
+				
+				
+	<!-- 	<div class="modal fade" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						
+					</div>
+					<div class="modal-body">
+				
+					</div>
+					<div class="modal-footer">
+			
+					</div>
+				</div>
+			</div>
+		</div> -->
+		<!-- 게시판 내용 모달 끝  -->
+		<!-- 게시판 내용  스크립트 시작 -->
+			<script>
+			//모달  게시판 내용 삽입
+			function createModal(title, content, writer){ 
+				var string
+				var showModal = document.getElementById("showModal");
+				
+				string += "<div class='modal fade' id='myModal'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'>"+title+"</div><div class='modal-body'>"+content+"</div><div class='modal-footer'>작성자 : "+writer+"</div></div></div></div>";
+				string += "<script>";
+				string += "$(document).ready(function()";
+				string += "{$('head').append('<style type='text/css'>.modal .modal-body {max-height:"
+				string += "+ ($('body').height() * .7)";
+				string += "+ 'px;overflow-y: auto;}.modal-open .modal{overflow-y: hidden !important;}</style>');";
+				string += "});";
+				string += "<";
+				string += '/script>';
+				showModal.innerHTML = string;
+			}
+			</script>
+		
+			
+			
+			
+			
+				<script>
+			//=========
+			//모달 띄우기
+					/* $(document).ready(function() 
+							{$('head').append('<style type="text/css">.modal .modal-body {max-height:
+							+ ($('body').height() * .7)
+							+ 'px;overflow-y: auto;}.modal-open .modal{overflow-y: hidden !important;}</style>');
+							});
+				// 모달창 닫음
+				
+				/* function createModal(title, content, writer){ 
+				var showModal = document.getElementById("showModal");
+				showModal.innerHTML += "		
+				<div class='modal fade' id='myModal'>
+					<div class='modal-dialog'>
+						<div class='modal-content'>
+							
+							<div class='modal-header'>
+							 title
+							</div>
+							<div class='modal-body'>
+							content
+							</div>
+							<div class='modal-footer'>
+							writer
+							</div>
+							
+						</div>
+					</div>
+				</div>";
+			} */
+			</script>
+		<!-- 게시판 내용  스크립트 끝 -->
+		
+		
 		<!--  -->
-
-	</div>
 
 
 
