@@ -24,7 +24,7 @@
 					
 				</tr>
 				<c:forEach var="stu" items="${list}" varStatus="v">
-					<tr>
+					<tr class="${stu.beforeStu}">
 					<td>${v.index +1}</td>
 					<td>${stu.beforeName }</td>
 					<td>${stu.beforeType }</td>
@@ -34,8 +34,8 @@
 					<td>${stu.beforeColName }</td>
 					<td>${stu.beforeDeptName }</td>
 					<td>
-					<input type="button" class="btn btn-outline-success btn-fw" value="승인">
-					<input type="button" class="btn btn-outline-danger btn-fw" value="거절">	
+					<input type="button" class="btn btn-outline-success btn-fw" onclick="insertNewStu(${stu.beforeStu});" value="승인"/>
+					<input type="button" class="btn btn-outline-danger btn-fw" onclick="deleteBeforeStu(${stu.beforeStu});" value="거절"/>	
 					</td>					
 				</tr>
 				</c:forEach>
@@ -52,7 +52,7 @@ function insertNewStu(result) {
 	$.ajax({
 		type : 'post',
 		url: "${pageContext.request.contextPath}/insertNewStu.do",
-		data : {"result" : result},
+		data : {"beforeStu" : result},
 		success : function(data) {
 			console.log(data);
 		}

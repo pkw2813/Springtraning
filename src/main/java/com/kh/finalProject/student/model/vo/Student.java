@@ -20,7 +20,7 @@ public class Student {
 	private String stuTel;
 	private String stuAddr;
 	private String gender;
-	private int deptCode;
+	private String deptCode;
 	private Date enterDate;
 	private String stuEmail;
 	private String regStatus;

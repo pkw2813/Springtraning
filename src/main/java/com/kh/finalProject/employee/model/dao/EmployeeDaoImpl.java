@@ -5,7 +5,9 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.employee.model.vo.Employee;
+import com.kh.finalProject.student.model.vo.Student;
 
 @Repository
 public class EmployeeDaoImpl implements EmployeeDao {
@@ -22,7 +24,28 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public List enrollStuList(SqlSessionTemplate session) {
 		return session.selectList("beforeStu.selectList");
 	}
+
+	@Override
+	public BeforeStu selectBeforeStu(SqlSessionTemplate session, int beforeStu) {
+//		return session.selectOne("beforeStu.selectBeforeStu", beforeStu);
+		return session.selectOne("beforeStu.selectBeforeStu", beforeStu);
+	}
+
+	@Override
+	public int deleteBeforeStu(SqlSessionTemplate session, int beforeStu) {
+		return session.delete("beforeStu.deleteBeforeStu", beforeStu);
+	}
+
+	@Override
+	public int insertNewStu(SqlSessionTemplate session, Student s) {
+		return session.insert("student.insertNewStu", s);
+	}
 	
+	
+	
+	
+	
+
 	
 
 }
