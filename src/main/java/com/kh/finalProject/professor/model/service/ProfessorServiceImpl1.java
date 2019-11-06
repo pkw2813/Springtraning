@@ -108,7 +108,17 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		return result;
 		
 	}
-	
+//	게시판select
+	@Override
+	public ProfessorBoard selectBoardView(int profBoardNo) {
+		ProfessorBoard pb = dao.selectBoardView(session, profBoardNo);
+		return pb;
+	}
+	@Override
+	public List<ProfBoardAttachment> selectProfAttachment(int profBoardNo) {
+		List<ProfBoardAttachment> pba = dao.selectProfAttachment(session, profBoardNo);
+		return pba;
+	}
 //	subject
 	@Override
 	public List<Subject> subjectCodeView(){

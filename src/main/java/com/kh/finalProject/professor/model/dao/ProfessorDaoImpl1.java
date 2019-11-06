@@ -71,7 +71,15 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	public int insertBoardAttachment(SqlSessionTemplate session, ProfBoardAttachment pba) {
 		return session.insert("professor1.insertBoardAttachment",pba);
 	}
-	
+	//게시판 상세
+	@Override
+	public ProfessorBoard selectBoardView(SqlSessionTemplate session, int profBoardNo) {
+		return session.selectOne("professor1.selectBoardView",profBoardNo);
+	}
+	@Override
+	public List<ProfBoardAttachment> selectProfAttachment(SqlSessionTemplate session, int profBoardNo) {
+		return session.selectList("professor1.selectProfAttachment",profBoardNo);
+	}
 //	subject
 	@Override
 	public List<Subject> subjectCodeView(SqlSessionTemplate session){

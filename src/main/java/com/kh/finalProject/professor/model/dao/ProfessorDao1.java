@@ -33,6 +33,9 @@ public interface ProfessorDao1 {
 	//게시판 작성
 	int insertBoardEnd(SqlSessionTemplate session,ProfessorBoard pb);
 	int insertBoardAttachment(SqlSessionTemplate session, ProfBoardAttachment pba);
+	//게시판 상세
+	ProfessorBoard selectBoardView(SqlSessionTemplate session, int profBoardNo);
+	List<ProfBoardAttachment> selectProfAttachment(SqlSessionTemplate session, int profBoardNo);
 //	subject
 	List<Subject> subjectCodeView(SqlSessionTemplate session);
 	Map<String,String> selectSubject(SqlSessionTemplate session, String subCode);

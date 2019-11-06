@@ -1,17 +1,19 @@
 package com.kh.finalProject.professor.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -213,9 +215,16 @@ public class ProfessorController1 {
 	}
 	//게시판 보기
 	@RequestMapping("/professor/selectBoardView")
-	public String selectBoardView(Model model) {
+	public ModelAndView selectBoardView(Model model, int profBoardNo) {
 		
-		return "professor/selectBoardView";
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("profBoard",service.selectBoardView(profBoardNo));
+		mv.addObject("profAttachment",service.selectProfAttachment(profBoardNo));
+		
+		mv.setViewName("/professor/selectBoardView");
+		
+		return mv;
 	}
 	@RequestMapping("/professor/insertBoardEnd")
 	public ModelAndView insertBoardEnd(MultipartFile[] upFile, HttpServletRequest req, ProfessorBoard pb) {
@@ -307,4 +316,113 @@ public class ProfessorController1 {
 		
 		return jsonStr; // <- 받아온 객체가 넘어간다
 	}
+	
+	//파일 다운로드용
+	@RequestMapping("/professor/fileDownLoad")
+	public void fileDownload(String oName, String rName, HttpServletRequest req, HttpServletResponse res) {
+		BufferedInputStream bis = null;
+		ServletOutputStream sos = null;
+		
+		String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/SubjectProfessor");
+		
+		File downFile = new File(saveDir+"/"+rName);
+		
+		try {
+			FileInputStream fis = new FileInputStream(downFile);
+			bis = new BufferedInputStream(fis);
+			
+			sos = res.getOutputStream();
+			String resFileName = "";
+			
+			boolean isMSIE = req.getHeader("user-agent").indexOf("MSIE")!=-1 || req.getHeader("user-agent").indexOf("Trident")!=-1;
+			
+			if(isMSIE) {
+				resFileName = URLEncoder.encode(oName, "UTF-8");
+				resFileName = resFileName.replaceAll("\\+", "%20");
+			}else {
+				resFileName = new String(oName.getBytes("UTF-8"),"ISO-8859-1");
+			}
+			res.setContentType("application/octet-stream;charset=utf-8");
+			
+			res.setContentLength((int)downFile.length());
+			int read = 0;
+			
+			while((read=bis.read())!=-1) {
+				sos.write(read);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				sos.close();
+				bis.close();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

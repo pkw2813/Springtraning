@@ -49,6 +49,13 @@
 	<insert id="insertBoardAttachment" parameterType="com.kh.finalProject.professor.model.vo.ProfBoardAttachment">
 		INSERT INTO HD_PROF_ATTACHMENT_TB VALUES(SEQ_PROF_BOARD_FILENO.NEXTVAL,#{profBoardNo},#{boardOrifilename},#{boardRefilename},DEFAULT)
 	</insert>
+	<!-- 게시판 상세 -->
+	<select id="selectBoardView" parameterType="_int" resultType="com.kh.finalProject.professor.model.vo.ProfessorBoard">
+		SELECT * FROM HD_PROF_BOARD_TB WHERE PROF_BOARD_NO = #{profBoardNo}
+	</select>
+	<select id="selectProfAttachment" parameterType="_int" resultType="com.kh.finalProject.professor.model.vo.ProfBoardAttachment">
+		SELECT * FROM HD_PROF_ATTACHMENT_TB WHERE PROF_BOARD_NO = #{profBoardNo}
+	</select>
 	<!-- subject -->
 	<select id="subjectCodeView" resultType="map">
 		SELECT * FROM HD_SUBJECT_TB WHERE DEPT_CODE='D1'
