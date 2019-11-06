@@ -21,13 +21,23 @@
 	</insert>
 
 	<select id="selectList" resultMap="selectMap">	
-SELECT * FROM
-  (SELECT  COL_CODE, COL_NAME, DEPT_CODE AS D, DEPT_NAME FROM HD_COLLEGE_TB 
-  	JOIN hd_department_tb USING(COL_CODE))
-  		JOIN hd_admission_tb A USING(COL_CODE) WHERE D = A.DEPT_CODE 
+		SELECT * FROM
+  		(SELECT  COL_CODE, COL_NAME, DEPT_CODE AS D, DEPT_NAME FROM HD_COLLEGE_TB 
+  			JOIN hd_department_tb USING(COL_CODE))
+  				JOIN hd_admission_tb A USING(COL_CODE) WHERE D = A.DEPT_CODE 
 	</select>
+	
+	<select id="selectBeforeStu" parameterType="_int" resultMap="selectMap">
+	SELECT * FROM hd_admission_tb WHERE BEFORE_STU_SEQ = #{beforeStu}
+	</select>
+	
+	<delete id="deleteBeforeStu" parameterType="_int">
+	DELETE FROM hd_admission_tb WHERE BEFORE_STU_SEQ = #{beforeStu}
+	</delete>
+	
+	
 
-	<resultMap type="map" id="selectMap">
+	<resultMap type="beforeStudent" id="selectMap">
 		<result column="BEFORE_STU_SEQ" property="beforeStu"/>
 		<result column="BEFORE_NAME" property="beforeName"/>
 		<result column="BEFORE_TYPE" property="beforeType"/>

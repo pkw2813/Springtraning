@@ -318,7 +318,7 @@ $(function(){
             let postCode = document.getElementById('sample6_postcode').value;
             let addrCode = document.getElementById("sample6_address").value;
             let detailAddr = document.getElementById("sample6_detailAddress").value;
-			let beforeAddr = "<input type='hidden' name='beforeAddr' value='"+postCode+" / "+addrCode+" / "+detailAddr+"'/>"; 
+			let beforeAddr = "<input type='hidden' name='beforeAddr' value='"+postCode+" PSTD "+addrCode+" "+detailAddr+"'/>"; 
 			document.getElementsByClassName("inputAddress")[0].innerHTML += beforeAddr;
 			console.log("주소값 :"+beforeAddr);
             
