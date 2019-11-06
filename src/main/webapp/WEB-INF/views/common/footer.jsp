@@ -32,6 +32,7 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="${path }/resources/assets/js/dashboard.js"></script>
+  <script src="${path }/resources/assets/js/file-upload.js"></script>
   <!-- End custom js for this page-->
 </body>
 
