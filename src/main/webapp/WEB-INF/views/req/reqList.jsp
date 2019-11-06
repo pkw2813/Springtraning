@@ -36,7 +36,7 @@
                       <tbody>
                       <c:forEach items="${list }" var="l" varStatus="v">
                         <tr class="reqOne">
-                          <td>${l.reqNo }<input type="hidden" value="${l.reqNo }" class="reqNo"/></td>
+                          <td>${v.count }<input type="hidden" value="${l.reqNo }" class="reqNo"/></td>
                           <td>${l.reqTitle }</td>
                           <td>${l.toName }</td>
                           <td>${l.toTime }</td>

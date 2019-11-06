@@ -68,23 +68,23 @@
       <!-- Modal content -->
       <div class="modal-content">
         <form action="${path}/req.hd">
-			<span class="close" id="close">&times;</span>
-			<p>건의사항</p>
+			<span class="close" id="close2">&times;</span>
+			<p>건의사항 답변 (처리완료시 답변)</p>
 			<div class="form-group">
 			<hr>
 			<label class="control-label">제목</label>
-			<input type="text" id="reqTitle" name="reqTitle" placeholder="제목을 입력하세요" class="form-control" required />
+			<input type="text" id="reqTitle" name="reqTitle" placeholder="제목을 입력하세요" class="form-control" value="[건의사항 처리완료]" required />
 			<hr>
-			<input type="hidden" id="toName" name="toName" value="${userId }"/>
+			<input type="hidden" id="toName" name="toName" value="EA000000000"/>
 			<label class="control-label">받는사람</label>
-			<input type="hidden" id="fromName" name="fromName" value="EA000000000"/>
-			<input type="text" class="form-control" value="관리자" readonly/>
+			<input type="hidden" id="fromName" name="fromName" value="${reqOne.toName }"/>
+			<input type="text" class="form-control" value="${reqOne.toName }" readonly/>
 			
 			<hr>
 			<label class="control-label">내용</label>
-			<textarea name="reqContents" cols="40" rows="8" class="form-control" placeholder="내용을 입력하세요" ></textarea>
+			<textarea name="reqContents" cols="40" rows="8" class="form-control" placeholder="내용을 입력하세요" >[건의사항 처리완료]</textarea>
 			</div>
-			<input type="button" class="btn btn-inverse-info btn-fw" id="close1" value="취소" style="float: right; margin: 7px;">
+			<input type="button" class="btn btn-inverse-info btn-fw" id="close3" value="취소" style="float: right; margin: 7px;">
 			<input type="submit" class="btn btn-inverse-info btn-fw" value="보내기" style="float: right; margin: 7px;">
 			<br>
 			<br>
@@ -101,8 +101,8 @@
         var btn = document.getElementById("answerBtn");
  
         // Get the <span> element that closes the modal
-        var close = document.getElementById("close");                                          
-        var close1 = document.getElementById("close1");  
+        var close = document.getElementById("close2");                                          
+        var close1 = document.getElementById("close3");  
         // When the user clicks on the button, open the modal 
         btn.onclick = function() {
             modal.style.display = "block";
@@ -115,16 +115,7 @@
         close1.onclick = function() {
             modal.style.display = "none";
         }
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
+        </script>
            
            
            

@@ -18,14 +18,22 @@ public class ReqController {
 	private ReqService service;
 	
 	@RequestMapping("/req.hd")
-	public String req(Req req, Model model) {
+	public String insertReq(Req req, Model model) {
 		String msg="";
-		String loc="/";
+		String loc="";
+		System.out.println(req.getToName());
 		try {
-			msg="건의사항 접수가 완료되었습니다.";
+			if(!req.getToName().equals("EA000000000")) {
+				msg="건의사항 접수가 완료되었습니다.";
+				loc="/main.hd";
+			}else {				
+				msg="답변이 전달 되었습니다.";
+				loc="/reqList.hd";
+			}
 			int result=service.insertReq(req);			
 		}catch(Exception e) {
 			msg="다시 작성해주세요.";
+			loc="/main.hd";
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("loc", loc);
