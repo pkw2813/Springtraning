@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
-<jsp:include page="/WEB-INF/views/common/pro_header2.jsp" />
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <!-- 달력 import start -->
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
@@ -29,7 +29,7 @@
 		<div class="row">
 			<div class="col-12 grid-margin stretch-card">
 				<div class="card">
-					<form class="forms-sample">
+					<form class="forms">
 						<div class="card-header">
 							<h3 class="card-title">강의 설정</h3>
 							<div class="row">
@@ -50,18 +50,16 @@
 									<label for="exampleInputName1">과제 제목</label> <input type="text"
 										class="form-control" id="exampleInputName1" placeholder="Name">
 								</div>
-								<div class="form-group col-md-4">
-									<label>첨부파일</label> <input type="file" name="img[]"
-										class="file-upload-default">
-									<div class="input-group col-xs-12">
-										<input type="text" class="form-control file-upload-info"
-											disabled="" placeholder="Upload Image"> <span
-											class="input-group-append">
-											<button class="file-upload-browse btn btn-primary"
-												type="button">Upload</button>
-										</span>
-									</div>
-								</div>
+								<div class="form-group">
+                      <label>File upload</label>
+                      <input type="file" name="img[]" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                        <span class="input-group-append">
+                          <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                        </span>
+                      </div>
+                    </div>
 							</div>
 
 							<div class="form-group">
@@ -78,9 +76,6 @@
 					</form>
 				</div>
 			</div>
-
-
-
 		</div>
 	</div>
 
@@ -88,8 +83,5 @@
 
 
 	<!-- Main-content End -->
-	<script>
-		
-	</script>
 	<!-- Body section End -->
-	<jsp:include page="/WEB-INF/views/common/n_footer.jsp" />
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

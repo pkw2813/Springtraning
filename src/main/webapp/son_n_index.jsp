@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
-<jsp:include page="/WEB-INF/views/common/pro_header2.jsp" />
+<jsp:include page="/WEB-INF/views/common/son_pro_header.jsp" />
 
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -18,20 +18,15 @@
 			</div>
 			</div>
 <!-- Main Content start -->	
-			<div class="row">
-				<div class="col-md-12 grid-margin stretch-card">
-					<div class="card">
-						<div class="card-body">
-						
-						</div>
-					</div>
-				</div>
+<div class="row">
+	<div class="col-md-8 grid-margin stretch-card">
+		<div class="card">
+			<div class="card-body">
+				
 			</div>
-
-
-
-
-<!-- Main-content End -->			
-
-<!-- Body section End -->	
-			<jsp:include page="/WEB-INF/views/common/n_footer.jsp" />
+		</div>
+	</div>
+</div>
+			
+			
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />
