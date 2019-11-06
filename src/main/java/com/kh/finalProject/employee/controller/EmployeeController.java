@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.common.encrypt.MyEncrypt;
+import com.kh.finalProject.email.controller.MailController;
 import com.kh.finalProject.employee.model.service.EmployeeService;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Controller
 public class EmployeeController {
 
+	@Autowired
+	MailController handler;
 	@Autowired
 	private MyEncrypt enc; 
 	@Autowired
@@ -37,12 +42,13 @@ public class EmployeeController {
 	
 		@RequestMapping("insertNewStu.do")
 		@ResponseBody
-		public int insertNewStu(@RequestParam int beforeStu) {
+		public int insertNewStu(@RequestParam int beforeStu, HttpServletRequest req) {
 			BeforeStu bs = service.selectBeforeStu(beforeStu);
 			Student s = settingNewStudent(bs);
 			System.out.println("s : " + s);
 			try {
 				int result = service.insertNewStu(s, beforeStu);
+				handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!", "아이디 : "+s.getStuNo()+"   \r\n    비밀번호 : "+enc.decrypt(s.getStuPw())+" 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
 			}catch(Exception e) {
 				System.out.println("에러");
 				return 0;
