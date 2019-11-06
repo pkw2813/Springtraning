@@ -61,15 +61,5 @@
 	<result column="PROF_ENROLL" property="profEnroll" />	
 </resultMap>
 
- <resultMap id="professorBoardResult1" type="professorBoard">
-	<result column="PROF_BOARD_NO" property="profBoardNo" />
-	<result column="PROF_NAME" property="profName" />
-	<result column="PROF_BOARD_TYPE" property="profBoardType" />
-	<result column="PROF_BOARD_TITLE" property="profBoardTitle" />
-	<result column="PROF_BOARD_CONTENT" property="profBoardContent" />	
-	<result column="PROF_ORIFILENAME" property="profOrifilename" />	
-	<result column="PROF_REFILENAME" property="profRefilename" />	
-	<result column="PROF_BOARD_DATE" property="profBoardTitle" />	
-</resultMap>
 	
 </mapper>
