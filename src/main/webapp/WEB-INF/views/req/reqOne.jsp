@@ -47,11 +47,12 @@
                         <tr>
                           <td>내용</td>
                           <td>
-                          <textarea name="reqContents" cols="40" rows="15" class="form-control">${reqOne.reqContents }</textarea>
+                          <textarea name="reqContents" cols="40" rows="15" class="form-control" readonly="readonly" disabled>${reqOne.reqContents }</textarea>
                           </td>
                         </tr>
                         <tr>
                         	<td colspan="2">
+                        		<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/answerUpdate.hd?reqNo=${reqOne.reqNo }&reqTitle=${reqOne.reqTitle }&reqContents=${reqOne.reqContents }&toName=${reqOne.toName }&fromName=${reqOne.fromName }&toTime=${reqOne.toTime }&reqRead=${reqOne.reqRead} '">처리 완료</button>&nbsp&nbsp&nbsp&nbsp
                         		<button class="btn btn-inverse-info btn-fw" id="answerBtn">답변 보내기</button>&nbsp&nbsp&nbsp&nbsp
                         		<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/reqList.hd'">목록으로</button>
                         	</td>
@@ -73,7 +74,7 @@
 			<div class="form-group">
 			<hr>
 			<label class="control-label">제목</label>
-			<input type="text" id="reqTitle" name="reqTitle" placeholder="제목을 입력하세요" class="form-control" value="[건의사항 처리완료]" required />
+			<input type="text" id="reqTitle" name="reqTitle" placeholder="제목을 입력하세요" class="form-control" value="${reqOne.reqTitle } [건의사항 처리완료]" required />
 			<hr>
 			<input type="hidden" id="toName" name="toName" value="EA000000000"/>
 			<label class="control-label">받는사람</label>
@@ -82,7 +83,7 @@
 			
 			<hr>
 			<label class="control-label">내용</label>
-			<textarea name="reqContents" cols="40" rows="8" class="form-control" placeholder="내용을 입력하세요" >[건의사항 처리완료]</textarea>
+			<textarea name="reqContents" cols="40" rows="8" class="form-control">[건의사항 처리완료]</textarea>
 			</div>
 			<input type="button" class="btn btn-inverse-info btn-fw" id="close3" value="취소" style="float: right; margin: 7px;">
 			<input type="submit" class="btn btn-inverse-info btn-fw" value="보내기" style="float: right; margin: 7px;">

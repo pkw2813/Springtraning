@@ -173,7 +173,7 @@
                 <i class="ti-settings text-primary"></i>
                 Login
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="${path }/logout.hd">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
@@ -448,25 +448,25 @@
     
     <script>
      // Get the modal
-        var modal = document.getElementById('reqModal');
+        var headerModal = document.getElementById('reqModal');
  
         // Get the button that opens the modal
-        var btn = document.getElementById("reqBtn");
+        var headerBtn = document.getElementById("reqBtn");
  
         // Get the <span> element that closes the modal
         var close = document.getElementById("close");                                          
         var close1 = document.getElementById("close1");  
         // When the user clicks on the button, open the modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
+        headerBtn.onclick = function() {
+        	headerModal.style.display = "block";
         }
  
         // When the user clicks on <span> (x), close the modal
         close.onclick = function() {
-            modal.style.display = "none";
+        	headerModal.style.display = "none";
         }
         close1.onclick = function() {
-            modal.style.display = "none";
+        	headerModal.style.display = "none";
         }
  
         // When the user clicks anywhere outside of the modal, close it

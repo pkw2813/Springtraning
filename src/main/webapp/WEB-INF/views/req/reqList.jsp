@@ -40,7 +40,7 @@
                           <td>${l.reqTitle }</td>
                           <td>${l.toName }</td>
                           <td>${l.toTime }</td>
-                          <td><button class="btn btn-inverse-info btn-fw">처리 완료</button></td>
+                          <td><button class="btn btn-inverse-info btn-fw">${l.reqRead }</button></td>
                         </tr>
                         </c:forEach>
                       </tbody>

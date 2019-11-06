@@ -11,4 +11,6 @@ public interface ReqDao {
 	int insertReq(SqlSessionTemplate session,Req req);
 	List<Req> reqList(SqlSessionTemplate session);
 	Req reqOne(SqlSessionTemplate session,int reqNo);
+	int answerUpdate(SqlSessionTemplate session,int reqNo);
+	int reqUpdate(SqlSessionTemplate session,int reqNo);
 }

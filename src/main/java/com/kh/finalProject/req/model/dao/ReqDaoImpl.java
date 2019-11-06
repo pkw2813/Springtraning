@@ -24,6 +24,18 @@ public class ReqDaoImpl implements ReqDao {
 	public Req reqOne(SqlSessionTemplate session, int reqNo) {
 		return session.selectOne("req.reqOne",reqNo);
 	}
+
+	@Override
+	public int answerUpdate(SqlSessionTemplate session, int reqNo) {
+		return session.update("req.answerUpdate", reqNo);
+	}
+
+	@Override
+	public int reqUpdate(SqlSessionTemplate session, int reqNo) {
+		return session.update("req.reqUpdate",reqNo);
+	}
+	
+	
 	
 	
 	

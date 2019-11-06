@@ -39,6 +39,20 @@ public class ReqServiceImpl implements ReqService {
 		Req req=dao.reqOne(session,reqNo);
 		return req;
 	}
+
+	@Override
+	public int answerUpdate(int reqNo) {
+		int answerUpdate=dao.answerUpdate(session,reqNo);
+		return answerUpdate;
+	}
+
+	@Override
+	public int reqUpdate(int reqNo) {
+		int reqUpdate=dao.reqUpdate(session,reqNo);
+		return reqUpdate;
+	}
+	
+	
 	
 	
 	
