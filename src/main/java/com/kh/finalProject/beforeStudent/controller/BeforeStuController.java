@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.finalProject.beforeStudent.model.service.BeforeStuService;
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
+import com.kh.finalProject.common.encrypt.MyEncrypt;
 
 @Controller
 public class BeforeStuController {
 
 	@Autowired
+	private MyEncrypt enc;
+	@Autowired
 	private BeforeStuService service;
-	
 	
 	
 	@RequestMapping("/selectColList.do")
@@ -53,6 +56,7 @@ public class BeforeStuController {
 		String msg ="";
 		String loc = "/";
 		try {
+			s.setBeforeNo(enc.encrypt(s.getBeforeNo()));
 			int result = service.insertBeforeStudent(s);
 			msg = "입학 신청 완료!";
 		}catch(Exception e){
