@@ -1,8 +1,11 @@
 package com.kh.finalProject.student.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Repository
@@ -18,6 +21,12 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	public int studentInfoUpdate(SqlSessionTemplate session, Student s) {
 		// TODO Auto-generated method stub
 		return session.update("student1.studentInfoUpdate",s);
+	}
+
+	@Override
+	public List<InsertClass> selectAllClass(SqlSessionTemplate session) {
+		
+		return session.selectList("student1.selectAllClass");
 	}
 
 	

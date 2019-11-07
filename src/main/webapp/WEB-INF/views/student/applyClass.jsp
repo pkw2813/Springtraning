@@ -35,7 +35,28 @@
 		.btn btn-outline-primary btn-sm{
 			
 		}
-	
+		#classInfo>tr{
+		font-size:25px;
+		}
+		
+		#classInfoTitle>th{
+		border:1px solid Lightgray;
+		font-size:16px;
+		font-family:arial;
+		text-align:center;
+		}
+		
+		#classInfo>td{
+		border:1px solid Lightgray;
+		font-size:16px;
+
+		}
+		#button{
+			height:28px;
+			font-size:14px;
+			font-weight:bold;
+			
+		}
 	</style>
 	
 	
@@ -49,13 +70,15 @@
 				<div class="card">
 					<div class="card-body">
 					<div class="table-responsive">
+					
 	<form method="post" action="${path }/student/studentInfoUpdateEnd.hd" enctype="multipart/form-data">
-	<table class="table table-default table-hover table-striped">
+	
+	<table class="table table-default table-striped">
 	<thead class="thead-dark">
 	<tr>
 	</tr>
       <tr>
-        <th colspan="11" style="font-size:25px;font-family:arial">강의조회/신청</th><br/>
+        <th colspan="11" style="font-size:25px;font-family:arial">강의조회/신청</th>
       </tr>
     </thead>
     	
@@ -103,22 +126,64 @@
 				</select>
 				</td>
 				<td>주야구분
-				
 				<select id="chk_night" name="chk_night">
 					<option value=>전체</option>
 					<option value="주간">주간</option>
 					<option value="야간">야간</option>
 				</select>
 				</td>
-				<td>교과목명검색
+				<td >교과목명검색
 				<input type="text" name="chk_no"></input>
 				</td>
 				</tr>
+				</table>
+				<br>
+				<br>
+				<table class="table table-sm table-hover table-striped">
 				<tr>
-				<td colspan="11">
-				강의 시간표
+				<thead class="thead-light">
+				      <tr>
+				        <th colspan="13" style="font-size:25px;font-family:arial">강의 시간표</th>
+				      </tr>
+				    </thead>
+				</tr>
+				<tr id="classInfoTitle">
+				<th>순번</th>
+				<th>강좌번호</th>
+				<th>교과목명</th>
+				<th>이수학점</th>
+				<th>언어</th>
+				<th>성적분류</th>
+				<th>담당교수</th>
+				<th>수강대상</th>
+				<th>강의시간</th>
+				<th>강의실</th>
+				<th>수강여석</th>
+				<th>수강평</th>
+				<th>신청/철회</th>
+				</tr>
+
+				<tr id="classInfo">
+				<td> asdf</td>
+				<td> asdf</td>
+				<td> asdf</td>
+				<td> asdf</td>
+				<td> asdf</td>
+				<td>asdf </td>
+				<td> asdf</td>
+				<td> asdf</td>
+				<td>asdf </td>
+				<td>asdf </td>
+				<td> asdf</td>
+				<td style="text-align:center">
+				<button id="button" class="btn btn-primary btn-xs">보기</button>
+				</td>
+				<td style="text-align:center">
+				<button id="button"class="btn btn-primary btn-xs">신청</button>
 				</td>
 				</tr>
+				</table>
+				
 					<%-- <th style="text-align:center;font-size:15px;" rowspan="6"  width="200px">
 						
 					
