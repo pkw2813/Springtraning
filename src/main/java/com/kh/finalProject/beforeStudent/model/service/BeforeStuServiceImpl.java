@@ -1,6 +1,7 @@
 package com.kh.finalProject.beforeStudent.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,14 @@ public class BeforeStuServiceImpl implements BeforeStuService{
 	private SqlSessionTemplate session;
 
 	@Override
-	public List selectColList() {
-		return dao.selectColList(session);
+	public List<Map> selectColList() {
+		System.out.println("asd123");
+			List<Map> map =	dao.selectColList(session);
+				return map;
 	}
 
 	@Override
-	public List selectDeptList(String result) {
+	public List<Map> selectDeptList(String result) {
 		return dao.selectDeptList(session, result);
 	}
 

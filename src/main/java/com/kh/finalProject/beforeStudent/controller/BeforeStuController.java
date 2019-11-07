@@ -30,9 +30,8 @@ public class BeforeStuController {
 	@RequestMapping("/selectColList.do")
 	@ResponseBody
 	public Map selectColList() {
-		
 		Map map = new HashedMap();
-		List list = service.selectColList();
+		List<Map> list = service.selectColList();
 		map.put("list", list);
 		return map;
 	}
@@ -41,10 +40,8 @@ public class BeforeStuController {
 	@RequestMapping("/selectDeptList.do")
 	@ResponseBody
 	public Map selectDeptList(@RequestParam String result) {
-		System.out.println("넘어옴");
-		
 		Map map = new HashedMap();
-		List list = service.selectDeptList(result);
+		List<Map> list = service.selectDeptList(result);
 		System.out.println(list);
 		map.put("list", list);
 		return map;

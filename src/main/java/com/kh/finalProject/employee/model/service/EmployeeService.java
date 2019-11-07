@@ -15,5 +15,7 @@ public interface EmployeeService {
 	BeforeStu selectBeforeStu(int beforeStu);
 	
 	int insertNewStu(Student s, int beforeStu) throws Exception;
+	
+	int selectLastNum(String deptCode);
 
 	}
