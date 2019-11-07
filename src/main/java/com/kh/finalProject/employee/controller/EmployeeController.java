@@ -93,7 +93,7 @@ public class EmployeeController {
 		s.setStuEmail(bs.getBeforeEmail());
 		s.setRegStatus("재학");
 		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ?"1-1":"미정");
-		return s;
+		return s; 
 	}
 	
 	// 학과 코드랑 
