@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="prof2">
+
+	<select id="selectInMajor" parameterType="selectInMajor" resultMap="studentResult">
+		SELECT STU_NO, STU_NAME, GENDER, STU_TEL, STU_EMAIL, 
+			   STU_ADDR, REG_STATUS, DEPT_CODE, 
+			   SUBSTR(STU_YEAR_SEM,1) AS GRADE
+		
+		FROM HD_STUDENT_TB 
+		
+		WHERE 1 = 1 
+		<if test='stuNo !="" &amp; stuNo != null'>
+			AND STU_NO = #{stuNo}
+		</if>
+		<if test='stuName !="" &amp; stuName != null'>
+			AND STU_NAME = #{stuName}
+		</if>
+	<!-- 	<if test='grade !="" &amp; grade != null'>
+			AND GRADE = #{grade}
+		</if>  -->
+			AND DEPT_CODE = #{deptCode} 
+			ORDER BY STU_NAME
+	</select>
+	
+	<select id="countInDept"  resultType="_int">
+	
+		SELECT COUNT(*) FROM HD_STUDENT_TB WHERE DEPT_CODE = #{deptCode}
+	</select>
+	
+
+  <resultMap id="professorResult" type="professor">
+		<result column="PROF_ID" property="profId" />
+		<result column="PROF_PW" property="profPw" />
+		<result column="PROF_NAME" property="profName" />
+		<result column="PROF_SSN" property="profSsn" />
+		<result column="DEPT_CODE" property="deptCode" />	
+		<result column="EMAIL" property="email" />	
+		<result column="PHONE" property="phone" />	
+		<result column="ADDRESS" property="address" />	
+		<result column="GENDER" property="gender" />	
+		<result column="PROF_ENROLL" property="profEnroll" />	
+	</resultMap>
+	
+	
+  	<resultMap id="studentResult" type="student">
+		<result column="STU_NO" property="stuNo" />
+		<result column="STU_NAME" property="stuName" />
+		<result column="STU_PW" property="stuPw" />
+		<result column="STU_SSN" property="stuSsn" />
+		<result column="STU_TEL" property="stuTel" />	
+		<result column="STU_ADDR" property="stuAddr" />	
+		<result column="GENDER" property="gender" />	
+		<result column="DEPT_CODE" property="deptCode" />	
+		<result column="ENTER_DATE" property="enterDate" />	
+		<result column="STU_EMAIL" property="stuEmail" />
+		<result column="REG_STATUS" property="regStatus" />	
+		<result column="PROF_ID" property="profId" />	
+		<result column="STU_YEAR_SEM" property="stuYearSem" />
+		<result column="MAX_PSB_CR" property="maxPsbCr"/>
+		<result column="CON_SEMESTER" property="conSemester" />	
+		<result column="STU_IMG_ORINAME" property="stuImgOriname" />
+		<result column="STU_IMG_RENAME" property="stuImgRename" />
+		<result column="STU_ACCOUNT" property="stuAccount" />	
+	</resultMap>
+	
+</mapper>

@@ -1,23 +1,71 @@
 package com.kh.finalProject.professor.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.kh.finalProject.professor.common.PageFactory;
+import com.kh.finalProject.professor.model.service.ProfessorService2;
+import com.kh.finalProject.professor.model.vo.Professor;
+import com.kh.finalProject.professor.model.vo.SelectInMajor;
+import com.kh.finalProject.student.model.vo.Student;
 
 @Controller
 public class ProfessorController2 {
 	//학과생조회
+	
+	@Autowired
+	ProfessorService2 service;
+	
 	@RequestMapping("prof/viewInMajor.hd")
-	public String viewInMajor(){
+	public String viewInMajor(@RequestParam(required = false) SelectInMajor sim, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage ,Model model, HttpSession session){
+		int numPerPage=5;
+//		List<ProfessorBoard> list = service.boardView(cPage, numPerPage);
+//		int totalData = service.selectBoardCount();
+		Professor p = (Professor)session.getAttribute("loginMember");
+		String deptCode = p.getDeptCode();
+		if(sim != null) {
+			System.out.println("notnull"+sim.getDeptCode());
+			System.out.println(sim.getStuName());
+			System.out.println(sim.getStuNo());
+		sim.setDeptCode(deptCode);
+		} else if(sim == null) {
+			sim = new SelectInMajor();
+			sim.setDeptCode(deptCode);
+			System.out.println("null"+sim.getDeptCode());
+			System.out.println(sim.getStuName());
+			System.out.println(sim.getStuNo());
+		}
+		System.out.println(sim.getDeptCode());
 		
+		List<Student> list = service.selectInMajor(sim, cPage, numPerPage);
+		
+		int totalData = service.countInDept(deptCode);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("totalCount",totalData);
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/viewInMajor.hd"));
 		
 		return "professor/stu_view_inMajor";
 	}
 	//수강생 조회
 	@RequestMapping("prof/viewInClass.hd")
-	public String viewInClass() {
+	public String viewInClass(@RequestParam(value="cPage",required=false,defaultValue="1")int cPage ,Model model) {
+		int numPerPage=5;
+		
+		
+//		List<Student> list = service.selectInClass();
+//		
+//		model.addAttribute("board",list);
+//		model.addAttribute("totalCount",totalData);
+//		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/lectureData"));
 		
 		return "professor/stu_view_inClass";
 	}

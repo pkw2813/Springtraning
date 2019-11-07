@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
@@ -74,7 +75,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h3>검색 입력</h3>
-						<form action="" method="post">
+						<form action="${path }/prof/viewInMajor.hd" method="post">
 							<table class="table table-bordered table-hover col-md-6 table-condensed">
 								<thead class="thead-dark">
 									<tr>
@@ -89,18 +90,18 @@
 
 									<tr>
 										<td><input type="text" placeholder="학번검색" value=""
-											name="studentNo"></td>
+											name="stuNo"></td>
 										<td><input type="text" placeholder="이름검색" value=""
-											name="studentName"></td>
+											name="stuName"></td>
 										<td><select name="grade">
-												<option value="*" selected>학년검색</option>
+												<option selected>학년검색</option>
 												<option value="1">1학년</option>
 												<option value="2">2학년</option>
 												<option value="3">3학년</option>
 												<option value="4">4학년</option>
 										</select></td>
-										<td><select name="status">
-												<option value="*" selected>학적구분</option>
+										<td><select name="regStatus">
+												<option selected>학적구분</option>
 												<option value="1">재학</option>
 												<option value="2">휴학</option>
 												<option value="3">재적</option>
@@ -151,49 +152,29 @@
 									</tr>
 								</thead>
 								<tbody>
+								<c:forEach items="${list }" var='l'>
 									<tr>
-										<td>2019A123</td>
-										<td>박성술</td>
-										<td>남</td>
-										<td>2학년</td>
-										<td>010-1234-1234</td>
-										<td>tjdtnf110@naver.com</td>
-										<td>서울시 성북구 하월곡동 오패산로 3길 17</td>
-										<td>재학</td>
-										<td><button type="button" class="btn btn-primary"
-												onclick="#">조회</button>
+										<td>${l.stuNo }</td>
+										<td>${l.stuName }</td>
+										<td>${l.gender }</td>
+										<td>
+										<c:set var="grade2" value="${l.stuYearSem }"/>
+										${fn:substring(grade2,0,1) }학년
+										</td>
+										<td>${l.stuTel }</td>
+										<td>${l.stuEmail }</td>
+										<td>${l.stuAddr }</td>
+										<td>${l.regStatus }</td>
+										<td><button type="button" class="btn btn-primary" onclick="#">조회</button>
 									</tr>
-									<tr>
-										<td>2019A123</td>
-										<td>박성술</td>
-										<td>남</td>
-										<td>2학년</td>
-										<td>010-1234-1234</td>
-										<td>tjdtnf110@naver.com</td>
-										<td>서울시 성북구 하월곡동 오패산로 3길 17</td>
-										<td>재학</td>
-										<td><button type="button" class="btn btn-primary"
-												onclick="#">조회</button>
-									</tr>
-									<tr>
-										<td>2019A123</td>
-										<td>박성술</td>
-										<td>남</td>
-										<td>2학년</td>
-										<td>010-1234-1234</td>
-										<td>tjdtnf110@naver.com</td>
-										<td>서울시 성북구 하월곡동 오패산로 3길 17</td>
-										<td>재학</td>
-										<td><button type="button" class="btn btn-primary"
-												onclick="#">조회</button>
-									</tr>
-
+								</c:forEach>
 								</tbody>
 							</table>
 						</div>
 					</div>
 					<div class="card-footer">
-						<ul class="pagination" style="justify-content: center;">
+						${pageBar }
+						<!-- <ul class="pagination" style="justify-content: center;">
 							<li class="page-item"><a class="page-link" href="#"
 								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 							</a></li>
@@ -203,7 +184,7 @@
 							<li class="page-item"><a class="page-link" href="#"
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 							</a></li>
-						</ul>
+						</ul> -->
 					</div>
 				</div>
 
