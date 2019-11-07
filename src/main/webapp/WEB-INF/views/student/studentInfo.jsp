@@ -75,7 +75,7 @@ table {
 							<th>성명</th>
 							<td><input type="text" value="${student.stuName}" required
 								disabled /></td>
-							<th>주민등록번호<br>(외국인등록번호)</th>
+							<th>&nbsp;&nbsp;&nbsp;주민등록번호<br>(외국인등록번호)</th>
 							<td><input type="text" value="${student.stuSsn}"
 								style="width: 130px" required disabled /></td>
 							</tr>

@@ -157,12 +157,13 @@
 	</div>
 	
 	<script>
+	alert("최초접속입니다 개인정보를 입력해주세요");
 	$("#stuAddrDt").hide(); 
 	$("#regStatus").val('${student.regStatus}');
 	$("#gender").val('${student.gender}');
 	$("#imgAttach").hide();
 	$("#submit").click(function(){
-		 if (confirm("변경하시겠습니까?") == true){    //확인
+		 if (confirm("입력하시겠습니까?") == true){    //확인
 		     document.removefrm.submit();
 		 }else{   //취소
 

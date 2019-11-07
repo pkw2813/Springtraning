@@ -29,12 +29,19 @@ public class StudentController1 {
 		Student s=(Student)session.getAttribute("loginMember");
 		String studentNo = s.getStuNo();
 		Student result = service.selectStudent(studentNo);
-		m.addAttribute("student", result);
 		String addr=result.getStuAddr();
 		String[] addrArr=addr.split("PSTC");
 		result.setStuAddr(addrArr[1]);
-
-		return "student/studentInfo";
+		m.addAttribute("student", result);
+		String loc;
+		if(result.getStuAccount()==null||result.getStuImgOriname()==null) {
+			loc="student/studentFirstInfo";
+		}else {
+			loc="student/studentInfo";
+			}
+		
+	
+		return loc;
 
 	}
 
@@ -44,6 +51,11 @@ public class StudentController1 {
 		String studentNo = s.getStuNo();
 		Student result = service.selectStudent(studentNo);
 		m.addAttribute("student", result);
+		String addr=result.getStuAddr();
+		String[] addrArr=addr.split("PSTC");
+		result.setStuAddr(addrArr[1]);
+		
+		
 		return "student/studentInfoUpdate";
 	}
 
@@ -58,7 +70,7 @@ public class StudentController1 {
 		String stuAddr = req.getParameter("totalAddress");
 		String stuAccount = req.getParameter("stuAccount");
 		String stuFile=req.getParameter("LoadImgStat");
-		System.out.println(stuAddr);
+		
 		int result=0;
 		
 		if(stuFile.equals("false")) {
