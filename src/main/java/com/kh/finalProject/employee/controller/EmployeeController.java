@@ -32,6 +32,11 @@ public class EmployeeController {
 	private MyEncrypt enc; 
 	@Autowired
 	private EmployeeService service;
+	
+	@Autowired
+	BeforeStuService bService;
+
+	static Map<Object, Integer> count = new HashMap();
 
 	@RequestMapping("/enrollStudent.hd")
 	public ModelAndView enrollStudent() {
@@ -49,7 +54,6 @@ public class EmployeeController {
 		public int insertNewStu(@RequestParam int beforeStu, HttpServletRequest req) {
 			BeforeStu bs = service.selectBeforeStu(beforeStu);
 			Student s = settingNewStudent(bs);
-			System.out.println("s : " + s);
 			try {
 				int result = service.insertNewStu(s, beforeStu);
 				handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!", "아이디 : "+s.getStuNo()+"   \r\n    비밀번호 : "+enc.decrypt(s.getStuPw())+" 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
@@ -70,6 +74,7 @@ public class EmployeeController {
 		String sysdate  = sdf.format(date);
 		Map sMap = settingStudentNumber(bs.getBeforeDeptCode());
 		int stuNum = (int)sMap.get(bs.getBeforeDeptCode());
+		System.out.println("stuNum : " + stuNum);
 		String stuNo = "S" +sysdate.substring(0, 4) + bs.getBeforeDeptCode() + String.format("%03d", stuNum);
 		s.setStuNo(stuNo);
 		s.setStuName(bs.getBeforeName());
@@ -78,17 +83,26 @@ public class EmployeeController {
 			s.setStuPw(enc.decrypt(bs.getBeforeNo()).substring(0, 6));
 			//패스워드 초기 패스워드 암호화함 
 			s.setStuPw(enc.encrypt(s.getStuPw()));
+
+			// 성별땜에
+			bs.setBeforeNo(enc.decrypt(bs.getBeforeNo()));
+			// 성별 설정
+			s.setGender(bs.getBeforeNo().substring(6, 7).equals("1") || bs.getBeforeNo().substring(6, 7).equals("3")?"M": bs.getBeforeNo().substring(6, 7).equals("2") || bs.getBeforeNo().substring(6, 7).equals("4")?"F":"");
+			
+			// 다시 암호화
+			bs.setBeforeNo(enc.encrypt(bs.getBeforeNo()));
+			
 			// 로그인 matches 양식
 //			String su = "911010";
 //			System.out.println("매치 :" + s.getStuPw().matches(su));
-
+			
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		s.setStuSsn(bs.getBeforeNo());
 		s.setStuTel(bs.getBeforePhone());
 		s.setStuAddr(bs.getBeforeAddr());
-		s.setGender(bs.getBeforeNo().substring(6, 7).equals("1") || bs.getBeforeNo().substring(6, 7).equals("3")?"M": bs.getBeforeNo().substring(6, 7).equals("2") || bs.getBeforeNo().substring(6, 7).equals("4")?"F":"");
+		s.setStuSsn(bs.getBeforeNo());
 		s.setDeptCode(bs.getBeforeDeptCode());
 		s.setStuEmail(bs.getBeforeEmail());
 		s.setRegStatus("재학");
@@ -98,17 +112,24 @@ public class EmployeeController {
 	
 	// 학과 코드랑 
 	public Map settingStudentNumber(String deptCode) {
-		BeforeStuService bService = new BeforeStuServiceImpl();
-		List<String> colList = bService.selectColList();
-		Map<String, Integer> count = new HashMap();
-		for(String col : colList) {
-			List<String> deptList = bService.selectDeptList(col);
+
+		List<Map> colList = bService.selectColList();
+		for(Map col : colList) {
+			List<Map> deptList = bService.selectDeptList((String)col.get("COL_CODE"));
 			for(int i = 0; i < deptList.size(); i ++) {
-				if(count.containsKey(deptList.get(i))) {
-					int result = count.get(deptList.get(i));
-					count.put(deptList.get(i), result + 1);
-				}else {
-					count.put(deptList.get(i), 1);
+			
+				if(count.containsKey(deptList.get(i).get("DEPT_CODE"))) {
+					if(deptCode.equals(deptList.get(i).get("DEPT_CODE"))) {
+					int lastNum = service.selectLastNum(deptCode);
+					count.put(deptList.get(i).get("DEPT_CODE"), lastNum + 1);
+					}
+					}else {
+					if(deptCode.equals(deptList.get(i).get("DEPT_CODE"))) {
+						int lastNum = service.selectLastNum(deptCode);
+					count.put(deptList.get(i).get("DEPT_CODE"), lastNum + 1);
+					}else {
+						count.put(deptList.get(i).get("DEPT_CODE"), 1);
+					}
 				}
 			}
 			

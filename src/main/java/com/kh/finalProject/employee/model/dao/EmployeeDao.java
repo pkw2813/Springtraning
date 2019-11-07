@@ -19,4 +19,6 @@ public interface EmployeeDao {
 	int deleteBeforeStu(SqlSessionTemplate session, int beforeStu);
 	
 	int insertNewStu(SqlSessionTemplate session, Student s);
+	
+	int selectLastNum(SqlSessionTemplate session, String deptCode);
 }

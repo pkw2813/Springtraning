@@ -1,6 +1,7 @@
 package com.kh.finalProject.beforeStudent.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,12 +12,12 @@ import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 public class BeforeStuDaoImpl implements BeforeStuDao{
 
 	@Override
-	public List<String> selectColList(SqlSessionTemplate session) {
+	public List<Map> selectColList(SqlSessionTemplate session) {
 		return session.selectList("beforeStu.selectColList");
 	}
 
 	@Override
-	public List<String> selectDeptList(SqlSessionTemplate session, String result) {
+	public List<Map> selectDeptList(SqlSessionTemplate session, String result) {
 		return session.selectList("beforeStu.selectDeptList", result);
 	}
 

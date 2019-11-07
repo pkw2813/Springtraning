@@ -40,6 +40,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int insertNewStu(SqlSessionTemplate session, Student s) {
 		return session.insert("student.insertNewStu", s);
 	}
+
+	@Override
+	public int selectLastNum(SqlSessionTemplate session, String deptCode) {
+		System.out.println("test");
+		return session.selectOne("student.selectLastNum", deptCode);
+	}
 	
 	
 	

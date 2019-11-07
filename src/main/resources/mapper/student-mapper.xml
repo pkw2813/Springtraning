@@ -9,7 +9,9 @@
   	INSERT INTO HD_STUDENT_TB VALUES(#{stuNo},#{stuName},#{stuPw},#{stuSsn},#{stuTel},#{stuAddr},#{gender},#{deptCode},sysdate,#{stuEmail},#{regStatus},NULL,#{stuYearSem},1,NULL,NULL)
   	</insert>
   	
-  	
+  	<select id="selectLastNum" parameterType="string" resultType="_int">
+  	    SELECT MAX(SUBSTR(STU_NO,9,10)) AS NUM FROM HD_STUDENT_TB WHERE DEPT_CODE = #{result} AND  STU_YEAR_SEM = '1-1'
+  	</select>
   	
   	<resultMap id="studentResult" type="student">
 		<result column="STU_NO" property="stuNo" />

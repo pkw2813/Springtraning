@@ -48,6 +48,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		return result;
 	}
+
+	@Override
+	public int selectLastNum(String deptCode) {
+		return dao.selectLastNum(session, deptCode);
+	}
 	
 	
 	
