@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalProject.employee.model.service.EmployeeService;
@@ -34,8 +35,8 @@ public class MemberController {
 	public String login() {
 		return "redirect:/index.jsp";
 	}
-	
-	@RequestMapping("/login.hd")
+
+	@RequestMapping(value="/login.hd", method=RequestMethod.POST)
 	public String Login1(
 			HttpSession session,
 			HttpServletRequest req,

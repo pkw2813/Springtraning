@@ -25,7 +25,7 @@ $(function(){
 		$(".login_emp").css("backgroundColor","#abdbff");
 		$.ajax({
 		    success:function(){
-		    emparr="<form class='form-horizontal' action='${path }/login.hd'>";
+		    emparr="<form class='form-horizontal' action='${path }/login.hd' method='post'>";
 		    emparr+="<input type='hidden' name='loginNo'value='s'/>"
 		    emparr+="<input type='text' name='loginId' placeholder='학번을 입력해주세요' class='form-control input-md'>";
 		    emparr+="<input type='password' name=loginPwd placeholder='비밀번호를 입력해주세요' class='form-control input-md input_pwd'>";
@@ -46,7 +46,7 @@ $(function(){
 		$(".login_emp").css("backgroundColor","#abdbff");
 		$.ajax({
 		    success:function(){
-		    emparr="<form class='form-horizontal' action='${path }/login.hd'>";
+		    emparr="<form class='form-horizontal' action='${path }/login.hd' method='post'>";
 		    emparr+="<input type='hidden' name='loginNo'value='p'/>"
 		    emparr+="<input type='text' name='loginId' placeholder='사번을 입력해주세요' class='form-control input-md'>";
 		    emparr+="<input type='password' name=loginPwd placeholder='비밀번호를 입력해주세요' class='form-control input-md input_pwd'>";
@@ -66,7 +66,7 @@ $(function(){
 		$(".login_pro").css("backgroundColor","#abdbff");
 		$.ajax({
 		    success:function(){
-		    emparr="<form class='form-horizontal' action='${path }/login.hd'>";
+		    emparr="<form class='form-horizontal' action='${path }/login.hd' method='post'>";
 		    emparr+="<input type='hidden' name='loginNo'value='e'/>"
 		    emparr+="<input type='text' name='loginId' placeholder='사번을 입력해주세요' class='form-control input-md'>";
 		    emparr+="<input type='password' name=loginPwd placeholder='비밀번호를 입력해주세요' class='form-control input-md input_pwd'>";
@@ -149,7 +149,7 @@ $(function(){
 					</div>
 					<div class="col-md-7" style="border-left: 1px solid #ccc; height: 160px">
 					
-						<form class="form-horizontal" action="${path }/login.hd">
+						<form class="form-horizontal" action="${path }/login.hd" method='post'>
 							<input type="hidden" name="loginNo" value="s"/>
 							<input type="text" name="loginId" placeholder="학번을 입력해주세요" class="form-control input-md">
 							<input type="password" name="loginPwd" placeholder="비밀번호를 입력해주세요" class="form-control input-md input_pwd">

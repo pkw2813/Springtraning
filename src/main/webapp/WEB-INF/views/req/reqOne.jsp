@@ -53,7 +53,9 @@
                         <tr>
                         	<td colspan="2">
                         		<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/answerUpdate.hd?reqNo=${reqOne.reqNo }&reqTitle=${reqOne.reqTitle }&reqContents=${reqOne.reqContents }&toName=${reqOne.toName }&fromName=${reqOne.fromName }&toTime=${reqOne.toTime }&reqRead=${reqOne.reqRead} '">처리 완료</button>&nbsp&nbsp&nbsp&nbsp
+                        		<c:if test="${reqOne.reqRead eq '처리 완료'}">
                         		<button class="btn btn-inverse-info btn-fw" id="answerBtn">답변 보내기</button>&nbsp&nbsp&nbsp&nbsp
+                        		</c:if>
                         		<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/reqList.hd'">목록으로</button>
                         	</td>
                         </tr>

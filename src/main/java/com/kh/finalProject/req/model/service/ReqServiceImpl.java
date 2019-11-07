@@ -29,11 +29,16 @@ public class ReqServiceImpl implements ReqService {
 	}
 
 	@Override
-	public List<Req> reqList() {
-		List<Req> list=dao.reqList(session);
-		return list;
+	public List<Req> reqList(int index, int cPage, int numPerPage) {
+		List<Req> allList=dao.reqList(session, index, cPage, numPerPage);
+		return allList;
 	}
 
+	@Override
+	public int selectReqCount(int index) {
+		return dao.selectReqCount(session,index);
+	}
+	
 	@Override
 	public Req reqOne(int reqNo) {
 		Req req=dao.reqOne(session,reqNo);
@@ -46,11 +51,6 @@ public class ReqServiceImpl implements ReqService {
 		return answerUpdate;
 	}
 
-	@Override
-	public int reqUpdate(int reqNo) {
-		int reqUpdate=dao.reqUpdate(session,reqNo);
-		return reqUpdate;
-	}
 	
 	
 	

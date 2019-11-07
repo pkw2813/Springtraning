@@ -2,6 +2,7 @@ package com.kh.finalProject.req.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,8 +17,15 @@ public class ReqDaoImpl implements ReqDao {
 	}
 
 	@Override
-	public List<Req> reqList(SqlSessionTemplate session) {
-		return session.selectList("req.reqList");
+	public List<Req> reqList(SqlSessionTemplate session, int index, int cPage, int numPerPage) {
+		RowBounds row=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		System.out.println(index);
+		return session.selectList("req.reqList",index,row);
+	}
+	
+	@Override
+	public int selectReqCount(SqlSessionTemplate session,int index) {
+		return session.selectOne("req.selectReqCount",index);
 	}
 
 	@Override
@@ -30,10 +38,6 @@ public class ReqDaoImpl implements ReqDao {
 		return session.update("req.answerUpdate", reqNo);
 	}
 
-	@Override
-	public int reqUpdate(SqlSessionTemplate session, int reqNo) {
-		return session.update("req.reqUpdate",reqNo);
-	}
 	
 	
 	

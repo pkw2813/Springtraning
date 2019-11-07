@@ -6,7 +6,14 @@
   </insert>
   
   <select id="reqList" resultMap="reqResult">
-  	SELECT REQ_NO, REQ_TITLE, REQ_CONTENTS, FROM_NAME, TO_NAME, REQ_READ, to_char(TO_TIME, 'YYYY-MM-DD HH24:MI')AS TO_TIME FROM HD_REQ_TB WHERE FROM_NAME='EA000000000'
+  	SELECT ROWNUM as REQ_NO, REQ_TITLE, REQ_CONTENTS, FROM_NAME, TO_NAME, REQ_READ, to_char(TO_TIME, 'YYYY-MM-DD HH24:MI')AS TO_TIME FROM HD_REQ_TB WHERE FROM_NAME='EA000000000' 
+  	<if test="value==1">
+  		AND REQ_READ='접수'
+  	</if>
+  	<if test="value==2">
+  		AND REQ_READ='처리 완료'
+  	</if>
+  	ORDER BY ROWNUM DESC
   </select>
   
   <select id="reqOne" parameterType="_int" resultMap="reqResult">
@@ -16,9 +23,24 @@
   <update id="answerUpdate" parameterType="_int">
   	UPDATE HD_REQ_TB SET REQ_READ='처리 완료' WHERE REQ_NO=#{reqNo}
   </update>
-  <update id="reqUpdate" parameterType="_int">
-  	UPDATE HD_REQ_TB SET REQ_READ='처리 진행중' WHERE REQ_NO=#{reqNo}
-  </update>
+  
+  <select id="selectReqCount" resultType="_int">
+  	select count(*) from HD_REQ_TB WHERE FROM_NAME='EA000000000' 
+  	<if test="value==1">
+  		AND REQ_READ='접수'
+  	</if>
+  	<if test="value==2">
+  		AND REQ_READ='처리 완료'
+  	</if>
+  </select>
+  
+  <select id="selectReqCount1" resultType="_int">
+  	select count(*) from HD_REQ_TB WHERE FROM_NAME='EA000000000' AND REQ_READ='접수'
+  </select>
+  
+  <select id="selectReqCount2" resultType="_int">
+  	select count(*) from HD_REQ_TB where FROM_NAME='EA000000000' AND REQ_READ='처리 완료'
+  </select>
   
   <resultMap id="reqResult" type="req">
 		<result column="REQ_NO" property="reqNo" />

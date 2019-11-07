@@ -1,13 +1,21 @@
 package com.kh.finalProject.req.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.req.model.service.ReqService;
 import com.kh.finalProject.req.model.vo.Req;
 
@@ -40,16 +48,38 @@ public class ReqController {
 	}
 	
 	@RequestMapping("/reqList.hd")
-	public String reqList(Model model) {
-		List<Req> list=service.reqList();
-		model.addAttribute("list",list);
+	public String reqList() {
 		return "req/reqList";
 	}
+
 	
-	@RequestMapping("/reqOne.hd")
+	@RequestMapping(value="/ajax/reqList.hd")
+	@ResponseBody
+	public String reqList(Model model, @RequestParam(value="index", required=false, defaultValue="0" ) int index, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage,
+			HttpServletResponse res) {
+		int numPerPage=5;
+		ObjectMapper mapper=new ObjectMapper();
+		List<Req> allList=service.reqList(index, cPage, numPerPage);
+		String jsonStr="";
+		int totalData=service.selectReqCount(index);
+		Map map=new HashMap();
+		map.put("allList",allList);
+		System.out.println(allList);
+		map.put("pageBar",PageFactory.getAjaxPageBar(index,totalData,cPage,numPerPage,"/finalProject/ajax/reqList.hd"));
+		
+		try {
+			jsonStr=mapper.writeValueAsString(map);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	
+		 
+		return jsonStr;
+	}
+	
+	@RequestMapping("/sucList.hd")
 	public String reqOne(@RequestParam int reqNo, Model model) {
 		Req req=service.reqOne(reqNo);
-		/* int reqUpdate=service.reqUpdate(reqNo); */
 		model.addAttribute("reqOne",req);
 		return "req/reqOne";
 	}

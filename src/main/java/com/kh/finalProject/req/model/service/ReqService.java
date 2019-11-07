@@ -7,9 +7,9 @@ import com.kh.finalProject.req.model.vo.Req;
 public interface ReqService {
 	
 	int insertReq(Req req) throws Exception;
-	List<Req> reqList();
+	List<Req> reqList(int index, int cPage, int numPerPage);
+	int selectReqCount(int index);
 	Req reqOne(int reqNo);
 	int answerUpdate(int reqNo);
-	int reqUpdate(int reqNo);
 
 }
