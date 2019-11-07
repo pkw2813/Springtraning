@@ -2,7 +2,9 @@ package com.kh.finalProject.employee.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.finalProject.beforeStudent.model.service.BeforeStuService;
+import com.kh.finalProject.beforeStudent.model.service.BeforeStuServiceImpl;
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.common.encrypt.MyEncrypt;
 import com.kh.finalProject.email.controller.MailController;
@@ -64,7 +68,9 @@ public class EmployeeController {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String sysdate  = sdf.format(date);
-		String stuNo = "S" +sysdate.substring(0, 4) + bs.getBeforeDeptCode() + String.format("%03d", bs.getBeforeStu());
+		Map sMap = settingStudentNumber(bs.getBeforeDeptCode());
+		int stuNum = (int)sMap.get(bs.getBeforeDeptCode());
+		String stuNo = "S" +sysdate.substring(0, 4) + bs.getBeforeDeptCode() + String.format("%03d", stuNum);
 		s.setStuNo(stuNo);
 		s.setStuName(bs.getBeforeName());
 		try {
@@ -88,6 +94,26 @@ public class EmployeeController {
 		s.setRegStatus("재학");
 		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ?"1-1":"미정");
 		return s;
+	}
+	
+	// 학과 코드랑 
+	public Map settingStudentNumber(String deptCode) {
+		BeforeStuService bService = new BeforeStuServiceImpl();
+		List<String> colList = bService.selectColList();
+		Map<String, Integer> count = new HashMap();
+		for(String col : colList) {
+			List<String> deptList = bService.selectDeptList(col);
+			for(int i = 0; i < deptList.size(); i ++) {
+				if(count.containsKey(deptList.get(i))) {
+					int result = count.get(deptList.get(i));
+					count.put(deptList.get(i), result + 1);
+				}else {
+					count.put(deptList.get(i), 1);
+				}
+			}
+			
+		}
+		return count;
 	}
 	
 }

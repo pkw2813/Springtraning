@@ -8,9 +8,9 @@ import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 
 public interface BeforeStuDao {
 
-	public List selectColList(SqlSessionTemplate session);
+	public List<String> selectColList(SqlSessionTemplate session);
 	
-	public List selectDeptList(SqlSessionTemplate session, String result);
+	public List<String> selectDeptList(SqlSessionTemplate session, String result);
 	
 	public int insertBeforeStudent(SqlSessionTemplate session, BeforeStu s);
 }

@@ -44,7 +44,7 @@ public class BeforeStuController {
 		System.out.println("넘어옴");
 		
 		Map map = new HashedMap();
-		List list = service.selectDeptList(result);
+		List<String> list = service.selectDeptList(result);
 		System.out.println(list);
 		map.put("list", list);
 		return map;

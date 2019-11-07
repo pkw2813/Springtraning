@@ -6,9 +6,9 @@ import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 
 public interface BeforeStuService {
 
-	public List selectColList();
+	public List<String> selectColList();
 	
-	public List selectDeptList(String result);
+	public List<String> selectDeptList(String result);
 	
 	public int insertBeforeStudent(BeforeStu s) throws Exception;
 }

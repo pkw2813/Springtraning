@@ -11,12 +11,12 @@ import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 public class BeforeStuDaoImpl implements BeforeStuDao{
 
 	@Override
-	public List selectColList(SqlSessionTemplate session) {
+	public List<String> selectColList(SqlSessionTemplate session) {
 		return session.selectList("beforeStu.selectColList");
 	}
 
 	@Override
-	public List selectDeptList(SqlSessionTemplate session, String result) {
+	public List<String> selectDeptList(SqlSessionTemplate session, String result) {
 		return session.selectList("beforeStu.selectDeptList", result);
 	}
 

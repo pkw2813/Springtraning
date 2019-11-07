@@ -20,12 +20,12 @@ public class BeforeStuServiceImpl implements BeforeStuService{
 	private SqlSessionTemplate session;
 
 	@Override
-	public List selectColList() {
+	public List<String> selectColList() {
 		return dao.selectColList(session);
 	}
 
 	@Override
-	public List selectDeptList(String result) {
+	public List<String> selectDeptList(String result) {
 		return dao.selectDeptList(session, result);
 	}
 
