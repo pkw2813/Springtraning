@@ -30,7 +30,6 @@ public class RSAEncrypto implements MyEncrypt {
 		String path = this.getClass().getResource("/").getPath();
 		path = path.substring(0, path.lastIndexOf("/target"));
 		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hd");
-		System.out.println("pasth : " + path);
 		
 		if(f.exists()) {
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {

@@ -18,4 +18,5 @@ public interface EmployeeService {
 	
 	int selectLastNum(String deptCode);
 
+	int selectDeptCount(String deptCode);
 	}

@@ -42,14 +42,12 @@ public class BeforeStuController {
 	public Map selectDeptList(@RequestParam String result) {
 		Map map = new HashedMap();
 		List<Map> list = service.selectDeptList(result);
-		System.out.println(list);
 		map.put("list", list);
 		return map;
 	}
 	
 	@RequestMapping("/beforeStudent/enroll.hd")
 	public String insertBeforeStudent(BeforeStu s, Model model) {
-		System.out.println(s);
 		String msg ="";
 		String loc = "/";
 		try {

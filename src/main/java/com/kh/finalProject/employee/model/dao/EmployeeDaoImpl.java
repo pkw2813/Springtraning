@@ -27,7 +27,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public BeforeStu selectBeforeStu(SqlSessionTemplate session, int beforeStu) {
-//		return session.selectOne("beforeStu.selectBeforeStu", beforeStu);
 		return session.selectOne("beforeStu.selectBeforeStu", beforeStu);
 	}
 
@@ -43,8 +42,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int selectLastNum(SqlSessionTemplate session, String deptCode) {
-		System.out.println("test");
 		return session.selectOne("student.selectLastNum", deptCode);
+	}
+
+	@Override
+	public int selectDeptCount(SqlSessionTemplate session, String deptCode) {
+		return session.selectOne("student.selectDeptCount", deptCode);
 	}
 	
 	

@@ -42,7 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int insertNewStu(Student s, int beforeStu) throws Exception {
 		int result = dao.deleteBeforeStu(session, beforeStu);
 		int result1 = dao.insertNewStu(session, s);
-		System.out.println("insert new :" + result);
 		if(result == 0 || result1 == 0) {
 			new Exception();
 		}
@@ -52,6 +51,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public int selectLastNum(String deptCode) {
 		return dao.selectLastNum(session, deptCode);
+	}
+
+	@Override
+	public int selectDeptCount(String deptCode) {
+		return dao.selectDeptCount(session, deptCode);
 	}
 	
 	

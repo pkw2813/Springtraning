@@ -21,4 +21,7 @@ public interface EmployeeDao {
 	int insertNewStu(SqlSessionTemplate session, Student s);
 	
 	int selectLastNum(SqlSessionTemplate session, String deptCode);
+	
+	int selectDeptCount(SqlSessionTemplate session, String deptCode);
+	
 }

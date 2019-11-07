@@ -22,7 +22,6 @@ public class BeforeStuServiceImpl implements BeforeStuService{
 
 	@Override
 	public List<Map> selectColList() {
-		System.out.println("asd123");
 			List<Map> map =	dao.selectColList(session);
 				return map;
 	}
