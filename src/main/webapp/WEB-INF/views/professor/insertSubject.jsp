@@ -27,7 +27,7 @@
 			<div class="card-body">
 				<div class="row gap1">
 					<div class="col-6">
-						<table style="text-align:center;">
+						<table class="scrolltable" style="text-align:center;overflow-y:scroll;height:270px;">
 							<tr style="background-color:lightgray;">
 								<th style="text-align:center;">이수구분</th>
 								<th style="text-align:center;">개설학기</th>
@@ -55,7 +55,7 @@
 						</table>
 					</div>
 					<div class="col-6">
-						<table style="text-align:center;">
+						<table id="" class="scrolltable" style="text-align:center;overflow-y:scroll;height:270px;">
 							<tr style="background-color:lightgray;">
 								<th style="text-align:center;">이수구분</th>
 								<th style="text-align:center;">개설학기</th>
@@ -335,12 +335,11 @@ $(function(){
 			contentType:false,
 			success:function(data){
 				var d=JSON.parse(data);
-				console.log(data);
 				console.log(d);
-				/* var tr= $("<tr>");
-				var data="<td>"+d[0][""]){
-					
-				}	 */			
+				var tr= $("<tr>");
+				var data="<td>"+d[0]["subCode"])"</td>";
+				tr.append(data);
+				
 			}
 		});
 		}else{
@@ -350,6 +349,10 @@ $(function(){
 });
 </script>
 <style>
+	.scrolltable {
+	    display: block;
+	    overflow: auto;
+	}
 	select{
 		font-size:10px;
 		width:auto;

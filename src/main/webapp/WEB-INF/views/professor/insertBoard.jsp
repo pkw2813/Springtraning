@@ -51,7 +51,7 @@
 								</tr>
 								<tr>
 									<th>제목</th>
-									<td><input id="selectTitle" name="profBoardTitle" class="btn btn-default" style="width:800px;border:1px solid black;text-align:left;" type='text'/></td>
+									<td><input id="selectTitle" name="profBoardTitle" class="btn btn-default" style="width:800px;border:1px solid black;text-align:left;" type='text' required/></td>
 								</tr>
 								<tr><td><br/></td></tr>
 								<tr>
@@ -65,7 +65,7 @@
 								<tr><td><br/></td></tr>
 								<tr>
 									<th>내용</th>
-									<td><textarea id="context" class="btn btn-default" name="profBoardContent" style="height:400px;width:800px;border:1px solid black;text-align:left;"></textarea></td>
+									<td><textarea id="context" class="btn btn-default" name="profBoardContent" style="height:400px;width:800px;border:1px solid black;text-align:left;" required></textarea></td>
 								</tr>
 							</table>
 						</div>
