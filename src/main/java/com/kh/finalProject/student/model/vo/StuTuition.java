@@ -1,7 +1,5 @@
 package com.kh.finalProject.student.model.vo;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +13,8 @@ public class StuTuition {
 	private String acaYearSemKor;
 	private int tuition;
 	private char paymentStat;
-	private Date paymentDate;
-	private Date dueDate;
+	private String paymentDate;
+	private String dueDate;
 	private char reductionStat;
 	private String stuName;
 	private String deptName;
