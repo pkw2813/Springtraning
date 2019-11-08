@@ -160,6 +160,7 @@
 				<th>수강평</th>
 				<th>신청/철회</th>
 				</tr>
+				
 				<c:forEach items="${list}" var="e" varStatus="v">
 				<tr id="classInfo">
 				<td><c:out value='${e["ROWNUM"] }'/></td>
