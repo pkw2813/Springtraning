@@ -11,17 +11,26 @@ public class InsertClass {
 	private String classYear;
 	private String profId;
 	private String openYn;
+	//총인원
 	private int capacity;
+	
+	//현재인원 
 	private int pre_capa;
+	
 	private int assignA;
 	private int assignB;
 	private int assignC;
 	private int assignD;
 	private int mTerm;
 	private int fTerm;
+	
+	//출석 반영 점수
 	private int statusGrade;
+	
 	private String useBook;
 	private String bookName;
+
+	//절대평가,상대평가
 	private String evaStan;
 	private String openOther;
 	private String clOriFileName;
