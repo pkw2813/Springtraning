@@ -1,11 +1,13 @@
 package com.kh.finalProject.student.model.service;
 
+import java.util.List;
+
 import com.kh.finalProject.student.model.vo.Student;
-import com.kh.finalProject.student.model.vo.Tuition;
+import com.kh.finalProject.student.model.vo.StuTuition;
 
 public interface StudentService3 {
 	
-	Student selectOne(String loginId,String loginPwd);
-	Tuition selectTuitionOne(String studentNo);
+	StuTuition selectTuitionOne(StuTuition tuition);
+	List<StuTuition> selectTuitionCertList(String studentNo);
 
 }

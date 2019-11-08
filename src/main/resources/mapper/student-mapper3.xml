@@ -2,17 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="student3">
 	
-	<select id="selectTuitionOne" parameterType="string" resultMap="tuitionResult">
+	<select id="selectTuitionOne" parameterType="stuTuition" resultMap="tuitionResult">
 		SELECT T.*, S.STU_NAME, D.DEPT_NAME, 
 		TO_CHAR(TO_DATE(SUBSTR(S.STU_SSN,1,2), 'RR'), 'RRRR')||'년 '||SUBSTR(S.STU_SSN,3,2)||'월 '||SUBSTR(S.STU_SSN,5,2)||'일' AS BIRTHDAY
-		FROM HD_TUITION_TB T JOIN HD_STUDENT_TB S 
-		ON T.STU_NO=#{studentNo} AND T.STU_NO=S.STU_NO 
+		FROM HD_STU_TUITION_TB T JOIN HD_STUDENT_TB S 
+		ON T.STU_NO=#{stuNo} AND T.STU_NO=S.STU_NO AND ACA_YEAR_SEM=#{acaYearSem}
 		JOIN HD_DEPARTMENT_TB D
-		ON S.DEPT_CODE=D.DEPT_NO
+		ON S.DEPT_CODE=D.DEPT_CODE
   	</select>
   	
+  	<select id="selectTuitionCertList" parameterType="string" resultMap="tuitionResult">
+	  	SELECT STU_NO, ACA_YEAR_SEM, PAYMENT_STAT FROM HD_STU_TUITION_TB
+		WHERE STU_NO=#{studentNo}
+		ORDER BY 2 DESC
+	</select>
   	
-  	<resultMap id="tuitionResult" type="tuition">
+  	
+  	<resultMap id="tuitionResult" type="stuTuition">
 		<result column="STU_NO" property="stuNo" />
 		<result column="ACA_YEAR_SEM" property="acaYearSem" />
 		<result column="TUITION" property="tuition" />

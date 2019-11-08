@@ -7,7 +7,7 @@
 		<typeAlias type="com.kh.finalProject.student.model.vo.Student" alias="student"/>
 		<typeAlias type="com.kh.finalProject.student.model.vo.Grade" alias="grade"/>
 		<typeAlias type="com.kh.finalProject.beforeStudent.model.vo.BeforeStu" alias="beforeStudent"/>
-		<typeAlias type="com.kh.finalProject.student.model.vo.Tuition" alias="tuition"/>
+		<typeAlias type="com.kh.finalProject.student.model.vo.StuTuition" alias="stuTuition"/>
 		<typeAlias type="com.kh.finalProject.req.model.vo.Req" alias="req"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.SelectInMajor" alias="selectInMajor"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.InsertClass" alias="insertClass"/>

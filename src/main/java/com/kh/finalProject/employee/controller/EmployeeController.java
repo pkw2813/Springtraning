@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.beforeStudent.model.service.BeforeStuService;
-import com.kh.finalProject.beforeStudent.model.service.BeforeStuServiceImpl;
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.common.encrypt.MyEncrypt;
 import com.kh.finalProject.email.controller.MailController;
 import com.kh.finalProject.employee.model.service.EmployeeService;
+import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Controller
@@ -66,15 +66,25 @@ public class EmployeeController {
 	}
 
 	
-	
-	@RequestMapping("/enrollprofrssor.hd")
-	public String enrollprofrssor() {
-		return "";
+	//교수 등록 삭제 리스트
+	@RequestMapping("/enrollprofessor.hd")
+	public ModelAndView enrollprofrssor() {
+		ModelAndView mv = new ModelAndView();
+		List<Professor> list = service.selectProfList();
+		List<Map> colList = bService.selectColList();
+		mv.setViewName("admin/enrollProfessor");
+		mv.addObject("colList", colList);
+		mv.addObject("list",list);
+		return mv;
 	}
 	
 	@RequestMapping("/enrollemployee.hd")
-	public String enrollemployee() {
-		return "";
+	public ModelAndView enrollemployee() {
+		ModelAndView mv = new ModelAndView();
+		
+		
+		mv.setViewName("admin/enrollEmp");
+		return mv;
 	}
 	
 	
@@ -155,9 +165,5 @@ public class EmployeeController {
 		return count;
 	}
 
-
-
-
-
-
+		
 }

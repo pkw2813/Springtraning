@@ -1,26 +1,25 @@
 package com.kh.finalProject.student.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalProject.student.model.vo.Student;
-import com.kh.finalProject.student.model.vo.Tuition;
+import com.kh.finalProject.student.model.vo.StuTuition;
 
 @Repository
 public class StudentDaoImpl3 implements StudentDao3 {
 
 	@Override
-	public Student selectOne(SqlSessionTemplate session, String loginId, String loginPwd) {
-		Student s=new Student();
-		s.setStuNo(loginId);
-		s.setStuPw(loginPwd);
-		return session.selectOne("student3.selectOne", s);
+	public StuTuition selectTuitionOne(SqlSessionTemplate session, StuTuition tuition) {
+		System.out.println("selectTuitionOne, dao들어옴."+tuition);
+		return session.selectOne("student3.selectTuitionOne", tuition);
 	}
 
 	@Override
-	public Tuition selectTuitionOne(SqlSessionTemplate session, String studentNo) {
-		System.out.println("dao들어옴."+studentNo);
-		return session.selectOne("student3.selectTuitionOne", studentNo);
+	public List<StuTuition> selectTuitionCertList(SqlSessionTemplate session, String studentNo) {
+		return session.selectList("student3.selectTuitionCertList", studentNo);
 	}
 	
 	

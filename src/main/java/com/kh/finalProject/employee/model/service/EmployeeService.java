@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.employee.model.vo.Employee;
+import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.student.model.vo.Student;
 
 public interface EmployeeService {
@@ -19,4 +20,6 @@ public interface EmployeeService {
 	int selectLastNum(String deptCode);
 
 	int selectDeptCount(String deptCode);
+	
+	List<Professor> selectProfList();
 	}
