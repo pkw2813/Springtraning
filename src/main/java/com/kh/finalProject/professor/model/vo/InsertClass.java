@@ -15,7 +15,7 @@ public class InsertClass {
 	private int capacity;
 	
 	//현재인원 
-	private int pre_capa;
+	private int preCapa;
 	
 	private int assignA;
 	private int assignB;
