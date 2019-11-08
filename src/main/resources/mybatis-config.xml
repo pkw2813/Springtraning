@@ -10,5 +10,6 @@
 		<typeAlias type="com.kh.finalProject.student.model.vo.Tuition" alias="tuition"/>
 		<typeAlias type="com.kh.finalProject.req.model.vo.Req" alias="req"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.SelectInMajor" alias="selectInMajor"/>
+		<typeAlias type="com.kh.finalProject.professor.model.vo.InsertClass" alias="class"/>
 	</typeAliases>
 </configuration>
