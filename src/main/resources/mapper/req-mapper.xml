@@ -6,14 +6,14 @@
   </insert>
   
   <select id="reqList" resultMap="reqResult">
-  	SELECT ROWNUM as REQ_NO, REQ_TITLE, REQ_CONTENTS, FROM_NAME, TO_NAME, REQ_READ, to_char(TO_TIME, 'YYYY-MM-DD HH24:MI')AS TO_TIME FROM HD_REQ_TB WHERE FROM_NAME='EA000000000' 
+  	SELECT REQ_NO, REQ_TITLE, REQ_CONTENTS, FROM_NAME, TO_NAME, REQ_READ, to_char(TO_TIME, 'YYYY-MM-DD HH24:MI')AS TO_TIME FROM HD_REQ_TB WHERE FROM_NAME='EA000000000' 
   	<if test="value==1">
   		AND REQ_READ='접수'
   	</if>
   	<if test="value==2">
   		AND REQ_READ='처리 완료'
   	</if>
-  	ORDER BY ROWNUM DESC
+  	ORDER BY REQ_NO DESC
   </select>
   
   <select id="reqOne" parameterType="_int" resultMap="reqResult">

@@ -19,7 +19,6 @@ public class ReqDaoImpl implements ReqDao {
 	@Override
 	public List<Req> reqList(SqlSessionTemplate session, int index, int cPage, int numPerPage) {
 		RowBounds row=new RowBounds((cPage-1)*numPerPage,numPerPage);
-		System.out.println(index);
 		return session.selectList("req.reqList",index,row);
 	}
 	

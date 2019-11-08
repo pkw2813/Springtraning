@@ -57,14 +57,13 @@ public class ReqController {
 	@ResponseBody
 	public String reqList(Model model, @RequestParam(value="index", required=false, defaultValue="0" ) int index, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage,
 			HttpServletResponse res) {
-		int numPerPage=5;
+		int numPerPage=4;
 		ObjectMapper mapper=new ObjectMapper();
 		List<Req> allList=service.reqList(index, cPage, numPerPage);
 		String jsonStr="";
 		int totalData=service.selectReqCount(index);
 		Map map=new HashMap();
 		map.put("allList",allList);
-		System.out.println(allList);
 		map.put("pageBar",PageFactory.getAjaxPageBar(index,totalData,cPage,numPerPage,"/finalProject/ajax/reqList.hd"));
 		
 		try {
@@ -77,7 +76,7 @@ public class ReqController {
 		return jsonStr;
 	}
 	
-	@RequestMapping("/sucList.hd")
+	@RequestMapping("/reqOne.hd")
 	public String reqOne(@RequestParam int reqNo, Model model) {
 		Req req=service.reqOne(reqNo);
 		model.addAttribute("reqOne",req);
