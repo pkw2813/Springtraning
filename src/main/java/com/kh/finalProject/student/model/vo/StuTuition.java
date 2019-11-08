@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tuition {
+public class StuTuition {
 	private String stuNo;
 	private String acaYearSem;
+	private String acaYearSemKor;
 	private int tuition;
 	private char paymentStat;
 	private Date paymentDate;

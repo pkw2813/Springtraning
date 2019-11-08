@@ -1,12 +1,14 @@
 package com.kh.finalProject.student.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.finalProject.student.model.vo.Student;
-import com.kh.finalProject.student.model.vo.Tuition;
+import com.kh.finalProject.student.model.vo.StuTuition;
 
 public interface StudentDao3 {
 	
-	Student selectOne(SqlSessionTemplate session,String loginId, String loginPwd);
-	Tuition selectTuitionOne(SqlSessionTemplate session, String studentNo);
+	StuTuition selectTuitionOne(SqlSessionTemplate session, StuTuition tuition);
+	List<StuTuition> selectTuitionCertList(SqlSessionTemplate session, String studentNo);
 }

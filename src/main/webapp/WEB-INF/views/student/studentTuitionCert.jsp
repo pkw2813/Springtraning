@@ -19,12 +19,12 @@
 	 }
 	 
 	 /* ui 테스트용 */
-	/*  div { 
+	 div { 
 	 	border: 1px solid black;
-	 } */
+	 }
 	 
 	 .divMarginBottom {
-	 	margin-bottom: 7px;
+	 	margin-bottom: 3px;
 	 }
 	  .divMarginLeft {
 	 	margin-left: 13px;
@@ -43,10 +43,28 @@
 				<div class="col-12 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body" style="padding-bottom:3px;">
-							<div style="margin-bottom: 10px;"><h4 class="font-weight-bold mb-0 textAlignCenter">
-								조회된 등록금 고지서가 없습니다.
-							</h4></div>
-							<div class="divMarginBottom divMarginLeft"><h5 class="font-weight-bold mb-0">
+							<div style="margin-bottom: 10px;">
+								<h4 class="font-weight-bold mb-0 textAlignCenter">
+									<div id="acaYearSemByAjax">
+									${selectYearSemKor} 조회된 등록금 납부 내역이 없습니다.
+									</div>
+								</h4>
+							</div>
+							<div class="divMarginBottom divMarginLeft">
+								<h5 class="font-weight-bold mb-0"></h5>
+							</div>
+						</div>
+						<div class="card-body" style="padding-bottom:13px;">
+							<div class="form-group">
+								<label for="selectYearSem">년도 학기별 선택</label>
+								<select class="form-control form-control-sm" style="color:black;" id="selectYearSem">
+								<c:forEach items="${tuitionCertList}" var="tcList">
+									<option value="<c:out value="${tcList.acaYearSem }"/>">
+										<c:out value="${tcList.acaYearSemKor }"/>
+									</option>
+								</c:forEach>
+								</select>
+							</div>
 						</div>
 						<div class="card-body" style="padding-top:3px; padding-bottom:3px;">
 						<div class="table-responsive">
@@ -76,16 +94,26 @@
 						</div>
 						<div class="card-body" style="padding-top:3px; padding-bottom:30px;">
 						</div>
-					</div>
 				</div>
 			</div>
+		</div>
 	</c:if>
 	<c:if test="${tuition ne null}">
 		<div class="row">
 				<div class="col-12 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body" style="padding-bottom:13px;">
-							<div style="margin-bottom:13px; color:royalblue;"><h4 class="font-weight-bold mb-0">
+							<div class="form-group">
+								<label for="selectYearSem">년도 학기별 선택</label>
+								<select class="form-control form-control-sm" style="color:black;" id="selectYearSem">
+								<c:forEach items="${tuitionCertList}" var="tcList">
+									<option value="<c:out value="${tcList.acaYearSem }"/>">
+										<c:out value="${tcList.acaYearSemKor }"/>
+									</option>
+								</c:forEach>
+								</select>
+							</div>
+							<div style="margin-bottom:13px;"><h4 class="font-weight-bold mb-0">
 								<div id="acaYearSem"></div>
 							</h4></div>
 							<div class="divMarginBottom divMarginLeft"><h5 class="font-weight-bold mb-0">
@@ -100,6 +128,9 @@
 							<div class="divMarginBottom divMarginLeft"><h5 class="font-weight-bold mb-0">
 								학과: ${tuition.deptName}
 							</h5></div>
+							<div class="divMarginBottom divMarginLeft"><h4 class="font-weight-bold mb-0">
+								<div class="textAlignCenter" style="margin-top:13px;" id="paymentStat"></div>
+							</h4></div>
 						</div>
 						<div class="card-body" style="padding-top:3px; padding-bottom:3px;">
 						<div class="table-responsive">
@@ -129,19 +160,19 @@
 						</div>
 						<div class="card-body" style="padding-top:13px; padding-bottom:30px;">
 							<div class="divMarginBottom divMarginLeft">
-								<h6 class="font-weight-bold mb-0">
-								<div id="dueDate"></div>
-								</h6>
+								<h5 class="font-weight-bold mb-0">
+								<div id="paymentDate"></div>
+								</h5>
 							</div>
 							<div class="divMarginBottom divMarginLeft">
-								<h6 class="font-weight-bold mb-0">
-									가상계좌 납부: KH은행 20-12321-12421
-								</h6>
+								<h5 class="font-weight-bold mb-0">
+								<div id="paymentCompleteText"></div>
+								</h5>
 							</div>
-							<div class="divMarginBottom divMarginLeft font-weight-bold">
-								<div class="textAlignCenter" id="todayDate"></div>
+							<div class="divMarginBottom divMarginLeft font-weight-bold"  style="margin-top:10px;">
+								<div class="textAlignCenter" style="margin-top:10px; margin-bottom:10px;" id="todayDate"></div>
 								<div class="textAlignRight" style="padding-right:10px;">
-									<h3 class="font-weight-bold mb-0">KH대학교 총장</h3>
+									<h3 class="font-weight-bold mb-0"><div id="sign"></div></h3>
 								</div>
 							</div>
 						</div>
@@ -175,12 +206,16 @@
 			<%if(tuition==null) { %>
 				console.log("조회된 등록금이 없습니다.");
 			<%}else { %>
+				var acaYearSem='${tuition.acaYearSem}'.substring(0,4)+'학년도 '+'${tuition.acaYearSem}'.substring(6,7)+"학기";
+				<%if(tuition.getPaymentStat()=='N') { %>
+				console.log("아직 납부하지 않음.");
+				$("#paymentStat").html(acaYearSem).css('color', 'royalblue');
+				$("#paymentStat").append(" 등록금 납부 내역이 없습니다.");
+				<%}else if(tuition.getPaymentStat()=='Y') { %>
 				tuition=${tuition.tuition}; // 등록금 저장
 				$("#tuition").html(numberWithCommas(tuition)+"원");  // 등록금에 1000원 단위로 컴마 추가하기
-				
-				var acaYearSem='${tuition.acaYearSem}'.substring(0,4)+'학년도 '+'${tuition.acaYearSem}'.substring(6,7)+"학기";
-				console.log(acaYearSem);
-				$("#acaYearSem").html(acaYearSem+' 등록금 고지서');
+				//console.log('${tuition.acaYearSem}');
+				$("#acaYearSem").html(acaYearSem+' 등록금 납입 증명서');
 				
 				var reductionMoney=0; // 감면금액 저장할 변수
 				if("${tuition.reductionStat}"=="Y") { // 감면여부가 'Y'이면
@@ -194,16 +229,58 @@
 				totalTuition=tuition-reductionMoney;
 				$("#totalTuition").html(numberWithCommas(totalTuition)+"원");  // 총액에 1000원 단위로 컴마 추가하기
 				
-				var dueDate; // 납입기한 저장할 변수
-				dueDate="${tuition.dueDate}";
-				//console.log("dueDate:"+dueDate);
-				$("#dueDate").html("납입기한: "+transDate(dueDate)+" 까지");
+				var paymentDate; // 납부일 저장할 변수
+				paymentDate="${tuition.paymentDate}";
+				//console.log("paymentDate:"+paymentDate);
+				$("#paymentDate").html("납부일: "+transDate(paymentDate));
+				$("#paymentCompleteText").html("가상계좌 납부 완료");
+				
 				
 				var today=new Date();
 			    //console.log("today:"+getFormatDate(today));
 			    
 				$("#todayDate").html(getFormatDate(today));
-			<%} %>
+				$("#sign").html("KH대학교 총장");
+				
+			<% 	}
+			} %>
+			
+			$("#selectYearSem").on('change', function(){
+				alert(this.value);
+				
+				// aJax 통신으로 해당 학년 학기 선택하기
+				//////
+				$.ajax({
+						url:"${path}/student/tuitionCertAjax.hd",
+						data:{"selectYearSem":this.value},
+						success:function(data) {
+							console.log("ajax 통신 성공:"+data);
+							var tuition={};
+							tuition=data;
+							console.log("data.acaYearSem:"+tuition.acaYearSem);
+							var acaYearSemByAjax=data.acaYearSem;
+			                acaYearSemByAjax=acaYearSemByAjax.substring(0,4)+'학년도 '+acaYearSemByAjax.substring(6,7)+"학기";
+			                console.log(acaYearSemByAjax);
+			                $("#acaYearSemByAjax").html(acaYearSemByAjax+" 조회된 등록금 납부 내역이 없습니다.");
+						}
+					});
+				//////
+			   /*  var xhr = new XMLHttpRequest();
+			    xhr.onreadystatechange = function () {
+			        if (xhr.readyState == 4) {
+			            if (xhr.status == 200) {
+			                console.log("선택 완료:" + xhr.responseText);
+			                var acaYearSemByAjax=xhr.responseText;
+			                acaYearSemByAjax=acaYearSemByAjax.substring(0,4)+'학년도 '+acaYearSemByAjax.substring(6,7)+"학기";
+			                console.log(acaYearSemByAjax);
+			                $("#acaYearSemByAjax").html(acaYearSemByAjax+" 조회된 등록금 납부 내역이 없습니다.");
+			            }
+			        }
+			    }
+			    xhr.open("post", "${path}/student/tuitionCertAjax.hd");
+			    xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+			    xhr.send("selectYearSem="+this.value); */
+			});
 		</script>
 
 
