@@ -32,22 +32,17 @@ public class ProfessorController2 {
 //		int totalData = service.selectBoardCount();
 		Professor p = (Professor)session.getAttribute("loginMember");
 		String deptCode = p.getDeptCode();
+		//sim 은 학과생 검색 조건들을 담은 객체. SelectInMajor 화면으로부터 정보를 받아서 객체로 생성.
+		//학과번호로 해당 학과생들을 조회함.
 		if(sim != null) {
-			System.out.println("notnull"+sim.getDeptCode());
-			System.out.println(sim.getStuName());
-			System.out.println(sim.getStuNo());
-			System.out.println(sim.getGrade());
-		sim.setDeptCode(deptCode);
+			sim.setDeptCode(deptCode);
 		} else if(sim == null) {
 			sim = new SelectInMajor();
 			sim.setDeptCode(deptCode);
-			System.out.println("null"+sim.getDeptCode());
-			System.out.println(sim.getStuName());
-			System.out.println(sim.getStuNo());
-			System.out.println(sim.getGrade());
 		}
 		System.out.println(sim.getDeptCode());
 		
+		//조건 검색들로 학생 목록을 추출
 		List<Student> list = service.selectInMajor(sim, cPage, numPerPage);
 		
 		int totalData = service.countInDept(sim);
@@ -60,9 +55,11 @@ public class ProfessorController2 {
 	}
 	//수강생 조회
 	@RequestMapping("prof/viewInClass.hd")
-	public String viewInClass(@RequestParam(value="cPage",required=false,defaultValue="1")int cPage ,Model model) {
+	public String viewInClass(@RequestParam(value="cPage",required=false,defaultValue="1")int cPage ,Model model, HttpSession session) {
 		int numPerPage=5;
-		
+		Professor p = (Professor)session.getAttribute("loginMember");
+		//현재 강의중인 과목 출력
+//		String[] preSubject = service.selectPreSubject(p);
 		
 //		List<Student> list = service.selectInClass();
 //		

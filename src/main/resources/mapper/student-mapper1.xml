@@ -45,9 +45,10 @@
 	</resultMap>
 	
 	
-  	<resultMap id="classResult" type="class">
+  	<resultMap id="classResult" type="insertClass">
 		<result column="SUB_CODE" property="subCode" />
 		<result column="CLASS_YEAR" property="classYear" />
+		<result column="T_SEMESTER" property="tSemester" />
 		<result column="CLASS_NAME" property="className" />
 		<result column="PROF_ID" property="profId" />
 		<result column="OPEN_YN" property="openYn" />	

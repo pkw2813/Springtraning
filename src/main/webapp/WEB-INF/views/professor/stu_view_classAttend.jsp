@@ -150,7 +150,6 @@
 														<th>영어과</th>
 														<th>3학년</th>
 													</tr>
-
 												</thead>
 											</table>
 										</div>

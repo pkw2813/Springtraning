@@ -17,7 +17,7 @@
 			AND STU_NAME = #{stuName}
 		</if>
 		<if test='grade !="" &amp; grade != null'>
-			AND (((TO_NUMBER(SUBSTR((SELECT SYSDATE FROM DUAL),1,2)))) - ((TO_NUMBER(SUBSTR(ENTER_DATE,1,2)))-1)) = #{grade} 
+			AND SUBSTR(STU_YEAR_SEM,1,1) = #{grade} 
 		</if>
 			AND DEPT_CODE = #{deptCode} 
 			ORDER BY STU_NAME
@@ -35,11 +35,28 @@
 			AND STU_NAME = #{stuName}
 		</if>
 		<if test='grade !="" &amp; grade != null'>
-			AND (((TO_NUMBER(SUBSTR((SELECT SYSDATE FROM DUAL),1,2)))) - ((TO_NUMBER(SUBSTR(ENTER_DATE,1,2)))-1)) = #{grade}
+			AND SUBSTR(STU_YEAR_SEM,1,1) = #{grade}
 		</if>
 		AND DEPT_CODE = #{deptCode}
 	</select>
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <resultMap id="professorResult" type="professor">
 		<result column="PROF_ID" property="profId" />
