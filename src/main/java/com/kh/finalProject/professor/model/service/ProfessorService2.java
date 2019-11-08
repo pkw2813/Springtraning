@@ -10,5 +10,5 @@ public interface ProfessorService2 {
 	
 	Professor selectOne(String loginId,String loginPwd);
 	List<Student> selectInMajor(SelectInMajor sim, int cPage, int numPerPage);
-	int countInDept(String deptCode);
+	int countInDept(SelectInMajor sim);
 }

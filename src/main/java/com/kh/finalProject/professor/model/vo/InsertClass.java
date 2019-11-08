@@ -12,6 +12,7 @@ public class InsertClass {
 	private String profId;
 	private String openYn;
 	private int capacity;
+	private int pre_capa;
 	private int assignA;
 	private int assignB;
 	private int assignC;

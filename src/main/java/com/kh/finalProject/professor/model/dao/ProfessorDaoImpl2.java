@@ -19,8 +19,8 @@ public class ProfessorDaoImpl2 implements ProfessorDao2 {
 	}
 
 	@Override
-	public int countInDept(SqlSessionTemplate session, String deptCode) {
-		return session.selectOne("prof2.countInDept",deptCode);
+	public int countInDept(SqlSessionTemplate session, SelectInMajor sim) {
+		return session.selectOne("prof2.countInDept",sim);
 	}
 
 	

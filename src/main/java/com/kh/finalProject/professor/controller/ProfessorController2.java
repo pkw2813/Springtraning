@@ -25,8 +25,9 @@ public class ProfessorController2 {
 	ProfessorService2 service;
 	
 	@RequestMapping("prof/viewInMajor.hd")
-	public String viewInMajor(@RequestParam(required = false) SelectInMajor sim, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage ,Model model, HttpSession session){
-		int numPerPage=5;
+	public String viewInMajor(SelectInMajor sim, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage ,Model model, HttpSession session){
+//		@RequestParam(required = false) ? 왜 
+		int numPerPage=10;
 //		List<ProfessorBoard> list = service.boardView(cPage, numPerPage);
 //		int totalData = service.selectBoardCount();
 		Professor p = (Professor)session.getAttribute("loginMember");
@@ -35,6 +36,7 @@ public class ProfessorController2 {
 			System.out.println("notnull"+sim.getDeptCode());
 			System.out.println(sim.getStuName());
 			System.out.println(sim.getStuNo());
+			System.out.println(sim.getGrade());
 		sim.setDeptCode(deptCode);
 		} else if(sim == null) {
 			sim = new SelectInMajor();
@@ -42,12 +44,13 @@ public class ProfessorController2 {
 			System.out.println("null"+sim.getDeptCode());
 			System.out.println(sim.getStuName());
 			System.out.println(sim.getStuNo());
+			System.out.println(sim.getGrade());
 		}
 		System.out.println(sim.getDeptCode());
 		
 		List<Student> list = service.selectInMajor(sim, cPage, numPerPage);
 		
-		int totalData = service.countInDept(deptCode);
+		int totalData = service.countInDept(sim);
 		
 		model.addAttribute("list",list);
 		model.addAttribute("totalCount",totalData);

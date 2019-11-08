@@ -94,14 +94,14 @@
 										<td><input type="text" placeholder="이름검색" value=""
 											name="stuName"></td>
 										<td><select name="grade">
-												<option selected>학년검색</option>
+												<option value="" selected>학년검색</option>
 												<option value="1">1학년</option>
 												<option value="2">2학년</option>
 												<option value="3">3학년</option>
 												<option value="4">4학년</option>
 										</select></td>
 										<td><select name="regStatus">
-												<option selected>학적구분</option>
+												<option value="" selected>학적구분</option>
 												<option value="1">재학</option>
 												<option value="2">휴학</option>
 												<option value="3">재적</option>

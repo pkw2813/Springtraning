@@ -11,6 +11,6 @@ public interface ProfessorDao2 {
 
 	List<Student> selectInMajor(SqlSessionTemplate session, SelectInMajor sim, int cPage, int numPerPage);
 	
-	int countInDept(SqlSessionTemplate session, String deptCode);
+	int countInDept(SqlSessionTemplate session, SelectInMajor sim);
 	
 }

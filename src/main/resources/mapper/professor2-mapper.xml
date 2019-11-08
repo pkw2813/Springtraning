@@ -16,16 +16,28 @@
 		<if test='stuName !="" &amp; stuName != null'>
 			AND STU_NAME = #{stuName}
 		</if>
-	<!-- 	<if test='grade !="" &amp; grade != null'>
-			AND GRADE = #{grade}
-		</if>  -->
+		<if test='grade !="" &amp; grade != null'>
+			AND (((TO_NUMBER(SUBSTR((SELECT SYSDATE FROM DUAL),1,2)))) - ((TO_NUMBER(SUBSTR(ENTER_DATE,1,2)))-1)) = #{grade} 
+		</if>
 			AND DEPT_CODE = #{deptCode} 
 			ORDER BY STU_NAME
 	</select>
 	
-	<select id="countInDept"  resultType="_int">
+	<select id="countInDept"  resultType="_int" parameterType="selectInMajor">
 	
-		SELECT COUNT(*) FROM HD_STUDENT_TB WHERE DEPT_CODE = #{deptCode}
+		SELECT COUNT(*) 
+		FROM HD_STUDENT_TB 
+		WHERE 1=1 
+		<if test='stuNo !="" &amp; stuNo != null'>
+			AND STU_NO = #{stuNo}
+		</if>
+		<if test='stuName !="" &amp; stuName != null'>
+			AND STU_NAME = #{stuName}
+		</if>
+		<if test='grade !="" &amp; grade != null'>
+			AND (((TO_NUMBER(SUBSTR((SELECT SYSDATE FROM DUAL),1,2)))) - ((TO_NUMBER(SUBSTR(ENTER_DATE,1,2)))-1)) = #{grade}
+		</if>
+		AND DEPT_CODE = #{deptCode}
 	</select>
 	
 
