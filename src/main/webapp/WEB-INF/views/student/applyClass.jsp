@@ -84,9 +84,8 @@
     	
 				<tr>
 				<td>시간표 구분
-				<input type="radio" name="chk_major" value="전공" checked="checked">전공
+				<input type="radio" name="chk_major" value="전공">전공
 				<input type="radio" name="chk_major" value="교양">교양
-			
 				</td>
 				<td>이수구분
 				
@@ -149,39 +148,44 @@
 				</tr>
 				<tr id="classInfoTitle">
 				<th>순번</th>
-				<th>강좌번호</th>
+				
 				<th>교과목명</th>
-				<th>이수학점</th>
-				<th>언어</th>
-				<th>성적분류</th>
+				<th>과목명</th>
 				<th>담당교수</th>
-				<th>수강대상</th>
+				<th>이수구분</th>
+				<th>이수학점</th>
 				<th>강의시간</th>
-				<th>강의실</th>
 				<th>수강여석</th>
+				<th>강의실</th>
 				<th>수강평</th>
 				<th>신청/철회</th>
 				</tr>
-
+				<c:forEach items="${list}" var="e" varStatus="v">
 				<tr id="classInfo">
-				<td> asdf</td>
-				<td> asdf</td>
-				<td> asdf</td>
-				<td> asdf</td>
-				<td> asdf</td>
-				<td>asdf </td>
-				<td> asdf</td>
-				<td> asdf</td>
-				<td>asdf </td>
-				<td>asdf </td>
-				<td> asdf</td>
+				<td><c:out value='${e["ROWNUM"] }'/></td>
+				<td><c:out value='${e["T_DEPT"] }'/></td>
+				<td><c:out value='${e["SUB_NAME"] }'/></td>
+				<td><c:out value='${e["PROF_NAME"] }'/></td>
+				<td><c:out value='${e["SUB_TYPE"] }'/></td>
+				<td>최대: <c:out value='${e["COMPLETE_PT"] }'/></td>
+				<td>매주: <c:out value='${e["SUB_DATE"] }'/> <c:out value='${e["SUB_TIME"] }'/></td>
+				<td><c:out value='${e["PRE_CAPA"] }'/>/<c:out value='${e["CAPACITY"] }'/></td>
+				<td><c:out value='${e["SUB_ROOM"] }'/></td>
+				
+				<c:if test='${e["OPEN_YN"] eq "Y"}'>
 				<td style="text-align:center">
 				<button id="button" class="btn btn-primary btn-xs">보기</button>
 				</td>
 				<td style="text-align:center">
 				<button id="button"class="btn btn-primary btn-xs">신청</button>
+				</c:if>
+				<c:if test='${e["OPEN_YN"] eq "N"}'>
+				<td></td>
+				<td></td>
+				</c:if>
 				</td>
 				</tr>
+				</c:forEach>
 				</table>
 				
 					<%-- <th style="text-align:center;font-size:15px;" rowspan="6"  width="200px">

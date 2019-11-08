@@ -1,11 +1,11 @@
 package com.kh.finalProject.student.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Repository
@@ -24,7 +24,7 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 
 	@Override
-	public List<InsertClass> selectAllClass(SqlSessionTemplate session) {
+	public List<Map> selectAllClass(SqlSessionTemplate session) {
 		
 		return session.selectList("student1.selectAllClass");
 	}

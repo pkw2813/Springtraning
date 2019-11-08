@@ -5,8 +5,11 @@
 	<select id="selectStudent" parameterType="string" resultMap="studentResult">
   		SELECT * FROM HD_STUDENT_TB WHERE STU_NO=#{studentNo}
   	</select>
-  	<select id="selectAllClass" resultMap="classResult">
-  		SELECT * FROM HD_STUDENT_TB
+  	<select id="selectAllClass" resultType="map">
+  		SELECT ROWNUM,A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,B.SUB_NAME,B.COMPLETE_PT,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN
+  		,B.SUB_TYPE
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
   	</select> 
   	
   	<update id="studentInfoUpdate" parameterType="student">

@@ -1,12 +1,12 @@
 package com.kh.finalProject.student.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.student.model.dao.StudentDao1;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -34,7 +34,7 @@ public class StudentServiceImpl1 implements StudentService1 {
 
 
 	@Override
-	public List<InsertClass> selectAllClass() {
+	public List<Map> selectAllClass() {
 		
 		return dao.selectAllClass(session);
 	}
