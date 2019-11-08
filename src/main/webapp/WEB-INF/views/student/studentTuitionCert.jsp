@@ -249,37 +249,24 @@
 				alert(this.value);
 				
 				// aJax 통신으로 해당 학년 학기 선택하기
-				//////
 				$.ajax({
 						url:"${path}/student/tuitionCertAjax.hd",
 						data:{"selectYearSem":this.value},
 						success:function(data) {
 							console.log("ajax 통신 성공:"+data);
-							var tuition={};
-							tuition=data;
-							console.log("data.acaYearSem:"+tuition.acaYearSem);
-							var acaYearSemByAjax=data.acaYearSem;
+							var tuitionObj=new Object();
+							tuitionObj=JSON.parse(data); // JSON을 자바스크립트 객체로 변환하기
+							var acaYearSemByAjax=tuitionObj.acaYearSem; // tuitionObj 객체의 acaYearSem 맴버변수 가져오기
+							console.log("acaYearSemByAjax:"+acaYearSemByAjax);
 			                acaYearSemByAjax=acaYearSemByAjax.substring(0,4)+'학년도 '+acaYearSemByAjax.substring(6,7)+"학기";
 			                console.log(acaYearSemByAjax);
-			                $("#acaYearSemByAjax").html(acaYearSemByAjax+" 조회된 등록금 납부 내역이 없습니다.");
+			                if(tuitionObj.paymentStat=='Y') {
+			                	$("#acaYearSemByAjax").html(acaYearSemByAjax+" 조회된 등록금 납부 내역이 있습니다.");
+			                }else if(tuitionObj.paymentStat=='N') {
+				                $("#acaYearSemByAjax").html(acaYearSemByAjax+" 조회된 등록금 납부 내역이 없습니다.");
+			                }
 						}
 					});
-				//////
-			   /*  var xhr = new XMLHttpRequest();
-			    xhr.onreadystatechange = function () {
-			        if (xhr.readyState == 4) {
-			            if (xhr.status == 200) {
-			                console.log("선택 완료:" + xhr.responseText);
-			                var acaYearSemByAjax=xhr.responseText;
-			                acaYearSemByAjax=acaYearSemByAjax.substring(0,4)+'학년도 '+acaYearSemByAjax.substring(6,7)+"학기";
-			                console.log(acaYearSemByAjax);
-			                $("#acaYearSemByAjax").html(acaYearSemByAjax+" 조회된 등록금 납부 내역이 없습니다.");
-			            }
-			        }
-			    }
-			    xhr.open("post", "${path}/student/tuitionCertAjax.hd");
-			    xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-			    xhr.send("selectYearSem="+this.value); */
 			});
 		</script>
 
