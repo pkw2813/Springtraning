@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.employee.model.dao.EmployeeDao;
 import com.kh.finalProject.employee.model.vo.Employee;
+import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Service
@@ -57,8 +58,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int selectDeptCount(String deptCode) {
 		return dao.selectDeptCount(session, deptCode);
 	}
-	
-	
+
+	@Override
+	public List<Professor> selectProfList() {
+		return dao.selectProfList(session);
+	}
 	
 	
 	

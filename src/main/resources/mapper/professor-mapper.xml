@@ -5,7 +5,9 @@
 		SELECT * FROM HD_PROFESSOR_TB WHERE prof_Id=#{profId} AND prof_Pw=#{profPw} AND SUBSTR(prof_Id,1,1)='P'
 	</select>
 
-
+	<select id="selectProfList" resultType="map">
+		SELECT *FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'P' ORDER BY DEPT_CODE
+	</select>	
 
   <resultMap id="professorResult" type="professor">
 		<result column="PROF_ID" property="profId" />

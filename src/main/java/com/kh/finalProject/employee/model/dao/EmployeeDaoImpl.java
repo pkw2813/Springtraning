@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.employee.model.vo.Employee;
+import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Repository
@@ -48,6 +49,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public int selectDeptCount(SqlSessionTemplate session, String deptCode) {
 		return session.selectOne("student.selectDeptCount", deptCode);
+	}
+
+	@Override
+	public List<Professor> selectProfList(SqlSessionTemplate session) {
+		return session.selectList("professor.selectProfList");
 	}
 	
 	

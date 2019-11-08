@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.employee.model.vo.Employee;
+import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.student.model.vo.Student;
 
 public interface EmployeeDao {
@@ -23,5 +24,7 @@ public interface EmployeeDao {
 	int selectLastNum(SqlSessionTemplate session, String deptCode);
 	
 	int selectDeptCount(SqlSessionTemplate session, String deptCode);
+	
+	List<Professor> selectProfList(SqlSessionTemplate session);
 	
 }
