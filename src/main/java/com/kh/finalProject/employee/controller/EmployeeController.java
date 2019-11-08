@@ -65,6 +65,22 @@ public class EmployeeController {
 		return beforeStu;
 	}
 
+	
+	
+	@RequestMapping("/enrollprofrssor.hd")
+	public String enrollprofrssor() {
+		return "";
+	}
+	
+	@RequestMapping("/enrollemployee.hd")
+	public String enrollemployee() {
+		return "";
+	}
+	
+	
+	
+	
+	
 	public Student settingNewStudent(BeforeStu bs) {
 
 		Student s = new Student();
@@ -87,8 +103,8 @@ public class EmployeeController {
 			bs.setBeforeNo(enc.decrypt(bs.getBeforeNo()));
 			// 성별 설정
 			s.setGender(bs.getBeforeNo().substring(6, 7).equals("1") || bs.getBeforeNo().substring(6, 7).equals("3")
-					? "M"
-					: bs.getBeforeNo().substring(6, 7).equals("2") || bs.getBeforeNo().substring(6, 7).equals("4") ? "F"
+					? "남"
+					: bs.getBeforeNo().substring(6, 7).equals("2") || bs.getBeforeNo().substring(6, 7).equals("4") ? "여"
 							: "");
 
 			// 다시 암호화
@@ -113,7 +129,6 @@ public class EmployeeController {
 
 	// 학과 코드랑
 	public Map settingStudentNumber(String deptCode) {
-
 		int deptCount = service.selectDeptCount(deptCode);
 		List<Map> colList = bService.selectColList();
 		for (Map col : colList) {
@@ -139,5 +154,10 @@ public class EmployeeController {
 		}
 		return count;
 	}
+
+
+
+
+
 
 }

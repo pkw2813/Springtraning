@@ -375,8 +375,8 @@
             <div class="collapse" id="auth5">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="${path }/enrollStudent.hd">입학 관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">교수 관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">직원 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/enrollprofessor.hd">교수 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/enrollemployee.hd">직원 관리</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/reqList.hd">건의사항 관리</a></li>
                </ul>
             </div>
