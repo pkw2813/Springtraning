@@ -42,10 +42,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int insertNewStu(Student s, int beforeStu) throws Exception {
 		int result = dao.deleteBeforeStu(session, beforeStu);
 		int result1 = dao.insertNewStu(session, s);
-		if(result == 0 || result1 == 0) {
+		if(result1 == 0 || result1 == 0) {
 			new Exception();
 		}
-		return result;
+		return result1;
 	}
 
 	@Override
