@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalProject.professor.model.dao.ProfessorDao1;
+import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
@@ -39,21 +40,16 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	//강의 개설
 	@Override
 	@Transactional
-	public Map<String,String> insertSubjectEnd(MultipartFile upfile, Map<String, String> map) throws RuntimeException {
+	public List<InsertClass> insertSubjectEnd(Map<String, String> map) throws RuntimeException {
 		int result = 0;
 		
-//		result = dao.insertSubjectEnd(session, upfile, map); // subject 
-//		if(result==0) {
-//			throw new RuntimeException();
-//		}
-//		result = dao.insertClassEnd(session, upfile, map); // insertClass
-//		if(result==0) {
-//				throw new RuntimeException();
-//		}
-//		Map<String,String> res=dao.selectSubjectView(map.get("subCode"));
-//		
-//		return res;
-		return map;
+		result = dao.insertSubjectEnd(session, map); // insertClass
+		if(result==0) {
+				throw new RuntimeException();
+		}
+		List<InsertClass> list = dao.subjectView(session,map); 
+		
+		return list;
 	}
 
 	//교수뷰
@@ -108,22 +104,38 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		return result;
 		
 	}
+	//게시판 수정
+	@Override
+	@Transactional
+	public int updateBoardEnd(ProfessorBoard pb, List<ProfBoardAttachment> list) throws RuntimeException{
+		int result = 0;
+		
+		result = dao.updateBoardEnd(session,pb);
+		
+		for(ProfBoardAttachment pba : list) {
+			pba.setProfBoardNo(pb.getProfBoardNo());
+			result = dao.updateAttachment(session, pba);
+		}
+		if(result == 0) {
+			throw new RuntimeException();
+		}
+		return result;
+		
+	}
 //	게시판select
 	@Override
 	public ProfessorBoard selectBoardView(int profBoardNo) {
-		ProfessorBoard pb = dao.selectBoardView(session, profBoardNo);
-		return pb;
+		return dao.selectBoardView(session, profBoardNo);
 	}
 	@Override
 	public List<ProfBoardAttachment> selectProfAttachment(int profBoardNo) {
-		List<ProfBoardAttachment> pba = dao.selectProfAttachment(session, profBoardNo);
-		return pba;
+		return dao.selectProfAttachment(session, profBoardNo);
 	}
 //	subject
 	@Override
-	public List<Subject> subjectCodeView(){
+	public List<Subject> subjectCodeView(String profId){
 		
-		List<Subject> list = dao.subjectCodeView(session);
+		List<Subject> list = dao.subjectCodeView(session,profId);
 		
 		return list;
 	}

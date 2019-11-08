@@ -81,9 +81,6 @@
 </script>
 
 <style>
-	div{
-		border:0.3px solid coral;
-	}
 	th{
 		background-color:snow;
 	}

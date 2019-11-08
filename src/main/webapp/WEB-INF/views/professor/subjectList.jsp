@@ -48,6 +48,9 @@
 			<th>학기구분</th>
 			<th>이수구분</th>
 			<th>학과번호</th>
+			<th>강의실</th>
+			<th>강의시간</th>
+			<th>강의요일</th>
 		</tr>
 		<c:forEach items="${list }" var="subject">
 			<tr>
@@ -60,6 +63,9 @@
 				<td>${subject.T_SEMESTER }학기</td>
 				<td>${subject.SUB_TYPE }</td>
 				<td>${subject.DEPT_CODE }</td>
+				<td>${subject.SUB_ROOM }</td>
+				<td>${subject.SUB_TIME }</td>
+				<td>${subject.SUB_DATE }</td>
 			</tr>
 		</c:forEach>
 

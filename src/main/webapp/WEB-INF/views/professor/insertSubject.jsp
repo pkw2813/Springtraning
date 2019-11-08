@@ -4,7 +4,7 @@
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-	<jsp:include page = "/WEB-INF/views/common/son_pro_header.jsp">
+	<jsp:include page = "/WEB-INF/views/common/header.jsp">
 		<jsp:param name="pageTitle" value=""/>
 	</jsp:include>
 	
@@ -26,7 +26,35 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="row gap1">
-					<div class="col-12">
+					<div class="col-6">
+						<table style="text-align:center;">
+							<tr style="background-color:lightgray;">
+								<th style="text-align:center;">이수구분</th>
+								<th style="text-align:center;">개설학기</th>
+								<th style="text-align:center;">과목명</th>
+								<th style="text-align:center;">강의시간</th>
+								<th style="text-align:center;">학과코드</th>
+								<th style="text-align:center;">수강학년</th>
+								<th style="text-align:center;">수강학과</th>
+								<th style="text-align:center;">정원</th>
+								<th style="text-align:center;">개설여부</th>
+							</tr>
+							<%-- <c:forEach items="" var=""> --%>
+							<tr style="height:30px;">
+								<td>임시</td>
+								<td>임시</td>
+								<td><a href="#">임시</a></td>
+								<td>임시</td>
+								<td>임시</td>
+								<td>임시</td>
+								<td>임시</td>
+								<td>임시</td>
+								<td>임시</td>
+							</tr>
+							<%-- </c:forEach> --%>
+						</table>
+					</div>
+					<div class="col-6">
 						<table style="text-align:center;">
 							<tr style="background-color:lightgray;">
 								<th style="text-align:center;">이수구분</th>
@@ -37,7 +65,6 @@
 								<th style="text-align:center;">수강학년</th>
 								<th style="text-align:center;">수강학과</th>
 								<th style="text-align:center;">교수명</th>
-								<th style="text-align:center;">전공</th>
 								<th style="text-align:center;">정원</th>
 							</tr>
 							<%-- <c:forEach items="" var=""> --%>
@@ -45,7 +72,6 @@
 								<td>임시</td>
 								<td>임시</td>
 								<td><a href="#">임시</a></td>
-								<td>임시</td>
 								<td>임시</td>
 								<td>임시</td>
 								<td>임시</td>
@@ -77,20 +103,21 @@
 							<table class="">
 								<tr>
 									<th>개설학기</th>
-									<td><input name="classYear" id="fn_year" type='number' min="2019" max="2050" style="width:100px;"/> 년도 </td>
+									<td><input name="classYear" id="fn_year" type='number' min="2019" max="2050" style="width:100px;"  value='<fmt:formatDate value="<%=new java.util.Date() %>" pattern="yyyy"/>' /> 년도 </td>
 									<td><input type='text' id="tSemester" name="tSemester" style="width:15px;text-align:center;" readonly/> 학기</td>
 								</tr>
 								<tr>
 									<th>교수명</th>
+									<input type='hidden' name="profId" value="${loginMember.profId }"/>
 									<td><input name="profName" type='text' value="${profName }" readonly/></td>
 								</tr>
 								<tr>
 									<th>연락처</th>
-									<td><input name="phone" type='tel'/></td>
+									<td><input name="phone" type='tel' value="${loginMember.phone }"/></td>
 								</tr>
 								<tr>
 									<th>이메일</th>
-									<td><input name="email" type='email'/></td>
+									<td><input name="email" type='email' value="${loginMember.email }"/></td>
 								</tr>
 								<tr>
 									<th>과목명</th>
@@ -113,11 +140,15 @@
 							<table class="">
 								<tr>
 									<th>강의실</th>
-									<td><input name="classRoom" type='text'/></td>
+									<td><input id="classRoom" name="classRoom" type='text' readonly/></td>
 								</tr>
 								<tr>
 									<th>강의시간</th>
-									<td><input name="classStart1" type='text'/></td>
+									<td><input id="classTime" name="classTime" type='text' readonly/></td>
+								</tr>
+								<tr>
+									<th>강의요일</th>
+									<td><input id="classDate" name="classDate" type="text" readonly/></td>
 								</tr>
 								<tr>
 									<th>강의목표</th>
@@ -132,13 +163,6 @@
 									<td><input id="completePt" name="completePt" style="width:60px;" type='number' readonly/> &nbsp; 학점</td>
 								</tr>
 								<tr>
-									<th>개설여부</th>
-									<td><select name="openYn" class="selectBox">
-										<option value="Y" selected>Y</option>
-										<option value="N">N</option>
-									</select></td>
-								</tr>
-								<tr>
 									<th>이수구분</th>
 									<td><input type='text' id="subType" name="subType" class="selectBox" readonly/></td>
 								</tr>
@@ -146,19 +170,19 @@
 						</div>
 						<div class="col-4">
 							<table class="">
-								<tr>
+<!-- 								<tr>
 									<th>전공</th>
 									<td><input name="deptName" type='text'/></td>
-								</tr>
+								</tr> -->
 								<tr>
-									<th>정 원</th>
-									<td><input name="capacity" type='number' style="width:60px;"/> 명 </td>
+									<th>정원</th>
+									<td><input name="capacity" type='number' style="width:60px;" min="25" max="30"/> 명 </td>
 								</tr>
 								<tr>
 									<th>교재 사용</th>
 									<td><select name="useBook" class="selectBox">
 										<option value="사용">사용</option>
-										<option value="미사용">미사용</option>
+										<option value="미사용" selected="selected">미사용</option>
 									</select></td>
 								</tr>
 								<tr>
@@ -187,6 +211,13 @@
 									</select></td>
 								</tr>
 								<tr>
+									<th>개설여부</th>
+									<td><select name="openYn" class="selectBox">
+										<option value="Y" selected>Y</option>
+										<option value="N">N</option>
+									</select></td>
+								</tr>
+								<tr>
 									<th style="width:150px;">강의계획서 첨부파일</th>
 									<td><input name="upfile" type='file'/></td>
 								</tr>
@@ -200,7 +231,7 @@
 									<th>평가기준</th>
 									<th style="width:50px;">중간</th><td><input name="mTerm" style="width:70px;background-color:snow" type='text'/></td>
 									<th style="width:50px;">&nbsp;&nbsp;기말</th><td><input name="fTerm" style="width:70px;background-color:snow" type='text'/></td>
-									<th style="width:50px;">&nbsp;&nbsp;과제</th><td><input name="assign" style="width:70px;background-color:snow" type='text'/></td>
+									<!-- <th style="width:50px;">&nbsp;&nbsp;과제</th><td><input name="assign" style="width:70px;background-color:snow" type='text'/></td> -->
 									<th style="width:50px;">&nbsp;&nbsp;출석</th><td><input name="statusGrade" style="width:70px;background-color:snow" type='text'/></td>
 								</tr>
 								<tr>
@@ -229,7 +260,7 @@
 
 $(function(){
 	$("#fn_subjectCode").click(function(){
-		var url="${pageContext.request.contextPath }/professor/subjectCodeView";
+		var url="${pageContext.request.contextPath }/professor/subjectCodeView?profId=${loginMember.profId}";
     	var name="subject";
     	var option="width=1000,height=500,top=100,left=265,resizable=no";
     	window.open(url,name,option);
@@ -255,6 +286,9 @@ function selectSubject(subCode){
 			$("#subType").val(subject.SUB_TYPE);
 			$("#subName").val(subject.SUB_NAME);
 			$("#tSubject").val(subject.T_SUBJECT);
+			$("#classDate").val(subject.SUB_DATE);
+			$("#classTime").val(subject.SUB_TIME);
+			$("#classRoom").val(subject.SUB_ROOM);
    	 	}
 	});
 	
@@ -300,7 +334,13 @@ $(function(){
 			processData:false,
 			contentType:false,
 			success:function(data){
+				var d=JSON.parse(data);
 				console.log(data);
+				console.log(d);
+				/* var tr= $("<tr>");
+				var data="<td>"+d[0][""]){
+					
+				}	 */			
 			}
 		});
 		}else{

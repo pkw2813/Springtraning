@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
@@ -17,11 +18,12 @@ public interface ProfessorDao1 {
 	//페이징 토탈데이타
 	int selectBoardCount(SqlSessionTemplate session);
 	//강의 개설
-//	Map<String,String> insertSubjectEnd(SqlSessionTemplate session, MultipartFile upfile, Map<String, String> map);
+	int insertSubjectEnd(SqlSessionTemplate session, Map<String, String> map);
+	List<InsertClass> subjectView(SqlSessionTemplate session,Map<String,String> map);
+//	int insertClassEnd(SqlSessionTemplate session, MultipartFile upfile, Map<String, String> map);
 //	
 //	Map<String,String> selectSubjectView(SqlSessionTemplate session, int subcode);
-//	
-//	int insertClassEnd(SqlSessionTemplate session, MultipartFile upfile, Map<String, String> map);
+	
 	//교수뷰
 	Professor professorView(SqlSessionTemplate session);
 	//교수 정보수정
@@ -33,10 +35,13 @@ public interface ProfessorDao1 {
 	//게시판 작성
 	int insertBoardEnd(SqlSessionTemplate session,ProfessorBoard pb);
 	int insertBoardAttachment(SqlSessionTemplate session, ProfBoardAttachment pba);
+	//게시판 수정
+	int updateBoardEnd(SqlSessionTemplate session, ProfessorBoard pb);
+	int updateAttachment(SqlSessionTemplate session, ProfBoardAttachment pba);
 	//게시판 상세
 	ProfessorBoard selectBoardView(SqlSessionTemplate session, int profBoardNo);
 	List<ProfBoardAttachment> selectProfAttachment(SqlSessionTemplate session, int profBoardNo);
 //	subject
-	List<Subject> subjectCodeView(SqlSessionTemplate session);
+	List<Subject> subjectCodeView(SqlSessionTemplate session,String profId);
 	Map<String,String> selectSubject(SqlSessionTemplate session, String subCode);
 }

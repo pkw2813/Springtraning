@@ -30,6 +30,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService1;
+import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
@@ -48,6 +49,27 @@ public class ProfessorController1 {
 		
 		return "professor/subjectView";
 	}
+	//과목선택
+	@RequestMapping(value="/professor/selectSubject", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String seletcSubject(String subCode,HttpServletResponse res) {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		logger.info("subCode : "+subCode);
+		
+		Map<String,String> map = service.selectSubject(subCode);
+
+		
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.writeValueAsString(map); // 멤버변수에 있는 값 들을 전부 자바스크립트 객체방식으로 바꿈( {key:value} 형식으로 )
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		res.setContentType("application/json;charset=UTF-8");
+		
+		return jsonStr; // <- 받아온 객체가 넘어간다
+	}
 	//강의개설
 	@RequestMapping("/professor/insertSubject")
 	public String insertSubject(Model model) {
@@ -57,9 +79,12 @@ public class ProfessorController1 {
 		
 		return "professor/insertSubject";
 	}
-	//강의개설 END
+//	강의개설 END
 	@RequestMapping("/professor/insertSubjectEnd")
-	public String insertSubjectEnd(MultipartFile upfile,@RequestParam Map<String,String> map,HttpServletRequest req) {
+	@ResponseBody
+	public String insertSubjectEnd(MultipartFile upfile,@RequestParam Map<String,String> map,HttpServletRequest req,HttpServletResponse res) {
+		
+		ModelAndView mv = new ModelAndView();
 		
 		String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/SubjectProject");
 		
@@ -91,16 +116,28 @@ public class ProfessorController1 {
 		logger.info("파일이름 : "+upfile.getOriginalFilename());
 		
 		logger.info("맵 : "+map);
-		String msg="";
+		
+		List<InsertClass> list = new ArrayList<InsertClass>();
 		try {
-			Map<String,String> result = service.insertSubjectEnd(upfile,map);
+			list=service.insertSubjectEnd(map);
+			logger.info("map : "+map);
+			logger.info("성공");
 		}catch(RuntimeException e) {
+			e.printStackTrace();
 			logger.info("생성불가");
 		}
 		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		res.setContentType("application/json;charset=UTF-8");
 		
 		
-		return "redirect:/";
+		return jsonStr;
 	}
 	//교수정보
 	@RequestMapping("/professor/professorView")
@@ -215,12 +252,18 @@ public class ProfessorController1 {
 	}
 	//게시판 보기
 	@RequestMapping("/professor/selectBoardView")
-	public ModelAndView selectBoardView(Model model, int profBoardNo) {
+	public ModelAndView selectBoardView(int profBoardNo) {
 		
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("profBoard",service.selectBoardView(profBoardNo));
 		mv.addObject("profAttachment",service.selectProfAttachment(profBoardNo));
+		
+		logger.info(""+profBoardNo);
+		logger.info(""+mv.getModel());
+		logger.info(""+mv.getModelMap());
+		logger.info(""+service.selectBoardView(profBoardNo));
+		logger.info(""+service.selectProfAttachment(profBoardNo));
 		
 		mv.setViewName("/professor/selectBoardView");
 		
@@ -286,44 +329,97 @@ public class ProfessorController1 {
 		
 		return mv;
 	}
+	//게시판수정
+	@RequestMapping("/profBoard/updateBoard")
+	public ModelAndView updateBoard(int profBoardNo) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("prof",service.selectBoardView(profBoardNo));
+		mv.addObject("profAttachment",service.selectProfAttachment(profBoardNo));
+		
+		
+		mv.setViewName("/professor/updateBoard");
+		
+		return mv;
+	}
+	@RequestMapping("/profBoard/updateBoardEnd")
+	public ModelAndView updateBoardEnd(MultipartFile[] upFile, HttpServletRequest req, ProfessorBoard pb) {
+
+		String msg = "";
+		String loc = "";
+		
+		ModelAndView mv = new ModelAndView();
+		
+		String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/SubjectProject");
+		
+		List<ProfBoardAttachment> list = new ArrayList<ProfBoardAttachment>();
+		
+		File dir = new File(saveDir);
+		
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		
+		for(MultipartFile f : upFile) {
+			if(!f.isEmpty()) {
+				String oriFileName = f.getOriginalFilename();
+				String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				int random = (int)(Math.random()*1000);
+				String reName = sdf.format(System.currentTimeMillis())+"_"+random+ext;
+				
+				try {
+					f.transferTo(new File(saveDir+"/"+reName));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				
+				ProfBoardAttachment pba = new ProfBoardAttachment();
+				pba.setBoardOrifilename(oriFileName);
+				pba.setBoardRefilename(reName);
+				
+				list.add(pba);
+			}
+			
+		}
+		
+		try {
+			service.updateBoardEnd(pb,list);
+			msg = "수정 완료";
+			loc = "/professor/lectureData";
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+			msg = "수정 실패";
+			loc = "/professor/insertBoardEnd";
+			logger.info("생성불가");
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
 //	과목조회
 	@RequestMapping("/professor/subjectCodeView")
-	public String subjectCodeView(Model model) {
+	public String subjectCodeView(Model model,String profId) {
 		
-		List<Subject> list = service.subjectCodeView();
+		List<Subject> list = service.subjectCodeView(profId);
 		
 		model.addAttribute("list",list);
 		
 		return "professor/subjectList";
 	}
-	@RequestMapping(value="/professor/selectSubject", produces = "application/text; charset=utf8")
-	@ResponseBody
-	public String seletcSubject(String subCode,HttpServletResponse res) {
-		
-		ObjectMapper mapper = new ObjectMapper();
-		logger.info("subCode : "+subCode);
-		
-		Map<String,String> map = service.selectSubject(subCode);
-
-		
-		String jsonStr = "";
-		try {
-			jsonStr = mapper.writeValueAsString(map); // 멤버변수에 있는 값 들을 전부 자바스크립트 객체방식으로 바꿈( {key:value} 형식으로 )
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		res.setContentType("application/json;charset=UTF-8");
-		
-		return jsonStr; // <- 받아온 객체가 넘어간다
-	}
-	
 	//파일 다운로드용
 	@RequestMapping("/professor/fileDownLoad")
 	public void fileDownload(String oName, String rName, HttpServletRequest req, HttpServletResponse res) {
 		BufferedInputStream bis = null;
 		ServletOutputStream sos = null;
 		
-		String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/SubjectProfessor");
+		String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/SubjectProject");
 		
 		File downFile = new File(saveDir+"/"+rName);
 		
@@ -343,6 +439,7 @@ public class ProfessorController1 {
 				resFileName = new String(oName.getBytes("UTF-8"),"ISO-8859-1");
 			}
 			res.setContentType("application/octet-stream;charset=utf-8");
+			res.addHeader("Content-Disposition", "attachment;filename=\""+resFileName+"\"");
 			
 			res.setContentLength((int)downFile.length());
 			int read = 0;

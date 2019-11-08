@@ -15,7 +15,7 @@
 			<div class="col-md-12 grid-margin">
 				<div class="d-flex justify-content-between align-items-center">
 					<div>
-						<h4 class="font-weight-bold mb-0">강의 자료 업로드</h4>
+						<h4 class="font-weight-bold mb-0">수정</h4>
 					</div>
 				</div>
 			</div>
@@ -26,20 +26,21 @@
 		<div class="card">
 			<div class="card-body">
 				<!-- <div class="row"><p style="font-size:25px;">글작성</p></div> -->
-				<form action="${pageContext.request.contextPath }/professor/insertBoardEnd" method="post" enctype="multipart/form-data">
+				<form action="${pageContext.request.contextPath }/profBoard/updateBoardEnd?profBoardNo=${prof.profBoardNo}" method="post" enctype="multipart/form-data">
 					<div class="row" style="margin:5px;">
 						<div class="col-12">
+						<input type='hidden' value="${prof.profBoardNo }"/>
 							<table class="spacing">
 								<tr>
 									<th>글쓴이</th>
-									<td><input class="btn btn-default" name="profName" style="text-align:left;" type='text' value="${loginMember.profName }" readonly/></td>
+									<td><input class="btn btn-default" name="profName" style="text-align:left;" type='text' value="${prof.profName }" readonly/></td>
 								</tr>
 								<tr>
 									<th>옵션</th>
 									<td>
 										<select id="selectContext" name="profBoardType" class="btn">
 											<option style="background-color:red;" id="AllNotice" value="전체 공지">전체 공지</option>
-											<option value="학과 공지" selected="selected">학과 공지</option>
+											<option value="학과 공지">학과 공지</option>
 											<option value="강의 자료">강의 자료</option>
 											<option value="기타 자료">기타 자료</option>
 										</select>
@@ -47,25 +48,25 @@
 								</tr>
 								<tr>
 									<th>입력일</th>
-									<td><input class="btn btn-default" style="width:800px;text-align:left;" type='text' value='<fmt:formatDate value="<%=new java.util.Date() %>" pattern="yyyy-MM-dd"/>' readonly/></td>
+									<td><input class="btn btn-default" style="width:800px;text-align:left;" type='text' value='<fmt:formatDate value="${prof.profBoardDate }" pattern="yyyy-MM-dd"/>' readonly/></td>
 								</tr>
 								<tr>
 									<th>제목</th>
-									<td><input id="selectTitle" name="profBoardTitle" class="btn btn-default" style="width:800px;border:1px solid black;text-align:left;" type='text'/></td>
+									<td><input id="selectTitle" name="profBoardTitle" class="btn btn-default" style="width:800px;border:1px solid black;text-align:left;" type='text' value="${prof.profBoardTitle }"/></td>
 								</tr>
 								<tr><td><br/></td></tr>
 								<tr>
 									<th>첨부파일</th>
+									<c:forEach items="${profAttachment }" var="file">
 									<td>
-										<input id="upFile" name="upFile" class="" type="file" value=""/>
-										<input type='button' id="creBtn" name="creBtn" class="btn btn-dark" value="추가"/>
-										<input type='button' id="delBtn" name="delBtn" class="btn btn-dark" value="삭제"/>
+										<input id="upFile" name="upFile" class="" type="file" value="${file.boardOrifilename }"/>
 									</td>
+									</c:forEach>
 								</tr>
 								<tr><td><br/></td></tr>
 								<tr>
 									<th>내용</th>
-									<td><textarea id="context" class="btn btn-default" name="profBoardContent" style="height:400px;width:800px;border:1px solid black;text-align:left;"></textarea></td>
+									<td><textarea id="context" class="btn btn-default" name="profBoardContent" style="height:400px;width:800px;border:1px solid black;text-align:left;">${prof.profBoardContent }</textarea></td>
 								</tr>
 							</table>
 						</div>
@@ -74,7 +75,7 @@
 						<div class="col-4"></div>
 						<div class="col-4"></div>
 						<div class="col-4">&nbsp;
-							<input class="btn btn-dark" type='submit' value=" 글 작성 "/>&nbsp;&nbsp;&nbsp;&nbsp;
+							<input class="btn btn-dark" type='submit' value=" 글 수정 "/>&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 ">
 						</div>
 					</div>

@@ -10,12 +10,11 @@
 	</select>
 	<!-- 강의 개설 -->
 	<insert id="insertSubjectEnd" parameterType="map">
-		INSERT INTO HD_CLASS_TB VALUES('1',#{classYear},#{className},#{profId},#{openYn},#{capacity},#{classStart1},'15','15',#{classRoom},#{assignA},#{assignB},#{assignC},#{assignD},#{mTerm},#{fTerm},#{statusGrade},#{useBook},#{bookName},'유병승',#{evaStan},'한국어',#{openOther},#{oriFile},#{upFile})
+		INSERT INTO HD_CLASS_TB VALUES(#{subCode},#{classYear},#{profId},#{openYn},#{capacity},#{assignA},#{assignB},#{assignC},#{assignD},#{mTerm},#{fTerm},#{statusGrade},#{useBook},#{bookName},#{evaStan},#{openOther},#{oriFile},#{upFile})
 	</insert>
-	
-	<insert id="insertClassEnd" parameterType="map">
-		INSERT INTO HD_SUBJECT_TB VALUES('1',#{subName},#{tSubject},#{tDept},#{tGrade},#{completePt},#{tSemester},#{subType},#{deptCode})
-	</insert>
+	<select id="subjectView" resultType="map" parameterType="map">
+		SELECT * FROM HD_SUBJECT_TB S JOIN HD_CLASS_TB C USING (SUB_CODE) JOIN HD_PROFESSOR_TB USING (PROF_ID) WHERE SUB_CODE = #{subCode} AND PROF_ID = #{profId}
+	</select>
 	<!-- 교수 뷰 -->
 	<select id="professorView" resultType="professor" resultMap="professorResult1">
 		SELECT * FROM HD_PROFESSOR_TB WHERE PROF_ID = #{profId}
@@ -49,16 +48,41 @@
 	<insert id="insertBoardAttachment" parameterType="com.kh.finalProject.professor.model.vo.ProfBoardAttachment">
 		INSERT INTO HD_PROF_ATTACHMENT_TB VALUES(SEQ_PROF_BOARD_FILENO.NEXTVAL,#{profBoardNo},#{boardOrifilename},#{boardRefilename},DEFAULT)
 	</insert>
+	<!-- 게시판 수정 -->
+	<update id="updateBoardEnd" parameterType="com.kh.finalProject.professor.model.vo.ProfessorBoard">
+		UPDATE HD_PROF_BOARD_TB SET PROF_BOARD_TYPE=#{profBoardType},PROF_BOARD_TITLE=#{profBoardTitle},PROF_BOARD_CONTENT=#{profBoardContent} WHERE PROF_BOARD_NO=#{profBoardNo}
+	</update>
+	<update id="updateAttachment" parameterType="com.kh.finalProject.professor.model.vo.ProfBoardAttachment">
+		UPDATE HD_PROF_ATTACHMENT_TB SET BOARD_ORIFILENAME=#{boardOrifilename},BOARD_REFILENAME=#{boardRefilename} WHERE PROF_BOARD_NO=#{profBoardNo}
+	</update>
 	<!-- 게시판 상세 -->
-	<select id="selectBoardView" parameterType="_int" resultType="com.kh.finalProject.professor.model.vo.ProfessorBoard">
-		SELECT * FROM HD_PROF_BOARD_TB WHERE PROF_BOARD_NO = #{profBoardNo}
+	<select id="selectBoardView" parameterType="_int" resultMap="professorBoardMap">
+		SELECT * FROM HD_PROF_BOARD_TB WHERE PROF_BOARD_NO=#{profBoardNo}
 	</select>
-	<select id="selectProfAttachment" parameterType="_int" resultType="com.kh.finalProject.professor.model.vo.ProfBoardAttachment">
-		SELECT * FROM HD_PROF_ATTACHMENT_TB WHERE PROF_BOARD_NO = #{profBoardNo}
+	<select id="selectProfAttachment" parameterType="_int" resultMap="profBoardAttachment">
+		SELECT * FROM HD_PROF_ATTACHMENT_TB WHERE PROF_BOARD_NO=#{profBoardNo}
 	</select>
+	
+	<resultMap type="com.kh.finalProject.professor.model.vo.ProfessorBoard" id="professorBoardMap">
+		<result column="PROF_BOARD_NO" property="profBoardNo"/>
+		<result column="PROF_NAME" property="profName"/>
+		<result column="PROF_BOARD_TYPE" property="profBoardType"/>
+		<result column="PROF_BOARD_TITLE" property="profBoardTitle"/>
+		<result column="PROF_BOARD_CONTENT" property="profBoardContent"/>
+		<result column="PROF_BOARD_DATE" property="profBoardDate"/>
+		<result column="PROF_BOARD_NOTICE" property="profBoardNotice"/>
+	</resultMap>
+	<resultMap type="com.kh.finalProject.professor.model.vo.ProfBoardAttachment" id="profBoardAttachment">
+		<result column="PROF_BOARD_NO" property="profBoardNo"/>
+		<result column="BOARD_FILENO" property="boardFileNo"/>
+		<result column="BOARD_ORIFILENAME" property="boardOrifilename"/>
+		<result column="BOARD_REFILENAME" property="boardRefilename"/>
+		<result column="BOARD_UPLOADDATE" property="boardUploaddate"/>
+	</resultMap>
+	
 	<!-- subject -->
 	<select id="subjectCodeView" resultType="map">
-		SELECT * FROM HD_SUBJECT_TB WHERE DEPT_CODE='D1'
+		SELECT S.*,P.DEPT_CODE,P.PROF_NAME FROM HD_SUBJECT_TB S,HD_PROFESSOR_TB P WHERE S.DEPT_CODE = P.DEPT_CODE(+) AND P.PROF_ID=#{profId}
 	</select>
 	<select id="selectSubject" resultType="map" parameterType="string">
 		SELECT * FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}

@@ -16,4 +16,7 @@ public class Subject {
 	private int tSemester;
 	private String subType;
 	private String deptCode;
+	private String subDate;
+	private String subTime;
+	private String subRoom;
 }

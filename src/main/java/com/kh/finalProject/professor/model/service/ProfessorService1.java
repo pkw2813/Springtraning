@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
@@ -15,7 +16,8 @@ public interface ProfessorService1 {
 	int selectBoardCount();
 	String selectProfName();
 	//강의개설
-	Map<String,String> insertSubjectEnd(MultipartFile upfile,Map<String, String>map) throws RuntimeException;
+//	Map<String,String> insertSubjectEnd(MultipartFile upfile,Map<String, String>map) throws RuntimeException;
+	List<InsertClass> insertSubjectEnd(Map<String, String>map) throws RuntimeException;
 	//교수뷰
 	Professor professorView();
 	//교수 정보수정
@@ -26,10 +28,12 @@ public interface ProfessorService1 {
 	List<ProfessorBoard> boardView(int cPage,int numPerPage);
 	//게시판 작성
 	int insertBoardEnd(ProfessorBoard pb, List<ProfBoardAttachment> list) throws RuntimeException;
+	//게시판 수정
+	int updateBoardEnd(ProfessorBoard pb, List<ProfBoardAttachment> list) throws RuntimeException;
 	//게시판select
 	ProfessorBoard selectBoardView(int profBoardNo);
 	List<ProfBoardAttachment> selectProfAttachment(int profBoardNo);
 	//subject조회
-	List<Subject> subjectCodeView();
+	List<Subject> subjectCodeView(String profId);
 	Map<String,String> selectSubject(String subCode);
 }
