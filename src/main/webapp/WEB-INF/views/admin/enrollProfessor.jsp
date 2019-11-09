@@ -9,10 +9,18 @@
 <div class="container-fluid">
 <div class="row">
 	<div class="col-6">
-		<c:forEach var="p" items="${colList}" varStatus="pv">
-				<hr>
-				<h4 style="margin: 0 auto; text-align: center;"><b>${p['COL_NAME']}</b></h4> 
-				<hr>
+		<hr>
+		<div>
+			<h4 style="margin: 0 auto; text-align: center;" ><b class="titleCol">${p['COL_NAME']}</b></h4> 
+		</div>				
+		<hr>
+		<select class="form-control selectCol col-sm-5" style="display: inline-block; margin-right: 5px;" name ='beforeColCode'>								
+			</select>
+			<!-- 여기에 학과 선택 넣어야함 .selectCol -->
+			<select class="form-control selectdep col-sm-5"  style="display: inline-block; margin-left: 5px;" name='beforeDeptCode' required>
+				</select>
+				
+				<c:forEach var="p" items="${colList}" varStatus="pv">
 			<table class="table">
 			<tr>
 		<th>번 호</th>
@@ -26,10 +34,9 @@
 	</tr>
 			<c:forEach var="pro" items="${list}" varStatus="v">
 						
-					
 					<c:if test ="${p['COL_CODE'] == pro['COL_CODE']}">
 					<tr>
-						<td>${v.index +1}</td>
+						<td>${v.count}</td>
 						<td>${pro['DEPT_NAME'] }</td>
 						<td>${pro['PROF_ID'] }</td>
 						<td>${pro['PROF_NAME']}</td>
@@ -45,6 +52,7 @@
 		</table>
 	</c:forEach>
 	</div>
+		
 	</div>
 	
 </div>
@@ -68,6 +76,64 @@ function insertNewStu(result) {
 function deleteBeforeStu() {
 
 }
+
+
+$(function() {
+	$(document).ready(function(){
+
+		$.ajax({
+			type : "post",
+			url: "${pageContext.request.contextPath}/selectColList.do",
+			success: function(data) {
+				let colListHtml = "";
+				
+				colListHtml = "<option value='select' id='selCol'>대학 선택</option>";
+				for(let i = 0; i < data.list.length; i++) {
+					let cols = data.list[i];
+					console.log(cols['COL_CODE']);
+
+					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
+				}
+				 	
+				$('.selectCol').html(colListHtml);
+					$('.selectCol').change(function(){
+						$('.titleCol').val($('.selectCol').val());
+					$("#selCol").attr('disabled',true);
+			
+		
+	})
+			
+			}
+		})
+	})
+});
+
+
+
+//대학이 선택 되었을때 해당 대학에 포함되어 있는 학과를 리스트로 가져옴
+ $(function(){
+ 	$('.selectCol').change(function(){
+ 		let val = $('.selectCol').val();
+		$.ajax({
+			type : "post",
+			url: "${pageContext.request.contextPath}/selectDeptList.do",
+			data: {"result" : $('.selectCol').val()},
+			success: function(data) {
+				let deptListHtml = "<option value='select' id='selDept'>학과 선택</option>";
+				for(let i = 0; i < data.list.length; i++) {
+					let depts = data.list[i];
+
+					deptListHtml += "<option value='"+depts['DEPT_CODE']+"'  class='deptList'>"+depts['DEPT_NAME']+"</option>";
+				}
+				
+				$('.selectdep').html(deptListHtml);
+					$('.selectdep').change(function(){
+					$("#selDept").attr('disabled',true);
+		});
+ 	}
+ });
+	 });
+ });
 
 
 
