@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SelectInClass {
-
+	private String subCode;
 	private String subYear;
 	private String subName;
 	private String grade;

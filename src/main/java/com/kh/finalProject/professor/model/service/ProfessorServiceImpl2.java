@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.professor.model.dao.ProfessorDao2;
+import com.kh.finalProject.professor.model.vo.InClassStudent;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
+import com.kh.finalProject.professor.model.vo.Select_SubjectNameCode;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Service
@@ -45,14 +47,14 @@ public class ProfessorServiceImpl2 implements ProfessorService2{
 	}
 
 	@Override
-	public List<String> selectPreSubjectNameo(Professor p) {
-		List<String> list = dao.selectPreSubjectNameo(session, p);
+	public List<Select_SubjectNameCode> selectPreSubjectNameo(Professor p) {
+		List<Select_SubjectNameCode> list = dao.selectPreSubjectNameo(session, p);
 		return list;
 	}
 
 	@Override
-	public List<Student> selectInClass(SelectInClass sic, int cPage, int numPerPage) {
-		List<Student> list = dao.selectInClass(session, sic, cPage, numPerPage);
+	public List<InClassStudent> selectInClass(SelectInClass sic, int cPage, int numPerPage) {
+		List<InClassStudent> list = dao.selectInClass(session, sic, cPage, numPerPage);
 		return list;
 	}
 

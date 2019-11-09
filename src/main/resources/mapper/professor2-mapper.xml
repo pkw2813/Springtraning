@@ -46,22 +46,24 @@
 		FROM HD_SUBJECT_TB A
 		JOIN (SELECT SUB_CODE FROM HD_CLASS_TB WHERE PROF_ID = #{profId}) B ON(A.SUB_CODE = B.SUB_CODE)
 	</select>
-	
-	<select id="selectPreSubjectName" parameterType="professor" resultType="string">
-		SELECT DISTINCT(SUB_NAME)
+	<!-- 로그인한 교수가 개설중인 강의명 , 강의코드 조회 -->
+	<select id="selectPreSubjectName" parameterType="professor" resultMap="subNameCodeResult">
+		SELECT a.SUB_NAME, a.sub_code
 		FROM HD_SUBJECT_TB A
 		JOIN (SELECT SUB_CODE FROM HD_CLASS_TB WHERE PROF_ID = #{profId}) B ON(A.SUB_CODE = B.SUB_CODE)
 	</select>
 	
-	<select id="selectInClass" parameterType="selectInClass" resultType="student">
-		SELECT * 
-		FROM HD_STUDENT_TB WHERE 1=1
-		<if test='subYear != null &amp; subYear != "" '>
-			AND SUB_YEAR = #{subYear}
-		</if>
-		<if test='subName != null &amp; subName != "" '>
-			AND SUB_NAME = #{subName}
-		</if>
+	<select id="selectInClass" parameterType="selectInClass" resultMap="inClassResult">
+		SELECT STU_NO, STU_NAME, GENDER , 
+		(SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_NAME,
+		SUBSTR(STU_YEAR_SEM,1,1) AS GRADE,
+		STU_TEL, STU_EMAIL, STU_ADDR
+		
+		FROM HD_STUDENT_TB
+		WHERE STU_NO = (SELECT STU_NO
+        FROM HD_SUB_REQ_TB
+        WHERE SUB_CODE = #{subCode})
+        
 		<if test='grade != null &amp; grade != "" '>
 			AND GRADE = #{grade}
 		</if>
@@ -71,18 +73,22 @@
 		<if test='stuName != null &amp; stuName != "" '>
 			AND STU_NAME = #{stuName}
 		</if>
-		AND 
+		<if test='subName != null &amp; subName != "" '>
+			AND SUB_NAME = #{subName}
+		</if>
+		
+		
+		AND SUB_YEAR = #{subYear}
+		AND SUB_CODE = #{subCode}
 	</select>
 	
 	<select id="countInClass" parameterType="selectInClass" resultType="_int">
-		SELECT count(*) 
-		FROM HD_STUDENT_TB WHERE 1=1
-		<if test='subYear != null &amp; subYear != "" '>
-			AND SUB_YEAR = #{subYear}
-		</if>
-		<if test='subName != null &amp; subName != "" '>
-			AND SUB_NAME = #{subName}
-		</if>
+		SELECT COUNT(*) 
+		FROM HD_STUDENT_TB
+		WHERE STU_NO = (SELECT STU_NO
+        FROM HD_SUB_REQ_TB
+        WHERE SUB_CODE = #{subCode})
+        
 		<if test='grade != null &amp; grade != "" '>
 			AND GRADE = #{grade}
 		</if>
@@ -92,25 +98,40 @@
 		<if test='stuName != null &amp; stuName != "" '>
 			AND STU_NAME = #{stuName}
 		</if>
-		AND 
-	
+		<if test='subName != null &amp; subName != "" '>
+			AND SUB_NAME = #{subName}
+		</if>
+		AND SUB_YEAR = #{subYear}
+		AND SUB_CODE = #{subCode}
 	</select>
 	
 
 
 
 
+	<resultMap id="inClassResult" type="inClassStudent">
+		<result column="STU_NO" property="stuNo" />
+		<result column="STU_NAME" property="stuName" />
+		<result column="GENDER" property="gender" />
+		<result column="SUB_NAME" property="subName" />
+		<result column="GRADE" property="grade" />
+		<result column="STU_TEL" property="stuTel" />
+		<result column="STU_EMAIL" property="stuEmail" />
+		<result column="STU_ADDR" property="stuAddr" />
+		<result column="ASSIGN_1" property="assign1" />
+		<result column="ASSIGN_2" property="assign2" />
+		<result column="ASSIGN_3" property="assign3" />
+		<result column="ASSIGN_4" property="assign4" />
+		<result column="M_TERM" property="mTerm" />
+		<result column="F_TERM" property="fTerm" />
+	</resultMap>
 
 
 
-
-
-
-
-
-
-
-
+	<resultMap id="subNameCodeResult" type="selectSubjectNameCode">
+		<result column="SUB_CODE" property="subCode" />
+		<result column="SUB_NAME" property="subName" />
+	</resultMap>
 
 
   <resultMap id="professorResult" type="professor">

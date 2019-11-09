@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService2;
+import com.kh.finalProject.professor.model.vo.InClassStudent;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
+import com.kh.finalProject.professor.model.vo.Select_SubjectNameCode;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Controller
@@ -64,28 +66,37 @@ public class ProfessorController2 {
 			Model model, HttpSession session) {
 		int numPerPage = 5;
 		Professor p = (Professor) session.getAttribute("loginMember");
+		
+		
 		// 현재 강의중인 과목이 있는 연도 조회====
 		List<String> preSubjectYear = service.selectPreSubject(p);
 		if (preSubjectYear != null && !preSubjectYear.isEmpty()) {
 			model.addAttribute("preSubjectList", preSubjectYear);
 		}
-		//================연도 조회 끝 ===========
-		//=========현재 강의중인 과목 이름 리스트 조회=======
-		List<String> preSubjectName = service.selectPreSubjectNameo(p);
-		if(preSubjectName != null && !preSubjectName.isEmpty()) {
-			model.addAttribute("preSubjectNameList", preSubjectName);
-		}
-		//=============과목 이름 조회 끝=======================
 		
+		
+		//=========현재 강의중인 과목 이름 리스트 조회=======
+		List<Select_SubjectNameCode> nameCodeList = service.selectPreSubjectNameo(p);
+		if(nameCodeList != null && !nameCodeList.isEmpty()) {
+			model.addAttribute("nameCodeList", nameCodeList);
+		}
 		
 		//조건 검색에 따른 실 수강생 목록 조회 시작
+		if(sic != null) {
 		int totalData = service.countInClass(sic);
-		List<Student> stuList = service.selectInClass(sic, cPage, numPerPage);
+		System.out.println(sic.getSubCode());
+		System.out.println(sic.getStuName());
+		System.out.println(sic.getStuNo());
+		System.out.println(sic.getSubYear());
+		System.out.println(sic.getSubName());
+		System.out.println(sic.getGrade());
+		
+		List<InClassStudent> stuList = service.selectInClass(sic, cPage, numPerPage);
 		//============
 		model.addAttribute("stuList",stuList);
 		model.addAttribute("totalCount",totalData);
 		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/lectureData"));
-
+		}
 	return"professor/stu_view_inClass";
 
 	}

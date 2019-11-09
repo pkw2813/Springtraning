@@ -29,29 +29,31 @@
 									<tr>
 										<th>개설년도</th>
 										<th>강의명</th>
-										<th>학번</th>
-										<th>이름</th>
 										<th>학년</th>
+										<th>이름</th>
 										<th>학과</th>
+										<th>학번</th>
 										<th>검색하기</th>
 									</tr>
 								</thead>
 
 								<tbody>
-									<tr>
-										<td><select name="subYear">
+									<tr><!-- 개설연도 -->
+										<td><select name="subYear" required>
 												<option value="" selected>개설기간 선택</option>
 												<c:forEach items="${preSubjectList }" var='yearList'>
 												
 												<option value="${yearList }">${yearList }</option>
 												</c:forEach>
 										</select></td>
-										<td><select name="subName">
-												<option value="" selected>과목선택</option>
-												<c:forEach items="${preSubjectNameList }" var="nameList">
-												<option value="${nameList }">${nameList}</option>
+										<!-- 강의명 -->
+										<td><select name="subCode" required>
+												<option value="" selected>강의선택</option>
+												<c:forEach items="${nameCodeList }" var="ncList">
+												<option value="${ncList.subCode }">${ncList.subName}</option>
 												</c:forEach>
 										</select></td>
+										<!-- 학년 -->
 										<td><select name="grade">
 												<option value="" selected>학년검색</option>
 												<option value="1">1학년</option>
@@ -59,13 +61,15 @@
 												<option value="3">3학년</option>
 												<option value="4">4학년</option>
 										</select></td>
-										<td><input type="text" placeholder="학번검색(미입력시 전체)"
-											value="" name="stuNo" /></td>
+										<!-- 이름 -->
 										<td><input type="text" placeholder="이름검색(미입력시 전체)"
 											value="" name="stuName" /></td>
-										
+										<!-- 학과 -->
 										<td><input type="text" placeholder="학과검색" value=""
 											name="major" /></td>
+										<!-- 학번 -->
+										<td><input type="text" placeholder="학번검색(미입력시 전체)"
+											value="" name="stuNo" /></td>
 										<td>
 											<button type="submit" class="btn btn-outline-primary">검색</button>
 										</td>
@@ -189,61 +193,32 @@
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach items="${stuList }" var="stuList">
 								<tr>
-									<td>2019A123</td>
-									<td>박성술</td>
-									<td>남</td>
-									<td>영어영문학과</td>
-									<td>2학년</td>
-									<td>010-1234-1234</td>
-									<td>tjdtnf110@naver.com</td>
-									<td>서울시 성북구 하월곡동 오패산로 3길 17</td>
-									<td>제출</td>
-									<td>제출</td>
-									<td>미제출</td>
-									<td>미제출</td>
-									<td>91.79</td>
-									<td>98.50</td>
+									<td>${stuList.stuNo }</td>
+									<td>${stuList.stuName }</td>
+									<td>${stuList.gender }</td>
+									<td>${stuList.subName }</td>
+									<td>${stuList.grade }학년</td>
+									<td>${stuList.stuTel }</td>
+									<td>${stuList.stuEmail }</td>
+									<td>${stuList.stuAddr }</td>
+									<td>${stuList.assign1 }</td>
+									<td>${stuList.assign2 }</td>
+									<td>${stuList.assign3 }</td>
+									<td>${stuList.assign4 }</td>
+									<td>${stuList.mTerm }</td>
+									<td>${stuList.fTerm }</td>
 								</tr>
-								<tr>
-									<td>2019A123</td>
-									<td>박성술</td>
-									<td>남</td>
-									<td>영어영문학과</td>
-									<td>2학년</td>
-									<td>010-1234-1234</td>
-									<td>tjdtnf110@naver.com</td>
-									<td>서울시 성북구 하월곡동 오패산로 3길 17</td>
-									<td>과제A</td>
-									<td>과제B</td>
-									<td>과제C</td>
-									<td>과제D</td>
-									<td>중간고사</td>
-									<td>기말고사</td>
-								</tr>
-								<tr>
-									<td>2019A123</td>
-									<td>박성술</td>
-									<td>남</td>
-									<td>영어영문학과</td>
-									<td>2학년</td>
-									<td>010-1234-1234</td>
-									<td>tjdtnf110@naver.com</td>
-									<td>서울시 성북구 하월곡동 오패산로 3길 17</td>
-									<td>과제A</td>
-									<td>과제B</td>
-									<td>과제C</td>
-									<td>과제D</td>
-									<td>중간고사</td>
-									<td>기말고사</td>
-								</tr>
+							</c:forEach>
 
 							</tbody>
 						</table>
 
 					</div>
 					<div class="card-footer">
-						<ul class="pagination" style="justify-content: center;">
+						${pageBar }
+						<!-- <ul class="pagination" style="justify-content: center;">
 							<li class="page-item"><a class="page-link" href="#"
 								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 							</a></li>
@@ -253,7 +228,7 @@
 							<li class="page-item"><a class="page-link" href="#"
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 							</a></li>
-						</ul>
+						</ul> -->
 					</div>
 				</div>
 			</div>
