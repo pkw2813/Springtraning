@@ -10,5 +10,8 @@ public interface StudentService1 {
 	Student selectStudent(String studentNo);
 	int studentInfoUpdate(Student s);
 	List<Map> selectAllClass();
+	List<Map> selectClass(Map<String,Object>param); 
+	int countAllClass();
+	int countSelectClass(Map<String,Object>param);
 
 }

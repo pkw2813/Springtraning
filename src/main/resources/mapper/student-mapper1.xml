@@ -5,13 +5,102 @@
 	<select id="selectStudent" parameterType="string" resultMap="studentResult">
   		SELECT * FROM HD_STUDENT_TB WHERE STU_NO=#{studentNo}
   	</select>
-  	<select id="selectAllClass" resultType="map">
-  		SELECT ROWNUM,T.* FROM(SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,B.SUB_NAME,B.COMPLETE_PT,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+  	
+  	 <select id="selectAllClass" resultType="map">
+  		select ROWNUM,T.* FROM(SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,B.T_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
   		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
         from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
         WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
         ORDER BY A.OPEN_YN DESC)T
+  	 
+  	</select>
+  	 <select id="selectClass" parameterType="map" resultType="map">
+  		select ROWNUM,T.* FROM(SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,B.T_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+  		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        ORDER BY A.OPEN_YN DESC)T 
+        where 1=1
+        <if test="chk_isu !=null and chk_isu != ''">
+			AND sub_type = #{chk_isu}
+		</if>
+		
+		<if test="chk_school !=null and chk_school != ''">
+			AND SUBSTR(SUB_CODE,0,1) = #{chk_school}
+		</if>
+		
+		<if test="chk_dept !=null and chk_dept != ''">
+			AND t_dept = #{chk_dept}
+		</if>
+		
+		 <if test="chk_year !=null and chk_year != ''">
+			AND SUB_YEAR = #{chk_year}
+		</if>
+		
+		 <if test="chk_sem !=null and chk_sem != ''">
+			AND T_SEMESTER = #{chk_sem}
+		</if>
+		
+		 <if test="chk_subName !=null and chk_subName != ''">
+			AND SUB_NAME LIKE '%'||#{chk_subName}||'%'
+		</if>
+           
   	</select> 
+  	
+  	<select id="countSelectClass" resultType="_int">
+  		select count(*) from(select ROWNUM,T.* FROM(SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,B.T_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+  		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        ORDER BY A.OPEN_YN DESC)T 
+        where 1=1
+        <if test="chk_isu !=null and chk_isu != ''">
+			AND sub_type = #{chk_isu}
+		</if>
+		
+		<if test="chk_school !=null and chk_school != ''">
+			AND SUBSTR(SUB_CODE,0,1) = #{chk_school}
+		</if>
+		
+		<if test="chk_dept !=null and chk_dept != ''">
+			AND t_dept = #{chk_dept}
+		</if>
+		
+		 <if test="chk_year !=null and chk_year != ''">
+			AND SUB_YEAR = #{chk_year}
+		</if>
+		
+		 <if test="chk_sem !=null and chk_sem != ''">
+			AND T_SEMESTER = #{chk_sem}
+		</if>
+		
+		 <if test="chk_subName !=null and chk_subName != ''">
+			AND SUB_NAME LIKE '%'||#{chk_subName}||'%'
+		</if>
+           )
+  	
+  	</select>
+  	
+  	
+  	
+  	<select id="countAllClass" resultType="_int">
+  		select count(*) from (select ROWNUM,T.* FROM(SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,B.T_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+  		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        ORDER BY A.OPEN_YN DESC)T)
+  	
+  	</select>
+  	
+  	
+  	
+  	<!-- <select id="selectBoardCount" resultType="_int">
+  		 select count(*) from ( SELECT ROWNUM,T.* FROM(SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,B.SUB_NAME,B.COMPLETE_PT,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+  		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        ORDER BY A.OPEN_YN DESC)T)
+  	</select>  -->
   	
   	<update id="studentInfoUpdate" parameterType="student">
   		<choose>
