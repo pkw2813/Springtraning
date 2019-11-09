@@ -21,6 +21,11 @@ public class StudentDaoImpl3 implements StudentDao3 {
 	public List<StuTuition> selectTuitionCertList(SqlSessionTemplate session, String studentNo) {
 		return session.selectList("student3.selectTuitionCertList", studentNo);
 	}
+
+	@Override
+	public StuTuition selectBasicStudentInfo(SqlSessionTemplate session, String studentNo) {
+		return session.selectOne("student3.selectBasicStudentInfo", studentNo);
+	}
 	
 	
 

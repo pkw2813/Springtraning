@@ -32,6 +32,12 @@ public class StudentServiceImpl3 implements StudentService3 {
 		return dao.selectTuitionCertList(session, studentNo);
 	}
 
+
+	@Override
+	public StuTuition selectBasicStudentInfo(String studentNo) {
+		return dao.selectBasicStudentInfo(session, studentNo);
+	}
+
 	
 	
 }

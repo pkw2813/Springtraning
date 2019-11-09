@@ -16,6 +16,14 @@
 		WHERE STU_NO=#{studentNo}
 		ORDER BY 2 DESC
 	</select>
+	
+	<select id="selectBasicStudentInfo" parameterType="string" resultMap="tuitionResult">
+		SELECT S.STU_NO, S.STU_NAME, D.DEPT_NAME, 
+		TO_CHAR(TO_DATE(SUBSTR(S.STU_SSN,1,2), 'RR'), 'RRRR')||'년'||SUBSTR(S.STU_SSN,3,2)||'월'||SUBSTR(S.STU_SSN,5,2)||'일' AS BIRTHDAY
+		FROM (SELECT * FROM HD_STUDENT_TB WHERE STU_NO=#{studentNo}) S 
+		JOIN HD_DEPARTMENT_TB D
+		ON S.DEPT_CODE=D.DEPT_CODE
+	</select>
   	
   	
   	<resultMap id="tuitionResult" type="stuTuition">

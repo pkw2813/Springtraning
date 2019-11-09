@@ -197,6 +197,7 @@
 				var dueDate; // 납입기한 저장할 변수
 				dueDate="${tuition.dueDate}";
 				//console.log("dueDate:"+dueDate);
+				dueDate=dueDate.substring(0, 10);
 				$("#dueDate").html("납입기한: "+transDate(dueDate)+" 까지");
 				
 				var today=new Date();

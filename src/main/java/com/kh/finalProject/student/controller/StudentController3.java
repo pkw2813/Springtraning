@@ -80,7 +80,7 @@ public class StudentController3 {
 			String acaYear=tuitionCertList.get(i).getAcaYearSem().substring(0, 4);
 			System.out.println("학년도:"+acaYear);
 			int tcListLength=tuitionCertList.get(i).getAcaYearSem().length();
-			String semester=tuitionCertList.get(i).getAcaYearSem().substring(tcListLength-1, tcListLength);
+			String semester=tuitionCertList.get(i).getAcaYearSem().substring(tcListLength-2, tcListLength);
 			System.out.println("학기:"+semester);
 			tuitionCertList.get(i).setAcaYearSemKor(acaYear+"학년도 "+semester+"학기");
 			if(i==0) {
@@ -95,8 +95,10 @@ public class StudentController3 {
 		StuTuition tuition=new StuTuition();
 		tuition.setStuNo(studentNo);
 		tuition.setAcaYearSem(selectYearSem);
+		StuTuition student=service.selectBasicStudentInfo(studentNo);
 		StuTuition result=service.selectTuitionOne(tuition);
 		System.out.println(result);
+		model.addAttribute("student", student);
 		model.addAttribute("tuition", result);
 		model.addAttribute("selectYearSemKor", selectYearSemKor);
 		
