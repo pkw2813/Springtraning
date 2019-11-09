@@ -7,6 +7,9 @@
 	<insert id="insertTuition" parameterType="tuition">
 		INSERT INTO HD_TUITION_TB VALUES(#{tuiYear}, #{deptCode}, #{tuiPay}, #{tuiPayDate})
 	</insert>
+	<select id="tuitionList" parameterType="tuition" resultType="map">
+		SELECT TUI_YEAR, DEPT_CODE, TUI_PAY, DEPT_NAME, COL_NAME FROM HD_TUITION_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) JOIN HD_COLLEGE_TB USING(COL_CODE) WHERE TUI_YEAR=#{tuiYear} ORDER BY DEPT_CODE
+	</select>
 	
 	<resultMap type="tuition" id="tuitionResult">
 		<result column="TUI_YEAR" property="tuiYear" />

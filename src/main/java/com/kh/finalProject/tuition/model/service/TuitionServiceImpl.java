@@ -1,5 +1,7 @@
 package com.kh.finalProject.tuition.model.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,14 @@ public class TuitionServiceImpl implements TuitionService {
 		int result=Dao.insertTuition(session,t);
 		return result;
 	}
+
+	@Override
+	public List<Tuition> tuitionList(String tuiYear) {
+		List<Tuition> list=Dao.tuitionList(session,tuiYear);
+		return list;
+	}
+	
+	
 	
 	
 }
