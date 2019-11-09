@@ -98,7 +98,7 @@ public class StudentController3 {
 		StuTuition student=service.selectBasicStudentInfo(studentNo);
 		StuTuition result=service.selectTuitionOne(tuition);
 		System.out.println(result);
-		model.addAttribute("student", student);
+		model.addAttribute("student", student); // 학생 기본 정보 보내기
 		model.addAttribute("tuition", result);
 		model.addAttribute("selectYearSemKor", selectYearSemKor);
 		
