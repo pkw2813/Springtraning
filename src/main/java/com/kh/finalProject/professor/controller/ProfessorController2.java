@@ -82,7 +82,7 @@ public class ProfessorController2 {
 		}
 		
 		//조건 검색에 따른 실 수강생 목록 조회 시작
-		if(sic != null) {
+		if(sic != null && sic.getSubCode() != null && sic.getSubYear() != null) {
 		int totalData = service.countInClass(sic);
 		System.out.println(sic.getSubCode());
 		System.out.println(sic.getStuName());

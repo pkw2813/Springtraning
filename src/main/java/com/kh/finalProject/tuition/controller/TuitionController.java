@@ -1,11 +1,16 @@
 package com.kh.finalProject.tuition.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.tuition.model.service.TuitionService;
 import com.kh.finalProject.tuition.model.vo.Tuition;
 
@@ -55,6 +60,22 @@ public class TuitionController {
 		model.addAttribute("loc",loc);
 		
 		return "common/msg";
+	}
+	
+	@RequestMapping("/tuitionList.hd")
+	@ResponseBody
+	public String tuitionList(@RequestParam String tuiYear, Model model) {
+		List<Tuition> list=service.tuitionList(tuiYear);
+		ObjectMapper mapper=new ObjectMapper();
+		System.out.println(list);
+		String jsonStr="";
+		try {
+			jsonStr=mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return jsonStr;
 	}
 
 }

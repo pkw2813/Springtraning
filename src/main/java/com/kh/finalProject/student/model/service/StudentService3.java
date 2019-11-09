@@ -10,5 +10,6 @@ public interface StudentService3 {
 	StuTuition selectTuitionOne(StuTuition tuition);
 	List<StuTuition> selectTuitionCertList(String studentNo);
 	StuTuition selectBasicStudentInfo(String studentNo);
+	int updateTuitionOne(StuTuition tuition);
 
 }

@@ -92,7 +92,6 @@
 	          			 var raw = JSON.parse(data);
 	          			 var arr="";
 	          			 for(var i=0;i<raw['allList'].length;i++){
-	          				 console.log(raw['allList'][i].reqTitle);
 	          				 arr+="<tr class='reqOne'>";
 	          				 arr+="<td>"+raw['allList'][i].reqTitle +"<input type='hidden' value='"+ raw['allList'][i].reqNo +"' class='reqNo'/></td>";
 	          				 arr+="<td>"+raw['allList'][i].toName +"</td>";
@@ -102,7 +101,6 @@
 	          			 $("#tbody").html(arr);
 	          			 $("#pageConainer").html(raw['pageBar']);
 	          			 $(".reqOne").click(function(){
-	                      	   console.log($($($(this).children())[0]).children().val());
 	                      	   location.href="${path}/reqOne.hd?reqNo="+$($($(this).children())[0]).children().val();
 	                         });
 	          		 }

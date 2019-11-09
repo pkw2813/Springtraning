@@ -1,5 +1,7 @@
 package com.kh.finalProject.tuition.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,13 @@ public class TuitionDaoImpl implements TuitionDao {
 	public int insertTuition(SqlSessionTemplate session,Tuition t) {
 		return session.insert("tuition.insertTuition",t);
 	}
+
+	@Override
+	public List<Tuition> tuitionList(SqlSessionTemplate session, String tuiYear) {
+		return session.selectList("tuition.tuitionList", tuiYear);
+	}
+	
+	
 	
 	
 	

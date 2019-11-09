@@ -117,7 +117,6 @@
               <div class="card" style="margin-top:50px">
                 <div class="card-body">
                   <div class="table-responsive">
-                  <form action="">
                   <br>
                   <div class="row">
                       <div class="col-md-5">
@@ -152,11 +151,11 @@
                         </div>
                       </div>
                       <div class="col-md-2">
-                     	<input type="hidden" id="hidDate1" name="tuiYear"/>
-                    	<input type="submit" value="조회" class="btn btn-inverse-info btn-fw" id="insBtn1">
+                     	<input type="hidden" id="hidDate1" name="tuiYear1"/>
+                    	<!-- <input type="submit" value="조회" > -->
+                    	<button class="btn btn-inverse-info btn-fw" id="insBtn1">조회</button>
                       </div>
                     </div>
-                    </form>
                     <table class="table table-hover">
                       <thead>
                         <tr>
@@ -165,16 +164,18 @@
                           <th>학부</th>
                           <th>학과</th>
                           <th>등록금</th>
+                          <th>등록금 수정</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="tuiList">
                         <tr>
-                          <td>Jacob</td>
-                          <td>Photoshop</td>
-                          <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
-                          <td><label class="badge badge-danger">Pending</label></td>
-                          <td><label class="badge badge-danger">Pending</label></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
                         </tr>
+
                         
                       </tbody>
                     </table>
@@ -295,12 +296,34 @@
 			   		});
 		       });
 		       
-
+		       $("#insBtn1").click(function(){
+		    	  $.ajax({
+		    		  url:"${path}/tuitionList.hd",
+		    		  data:{"tuiYear":$("#hidDate1").val()},
+		    		  success:function(result){
+		    			  let re=JSON.parse(result);
+		    			  var tuitionArr="";
+		    			  for(var i=0; i<re.length; i++){
+		    			 	 tuitionArr+="<tr><td>"+re[i]["TUI_YEAR"].substring(0,4)+"</td>";
+		    				 tuitionArr+="<td>"+re[i]["TUI_YEAR"].substr(6,2)+"학기</td>";
+		    				 tuitionArr+="<td>"+re[i]["COL_NAME"]+"</td>";
+		    				 tuitionArr+="<td>"+re[i]["DEPT_NAME"]+"</td>";
+		    				 tuitionArr+="<td><input type='text' class='form-control payUpdate' value='"+re[i]["TUI_PAY"]+"' id='tuiPay1'/></td>";
+		    				 tuitionArr+="<td><button class='btn btn-inverse-info btn-fw' onclick='tuiUpdate()'></td>";
+		    				 tuitionArr+="</tr>";
+		    				 tuitionArr+="<script>";
+		    				 tuitionArr+="function tuiUpdate(){";
+		    				 tuitionArr+="location.href='${path}/tuitionUpdate.hd?tuiYear="+re[i]["TUI_YEAR"]+"&deptCode="+re[i]["DEPT_CODE"]+"&tuiPay="+$('#tuiPay1').val()+"'";
+		    				 tuitionArr+="}";
+		    				 tuitionArr+="<";
+		    				 tuitionArr+="/script>";
+		    			  }
+		    			  $("#tuiList").html(tuitionArr);
+		    		  } 
+		    	  }); 
+		       });
 
               </script>
-
-
-
 
 
 

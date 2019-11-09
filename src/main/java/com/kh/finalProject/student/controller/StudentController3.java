@@ -58,8 +58,15 @@ public class StudentController3 {
 		System.out.println("acaYearSem:"+acaYearSem);
 		
 		tuition.setAcaYearSem(acaYearSem);
+		StuTuition student=service.selectBasicStudentInfo(studentNo);
+		if(student.getStuAddr()!=null&&student.getStuAddr().contains("PSTC")&&student.getStuAddr().split("PSTC").length==2) {
+			student.setStuPostcode(student.getStuAddr().split("PSTC")[0]); // 우편번호 저장
+		}else {
+			student.setStuPostcode(""); // 우편번호 저장
+		}
 		StuTuition result=service.selectTuitionOne(tuition);
-		System.out.println(result);
+		System.out.println("result:"+result);
+		model.addAttribute("student", student); // 학생 기본 정보 보내기
 		model.addAttribute("tuition", result);
 		
 		return "student/studentTuition";
@@ -88,7 +95,7 @@ public class StudentController3 {
 				selectYearSemKor=acaYear+"학년도 "+semester+"학기"; // 가장 최근의 학년 학기만 저장
 			}
 		}
-		System.out.println(tuitionCertList);
+		System.out.println("tuitionCertList:"+tuitionCertList);
 		model.addAttribute("tuitionCertList", tuitionCertList);
 		
 		System.out.println("로그인한 아이디:"+studentNo);
@@ -96,8 +103,13 @@ public class StudentController3 {
 		tuition.setStuNo(studentNo);
 		tuition.setAcaYearSem(selectYearSem);
 		StuTuition student=service.selectBasicStudentInfo(studentNo);
+		if(student.getStuAddr()!=null&&student.getStuAddr().contains("PSTC")&&student.getStuAddr().split("PSTC").length==2) {
+			student.setStuPostcode(student.getStuAddr().split("PSTC")[0]); // 우편번호 저장
+		}else {
+			student.setStuPostcode(""); // 우편번호 저장
+		}
 		StuTuition result=service.selectTuitionOne(tuition);
-		System.out.println(result);
+		System.out.println("result:"+result);
 		model.addAttribute("student", student); // 학생 기본 정보 보내기
 		model.addAttribute("tuition", result);
 		model.addAttribute("selectYearSemKor", selectYearSemKor);
@@ -133,16 +145,42 @@ public class StudentController3 {
 		}
 		  res.setContentType("application/json;charset=utf-8"); // 인코딩 설정하기
 		return jsonStr;
-		
-//		res.setContentType("application/json; charset=UTF-8");
-//		try {
-//			res.getOutputStream().print(selectYearSem);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
 	}
 	
+	@RequestMapping("/student/payTuitionAjax.hd")
+	@ResponseBody
+	public String payTuitionByAjax(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("/student/payTuitionAjax.hd가 호출됨");
+		
+		Student stu=(Student)session.getAttribute("loginMember");
+		String studentNo=stu.getStuNo();
+		StuTuition tuition=new StuTuition();
+		tuition.setStuNo(studentNo);
+		
+		String acaYearSem="";
+		acaYearSem=req.getParameter("acaYearSem");
+		System.out.println("ajax로 입력받은 acaYearSem:"+acaYearSem);
+		tuition.setAcaYearSem(acaYearSem);
+		System.out.println("update이전:"+tuition);
+		int result=service.updateTuitionOne(tuition);
+		
+		String resultStr="";
+		if(result>=1) {
+			resultStr="업데이트 성공";
+		}else if(result==0) {
+			resultStr="업데이트 실패";
+		}
+		System.out.println("resultStr:"+resultStr);
+		
+		ObjectMapper mapper=new ObjectMapper();
+		String jsonStr="";
+		  try {
+			jsonStr=mapper.writeValueAsString(resultStr); // 매개변수에 배열도 들어갈 수 있다!! 매우 편리하다!! 자바스크립트 객체 형식으로 변환 해준다.
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  res.setContentType("application/json;charset=utf-8"); // 인코딩 설정하기
+		return jsonStr;
+	}
 }
