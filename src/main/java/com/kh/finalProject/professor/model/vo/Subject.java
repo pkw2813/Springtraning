@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Subject {
+	private String subYear;
 	private String subCode;
 	private String subName;
 	private String tSubject;

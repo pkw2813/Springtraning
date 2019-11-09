@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class InsertClass {
 	private String subCode;
+	
 	private String classYear;
+	
 	private String tSemester;
 	private String profId;
 	private String openYn;

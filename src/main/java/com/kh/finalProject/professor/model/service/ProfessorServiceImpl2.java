@@ -31,14 +31,19 @@ public class ProfessorServiceImpl2 implements ProfessorService2{
 		List<Student> list = dao.selectInMajor(session, sim, cPage, numPerPage);
 		return list;
 	}
-
-
-
 	@Override
 	public int countInDept(SelectInMajor sim) {
 		int result = dao.countInDept(session,sim);
 		return result;
 	}
+
+	@Override
+	public List<String> selectPreSubject(Professor p) {
+		List<String> list = dao.selectPreSubject(session, p);
+		
+		return null;
+	}
+	
 	
 	
 

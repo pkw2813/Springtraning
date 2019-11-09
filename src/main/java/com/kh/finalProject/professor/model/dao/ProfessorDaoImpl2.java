@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -23,6 +24,13 @@ public class ProfessorDaoImpl2 implements ProfessorDao2 {
 		return session.selectOne("prof2.countInDept",sim);
 	}
 
+	@Override
+	public List<String> selectPreSubject(SqlSessionTemplate session, Professor p) {
+		return session.selectList("prof2.selectPreSubject", p);
+	}
+	
+	
+	
 	
 	
 }

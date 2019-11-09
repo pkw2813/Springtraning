@@ -40,7 +40,12 @@
 		AND DEPT_CODE = #{deptCode}
 	</select>
 	
-
+	<!-- 수강생 조회 -->
+	<select id="selectPreSubject" parameterType="professor" resultType="string">
+		SELECT DISTINCT(SUB_YEAR) 
+		FROM HD_SUBJECT_TB A
+		JOIN (SELECT SUB_CODE FROM HD_CLASS_TB WHERE PROF_ID = #{profId}) B ON(A.SUB_CODE = B.SUB_CODE)
+	</select>
 
 
 

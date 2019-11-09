@@ -59,9 +59,10 @@ public class ProfessorController2 {
 		int numPerPage=5;
 		Professor p = (Professor)session.getAttribute("loginMember");
 		//현재 강의중인 과목 출력
-//		String[] preSubject = service.selectPreSubject(p);
-		
-//		List<Student> list = service.selectInClass();
+		List<String> preSubject = service.selectPreSubject(p);
+		for(String a : preSubject) {
+			System.out.println(a);
+		}
 //		
 //		model.addAttribute("board",list);
 //		model.addAttribute("totalCount",totalData);
