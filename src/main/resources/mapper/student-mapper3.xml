@@ -29,6 +29,16 @@
 		UPDATE HD_STU_TUITION_TB SET PAYMENT_STAT='Y', PAYMENT_DATE=SYSDATE WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM=#{acaYearSem}
 	</update>
 	
+  	<select id="selectGraduationCon" parameterType="string" resultMap="graduationConResult">
+  		SELECT GC.*, S.STU_NAME, S.STU_SSN, D.DEPT_NAME
+		FROM HD_GRADUATION_CON_TB GC
+		JOIN HD_STUDENT_TB S
+		ON S.STU_NO=#{studentNo}
+		AND GC.STU_NO=S.STU_NO
+		JOIN HD_DEPARTMENT_TB D
+		ON S.DEPT_CODE=D.DEPT_CODE
+  	</select>
+  	
   	
   	<resultMap id="tuitionResult" type="stuTuition">
 		<result column="STU_NO" property="stuNo" />
@@ -46,6 +56,16 @@
 		<result column="STU_EMAIL" property="stuEmail" />
 	</resultMap>
 	
+	<resultMap id="graduationConResult" type="graduationCon">
+		<result column="STU_NO" property="stuNo" />
+		<result column="PSBL_MAJ_CR" property="psblMajCr" />
+		<result column="MY_MAJ_CR" property="myMajCr" />
+		<result column="PSBL_LIB_CR" property="psblLibCr" />
+		<result column="MY_LIB_CR" property="myLibCr" />
+		<result column="STU_NAME" property="stuName" />	
+		<result column="STU_SSN" property="stuSSn" />
+		<result column="DEPT_NAME" property="deptName" />	
+	</resultMap>
 
   
 </mapper>

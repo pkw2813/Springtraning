@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.student.model.dao.StudentDao3;
 import com.kh.finalProject.student.model.vo.Student;
+import com.kh.finalProject.student.model.vo.GraduationCon;
 import com.kh.finalProject.student.model.vo.StuTuition;
 
 @Service
@@ -42,6 +43,12 @@ public class StudentServiceImpl3 implements StudentService3 {
 	@Override
 	public int updateTuitionOne(StuTuition tuition) {
 		return dao.updateTuitionOne(session, tuition);
+	}
+
+
+	@Override
+	public GraduationCon selectGraduationCon(String studentNo) {
+		return dao.selectGraduationCon(session, studentNo);
 	}
 
 	

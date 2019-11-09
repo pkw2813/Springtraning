@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.finalProject.student.model.vo.Student;
+import com.kh.finalProject.student.model.vo.GraduationCon;
 import com.kh.finalProject.student.model.vo.StuTuition;
 
 public interface StudentDao3 {
@@ -13,4 +14,5 @@ public interface StudentDao3 {
 	List<StuTuition> selectTuitionCertList(SqlSessionTemplate session, String studentNo);
 	StuTuition selectBasicStudentInfo(SqlSessionTemplate session, String studentNo);
 	int updateTuitionOne(SqlSessionTemplate session, StuTuition tuition);
+	GraduationCon selectGraduationCon(SqlSessionTemplate session, String studentNo);
 }

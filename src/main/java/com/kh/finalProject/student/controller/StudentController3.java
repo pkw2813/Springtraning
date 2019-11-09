@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.student.model.service.StudentService3;
 import com.kh.finalProject.student.model.vo.Student;
+import com.kh.finalProject.student.model.vo.GraduationCon;
 import com.kh.finalProject.student.model.vo.StuTuition;
 
 
@@ -182,5 +183,30 @@ public class StudentController3 {
 		}
 		  res.setContentType("application/json;charset=utf-8"); // 인코딩 설정하기
 		return jsonStr;
+	}
+	
+	
+	@RequestMapping("/student/myGraduation.hd")
+	public String selectMyGraduation(HttpSession session, Model model, HttpServletRequest req) {
+		System.out.println("/student/myGraduation.hd가 호출됨");
+		
+		Student stu=(Student)session.getAttribute("loginMember");
+		String studentNo=stu.getStuNo();
+		
+		System.out.println("로그인한 아이디:"+studentNo);
+		GraduationCon graduationCon=service.selectGraduationCon(studentNo);
+		System.out.println("graduationCon:"+graduationCon);
+		String birthday="";
+		if(graduationCon!=null) {
+			String year=graduationCon.getStuSSn().substring(0, 2);
+			String month=graduationCon.getStuSSn().substring(2, 4);
+			String day=graduationCon.getStuSSn().substring(4, 6);
+			birthday=year+"년 "+month+"월"+day+"일";
+		}
+
+		model.addAttribute("graduationCon", graduationCon); // 학생 졸업조건 넘기기
+		model.addAttribute("birthday", birthday); // 학생 생년월일 넘기기
+		
+		return "student/myGraduation";
 	}
 }

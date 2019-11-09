@@ -3,6 +3,7 @@ package com.kh.finalProject.student.model.service;
 import java.util.List;
 
 import com.kh.finalProject.student.model.vo.Student;
+import com.kh.finalProject.student.model.vo.GraduationCon;
 import com.kh.finalProject.student.model.vo.StuTuition;
 
 public interface StudentService3 {
@@ -11,5 +12,6 @@ public interface StudentService3 {
 	List<StuTuition> selectTuitionCertList(String studentNo);
 	StuTuition selectBasicStudentInfo(String studentNo);
 	int updateTuitionOne(StuTuition tuition);
+	GraduationCon selectGraduationCon(String studentNo);
 
 }
