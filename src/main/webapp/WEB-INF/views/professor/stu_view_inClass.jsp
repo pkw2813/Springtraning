@@ -193,6 +193,7 @@
 								</tr>
 							</thead>
 							<tbody>
+							<c:if test="${stuList ne null && not empty stuList}">
 							<c:forEach items="${stuList }" var="stuList">
 								<tr>
 									<td>${stuList.stuNo }</td>
@@ -203,21 +204,29 @@
 									<td>${stuList.stuTel }</td>
 									<td>${stuList.stuEmail }</td>
 									<td>${stuList.stuAddr }</td>
-									<td>${stuList.assign1 }</td>
+									<td>제출</td>
+									<td>제출</td>
+									<td>미제출</td>
+									<td>미제출</td>
+									<td>중간점수</td>
+									<td>기말점수</td>
+									<%-- <td>${stuList.assign1 }</td>
 									<td>${stuList.assign2 }</td>
 									<td>${stuList.assign3 }</td>
 									<td>${stuList.assign4 }</td>
 									<td>${stuList.mTerm }</td>
-									<td>${stuList.fTerm }</td>
+									<td>${stuList.fTerm }</td> --%>
 								</tr>
 							</c:forEach>
-
+							</c:if>
 							</tbody>
 						</table>
 
 					</div>
 					<div class="card-footer">
+						<c:if test="${pageBar ne null}">
 						${pageBar }
+						</c:if>
 						<!-- <ul class="pagination" style="justify-content: center;">
 							<li class="page-item"><a class="page-link" href="#"
 								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>

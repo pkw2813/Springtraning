@@ -56,6 +56,8 @@
 	<select id="selectInClass" parameterType="selectInClass" resultMap="inClassResult">
 		SELECT STU_NO, STU_NAME, GENDER , 
 		(SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_NAME,
+		(SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') AS SUB_CODE,
+        (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') AS SUB_YEAR,
 		SUBSTR(STU_YEAR_SEM,1,1) AS GRADE,
 		STU_TEL, STU_EMAIL, STU_ADDR
 		
@@ -65,7 +67,7 @@
         WHERE SUB_CODE = #{subCode})
         
 		<if test='grade != null &amp; grade != "" '>
-			AND GRADE = #{grade}
+			AND SUBSTR(STU_YEAR_SEM,1,1) = #{grade}
 		</if>
 		<if test='stuNo != null &amp; stuNo != "" '>
 			AND STU_NO = #{stuNo}		
@@ -76,21 +78,34 @@
 		<if test='subName != null &amp; subName != "" '>
 			AND SUB_NAME = #{subName}
 		</if>
+		AND (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subYear}
+		AND (SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subCode}
 		
-		
-		AND SUB_YEAR = #{subYear}
-		AND SUB_CODE = #{subCode}
 	</select>
 	
 	<select id="countInClass" parameterType="selectInClass" resultType="_int">
-		SELECT COUNT(*) 
+		<!-- SELECT COUNT(*),STU_NO, STU_NAME, GENDER , 
+		(SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_NAME,
+		SUBSTR(STU_YEAR_SEM,1,1) AS GRADE,
+		STU_TEL, STU_EMAIL, STU_ADDR
 		FROM HD_STUDENT_TB
 		WHERE STU_NO = (SELECT STU_NO
         FROM HD_SUB_REQ_TB
-        WHERE SUB_CODE = #{subCode})
-        
+        WHERE SUB_CODE = #{subCode}) -->
+        SELECT COUNT(*)
+
+		FROM    (SELECT STU_NO, STU_NAME, GENDER , 
+				(SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_NAME,
+				(SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') AS SUB_CODE,
+        		(SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') AS SUB_YEAR,
+				SUBSTR(STU_YEAR_SEM,1,1) AS GRADE,
+				STU_TEL, STU_EMAIL, STU_ADDR
+				FROM HD_STUDENT_TB
+				WHERE STU_NO = (SELECT STU_NO
+		        FROM HD_SUB_REQ_TB
+		        WHERE SUB_CODE = #{subCode})
 		<if test='grade != null &amp; grade != "" '>
-			AND GRADE = #{grade}
+			AND SUBSTR(STU_YEAR_SEM,1,1) = #{grade}
 		</if>
 		<if test='stuNo != null &amp; stuNo != "" '>
 			AND STU_NO = #{stuNo}		
@@ -99,10 +114,13 @@
 			AND STU_NAME = #{stuName}
 		</if>
 		<if test='subName != null &amp; subName != "" '>
-			AND SUB_NAME = #{subName}
+			AND (SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subName}
 		</if>
-		AND SUB_YEAR = #{subYear}
-		AND SUB_CODE = #{subCode}
+		AND (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subYear}
+		AND (SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subCode}
+        )
+        
+		
 	</select>
 	
 
