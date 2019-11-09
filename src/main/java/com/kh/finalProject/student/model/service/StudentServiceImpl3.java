@@ -38,6 +38,12 @@ public class StudentServiceImpl3 implements StudentService3 {
 		return dao.selectBasicStudentInfo(session, studentNo);
 	}
 
+
+	@Override
+	public int updateTuitionOne(StuTuition tuition) {
+		return dao.updateTuitionOne(session, tuition);
+	}
+
 	
 	
 }

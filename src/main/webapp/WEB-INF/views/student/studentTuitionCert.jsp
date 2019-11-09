@@ -58,11 +58,6 @@
 							<div style="margin-bottom: 10px;">
 								<h4 class="font-weight-bold mb-0 textAlignCenter">
 									<div id="paymentStat">
-									<c:if test="${tuition eq null}">
-									${selectYearSemKor} 조회된 등록금 납부 내역이 없습니다.
-									</c:if>
-									<c:if test="${tuition ne null}">
-									</c:if>
 									</div>
 								</h4>
 							</div>
@@ -108,12 +103,12 @@
 						<div class="card-body" style="padding-top:13px; padding-bottom:30px;">
 							<div class="divMarginBottom divMarginLeft">
 								<h5 class="font-weight-bold mb-0">
-								<div id="paymentDate"></div>
+								<div id="paymentDate" style="color:royalblue;"></div>
 								</h5>
 							</div>
 							<div class="divMarginBottom divMarginLeft">
 								<h5 class="font-weight-bold mb-0">
-								<div id="paymentCompleteText"></div>
+								<div id="paymentCompleteText" style="color:royalblue;"></div>
 								</h5>
 							</div>
 							<div class="divMarginBottom divMarginLeft font-weight-bold"  style="margin-top:10px;">
@@ -126,7 +121,16 @@
 					</div>
 				</div>
 			</div>
+			
+			
+			
+		<!-- 아임포트 cdn -->
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+		
 		<script>
+		var IMP = window.IMP; // 생략가능
+		IMP.init('imp79492569'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+
 		function getFormatDate(date) { // yyyyMMdd 포맷으로 변환하는 함수
 		    var year=date.getFullYear(); // yyyy
 		    var month=(1+date.getMonth()); // M
@@ -150,17 +154,49 @@
 			};
 			
 			var tuition=0; // 등록금 저장할 변수
+			var today=new Date();
+			//console.log("today:"+getFormatDate(today));
+			$("#todayDate").html(getFormatDate(today));
+			
+			var acaYearSem='${selectYearSemKor}';
+			$("#acaYearSem").html(acaYearSem+' 등록금 납입 증명서');
 			<%if(tuition==null) { %>
 				// console.log("조회된 등록금이 없습니다.");
 			<%}else { %>
-				var acaYearSem='${tuition.acaYearSem}'.substring(0,4)+'학년도 '+'${tuition.acaYearSem}'.substring(6,7)+"학기";
 				<%if(tuition.getPaymentStat()=='N') { %>
 				// console.log("아직 납부하지 않음.");
+				$("#paymentStat").show();
+				$("#paymentStat").html(acaYearSem+" 등록금을 아직 납부하지 않았습니다.").css('color', 'royalblue');
+				
+				function payTuition() {
+					IMP.request_pay({
+					    pg : 'html5_inicis', // version 1.1.0부터 지원.
+					    pay_method : 'vbank',
+					    merchant_uid : 'merchant_' + new Date().getTime(),
+					    name : 'KH대학교 ${tuition.acaYearSem} 등록금 납부', // 결제창에서 보여질 이름
+					    amount : totalTuition, // 총 등록금액
+					    buyer_email : '${student.stuEmail}',
+					    buyer_name : '${student.stuName}',
+					    buyer_tel : '${student.stuTel}',
+					    buyer_addr : '${student.stuAddr}',
+					    buyer_postcode : '${student.stuPostcode}',
+					    vbank_due : dueDate
+					   //  m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+					}, function(rsp) {
+					    if ( rsp.success ) {
+					        var msg = 'KH대학교 ${tuition.acaYearSem} 등록금 납부가 완료되었습니다.';
+					    } else {
+					        var msg = '등록금 납부에 실패하였습니다.\n';
+					        msg += rsp.error_msg; // 에러 내용
+					    }
+					    alert(msg);
+					});
+				}
 				<%}else if(tuition.getPaymentStat()=='Y') { %>
+				$("#paymentStat").hide();
 				tuition=${tuition.tuition}; // 등록금 저장
 				$("#tuition").html(numberWithCommas(tuition)+"원");  // 등록금에 1000원 단위로 컴마 추가하기
 				//console.log('${tuition.acaYearSem}');
-				$("#acaYearSem").html(acaYearSem+' 등록금 납입 증명서');
 				
 				var reductionMoney=0; // 감면금액 저장할 변수
 				if("${tuition.reductionStat}"=="Y") { // 감면여부가 'Y'이면
@@ -180,10 +216,6 @@
 				$("#paymentDate").html("납부일: "+transDate(paymentDate));
 				$("#paymentCompleteText").html("가상계좌 납부 완료");
 				
-				
-				var today=new Date();
-			    //console.log("today:"+getFormatDate(today));
-				$("#todayDate").html(getFormatDate(today));
 				
 				$("#sign").html("KH대학교 총장");
 				
@@ -246,7 +278,10 @@
 						}
 					});
 			});
+			
+			
+			
 		</script>
 
 
-			<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+		<jsp:include page="/WEB-INF/views/common/footer.jsp" />

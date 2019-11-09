@@ -19,7 +19,7 @@
 	 }
 	 
 	 /* ui 테스트용 */
-	/*  div { 
+	/* div { 
 	 	border: 1px solid black;
 	 } */
 	 
@@ -135,7 +135,7 @@
 							</div>
 							<div class="divMarginBottom divMarginLeft">
 								<h6 class="font-weight-bold mb-0">
-									가상계좌 납부: KH은행 20-12321-12421
+									가상계좌 납부: 국민은행 20-12321-12421
 								</h6>
 							</div>
 							<div class="divMarginBottom divMarginLeft font-weight-bold">
@@ -144,12 +144,28 @@
 									<h3 class="font-weight-bold mb-0">KH대학교 총장</h3>
 								</div>
 							</div>
+							<div class="divMarginBottom divMarginLeft font-weight-bold textAlignCenter">
+							<%if(tuition.getPaymentStat()=='Y') { %>
+							<h3 class="font-weight-bold mb-0" style="color:royalblue;">납부 완료</h3>
+							<%}else if(tuition.getPaymentStat()=='N') { %>
+								<input type="button" class="btn btn-primary" value="납부하기" onclick="payTuition();">
+							<%} %>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</c:if>	
+		
+		<!-- 아임포트 cdn -->
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+		
 		<script>
+		
+		var IMP = window.IMP; // 생략가능
+		IMP.init('imp79492569'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+		
+
 		function getFormatDate(date) { // yyyyMMdd 포맷으로 변환하는 함수
 		    var year=date.getFullYear(); // yyyy
 		    var month=(1+date.getMonth()); // M
@@ -172,6 +188,7 @@
 			};
 			
 			var tuition=0; // 등록금 저장할 변수
+			var totalTuition=0; // 등록금-감면액 저장할 변수
 			<%if(tuition==null) { %>
 				console.log("조회된 등록금이 없습니다.");
 			<%}else { %>
@@ -179,7 +196,7 @@
 				$("#tuition").html(numberWithCommas(tuition)+"원");  // 등록금에 1000원 단위로 컴마 추가하기
 				
 				var acaYearSem='${tuition.acaYearSem}'.substring(0,4)+'학년도 '+'${tuition.acaYearSem}'.substring(6,7)+"학기";
-				console.log(acaYearSem);
+				// console.log(acaYearSem);
 				$("#acaYearSem").html(acaYearSem+' 등록금 고지서');
 				
 				var reductionMoney=0; // 감면금액 저장할 변수
@@ -187,10 +204,9 @@
 					reductionMoney=${tuition.tuition}/2; // 등록금의 1/2 감면해 준다.
 				}else if("${tuition.reductionStat}"=="N"){ // 감면여부가 'N'이면
 					reductionMoney=0;
-					console.log("감면 되지 않습니다.");
+					// console.log("감면 되지 않습니다.");
 				}
 				$("#reduction").html(numberWithCommas(reductionMoney)+"원");  // 감면금액에 1000원 단위로 컴마 추가하기
-				var totalTuition=0;
 				totalTuition=tuition-reductionMoney;
 				$("#totalTuition").html(numberWithCommas(totalTuition)+"원");  // 총액에 1000원 단위로 컴마 추가하기
 				
@@ -204,7 +220,45 @@
 			    //console.log("today:"+getFormatDate(today));
 			    
 				$("#todayDate").html(getFormatDate(today));
+				
+				function payTuition() {
+					IMP.request_pay({
+					    pg : 'html5_inicis', // version 1.1.0부터 지원.
+					    pay_method : 'vbank',
+					    merchant_uid : 'merchant_' + new Date().getTime(),
+					    name : 'KH대학교 ${tuition.acaYearSem} 등록금 납부', // 결제창에서 보여질 이름
+					    amount : totalTuition, // 총 등록금액
+					    buyer_email : '${student.stuEmail}',
+					    buyer_name : '${student.stuName}',
+					    buyer_tel : '${student.stuTel}',
+					    buyer_addr : '${student.stuAddr}',
+					    buyer_postcode : '${student.stuPostcode}',
+					    vbank_due : dueDate
+					   //  m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+					}, function(rsp) {
+					    if ( rsp.success ) {
+					    	// aJax 통신으로 해당 학년 학기 선택하기
+							$.ajax({
+									url:"${path}/student/payTuitionAjax.hd",
+									data:{"acaYearSem": '${tuition.acaYearSem}'},
+									success:function(data) {
+										console.log("ajax 통신 성공:"+data);
+										//var tuitionObj=new Object();
+										//tuitionObj=JSON.parse(data); // JSON을 자바스크립트 객체로 변환하기
+										//var acaYearSemByAjax=tuitionObj.acaYearSem; // tuitionObj 객체의 acaYearSem 맴버변수 가져오기
+									}
+								});
+					        var msg = 'KH대학교 ${tuition.acaYearSem} 등록금 납부가 완료되었습니다.';
+					    } else {
+					        var msg = '등록금 납부에 실패하였습니다.\n';
+					        msg += rsp.error_msg; // 에러 내용
+					    }
+					    alert(msg);
+					    location.href="${path}/student/tuitionBill.hd";
+					});
+				}
 			<%} %>
+			
 		</script>
 
 
