@@ -12,7 +12,15 @@
 	.col-sm-9{
 		margin-left:-30px;
 	}
-	option{
+	td{
+		text-align:center;
+	}
+	th{
+		text-align:center;
+		letter-spacing:3px;
+	}
+	.col-sm-12{
+		margin:0 auto;
 		text-align:center;
 	}
 
@@ -21,49 +29,34 @@
 	<div class="content-wrapper">
 			   <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Horizontal Two column</h4>
-                  <form class="form-sample">
-                    <p class="card-description">
-                      Personal info
-                    </p>
+                  <h4 class="card-title">등록금 등록</h4>
+                  <form class="form-sample" action="${path }/tuitonInsert.hd">
                     <div class="row">
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">년도 선택</label>
-                          <div class="col-sm-7">
-                            <select class="form-control selectDepartment" id="year">
+                          <label class="col-sm-3 col-form-label">년도 선택</label>
+                          <div class="col-sm-9">
+                            <select class="form-control" id="year">
                             </select>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group row firstForm">
-                          <label class="col-sm-4 col-form-label">학년 선택</label>
-                          <div class="col-sm-7">
-                            <select class="form-control selectDepartment">
-                              <option>1 학년</option>
-                              <option>2 학년</option>
-                              <option>3 학년</option>
-                              <option>4 학년</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
+                      <div class="col-md-5">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">학기 선택</label>
                           <div class="col-sm-4">
                             <div class="form-check">
                               <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="membershipRadios" value="1학기">
+                                <input type="radio" class="form-check-input" name="membershipRadios" value="-01">
                                 1학기
                               <i class="input-helper"></i></label>
                             </div>
                           </div>
-                          <div class="col-sm-5">
+                          <div class="col-sm-4">
                             <div class="form-check">
                               <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="membershipRadios" value="2학기">
+                                <input type="radio" class="form-check-input" name="membershipRadios" value="-02">
+                               	
                                 2학기
                               <i class="input-helper"></i></label>
                             </div>
@@ -72,17 +65,13 @@
                       </div>
                     </div>
                     
-                    
+                    <input type="hidden" id="hidDate" name="tuiYear"/>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">학부 선택</label>
                           <div class="col-sm-9">
                             <select class="form-control selectColleage">
-                              <option>Male</option>
-                              <option>Female</option>
-                              <option>Female</option>
-                              <option>Female</option>
                             </select>
                           </div>
                         </div>
@@ -91,22 +80,19 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">학과 선택</label>
                           <div class="col-sm-9">
-                            <select class="form-control selectDepartment">
-                              <option>Category1</option>
-                              <option>Category2</option>
-                              <option>Category3</option>
-                              <option>Category4</option>
+                            <select class="form-control selectDepartment" name="deptCode">
                             </select>
                           </div>
                         </div>
                       </div>
                     </div>
+                    
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">등록금 금액</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" id="tuition" placeholder="0,000,000" onkeyup="inputNumberFormat(this)">
+                            <input type="text" class="form-control" name="tuiPay" id="tuition" placeholder="0,000,000" onkeyup="inputNumberFormat(this)">
                           </div>
                         </div>
                       </div>
@@ -114,12 +100,46 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">납부 기한</label>
                           <div class="col-sm-9">
-                            <input class="form-control" placeholder="dd/mm/yyyy">
+                            <input class="form-control" type="text" id="payDay" name="tuiPayDate" placeholder="20191121" readonly/>
                           </div>
                         </div>
                       </div>
                     </div>
+	                    <div class="col-sm-12">
+	                    	<input type="submit" value="저장" class="btn btn-inverse-info btn-fw" id="insBtn"/>&nbsp&nbsp
+	                    	<input type="reset" value="초기화" class="btn btn-inverse-info btn-fw"/>
+	                    </div>
                   </form>
+                </div>
+              </div>
+              
+              
+              <div class="card" style="margin-top:50px">
+                <div class="card-body">
+                  <h4 class="card-title">현재학기 등록내역</h4>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>년도</th>
+                          <th>학기</th>
+                          <th>학부</th>
+                          <th>학과</th>
+                          <th>등록금</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Jacob</td>
+                          <td>Photoshop</td>
+                          <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
+                          <td><label class="badge badge-danger">Pending</label></td>
+                          <td><label class="badge badge-danger">Pending</label></td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
 
@@ -140,22 +160,22 @@
             					
             					$('.selectColleage').html(colListHtml);
             						$('.selectColleage').change(function(){
-            						$("#selCol").attr('disabled',true);
-            		});
+            							$("#selColleage").attr('disabled',true);
+            						})
             				}
-            			});
-            		});
+            			})
+            		})
             	});
               
-              
-              $(function(){
-            	 	$('.selColleage').change(function(){
-            	 		let val = $('.selColleage').val();
+               $(function(){
+            	 	$('.selectColleage').change(function(){
+            	 		console.log($('.selectColleage').val());
             			$.ajax({
             				type : "post",
             				url: "${pageContext.request.contextPath}/selectDeptList.do",
-            				data: {"result" : $('.selColleage').val()},
+            				data: {"result" : $('.selectColleage').val()},
             				success: function(data) {
+            					console.log(data);
             					let deptListHtml = "<option value='select' id='selectDepartment'>학과 선택</option>";
             					for(let i = 0; i < data.list.length; i++) {
             						let depts = data.list[i];
@@ -170,7 +190,16 @@
             	 	}
             	 });
             		 });
-            	 });
+            	 }); 
+              
+               
+              $("#insBtn").click(function(){
+            	  var st = $(":input:radio[name=membershipRadios]:checked").val();
+		    	  var year=$("#year option:selected").val();
+		    	  
+		    	  $("#hidDate").val(year+st);
+		    	  
+              });
               
               function inputNumberFormat(obj) {
               obj.value = comma(uncomma(obj.value));
@@ -197,14 +226,28 @@
 		        		var optionIndex = 0;
 	
 		        		for(var i=year;i<=year+20;i++){
-		        				selectValue.add(new Option(i+"년",i),optionIndex++);
-		        	}
-		        		
-		        		 
+		        				selectValue.add(new Option(i,i),optionIndex++);
+		        	}	 
 		        }
-	          
 
-              
+		       
+		       
+		       $(document).ready(function(){
+		    	   $("input:radio[name=membershipRadios]").click(function(){
+			    	   var st = $(":input:radio[name=membershipRadios]:checked").val();
+			    	   var year=$("#year option:selected").val();
+			    	   console.log(st);
+					   if(st=='01'){
+						   $("#payDay").val(year+"0201");
+					   }else{
+						   $("#payDay").val((year)+"0810");
+					   }
+					   console.log($("#year option:selected").val());
+			   		});
+		       });
+		       
+
+
               </script>
 
 

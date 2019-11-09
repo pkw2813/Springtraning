@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tuition">
+	<select id="selectOne" parameterType="tuition" resultMap="tuitionResult">
+		SELECT* FROM HD_TUITION_TB WHERE TUI_YEAR=#{tuiYear} AND DEPT_CODE=#{deptCode}
+	</select>
+	<insert id="insertTuition" parameterType="tuition">
+		INSERT INTO HD_TUITION_TB VALUES(#{tuiYear}, #{deptCode}, #{tuiPay}, #{tuiPayDate})
+	</insert>
+	
+	<resultMap type="tuition" id="tuitionResult">
+		<result column="TUI_YEAR" property="tuiYear" />
+		<result column="DEPT_CODE" property="deptCode" />
+		<result column="TUI_PAY" property="tuiPay" />
+		<result column="TUI_PAY_DATE" property="tuiPayDate" />
+	</resultMap>
+</mapper>
