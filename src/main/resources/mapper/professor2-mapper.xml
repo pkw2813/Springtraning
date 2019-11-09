@@ -53,11 +53,48 @@
 		JOIN (SELECT SUB_CODE FROM HD_CLASS_TB WHERE PROF_ID = #{profId}) B ON(A.SUB_CODE = B.SUB_CODE)
 	</select>
 	
-	<select id="selectInClass" parameterType="selectInClass" resultType="_jnt">
+	<select id="selectInClass" parameterType="selectInClass" resultType="student">
 		SELECT * 
-		FROM HD_STUDENT_TB
+		FROM HD_STUDENT_TB WHERE 1=1
+		<if test='subYear != null &amp; subYear != "" '>
+			AND SUB_YEAR = #{subYear}
+		</if>
+		<if test='subName != null &amp; subName != "" '>
+			AND SUB_NAME = #{subName}
+		</if>
+		<if test='grade != null &amp; grade != "" '>
+			AND GRADE = #{grade}
+		</if>
+		<if test='stuNo != null &amp; stuNo != "" '>
+			AND STU_NO = #{stuNo}		
+		</if>
+		<if test='stuName != null &amp; stuName != "" '>
+			AND STU_NAME = #{stuName}
+		</if>
+		AND 
 	</select>
 	
+	<select id="countInClass" parameterType="selectInClass" resultType="_int">
+		SELECT count(*) 
+		FROM HD_STUDENT_TB WHERE 1=1
+		<if test='subYear != null &amp; subYear != "" '>
+			AND SUB_YEAR = #{subYear}
+		</if>
+		<if test='subName != null &amp; subName != "" '>
+			AND SUB_NAME = #{subName}
+		</if>
+		<if test='grade != null &amp; grade != "" '>
+			AND GRADE = #{grade}
+		</if>
+		<if test='stuNo != null &amp; stuNo != "" '>
+			AND STU_NO = #{stuNo}		
+		</if>
+		<if test='stuName != null &amp; stuName != "" '>
+			AND STU_NAME = #{stuName}
+		</if>
+		AND 
+	
+	</select>
 	
 
 

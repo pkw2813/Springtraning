@@ -73,17 +73,18 @@ public class ProfessorController2 {
 		//=========현재 강의중인 과목 이름 리스트 조회=======
 		List<String> preSubjectName = service.selectPreSubjectNameo(p);
 		if(preSubjectName != null && !preSubjectName.isEmpty()) {
-			
 			model.addAttribute("preSubjectNameList", preSubjectName);
 		}
-		int totalData = service.countInClass(sic);
-		List<Student> stulist = service.selectInClass(sic, cPage, numPerPage);
-		
 		//=============과목 이름 조회 끝=======================
-//		
-//		model.addAttribute("board",list);
-//		model.addAttribute("totalCount",totalData);
-//		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/lectureData"));
+		
+		
+		//조건 검색에 따른 실 수강생 목록 조회 시작
+		int totalData = service.countInClass(sic);
+		List<Student> stuList = service.selectInClass(sic, cPage, numPerPage);
+		//============
+		model.addAttribute("stuList",stuList);
+		model.addAttribute("totalCount",totalData);
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/lectureData"));
 
 	return"professor/stu_view_inClass";
 
