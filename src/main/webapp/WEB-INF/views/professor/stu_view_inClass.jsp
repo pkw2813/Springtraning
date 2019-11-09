@@ -39,31 +39,31 @@
 
 								<tbody>
 									<tr>
-										<td><select name="openYear">
-												<option value="#" selected>개설기간 선택</option>
-												<option value="2019">2019</option>
-												<option value="2018">2018</option>
-												<option value="2017">2017</option>
-												<option value="2016">2016</option>
+										<td><select name="subYear">
+												<option value="" selected>개설기간 선택</option>
+												<c:forEach items="${preSubjectList }" var='yearList'>
+												
+												<option value="${yearList }">${yearList }</option>
+												</c:forEach>
 										</select></td>
-										<td><select name="subjectName">
-												<option value="*" selected>과목선택</option>
-												<option value="E1203">영어영문학</option>
-												<option value="J123">자바프로그래밍</option>
-												<option value="chul">철학입문1</option>
-												<option value="Muyeok">무역영어</option>
+										<td><select name="subName">
+												<option value="" selected>과목선택</option>
+												<c:forEach items="${preSubjectNameList }" var="nameList">
+												<option value="${nameList }">${nameList}</option>
+												</c:forEach>
 										</select></td>
-										<td><input type="text" placeholder="학번검색(미입력시 전체)"
-											value="" name="studentNo" /></td>
-										<td><input type="text" placeholder="이름검색(미입력시 전체)"
-											value="" name="studentName" /></td>
 										<td><select name="grade">
-												<option value="*" selected>학년검색</option>
+												<option value="" selected>학년검색</option>
 												<option value="1">1학년</option>
 												<option value="2">2학년</option>
 												<option value="3">3학년</option>
 												<option value="4">4학년</option>
 										</select></td>
+										<td><input type="text" placeholder="학번검색(미입력시 전체)"
+											value="" name="stuNo" /></td>
+										<td><input type="text" placeholder="이름검색(미입력시 전체)"
+											value="" name="stuName" /></td>
+										
 										<td><input type="text" placeholder="학과검색" value=""
 											name="major" /></td>
 										<td>

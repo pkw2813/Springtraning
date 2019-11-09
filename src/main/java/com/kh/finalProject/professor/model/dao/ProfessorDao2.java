@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.finalProject.professor.model.vo.Professor;
+import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -15,5 +16,10 @@ public interface ProfessorDao2 {
 	int countInDept(SqlSessionTemplate session, SelectInMajor sim);
 	
 	List<String> selectPreSubject(SqlSessionTemplate session, Professor p);
+	
+	List<String> selectPreSubjectNameo(SqlSessionTemplate session , Professor p);
+	
+	List<Student> selectInClass(SqlSessionTemplate session, SelectInClass sic, int cPage, int numPerPage);
+	int countInClass(SqlSessionTemplate session, SelectInClass sic);
 	
 }

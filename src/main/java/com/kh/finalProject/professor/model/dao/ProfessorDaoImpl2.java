@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalProject.professor.model.vo.Professor;
+import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -28,6 +29,28 @@ public class ProfessorDaoImpl2 implements ProfessorDao2 {
 	public List<String> selectPreSubject(SqlSessionTemplate session, Professor p) {
 		return session.selectList("prof2.selectPreSubject", p);
 	}
+
+	@Override
+	public List<String> selectPreSubjectNameo(SqlSessionTemplate session, Professor p) {
+		return session.selectList("prof2.selectPreSubjectName", p);
+	}
+
+	@Override
+	public List<Student> selectInClass(SqlSessionTemplate session, SelectInClass sic, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("prof2.selectInClass", sic, row);
+	}
+
+	@Override
+	public int countInClass(SqlSessionTemplate session, SelectInClass sic) {
+		return session.selectOne("prof2.countInClass",sic);
+	}
+	
+	
+	
+	
+	
 	
 	
 	

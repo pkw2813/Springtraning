@@ -42,10 +42,23 @@
 	
 	<!-- 수강생 조회 -->
 	<select id="selectPreSubject" parameterType="professor" resultType="string">
-		SELECT DISTINCT(SUB_YEAR) 
+		SELECT DISTINCT(SUB_YEAR)
 		FROM HD_SUBJECT_TB A
 		JOIN (SELECT SUB_CODE FROM HD_CLASS_TB WHERE PROF_ID = #{profId}) B ON(A.SUB_CODE = B.SUB_CODE)
 	</select>
+	
+	<select id="selectPreSubjectName" parameterType="professor" resultType="string">
+		SELECT DISTINCT(SUB_NAME)
+		FROM HD_SUBJECT_TB A
+		JOIN (SELECT SUB_CODE FROM HD_CLASS_TB WHERE PROF_ID = #{profId}) B ON(A.SUB_CODE = B.SUB_CODE)
+	</select>
+	
+	<select id="selectInClass" parameterType="selectInClass" resultType="_jnt">
+		SELECT * 
+		FROM HD_STUDENT_TB
+	</select>
+	
+	
 
 
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.professor.model.dao.ProfessorDao2;
 import com.kh.finalProject.professor.model.vo.Professor;
+import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -15,7 +16,6 @@ import com.kh.finalProject.student.model.vo.Student;
 public class ProfessorServiceImpl2 implements ProfessorService2{
 	@Autowired
 	ProfessorDao2 dao;
-	
 	@Autowired
 	SqlSessionTemplate session;
 	
@@ -41,8 +41,30 @@ public class ProfessorServiceImpl2 implements ProfessorService2{
 	public List<String> selectPreSubject(Professor p) {
 		List<String> list = dao.selectPreSubject(session, p);
 		
-		return null;
+		return list;
 	}
+
+	@Override
+	public List<String> selectPreSubjectNameo(Professor p) {
+		List<String> list = dao.selectPreSubjectNameo(session, p);
+		return list;
+	}
+
+	@Override
+	public List<Student> selectInClass(SelectInClass sic, int cPage, int numPerPage) {
+		List<Student> list = dao.selectInClass(session, sic, cPage, numPerPage);
+		return list;
+	}
+
+	@Override
+	public int countInClass(SelectInClass sic) {
+		int result = dao.countInClass(session, sic);
+		return result;
+	}
+	
+	
+	
+	
 	
 	
 	
