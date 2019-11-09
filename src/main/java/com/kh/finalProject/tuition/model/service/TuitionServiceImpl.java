@@ -25,7 +25,6 @@ public class TuitionServiceImpl implements TuitionService {
 	@Override
 	public int insertTuition(Tuition t) {
 		int result=Dao.insertTuition(session,t);
-		System.out.println(t+"!@3123");
 		return result;
 	}
 	

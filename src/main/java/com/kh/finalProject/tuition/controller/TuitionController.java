@@ -37,13 +37,20 @@ public class TuitionController {
 		String msg="";
 		String loc="/tuition.hd";
 		Tuition tui=service.selectOne(tuiYear,deptCode);
-		
-		if(tui.getTuiYear()==t.getTuiYear() && tui.getDeptCode()==t.getDeptCode()) {
-			msg="이미 등록되어 있습니다.";
+		if(tui!=null) {
+			if(!(tui.getTuiYear()==t.getTuiYear() && tui.getDeptCode()==t.getDeptCode())) {
+				msg="이미 등록되어 있습니다.";
+				System.out.println("시발 왜안돼");
+			}else {
+				int result=service.insertTuition(t);
+				msg="정상적으로 등록 되었습니다.";
+				System.out.println("시발");
+			}
 		}else {
 			int result=service.insertTuition(t);
 			msg="정상적으로 등록 되었습니다.";
 		}
+		
 		model.addAttribute("msg",msg);
 		model.addAttribute("loc",loc);
 		

@@ -85,7 +85,7 @@
 			
 			<hr>
 			<label class="control-label">내용</label>
-			<textarea name="reqContents" cols="40" rows="8" class="form-control">[건의사항 처리완료]</textarea>
+			<textarea name="reqContents" cols="40" rows="8" class="form-control" placeholder="처리결과 내용을 입력해주세요."></textarea>
 			</div>
 			<input type="button" class="btn btn-inverse-info btn-fw" id="close3" value="취소" style="float: right; margin: 7px;">
 			<input type="submit" class="btn btn-inverse-info btn-fw" value="보내기" style="float: right; margin: 7px;">

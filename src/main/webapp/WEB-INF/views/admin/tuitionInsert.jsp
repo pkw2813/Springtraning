@@ -116,8 +116,47 @@
               
               <div class="card" style="margin-top:50px">
                 <div class="card-body">
-                  <h4 class="card-title">현재학기 등록내역</h4>
                   <div class="table-responsive">
+                  <form action="">
+                  <br>
+                  <div class="row">
+                      <div class="col-md-5">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">년도 선택</label>
+                          <div class="col-sm-9">
+                            <select class="form-control" id="year1">
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">학기 선택</label>
+                          <div class="col-sm-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="membershipRadios1" value="-01">
+                                1학기
+                              <i class="input-helper"></i></label>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="membershipRadios1" value="-02">
+                               	
+                                2학기
+                              <i class="input-helper"></i></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                     	<input type="hidden" id="hidDate1" name="tuiYear"/>
+                    	<input type="submit" value="조회" class="btn btn-inverse-info btn-fw" id="insBtn1">
+                      </div>
+                    </div>
+                    </form>
                     <table class="table table-hover">
                       <thead>
                         <tr>
@@ -198,7 +237,13 @@
 		    	  var year=$("#year option:selected").val();
 		    	  
 		    	  $("#hidDate").val(year+st);
+              });
+              
+              $("#insBtn1").click(function(){
+            	  var st = $(":input:radio[name=membershipRadios1]:checked").val();
+		    	  var year=$("#year1 option:selected").val();
 		    	  
+		    	  $("#hidDate1").val(year+st);
               });
               
               function inputNumberFormat(obj) {
@@ -223,11 +268,15 @@
 		        		var date = new Date();
 		        		var year = date.getFullYear();
 		        		var selectValue = document.getElementById("year");
+		        		var selectValue1 = document.getElementById("year1");
 		        		var optionIndex = 0;
 	
 		        		for(var i=year;i<=year+20;i++){
 		        				selectValue.add(new Option(i,i),optionIndex++);
-		        	}	 
+		        		}
+		        		for(var i=year-5;i<=year+1;i++){
+	        					selectValue1.add(new Option(i,i),optionIndex++);
+	        			}
 		        }
 
 		       
@@ -237,7 +286,7 @@
 			    	   var st = $(":input:radio[name=membershipRadios]:checked").val();
 			    	   var year=$("#year option:selected").val();
 			    	   console.log(st);
-					   if(st=='01'){
+					   if(st=='-01'){
 						   $("#payDay").val(year+"0201");
 					   }else{
 						   $("#payDay").val((year)+"0810");

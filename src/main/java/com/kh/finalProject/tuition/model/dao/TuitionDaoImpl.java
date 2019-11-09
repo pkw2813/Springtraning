@@ -13,13 +13,11 @@ public class TuitionDaoImpl implements TuitionDao {
 		Tuition t=new Tuition();
 		t.setTuiYear(tuiYear);
 		t.setDeptCode(deptCode);
-		System.out.println(t);
 		return session.selectOne("tuition.selectOne", t);
 	}
 
 	@Override
 	public int insertTuition(SqlSessionTemplate session,Tuition t) {
-		System.out.println(t);
 		return session.insert("tuition.insertTuition",t);
 	}
 	
