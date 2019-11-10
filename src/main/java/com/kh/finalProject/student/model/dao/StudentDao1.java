@@ -15,4 +15,10 @@ public interface StudentDao1 {
 	List<Map> selectClass(SqlSessionTemplate session,Map<String,Object> param);
 	int countAllClass(SqlSessionTemplate session);
 	int countSelectClass(SqlSessionTemplate session,Map<String,Object>param);
+	List<Map> selectProfEval(SqlSessionTemplate session,Map<String,Object>param);
+	Map selectProfInfo(SqlSessionTemplate session,Map<String,Object> param);
+	int applyClass(SqlSessionTemplate session,Map<String,Object> param);
+	List<Map> selectApplyClass(SqlSessionTemplate session,String stuNo);
+	double averPoint(SqlSessionTemplate session,Map<String,Object>param);
+	
 }

@@ -54,6 +54,36 @@ public class StudentServiceImpl1 implements StudentService1 {
 		return dao.countSelectClass(session,param);
 	}
 
+	@Override
+	public List<Map> selectProfEval(Map<String, Object> param) {
+		
+		return dao.selectProfEval(session,param);
+	}
+
+	@Override
+	public Map selectProfInfo(Map<String, Object> param) {
+		
+		return dao.selectProfInfo(session,param);
+	}
+
+	@Override
+	public int applyClass(Map<String, Object> param) {
+	
+		return dao.applyClass(session,param);
+	}
+
+	@Override
+	public List<Map> selectApplyClass(String stuNo) {
+		
+		return dao.selectApplyClass(session,stuNo);
+	}
+
+	@Override
+	public double averPoint(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.averPoint(session,param);
+	}
+
 	
 	 
 

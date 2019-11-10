@@ -46,6 +46,39 @@ public class StudentDaoImpl1 implements StudentDao1 {
 		
 		return session.selectOne("student1.countSelectClass");
 	}
+
+	@Override
+	public List<Map> selectProfEval(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.selectList("student1.selectProfEval",param);
+	}
+
+	@Override
+	public Map selectProfInfo(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.selectOne("student1.selectProfInfo",param);
+	}
+
+	@Override
+	public int applyClass(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.insert("student1.applyClass",param);
+	}
+
+	@Override
+	public List<Map> selectApplyClass(SqlSessionTemplate session, String stuNo) {
+		
+		
+		return session.selectList("student1.selectApplyClass",stuNo);
+	}
+
+	@Override
+	public double averPoint(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.selectOne("student1.averPoint",param);
+	}
+	
+	
 	
 	
 

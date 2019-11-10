@@ -14,7 +14,7 @@
 		tr, td, th {
 			text-align: left;
 			font-size: 13px;
-		
+			border:1px solid lightgray;
 			cursor: auto;
 		}
 		
@@ -48,7 +48,7 @@
 		font-size:16px;
 
 		}
-		#button{
+		button{
 			height:28px;
 			font-size:14px;
 			font-weight:bold;
@@ -145,7 +145,7 @@
 				</tr>
 				<tr id="classInfoTitle">
 				<th>순번</th>
-				
+				<th>학기</th>
 				<th>교과목명</th>
 				<th>과목명</th>
 				<th>담당교수</th>
@@ -162,6 +162,7 @@
 				
 				<tr id="classInfo">
 				<td><c:out value='${e["ROWNUM"] }'/></td>
+				<td><c:out value='${e["CLASS_YEAR"]}'/>-<c:out value='${e["T_SEMESTER"]}'/></td>
 				<td><c:out value='${e["T_DEPT"] }'/></td>
 				<td><c:out value='${e["SUB_NAME"] }'/></td>
 				<td><c:out value='${e["PROF_NAME"] }'/></td>
@@ -173,13 +174,14 @@
 				<c:if test='${e["OPEN_YN"] eq "Y"}'>
 				<td style="text-align:center">
 				
-				<button id='button-profEval${e["ROWNUM"]}' onclick="profEval(this.id,this.value)" class="btn btn-primary btn-xs" value='${e["SUB_NAME"]},${e["PROF_NAME"]}'>보기
-			
-				
+				<button id='button-profEval' class="btn btn-primary btn-xs" onclick="profEval(this.id,this.value)" 
+				value='${e["SUB_NAME"]},${e["PROF_ID"]},${e["CLASS_YEAR"]}-${e["T_SEMESTER"]}'>보기
 				</button>
 				</td>
+				
 				<td style="text-align:center">
-				<button id="button"class="btn btn-primary btn-xs">신청</button>
+				<button id="button-applyClass${e[ROWNUM]}" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
+				value='${loginMember.stuNo },${e["SUB_CODE"]},${e["PROF_ID"]},${e["CLASS_YEAR"]}-${e["T_SEMESTER"]}'>신청</button>
 				
 				</c:if>
 				<c:if test='${e["OPEN_YN"] eq "N"}'>
@@ -273,20 +275,37 @@
 			console.log($("#profEvalForm").val());
 			 var myForm = document.popForm;
 			 var url= "${path}/student/profEval.hd";    //팝업창 페이지 URL
-			 var winWidth = 700;
-		     var winHeight = 600;
+			 var winWidth = 1000;
+		     var winHeight = 1000;
 		     var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
 			
 		   
 		    window.open("" ,"popForm",
-				       "toolbar=no, width=540, height=467, directories=no, status=no,scrollorbars=no, resizable=no");
+				       "toolbar=no, width=1000, height=700, directories=no, status=no,scrollorbars=no, resizable=no");
 		    myForm.action =url;
 			myForm.method="post";
 			myForm.target="popForm";
 			myForm.submit();
 		}
 		
-		
+		function applyClass(id,value){
+			
+			var data={value};
+			 $.post({
+		            url: "${path}/student/applyClass.hd",
+		            type: "post",
+		            data: data,
+		            success: function(data){
+		                	alert("정상처리 됐습니다")
+		            },
+		            error: function(){
+		                alert("에러처리");
+		            }
+		        });
+			 
+		   
+		  
+		}
 
 			
 	

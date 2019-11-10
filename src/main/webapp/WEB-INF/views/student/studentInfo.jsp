@@ -44,7 +44,7 @@ table {
 				<div class="card">
 					<div class="card-body">
 					<div class="table-responsive">
-						<table class="table table-default table-hover table-striped"" >
+						<table class="table table-default table-hover table-striped">
 						<thead class="thead-dark">
 							<tr>
 								<td colspan="8">

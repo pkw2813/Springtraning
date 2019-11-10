@@ -1,6 +1,5 @@
 package com.kh.finalProject.student.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.student.model.service.StudentService1;
+import com.kh.finalProject.student.model.vo.Student;
 
 
 
@@ -31,9 +31,13 @@ public class ClassController {
 	@RequestMapping("/student/applyClass.hd")
 	public String selectAllClass(HttpSession session, Model m,HttpServletRequest req,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage)
 	{
+		Student loginMember=(Student)session.getAttribute("loginMember");
+		String stuId=loginMember.getStuNo();
 		int numPerPage=10;
+		List<Map> button=service.selectApplyClass(stuId);
 		List<Map> list=service.selectAllClass();
 		int totalData = service.countAllClass();
+		m.addAttribute("button",button);
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
 		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/applyClass.hd"));
@@ -65,20 +69,73 @@ public class ClassController {
 	@RequestMapping(value = "/student/profEval.hd", method = RequestMethod.POST)
 	public String profEval(HttpServletRequest req,Model m)
 	{
-		System.out.println(req.getParameter("profEvalForm"));
-		
+	
+			
 		  String[] profInfo=req.getParameter("profEvalForm").split(",");
 		  String subName=profInfo[0];
-		  String profName=profInfo[2];
-
+		  String profId=profInfo[1];
+		  String semester=profInfo[2];
+		  String[] sem1 =semester.split("-");
+		  int year=Integer.parseInt(sem1[0]);
+		  int sem=Integer.parseInt(sem1[1]);
+		  if(sem==2) {
+			  sem=sem-1;
+			  semester=year+"-"+sem;
+		  }else if(sem==1) {
+			  year=year-1;
+			  sem=sem+1;
+			  semester=year+"-"+sem;
+		  }
 		  
+		  System.out.println(subName);
+		  System.out.println(profId);
+		  System.out.println(semester);
+		  Map<String,Object> param=new HashMap();
+		  param.put("subName", subName);
+		  param.put("profId", profId);
+		  param.put("semester", semester);
+		  Map<String,Object> reprofInfo=service.selectProfInfo(param);
+		  double averPoint=service.averPoint(param);
+		  
+		  List<Map> list=service.selectProfEval(param);
+		  
+		  
+		  m.addAttribute("averPoint",averPoint);
+		  m.addAttribute("profInfo",reprofInfo);
+		  m.addAttribute("list",list);
+		  
+	
 		  
 		  
 		return "student/profEval";
 
 	}
+	
+	@RequestMapping(value = "/student/applyClass.hd", method = RequestMethod.POST)
+	
+	public String applyClass(HttpServletRequest req,Model m)
+	{
+		Map param=new HashMap();
+		String value=req.getParameter("value");
+		String[] value1=value.split(",");
+		String stuNo=value1[0];
+		String subId=value1[1];
+		String profId=value1[2];
+		String sem=value1[3];
+		
+		param.put("stuNo",stuNo);
+		param.put("subId",subId);
+		param.put("profId",profId);
+		param.put("sem",sem);
+	
+		int result=service.applyClass(param);
+		
+		
+		
+		return "student/applyClass";
+	
+	}
+
 }
-
-
 	
 
