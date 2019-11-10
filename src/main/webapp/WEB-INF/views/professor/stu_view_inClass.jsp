@@ -93,35 +93,35 @@
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">과목코드
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value='<c:if test="${list ne null }">${list.subCode }</c:if>' readonly>
+												aria-describedby="sizing-addon3" value='<c:if test="${info ne null }">${info.subCode }</c:if>' readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">개설년도
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="" readonly>
+												aria-describedby="sizing-addon3" value='<c:if test="${info ne null }">${info.subYear }</c:if>' readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">개설학기
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="" readonly>
+												aria-describedby="sizing-addon3" value='<c:if test="${info ne null }">${info.subSeme }</c:if>' readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">교수이름
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="" readonly>
+												aria-describedby="sizing-addon3" value='<c:if test="${info ne null }">${info.profName }</c:if>' readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
-											<span class="input-group-addon" id="sizing-addon3">핸드폰번호
+											<span class="input-group-addon" id="sizing-addon3">교수 연락처
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value=""
+												aria-describedby="sizing-addon3" value='<c:if test="${info ne null }">${info.phone }</c:if>'
 												readonly>
 										</div>
 									</th>
@@ -131,7 +131,7 @@
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">강의시간
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value=""
+												aria-describedby="sizing-addon3" value='<c:if test="${info ne null }">${info.subTime }</c:if>'
 												readonly>
 										</div>
 									</th>
@@ -139,28 +139,28 @@
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">강의장
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="" readonly>
+												aria-describedby="sizing-addon3" value='<c:if test="${info ne null }">${info.subRoom }</c:if>' readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">강의요일&nbsp;&nbsp;&nbsp;</span>
 											<input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="" readonly>
+												aria-describedby="sizing-addon3" value='<c:if test="${info ne null }">${info.subDate }</c:if>' readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">교재-이름&nbsp;&nbsp;&nbsp;</span>
 											<input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="" readonly>
+												aria-describedby="sizing-addon3" value='<c:if test="${info ne null }">${info.bookName }</c:if>' readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">총원
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon1" value="" readonly>
+												aria-describedby="sizing-addon1" value='<c:if test="${info ne null }">${info.capacity }</c:if>' readonly>
 										</div>
 									</th>
 								</tr>

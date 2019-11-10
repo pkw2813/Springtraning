@@ -135,7 +135,7 @@
 		        (SELECT COUNT(*)
 		        FROM (SELECT * 
 		        FROM HD_SUB_REQ_TB
-		        WHERE SUB_CODE ={#subCode})) AS CAPACITY
+		        WHERE SUB_CODE =#{subCode})) AS CAPACITY
 				FROM HD_CLASS_TB
 				WHERE SUB_CODE = #{subCode})
 			

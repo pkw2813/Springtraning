@@ -94,10 +94,11 @@ public class ProfessorController2 {
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("subCode", sic.getSubCode());
 		params.put("profId", p.getProfId());
-		
+		if(sic.getSubCode() != null && p.getProfId() != null) {
 		Select_ClassInfo sci = service.selectClassInfo(params);
 		
 		model.addAttribute("classInfo", sci);
+		}
 		//=======================================
 		model.addAttribute("stuList",stuList);
 		model.addAttribute("totalCount",totalData);
