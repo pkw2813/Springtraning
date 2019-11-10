@@ -1,8 +1,10 @@
 package com.kh.finalProject.professor.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.finalProject.professor.model.vo.InClassStudent;
+import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
@@ -26,4 +28,8 @@ public interface ProfessorService2 {
 	//수강생을 조건(sic)에 따라 조회 ============
 	List <InClassStudent> selectInClass(SelectInClass sic, int cPage, int numPerPage);
 	int countInClass(SelectInClass sic);
+	
+	InsertClass selectClassInfo(Map<String,String> map);
+	
+	
 }

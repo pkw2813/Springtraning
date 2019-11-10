@@ -1,6 +1,8 @@
 package com.kh.finalProject.professor.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService2;
 import com.kh.finalProject.professor.model.vo.InClassStudent;
+import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
@@ -84,15 +87,16 @@ public class ProfessorController2 {
 		//조건 검색에 따른 실 수강생 목록 조회 시작
 		if(sic != null && sic.getSubCode() != null && sic.getSubYear() != null) {
 		int totalData = service.countInClass(sic);
-		System.out.println(sic.getSubCode());
-		System.out.println(sic.getStuName());
-		System.out.println(sic.getStuNo());
-		System.out.println(sic.getSubYear());
-		System.out.println(sic.getSubName());
-		System.out.println(sic.getGrade());
 		
 		List<InClassStudent> stuList = service.selectInClass(sic, cPage, numPerPage);
-		//============
+		
+		//============강의정보 출력==================
+		Map<String,String> params = new HashMap<String,String>();
+		params.put("subCode", sic.getSubCode());
+		params.put("profId", p.getProfId());
+		
+		InsertClass ic = service.selectClassInfo(params); 
+		//=======================================
 		model.addAttribute("stuList",stuList);
 		model.addAttribute("totalCount",totalData);
 		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/lectureData"));

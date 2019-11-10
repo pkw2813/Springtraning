@@ -1,6 +1,7 @@
 package com.kh.finalProject.professor.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.professor.model.dao.ProfessorDao2;
 import com.kh.finalProject.professor.model.vo.InClassStudent;
+import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
@@ -63,6 +65,13 @@ public class ProfessorServiceImpl2 implements ProfessorService2{
 		int result = dao.countInClass(session, sic);
 		return result;
 	}
+
+	@Override
+	public InsertClass selectClassInfo(Map<String, String> map) {
+		InsertClass ic = dao.selectClassInfo(session, map);
+		return ic;
+	}
+	
 	
 	
 	

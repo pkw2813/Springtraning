@@ -90,35 +90,35 @@
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">과목코드
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="A3018" readonly>
+												aria-describedby="sizing-addon3" value="" readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">개설년도
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="2019" readonly>
+												aria-describedby="sizing-addon3" value="" readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">개설학기
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="2학기" readonly>
+												aria-describedby="sizing-addon3" value="" readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">교수이름
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="박성술" readonly>
+												aria-describedby="sizing-addon3" value="" readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">핸드폰번호
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="01020176846"
+												aria-describedby="sizing-addon3" value=""
 												readonly>
 										</div>
 									</th>
@@ -128,7 +128,7 @@
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">강의시간
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="09:00~11:50 3교시"
+												aria-describedby="sizing-addon3" value=""
 												readonly>
 										</div>
 									</th>
@@ -136,28 +136,28 @@
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">강의장
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="A-101" readonly>
+												aria-describedby="sizing-addon3" value="" readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
-											<span class="input-group-addon" id="sizing-addon3">교재-제목&nbsp;&nbsp;&nbsp;</span>
+											<span class="input-group-addon" id="sizing-addon3">강의요일&nbsp;&nbsp;&nbsp;</span>
 											<input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="자바기초" readonly>
+												aria-describedby="sizing-addon3" value="" readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
-											<span class="input-group-addon" id="sizing-addon3">교재-저자&nbsp;&nbsp;&nbsp;</span>
+											<span class="input-group-addon" id="sizing-addon3">교재-이름&nbsp;&nbsp;&nbsp;</span>
 											<input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="유병승" readonly>
+												aria-describedby="sizing-addon3" value="" readonly>
 										</div>
 									</th>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">총원
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon1" value="32" readonly>
+												aria-describedby="sizing-addon1" value="" readonly>
 										</div>
 									</th>
 								</tr>

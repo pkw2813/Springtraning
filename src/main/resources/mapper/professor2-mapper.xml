@@ -123,6 +123,11 @@
 		
 	</select>
 	
+	<select id="selectClassInfo" parameterType="map" resultType="insertClass">
+		
+	
+	
+	</select>
 
 
 
