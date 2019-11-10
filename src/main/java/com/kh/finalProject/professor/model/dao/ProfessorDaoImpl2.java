@@ -8,10 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalProject.professor.model.vo.InClassStudent;
-import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
+import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
 import com.kh.finalProject.professor.model.vo.Select_SubjectNameCode;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -52,7 +52,7 @@ public class ProfessorDaoImpl2 implements ProfessorDao2 {
 	}
 
 	@Override
-	public InsertClass selectClassInfo(SqlSessionTemplate session, Map<String, String> map) {
+	public Select_ClassInfo selectClassInfo(SqlSessionTemplate session, Map<String, String> map) {
 		return session.selectOne("prof2.selectClassInfo", map);
 	}
 	

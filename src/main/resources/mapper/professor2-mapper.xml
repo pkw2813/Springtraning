@@ -123,12 +123,38 @@
 		
 	</select>
 	
-	<select id="selectClassInfo" parameterType="map" resultType="insertClass">
-		
+	<select id="selectClassInfo" parameterType="map" resultMap="selectClassInfoResult">
+		SELECT * 
+		FROM (SELECT SUB_CODE , CLASS_YEAR AS SUB_YEAR, T_SEMESTER AS SUB_SEME, 
+		       (SELECT PROF_NAME FROM HD_PROFESSOR_TB WHERE PROF_ID = #{profId}) AS PROF_NAME ,
+		       (SELECT PHONE FROM HD_PROFESSOR_TB WHERE PROF_ID = #{profId}) AS PHONE ,
+		       (SELECT SUB_DATE FROM HD_SUBJECT_TB WHERE SUB_CODE=#{subCode}) AS SUB_DATE,
+		       (SELECT SUB_TIME FROM HD_SUBJECT_TB WHERE SUB_CODE=#{subCode}) AS SUB_TIME,
+		       (SELECT SUB_ROOM FROM HD_SUBJECT_TB WHERE SUB_CODE=#{subCode}) AS SUB_ROOM,
+		        BOOK_NAME , 
+		        (SELECT COUNT(*)
+		        FROM (SELECT * 
+		        FROM HD_SUB_REQ_TB
+		        WHERE SUB_CODE ={#subCode})) AS CAPACITY
+				FROM HD_CLASS_TB
+				WHERE SUB_CODE = #{subCode})
+			
 	
 	
 	</select>
-
+	
+	<resultMap id="selectClassInfoResult" type="selectClassInfo">
+		<result column="SUB_CODE" property="subCode" />
+		<result column="SUB_YEAR" property="subYear" />
+		<result column="SUB_SEME" property="subSeme" />
+		<result column="PROF_NAME" property="profName" />
+		<result column="PHONE" property="phone" />
+		<result column="SUB_DATE" property="subDate" />
+		<result column="SUB_TIME" property="subTime" />
+		<result column="SUB_ROOM" property="subRoom" />
+		<result column="BOOK_NAME" property="bookName" />
+		<result column="CAPACITY" property="capacity" />
+	</resultMap>
 
 
 

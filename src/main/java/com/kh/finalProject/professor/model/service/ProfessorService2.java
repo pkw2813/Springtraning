@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.finalProject.professor.model.vo.InClassStudent;
-import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
+import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
 import com.kh.finalProject.professor.model.vo.Select_SubjectNameCode;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -29,7 +29,7 @@ public interface ProfessorService2 {
 	List <InClassStudent> selectInClass(SelectInClass sic, int cPage, int numPerPage);
 	int countInClass(SelectInClass sic);
 	
-	InsertClass selectClassInfo(Map<String,String> map);
+	Select_ClassInfo selectClassInfo(Map<String,String> map);
 	
 	
 }

@@ -85,12 +85,15 @@
 						<table class="table table-bordered table-hover"
 							style="text-align: center;">
 							<thead class="thead-dark">
+							
+							<!-- 강의 정보 변수 생성 -->
+							<c:set value="${classInfo }" var="info"/>
 								<tr>
 									<th>
 										<div class="input-group input-group-sm">
 											<span class="input-group-addon" id="sizing-addon3">과목코드
 												&nbsp;&nbsp;&nbsp;</span> <input type="text" class="form-control"
-												aria-describedby="sizing-addon3" value="" readonly>
+												aria-describedby="sizing-addon3" value='<c:if test="${list ne null }">${list.subCode }</c:if>' readonly>
 										</div>
 									</th>
 									<th>

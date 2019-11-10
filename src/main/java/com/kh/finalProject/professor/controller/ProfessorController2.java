@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService2;
 import com.kh.finalProject.professor.model.vo.InClassStudent;
-import com.kh.finalProject.professor.model.vo.InsertClass;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
+import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
 import com.kh.finalProject.professor.model.vo.Select_SubjectNameCode;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -95,7 +95,9 @@ public class ProfessorController2 {
 		params.put("subCode", sic.getSubCode());
 		params.put("profId", p.getProfId());
 		
-		InsertClass ic = service.selectClassInfo(params); 
+		Select_ClassInfo sci = service.selectClassInfo(params);
+		
+		model.addAttribute("classInfo", sci);
 		//=======================================
 		model.addAttribute("stuList",stuList);
 		model.addAttribute("totalCount",totalData);
