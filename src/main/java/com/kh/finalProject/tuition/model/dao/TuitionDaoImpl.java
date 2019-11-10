@@ -27,6 +27,13 @@ public class TuitionDaoImpl implements TuitionDao {
 	public List<Tuition> tuitionList(SqlSessionTemplate session, String tuiYear) {
 		return session.selectList("tuition.tuitionList", tuiYear);
 	}
+
+	@Override
+	public int tuitionUpdate(SqlSessionTemplate session, Tuition t) {
+		return session.update("tuition.tuitionUpdate", t);
+	}
+	
+	
 	
 	
 	

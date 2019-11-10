@@ -116,7 +116,8 @@
               
               <div class="card" style="margin-top:50px">
                 <div class="card-body">
-                  <div class="table-responsive">
+                  <div class="table-responsive" style="overflow-x:hidden">
+                  <h4 class="card-title">등록금 조회</h4>
                   <br>
                   <div class="row">
                       <div class="col-md-5">
@@ -163,7 +164,7 @@
                           <th>학기</th>
                           <th>학부</th>
                           <th>학과</th>
-                          <th>등록금</th>
+                          <th style="width:200px">등록금</th>
                           <th>등록금 수정</th>
                         </tr>
                       </thead>
@@ -303,8 +304,10 @@
 		    		  success:function(result){
 		    			  let re=JSON.parse(result);
 		    			  var tuitionArr="";
+		    			  var tuiUpdateBtn=new Array();
 		    			  for(var i=0; i<re.length; i++){
-		    			 	 tuitionArr+="<tr><td>"+re[i]["TUI_YEAR"].substring(0,4)+"</td>";
+		    				  
+		    			 	 /* tuitionArr+="<tr><td>"+re[i]["TUI_YEAR"].substring(0,4)+"</td>";
 		    				 tuitionArr+="<td>"+re[i]["TUI_YEAR"].substr(6,2)+"학기</td>";
 		    				 tuitionArr+="<td>"+re[i]["COL_NAME"]+"</td>";
 		    				 tuitionArr+="<td>"+re[i]["DEPT_NAME"]+"</td>";
@@ -316,16 +319,43 @@
 		    				 tuitionArr+="location.href='${path}/tuitionUpdate.hd?tuiYear="+re[i]["TUI_YEAR"]+"&deptCode="+re[i]["DEPT_CODE"]+"&tuiPay="+$('#tuiPay1').val()+"'";
 		    				 tuitionArr+="}";
 		    				 tuitionArr+="<";
-		    				 tuitionArr+="/script>";
+		    				 tuitionArr+="/script>"; */
+		    				 tuitionArr+="<tr><td>"+re[i]["TUI_YEAR"].substring(0,4)+"</td>";
+		    			     tuitionArr+="<td>"+re[i]["TUI_YEAR"].substr(6,2)+"학기</td>";
+		    			     tuitionArr+="<td>"+re[i]["COL_NAME"]+"</td>";
+		    			     tuitionArr+="<td>"+re[i]["DEPT_NAME"]+"</td>";
+		    			     tuitionArr+="<td><input type='text' id='tuiPay"+i+"' class='form-control payUpdate' value='"+re[i]["TUI_PAY"]+"' id='tuiPay1' onkeyup='inputNumberFormat(this)'></td>";
+		    			     tuitionArr+="<td><input type='button' id='tuiUpdateBtn"+i+"' class='btn btn-inverse-info btn-fw' value='수정 완료'/></td>";
+		    			     tuitionArr+="</tr>";
+		    			     tuitionArr+="<input type='hidden' id='tuiYear"+i+"' value='"+re[i]["TUI_YEAR"]+"'>";
+		    			     tuitionArr+="<input type='hidden' id='deptCode"+i+"' value='"+re[i]["DEPT_CODE"]+"'>";
 		    			  }
 		    			  $("#tuiList").html(tuitionArr);
+
+
+		    		        for(var i=0; i<re.length; i++){
+		    		            tuiUpdateBtn[i]=document.getElementById("tuiUpdateBtn"+i); // 해당 요소 받아오기
+		    		            tuiUpdateBtn[i].addEventListener('click', function(event){
+		    		                var tuiUpdateBtnNo=this.id.substr(this.id.length-1);
+		    		                var tuiYear=$("#tuiYear"+tuiUpdateBtnNo).val();
+		    		                var deptCode=$("#deptCode"+tuiUpdateBtnNo).val();
+		    		                tuiPay=$("#tuiPay"+tuiUpdateBtnNo).val();
+		    		                location.href='${path}/tuitionUpdate.hd?tuiYear='+tuiYear+'&deptCode='+deptCode+'&tuiPay='+tuiPay;
+		    		            }); // 이벤트 등록
+
+		    		            $("#tuiPay"+i).keyup(function(e) {
+		    		                $("#tuiPay"+i).val($(this).val());
+		    		        });
 		    		  } 
+		    		 }
 		    	  }); 
 		       });
 
               </script>
 
 
+
+       
 
 
 

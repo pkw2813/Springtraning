@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.finalProject.tuition.model.dao.TuitionDao;
 import com.kh.finalProject.tuition.model.vo.Tuition;
@@ -25,8 +26,12 @@ public class TuitionServiceImpl implements TuitionService {
 	}
 
 	@Override
-	public int insertTuition(Tuition t) {
+	@Transactional(rollbackFor=Exception.class)
+	public int insertTuition(Tuition t) throws Exception{
 		int result=Dao.insertTuition(session,t);
+		if(result==0) {
+			throw new Exception();
+		}
 		return result;
 	}
 
@@ -35,6 +40,18 @@ public class TuitionServiceImpl implements TuitionService {
 		List<Tuition> list=Dao.tuitionList(session,tuiYear);
 		return list;
 	}
+
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public int tuitionUpdate(Tuition t) throws Exception{
+		int result=Dao.tuitionUpdate(session,t);
+		if(result==0) {
+			throw new Exception();
+		}
+		return result;
+	}
+	
+	
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.kh.finalProject.tuition.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,15 +46,21 @@ public class TuitionController {
 		if(tui!=null) {
 			if(!(tui.getTuiYear()==t.getTuiYear() && tui.getDeptCode()==t.getDeptCode())) {
 				msg="이미 등록되어 있습니다.";
-				System.out.println("시발 왜안돼");
 			}else {
-				int result=service.insertTuition(t);
-				msg="정상적으로 등록 되었습니다.";
-				System.out.println("시발");
+				try {
+					int result=service.insertTuition(t);					
+					msg="정상적으로 등록 되었습니다.";
+				}catch(Exception e) {
+					msg="등록중 에러가 발생했습니다.";
+				}
 			}
 		}else {
-			int result=service.insertTuition(t);
-			msg="정상적으로 등록 되었습니다.";
+			try {
+				int result=service.insertTuition(t);				
+				msg="정상적으로 등록 되었습니다.";
+			}catch(Exception e) {
+				msg="등록중 에러가 발생했습니다.";
+			}
 		}
 		
 		model.addAttribute("msg",msg);
@@ -67,7 +74,6 @@ public class TuitionController {
 	public String tuitionList(@RequestParam String tuiYear, Model model) {
 		List<Tuition> list=service.tuitionList(tuiYear);
 		ObjectMapper mapper=new ObjectMapper();
-		System.out.println(list);
 		String jsonStr="";
 		try {
 			jsonStr=mapper.writeValueAsString(list);
@@ -76,6 +82,31 @@ public class TuitionController {
 		}
 		
 		return jsonStr;
+	}
+	
+	@RequestMapping("/tuitionUpdate.hd")
+	public String tuitionUpdate(
+			@RequestParam String tuiYear,
+			@RequestParam String deptCode,
+			@RequestParam String tuiPay,
+			Model model
+			) {
+		Tuition t=new Tuition();
+		t.setTuiYear(tuiYear);
+		t.setDeptCode(deptCode);
+		t.setTuiPay(tuiPay);
+		String msg="";
+		String loc="/tuition.hd";
+		try {
+			int result = service.tuitionUpdate(t);			
+			msg="정상적으로 수정되었습니다.";
+		}catch(Exception e) {
+			msg="다시 수정해주세요.";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+
+		return "common/msg";
 	}
 
 }

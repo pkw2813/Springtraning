@@ -71,9 +71,7 @@ public class ReqController {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-	
-		 
-		return jsonStr;
+			return jsonStr;
 	}
 	
 	@RequestMapping("/reqOne.hd")

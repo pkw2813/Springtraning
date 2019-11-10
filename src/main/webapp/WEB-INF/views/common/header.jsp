@@ -395,6 +395,7 @@
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">리스트</a></li>
                 <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기자재</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/tuition.hd">등록금 등록</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/curriculum.hd">커리큘럼 등록</a></li>
                </ul>
             </div>
           </li>
