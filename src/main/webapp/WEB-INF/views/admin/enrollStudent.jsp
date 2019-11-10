@@ -6,6 +6,10 @@
 
 <jsp:include page = "/WEB-INF/views/common/header.jsp"/>
 
+
+
+		<div class="main-panel">
+   		<div class="content-wrapper">
 <div class="container-fluid">
 <div class="row">
 		<div class="col-6">

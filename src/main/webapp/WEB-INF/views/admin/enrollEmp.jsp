@@ -45,6 +45,10 @@
 				</div>
 			</div>
 			</div>
+			
+			
+		<div class="main-panel">
+   		<div class="content-wrapper">
 <!-- Main Content start -->	
 <div class="row">
 	<div class="col-12 grid-margin stretch-card">
