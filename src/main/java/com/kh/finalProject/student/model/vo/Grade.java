@@ -20,9 +20,10 @@ public class Grade {
 	private int assign2;
 	private int assign3;
 	private int assign4;
-	private int grade;
+	private String grade;
 	private String stuNo;
 	private String retake;
 	private int rcvCredits;
+	private String subType;
 	
 }

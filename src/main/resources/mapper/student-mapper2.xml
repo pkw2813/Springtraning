@@ -3,40 +3,38 @@
 <mapper namespace="student2">
 	
 	<!-- 서브퀴리를 통해 이수구분을 받아오는 HD_SUBJECT_TB에서 과목종류 SUB_TYPE, 이수학점 COMPLETE_PT 을 조회해와야한다. -->
-<!-- 	<select id="selectGradeList" resultMap="GradeMap">
-		SELECT * FROM HD_GRADE_TB WHERE STU_NO=#{stuNo};
-	</select> -->
+	<select id="selectGradeList" parameterType="string" resultMap="GradeResult">
+		SELECT A.*, B.SUB_TYPE FROM HD_GRADE_TB A JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B ON (A.SUB_CODE = B.SUB_CODE) WHERE STU_NO=#{stuNo} ORDER BY ACA_YEAR_SEM DESC, SUB_NAME ASC
+	</select>
+	<select id="selectGradeListSubType" parameterType="string" resultType="map">
+		select stu_no,aca_year_sem, sum(rcv_credits), sub_type 
+		from hd_grade_tb join hd_subject_tb using (sub_code) 
+		group by (stu_no, aca_year_sem, sub_type) having stu_no=#{stuNo}	
+	</select>
 	
-<!-- 	<select id="selectStudent" parameterType="string" resultMap="studentResult">
-  		SELECT * FROM HD_STUDENT_TB WHERE STU_NO=#{studentNo}
-  	</select>
-  	
-  	<update id="studentInfoUpdate" parameterType="student">
-  		UPDATE HD_STUDENT_TB SET STU_TEL=#{stuTel},STU_ADDR=#{stuAddr},STU_EMAIL=#{stuEmail},
-  		STU_IMG_ORINAME=#{stuImgOriname},STU_ACCOUNT=#{stuAccount} where STU_NO=#{stuNo}
-  	</update>
-  	
-  	
-  	<resultMap id="studentResult" type="student">
-		<result column="STU_NO" property="stuNo" />
-		<result column="STU_NAME" property="stuName" />
-		<result column="STU_PW" property="stuPw" />
-		<result column="STU_SSN" property="stuSsn" />
-		<result column="STU_TEL" property="stuTel" />	
-		<result column="STU_ADDR" property="stuAddr" />	
-		<result column="GENDER" property="gender" />	
-		<result column="DEPT_CODE" property="deptCode" />	
-		<result column="ENTER_DATE" property="enterDate" />	
-		<result column="STU_EMAIL" property="stuEmail" />
-		<result column="REG_STATUS" property="regStatus" />	
-		<result column="PROF_ID" property="profId" />	
-		<result column="STU_YEAR_SEM" property="stuYearSem" />
-		<result column="MAX_PSB_CR" property="maxPsbCr"/>
-		<result column="CON_SEMESTER" property="conSemester" />	
-		<result column="STU_IMG_ORINAME" property="stuImgOriname" />
-		<result column="STU_IMG_RENAME" property="stuImgRename" />
-		<result column="STU_ACCOUNT" property="stuAccount" />	
-	</resultMap> -->
+	
+	
+	<!-- resultMap에 개념은 vo객체와 DB에 있는 컬럼명이 맞지 않을경우 매칭이 안되므로 그 매칭을 해주기 위해 설정 해주는 것. -->
+	<resultMap type="grade" id="GradeResult">
+		<!-- typeHandler="" 은 뭐지? -->
+		<result column="ACA_YEAR_SEM" property="acaYearSem"/>
+		<result column="SUB_CODE" property="subCode"/>
+		<result column="SUB_NAME" property="subName"/>
+		<result column="PROF_ID" property="profId"/>
+		<result column="MTERM" property="mterm"/>
+		<result column="FTERM" property="fterm"/>
+		<result column="ASSIGN_1" property="assign1"/>
+		<result column="ASSIGN_2" property="assign2"/>
+		<result column="ASSIGN_3" property="assign3"/>
+		<result column="ASSIGN_4" property="assign4"/>
+		<result column="GRADE" property="grade"/>
+		<result column="STU_NO" property="stuNo"/>
+		<result column="RETAKE" property="retake"/>
+		<result column="RCV_CREDITS" property="rcvCredits"/>
+		<result column="SUB_TYPE" property="subType"/>
+	</resultMap>
+	
+
 
   
 </mapper>
