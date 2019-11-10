@@ -56,16 +56,18 @@ pre {
 			} else if($(this).val()=="sub_type"){
 				alert("이수구분별");
 			} else if($(this).val()=="sub_name"){
-				$(".select_name").addClass("desc");
+				$("#select").tablesorter({
+					sortList: [[4,1]]
+				});
 			}
-		})
+		});
 </script>
 					<div class="card-body">
 						<!-- 부트스트랩에서는 화면 폭이 좁을 때(768px 이하) 하단에 스크롤바가 나타나며 수평으로 스크롤해서 테이블을 볼 수 있게 했습니다. 
 						<table> 태그 외곽에 <div> 태그로 감싸서 .table-responsive 클래스를 추가하면 반응형 테이블로 사용할 수 있습니다. -->
 						<div class="table-responsive">
 							<pre class="pre-scrollable" style="max-height: 300px;">
-								<table class="table table-striped table-bordered table-hover table-condensed">
+								<table class="table table-striped table-bordered table-hover table-condensed tablesorter">
 									<thead class="thead-dark">
 										<tr class="my-header">
 											<th scope="col">순번</th>
@@ -87,7 +89,7 @@ pre {
 													<td><c:out value="${fn:substring(seme,0,4)}"/></td>
 													<td><c:out value="${fn:substring(seme,5,6)}"/></td>
 													<td><c:out value="${l.subCode}"/></td>
-													<td id="select_name"><c:out value="${l.subName}"/></td>
+													<td><c:out value="${l.subName}"/></td>
 													<td><c:out value="${l.subType}"/></td>
 													<td><c:out value="${l.rcvCredits}"/></td>
 													<td><c:out value="${l.grade}"/></td>
