@@ -16,5 +16,6 @@
 		<typeAlias type="com.kh.finalProject.professor.model.vo.Select_SubjectNameCode" alias="selectSubjectNameCode"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.InClassStudent" alias="inClassStudent"/>
 		<typeAlias type="com.kh.finalProject.student.model.vo.GraduationCon" alias="graduationCon"/>
+				<typeAlias type="com.kh.finalProject.schedule.model.vo.Schedule" alias="schedule"/>
 	</typeAliases>
 </configuration>
