@@ -83,8 +83,6 @@ public class ReqController {
 	
 	@RequestMapping("/answerUpdate.hd")
 	public String answerUpdate(Req req, @RequestParam int reqNo, Model model) {
-		System.out.println("123123"+reqNo);
-		System.out.println(req);
 		int answerUpdate=service.answerUpdate(reqNo);
 		String msg="";
 		if(answerUpdate > 0) {
