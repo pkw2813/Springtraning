@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService2;
 import com.kh.finalProject.professor.model.vo.InClassStudent;
@@ -33,7 +34,7 @@ public class ProfessorController2 {
 	@RequestMapping("prof/viewInMajor.hd")
 	public String viewInMajor(SelectInMajor sim,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, Model model,
-			HttpSession session) {
+			HttpSession session) throws JsonProcessingException {
 //		@RequestParam(required = false) ? 왜 
 		int numPerPage = 10;
 //		List<ProfessorBoard> list = service.boardView(cPage, numPerPage);
@@ -54,11 +55,11 @@ public class ProfessorController2 {
 		List<Student> list = service.selectInMajor(sim, cPage, numPerPage);
 
 		int totalData = service.countInDept(sim);
-
+		model.addAttribute("sim",sim);
 		model.addAttribute("list", list);
 		model.addAttribute("totalCount", totalData);
 		model.addAttribute("pageBar",
-				PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/viewInMajor.hd"));
+		PageFactory.getInMajorPageBar(totalData, cPage, numPerPage, "/finalProject/prof/viewInMajor.hd",sim));
 
 		return "professor/stu_view_inMajor";
 	}
@@ -102,10 +103,16 @@ public class ProfessorController2 {
 		//=======================================
 		model.addAttribute("stuList",stuList);
 		model.addAttribute("totalCount",totalData);
-		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/lectureData"));
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/viewInClass.hd"));
 		}
 	return"professor/stu_view_inClass";
 
+	}
+	
+	@RequestMapping()
+	public String getAjaxInClass() {
+		
+		return "";
 	}
 
 	// 출결조회

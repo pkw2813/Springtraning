@@ -22,7 +22,7 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-header">
-						<form action="" method="post">
+						<form action="${path }/prof/viewInClass.hd" method="post" id="inClassForm">
 							<table class="table table-bordered table-hover col-md-10"
 								style="text-align: center;">
 								<thead class="thead-dark">
@@ -54,6 +54,7 @@
 												</c:forEach>
 										</select></td>
 										<!-- 학년 -->
+								
 										<td><select name="grade">
 												<option value="" selected>학년검색</option>
 												<option value="1">1학년</option>
@@ -195,7 +196,8 @@
 									<th>기말고사</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="#stuListBody">
+							
 							<c:if test="${stuList ne null && not empty stuList}">
 							<c:forEach items="${stuList }" var="stuList">
 								<tr>
@@ -222,6 +224,7 @@
 								</tr>
 							</c:forEach>
 							</c:if>
+							
 							</tbody>
 						</table>
 
@@ -230,24 +233,10 @@
 						<c:if test="${pageBar ne null}">
 						${pageBar }
 						</c:if>
-						<!-- <ul class="pagination" style="justify-content: center;">
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul> -->
 					</div>
 				</div>
 			</div>
 		</div>
-
-
-
 
 		<!-- Main-content End -->
 
