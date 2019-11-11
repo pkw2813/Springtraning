@@ -43,7 +43,7 @@
                           <div class="col-sm-4">
                             <div class="form-check">
                               <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="membershipRadios" value="1">
+                                <input type="radio" class="form-check-input seme" name="membershipRadios" value="1">
                                 1학기
                               <i class="input-helper"></i></label>
                             </div>
@@ -51,8 +51,7 @@
                           <div class="col-sm-4">
                             <div class="form-check">
                               <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="membershipRadios" value="2">
-                               	
+                                <input type="radio" class="form-check-input seme" name="membershipRadios" value="2">
                                 2학기
                               <i class="input-helper"></i></label>
                             </div>
@@ -135,7 +134,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의 요일</label>
                           <div class="col-sm-9">
-                            <select class="form-control">
+                            <select class="form-control" id="subDay">
                             	<option value="월">월</option>
                             	<option value="화">화</option>
                             	<option value="수">수</option>
@@ -150,6 +149,7 @@
                           <label class="col-sm-3 col-form-label">강의관</label>
                           <div class="col-sm-9">
                             <select class="form-control" id="roomTitle">
+                            	<option id="roomTitlec">강의관 선택</option>
                             	<option value="A">A관</option>
                             	<option value="B">B관</option>
                             	<option value="C">C관</option>
@@ -161,9 +161,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의실</label>
                           <div class="col-sm-9">
-                            <select class="form-control">
-                            	<option value="A101">A101</option>
-                            	<option value="A102">A102</option>
+                            <select class="form-control" id="classRoom">
                             </select>
                           </div>
                         </div>
@@ -178,10 +176,14 @@
                           <label class="col-sm-3 col-form-label">강의 시작시간</label>
                           <div class="col-sm-9">
                             <select class="form-control">
-                            	<option value="전공필수">전공필수</option>
-                            	<option value="전공선택">전공선택</option>
-                            	<option value="교양필수">교양필수</option>
-                            	<option value="교양선택">교양선택</option>
+                            	<option value="09:00">09:00</option>
+                            	<option value="10:00">10:00</option>
+                            	<option value="11:00">11:00</option>
+                            	<option value="12:00">12:00</option>
+                            	<option value="13:00">13:00</option>
+                            	<option value="14:00">14:00</option>
+                            	<option value="15:00">15:00</option>
+                            	<option value="16:00">16:00</option>
                             </select>
                           </div>
                         </div>
@@ -190,16 +192,11 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의 종료시간</label>
                           <div class="col-sm-9">
-                            <select class="form-control">
-                            	<option value="2">2점</option>
-                            	<option value="3">3점</option>
-                            </select>
+                            <input type="text" class="form-control" readonly>
                           </div>
                         </div>
                       </div>
                     </div>
-                    
-                    
                   </form>
                 </div>
               </div>
@@ -231,8 +228,7 @@
      					colListHtml = "<option value='select' id='selColleage'>학부 선택</option>";
      					for(let i = 0; i < data.list.length; i++) {
      						let cols = data.list[i];
-     						console.log(cols['COL_CODE']);
-     						colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
+     						colListHtml += "<option value='"+cols['COL_CODE']+"' class='colList'>"+cols['COL_NAME']+"</option>";
      					}
      					
      					$('.selectColleage').html(colListHtml);
@@ -243,16 +239,17 @@
      			})
      		})
      	});
+		 $("#roomTitle").change(function(){
+			$("#roomTitlec").attr('disabled',true);
+		 });
        
         $(function(){
      	 	$('.selectColleage').change(function(){
-     	 		console.log($('.selectColleage').val());
      			$.ajax({
      				type : "post",
      				url: "${pageContext.request.contextPath}/selectDeptList.do",
      				data: {"result" : $('.selectColleage').val()},
      				success: function(data) {
-     					console.log(data);
      					let deptListHtml = "<option value='select' id='selectDepartment'>학과 선택</option>";
      					for(let i = 0; i < data.list.length; i++) {
      						let depts = data.list[i];
@@ -271,15 +268,45 @@
         
         $(function(){
         	$("#roomTitle").change(function(){
-        		$.ajxa({
+        		$.ajax({
         			url:"${path}/selectRoom.hd",
         			data:{"roomValue":$("#roomTitle").val()},
         			success:function(data){
-        				
+        				let rooms=JSON.parse(data);
+        				let roomTitle = "<option value='select' id='selectDepartment'>강의실 선택</option>";
+        				for(let i = 0; i < rooms.length; i++) {
+        				roomTitle += "<option value='"+rooms[i]['SUB_ROOM']+"' id='selectRoom'>"+rooms[i]['SUB_ROOM']+"</option>";
+        				}
+        			
+        				$('#classRoom').html(roomTitle);
+						$('#classRoom').change(function(){
+							$("#selectRoom").attr('disabled',true);
+						});
         			}
-        		});
-            	
-            });
+	            });
+	        });
+        });
+        
+        $(function(){
+        	$("#classRoom").change(function(){
+        		 var day=$("#subDay").val();
+        		 var room=$("#classRoom").val();
+        		 var semester=$('input[name="membershipRadios"]:checked').val();
+        		 var year=$("#year").val();
+        		 console.log(year);
+        		 console.log(semester);
+        		 console.log(day);
+        		 console.log(room);
+        		 $.ajax({
+        			 url:"${path}/selectTime.hd",
+        			 data:{"subYear":year,"subSemester":semester,"subDate":day,"subRoom":room},
+        			 success:function(data){
+        				 let re=JSON.parse(data);
+        				 console.log(data);
+        				 console.log(re);
+        			 }
+        		 });
+        	});
         });
         
 	</script>
