@@ -155,11 +155,6 @@ public class ClassController {
 		param.put("subId",subId);
 		param.put("profId",profId);
 		param.put("sem",sem);
-	
-		System.out.println(stuNo);
-		System.out.println(subId);
-		System.out.println(profId);
-		System.out.println(sem);
 		int result=service.cancelClass(param);
 		
 		
@@ -169,20 +164,72 @@ public class ClassController {
 	}
 
 	@RequestMapping("/student/myClassInfo.hd")
-	public String selectMyApplyClass(HttpSession session,Model m) {
-	Student loginMember=(Student)session.getAttribute("loginMember");
-	String stuId=loginMember.getStuNo();
+	public String selectMyApplyClass(HttpSession session,Model m,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
+		Student loginMember=(Student)session.getAttribute("loginMember");
+		String stuId=loginMember.getStuNo();
+		int numPerPage=10;
+		int count=0;
+		List<Map> list=service.myApplyClass(stuId);
+		int totalData = service.countMyApplyClass(stuId);
 	
-	
-	List<Map> list=service.selectMyApplyClass(stuId);
-
-	
-	m.addAttribute("list",list);
-	
-	
-	return "student/applyClass";
+		
+		m.addAttribute("list",list);
+		m.addAttribute("totalCount",totalData);
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/applyClass.hd"));
+		return "student/myApplyClass";
 	
 	}
+	
+	@RequestMapping(value = "/student/cancelMyClass.hd", method = RequestMethod.POST)
+	public String cancelMyClass(HttpServletRequest req,Model m)
+	{
+		Map param=new HashMap();
+		String value=req.getParameter("value");
+		String[] value1=value.split(",");
+		String stuNo=value1[0];
+		String subId=value1[1];
+		String profId=value1[2];
+		String sem=value1[3];
+		
+		param.put("stuNo",stuNo);
+		param.put("subId",subId);
+		param.put("profId",profId);
+		param.put("sem",sem);
+		int result=service.cancelClass(param);
+		return "student/myApplyClass";
+	
+	}
+	@RequestMapping(value = "/student/selectMyClass.hd", method = RequestMethod.POST)
+	public String selectMyClass(HttpSession session, Model m,HttpServletRequest req,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
+		Student loginMember=(Student)session.getAttribute("loginMember");
+		String stuId=loginMember.getStuNo();
+		
+		
+		int numPerPage=10;
+		Map<String,Object> param = new HashMap();
+		param.put("stuId",stuId);
+		param.put("chk_isu",req.getParameter("chk_isu"));
+		param.put("chk_school",req.getParameter("chk_school"));
+		param.put("chk_dept",req.getParameter("chk_dept"));
+		param.put("chk_year",req.getParameter("chk_year"));
+		param.put("chk_sem",req.getParameter("chk_sem"));
+		param.put("chk_subName",req.getParameter("chk_subName"));
+		List<Map> list=service.selectMyClass(param);
+		int totalData = service.countSelectMyClass(param);
+
+		m.addAttribute("list",list);
+		m.addAttribute("totalCount",totalData);
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/selectClass.hd"));
+		return "student/myApplyClass";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }
 	

@@ -96,7 +96,38 @@ public class StudentServiceImpl1 implements StudentService1 {
 		return dao.selectMyApplyClass(session,stuId);
 	}
 
+	@Override
+	public List<Map> myApplyClass(String stuId) {
+	
+		return dao.myApplyClass(session,stuId);
+		
+	}
+
+	@Override
+	public int countMyApplyClass(String stuId) {
+		// TODO Auto-generated method stub
+		return dao.countMyApplyClass(session,stuId);
+	}
+	
+	@Override
+	public int cancelMyClass(Map<String, Object> param) {
+		
+		return dao.cancelMyClass(session,param);
+	}
+	
+	@Override
+	public List<Map> selectMyClass(Map<String, Object> param) {
+		
+		return dao.selectMyClass(session,param);
+	}
 	
 	 
+	@Override
+	public int countSelectMyClass(Map<String, Object> param) {
+		
+		return dao.countSelectMyClass(session,param);
+	}
+	
+	
 
 }

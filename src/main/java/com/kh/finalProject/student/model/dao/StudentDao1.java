@@ -22,5 +22,9 @@ public interface StudentDao1 {
 	double averPoint(SqlSessionTemplate session,Map<String,Object>param);
 	int cancelClass(SqlSessionTemplate session,Map<String,Object> param);
 	List<Map> selectMyApplyClass(SqlSessionTemplate session,String stuId);
-	
+	List<Map> myApplyClass(SqlSessionTemplate session,String stuId);
+	int countMyApplyClass(SqlSessionTemplate session,String stuId);
+	int cancelMyClass(SqlSessionTemplate session,Map<String,Object> param);
+	List<Map> selectMyClass(SqlSessionTemplate session,Map<String,Object> param);
+	int countSelectMyClass(SqlSessionTemplate session,Map<String,Object>param);
 }

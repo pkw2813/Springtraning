@@ -21,4 +21,11 @@ public interface StudentService1 {
 	double averPoint(Map<String,Object>param);
 	int cancelClass(Map<String,Object>param);
 	List<Map> selectMyApplyClass(String stuId);
+	int cancelMyClass(Map<String,Object>param);
+	List<Map> myApplyClass(String stuId);
+	int countMyApplyClass(String stuId);
+	List<Map> selectMyClass(Map<String,Object>param);
+	int countSelectMyClass(Map<String,Object>param);
+	
+	
 }

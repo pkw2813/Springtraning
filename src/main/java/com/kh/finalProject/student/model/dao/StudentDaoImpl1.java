@@ -89,12 +89,38 @@ public class StudentDaoImpl1 implements StudentDao1 {
 		// TODO Auto-generated method stub
 		return session.selectList("student1.selectMyApplyClass");
 	}
-	
-	
-	
-	
 
+	@Override
+	public List<Map> myApplyClass(SqlSessionTemplate session,String stuId) {
+		
+		return session.selectList("student1.myApplyClass",stuId);
+		
+	}
 
+	@Override
+	public int countMyApplyClass(SqlSessionTemplate session,String stuId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("student1.countMyApplyClass",stuId);
+	}
+	
+	
+	@Override
+	public int cancelMyClass(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.delete("student1.cancelMyClass",param);
+	}
+	
+	@Override
+	public List<Map> selectMyClass(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectList("student1.selectMyClass",param);
+	}
+
+	@Override
+	public int countSelectMyClass(SqlSessionTemplate session,Map<String, Object> param) {
+		
+		return session.selectOne("student1.countSelectMyClass",param);
+	}
 	
 	
 	
