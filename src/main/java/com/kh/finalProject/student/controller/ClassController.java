@@ -34,10 +34,12 @@ public class ClassController {
 		Student loginMember=(Student)session.getAttribute("loginMember");
 		String stuId=loginMember.getStuNo();
 		int numPerPage=10;
-		List<Map> button=service.selectApplyClass(stuId);
-		List<Map> list=service.selectAllClass();
-		int totalData = service.countAllClass();
-		m.addAttribute("button",button);
+		int count=0;
+		List<Map> list=service.selectAllClass(stuId);
+		
+		
+		int totalData = service.countAllClass(stuId);
+	
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
 		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/applyClass.hd"));
@@ -48,8 +50,13 @@ public class ClassController {
 	
 	@RequestMapping(value = "/student/selectClass.hd", method = RequestMethod.POST)
 	public String selectClass(HttpSession session, Model m,HttpServletRequest req,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
+		Student loginMember=(Student)session.getAttribute("loginMember");
+		String stuId=loginMember.getStuNo();
+		
+		
 		int numPerPage=10;
 		Map<String,Object> param = new HashMap();
+		param.put("stuId",stuId);
 		param.put("chk_isu",req.getParameter("chk_isu"));
 		param.put("chk_school",req.getParameter("chk_school"));
 		param.put("chk_dept",req.getParameter("chk_dept"));
@@ -98,8 +105,6 @@ public class ClassController {
 		  double averPoint=service.averPoint(param);
 		  
 		  List<Map> list=service.selectProfEval(param);
-		  
-		  
 		  m.addAttribute("averPoint",averPoint);
 		  m.addAttribute("profInfo",reprofInfo);
 		  m.addAttribute("list",list);
@@ -133,9 +138,52 @@ public class ClassController {
 		
 		
 		return "student/applyClass";
+		
+	}
+	@RequestMapping(value = "/student/cancelClass.hd", method = RequestMethod.POST)
+	public String cancelClass(HttpServletRequest req,Model m)
+	{
+		Map param=new HashMap();
+		String value=req.getParameter("value");
+		String[] value1=value.split(",");
+		String stuNo=value1[0];
+		String subId=value1[1];
+		String profId=value1[2];
+		String sem=value1[3];
+		
+		param.put("stuNo",stuNo);
+		param.put("subId",subId);
+		param.put("profId",profId);
+		param.put("sem",sem);
+	
+		System.out.println(stuNo);
+		System.out.println(subId);
+		System.out.println(profId);
+		System.out.println(sem);
+		int result=service.cancelClass(param);
+		
+		
+		
+		return "student/applyClass";
 	
 	}
 
+	@RequestMapping("/student/myClassInfo.hd")
+	public String selectMyApplyClass(HttpSession session,Model m) {
+	Student loginMember=(Student)session.getAttribute("loginMember");
+	String stuId=loginMember.getStuNo();
+	
+	
+	List<Map> list=service.selectMyApplyClass(stuId);
+
+	
+	m.addAttribute("list",list);
+	
+	
+	return "student/applyClass";
+	
+	}
+	
 }
 	
 

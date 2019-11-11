@@ -48,12 +48,12 @@
 		font-size:16px;
 
 		}
-		button{
+		/* button>*{
 			height:28px;
-			font-size:14px;
+			font-size:20px;
 			font-weight:bold;
 			
-		}
+		} */
 	</style>
 	
 	
@@ -127,7 +127,7 @@
 				
 				</td>
 				<td >교과목명검색
-				<input type="text" name="chk_subName"></input>&nbsp&nbsp<button class="btn btn-primary btn-xs"type="submit">검색</button>
+				<input type="text" name="chk_subName"></input>&nbsp&nbsp<button style="font-size:12px;font-weight:bold;height:25px;" class="btn btn-primary btn-xs"type="submit">검색</button>
 				</td>
 				</tr>
 				</table>
@@ -162,7 +162,7 @@
 				
 				<tr id="classInfo">
 				<td><c:out value='${e["ROWNUM"] }'/></td>
-				<td><c:out value='${e["CLASS_YEAR"]}'/>-<c:out value='${e["T_SEMESTER"]}'/></td>
+				<td><c:out value='${e["SUB_YEAR"]}'/>-<c:out value='${e["SUB_SEMESTER"]}'/></td>
 				<td><c:out value='${e["T_DEPT"] }'/></td>
 				<td><c:out value='${e["SUB_NAME"] }'/></td>
 				<td><c:out value='${e["PROF_NAME"] }'/></td>
@@ -171,18 +171,26 @@
 				<td>매주: <c:out value='${e["SUB_DATE"] }'/> <c:out value='${e["SUB_TIME"] }'/></td>
 				<td><c:out value='${e["PRE_CAPA"] }'/>/<c:out value='${e["CAPACITY"] }'/></td>
 				<td><c:out value='${e["SUB_ROOM"] }'/></td>
+				
 				<c:if test='${e["OPEN_YN"] eq "Y"}'>
 				<td style="text-align:center">
-				
-				<button id='button-profEval' class="btn btn-primary btn-xs" onclick="profEval(this.id,this.value)" 
-				value='${e["SUB_NAME"]},${e["PROF_ID"]},${e["CLASS_YEAR"]}-${e["T_SEMESTER"]}'>보기
+				<button id='button-profEval' style="font-size:12px;font-weight:bold;height:25px;" class="btn btn-primary btn-xs" onclick="profEval(this.id,this.value)" 
+				value='${e["SUB_NAME"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>보기
 				</button>
 				</td>
 				
 				<td style="text-align:center">
-				<button id="button-applyClass${e[ROWNUM]}" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
-				value='${loginMember.stuNo },${e["SUB_CODE"]},${e["PROF_ID"]},${e["CLASS_YEAR"]}-${e["T_SEMESTER"]}'>신청</button>
 				
+				<c:if test='${e["CHECK_IN"] eq null or e["CHECK_IN"] ne loginMember.stuNo}'>
+				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
+				value='${loginMember.stuNo },${e["SUB_CODE"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>신청</button>
+				</c:if>
+				
+				<c:if test='${e["CHECK_IN"] eq loginMember.stuNo}'>
+				<button id="button-cancelClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="cancelClass(this.id,this.value)" class="btn btn-danger btn-xs"
+				value='${loginMember.stuNo},${e["SUB_CODE"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>취소</button>
+				</td>		
+				</c:if>
 				</c:if>
 				<c:if test='${e["OPEN_YN"] eq "N"}'>
 				<td></td>
@@ -190,7 +198,9 @@
 				</c:if>
 				</td>
 				</tr>
+				
 				</c:forEach>
+				
 				</table>
 				<br><br>
 				${pageBar}
@@ -289,25 +299,76 @@
 		}
 		
 		function applyClass(id,value){
+			if (confirm("신청하시겠습니까??") == true){    //확인
+				var data={value};
+				 $.post({
+					 
+					 
+					 
+			            url: "${path}/student/applyClass.hd",
+			            type: "post",
+			            data: data,
+			            success: function(data){
+			                	alert("신청처리 됐습니다")
+			                	$("#applyButton").html("")
+			                	location.href="${path}/student/applyClass.hd"; 
+			                		
+			                	
+			                	
+			                	
+			            },
+			            error: function(){
+			                alert("에러처리");
+			            }
+			        });
+				
+				
+			 }else{   //취소
+
+			     return false;
+
+			 }
 			
-			var data={value};
+			
+			
+			
+			 
+		   
+		  
+		}
+		  
+	
+	
+		
+ 	function cancelClass(id,value){
+			
+ 		if (confirm("취소하시겠습니까?") == true){    //확인
+ 			
+ 			var data={value};
 			 $.post({
-		            url: "${path}/student/applyClass.hd",
+		            url: "${path}/student/cancelClass.hd",
 		            type: "post",
 		            data: data,
 		            success: function(data){
-		                	alert("정상처리 됐습니다")
+		                	alert("정상취소 됐습니다");
+		                	location.href="${path}/student/applyClass.hd"; 
+		                	
 		            },
 		            error: function(){
 		                alert("에러처리");
 		            }
 		        });
-			 
-		   
-		  
-		}
+		 }else{   //취소
 
+		     return false;
+
+		 }
+ 		
+ 		
 			
+			 
+ 	}
+		
 	
 	
 	</script>

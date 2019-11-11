@@ -24,9 +24,9 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 
 	@Override
-	public List<Map> selectAllClass(SqlSessionTemplate session) {
+	public List<Map> selectAllClass(SqlSessionTemplate session,String stuId) {
 		// TODO Auto-generated method stub
-		return session.selectList("student1.selectAllClass");
+		return session.selectList("student1.selectAllClass",stuId);
 	}
 
 	@Override
@@ -36,15 +36,15 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 
 	@Override
-	public int countAllClass(SqlSessionTemplate session) {
+	public int countAllClass(SqlSessionTemplate session,String stuId) {
 		
-		return session.selectOne("student1.countAllClass");
+		return session.selectOne("student1.countAllClass",stuId);
 	}
 
 	@Override
 	public int countSelectClass(SqlSessionTemplate session,Map<String, Object> param) {
 		
-		return session.selectOne("student1.countSelectClass");
+		return session.selectOne("student1.countSelectClass",param);
 	}
 
 	@Override
@@ -76,6 +76,18 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	public double averPoint(SqlSessionTemplate session, Map<String, Object> param) {
 		
 		return session.selectOne("student1.averPoint",param);
+	}
+
+	@Override
+	public int cancelClass(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.delete("student1.cancelClass",param);
+	}
+
+	@Override
+	public List<Map> selectMyApplyClass(SqlSessionTemplate session, String stuId) {
+		// TODO Auto-generated method stub
+		return session.selectList("student1.selectMyApplyClass");
 	}
 	
 	

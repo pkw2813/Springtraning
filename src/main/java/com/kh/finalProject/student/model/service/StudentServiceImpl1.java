@@ -31,9 +31,9 @@ public class StudentServiceImpl1 implements StudentService1 {
 	}
 
 	@Override
-	public List<Map> selectAllClass() {
+	public List<Map> selectAllClass(String stuId) {
 		// TODO Auto-generated method stub
-		return dao.selectAllClass(session);
+		return dao.selectAllClass(session,stuId);
 	}
 
 	@Override
@@ -43,9 +43,9 @@ public class StudentServiceImpl1 implements StudentService1 {
 	}
 
 	@Override
-	public int countAllClass() {
+	public int countAllClass(String stuId) {
 		
-		return dao.countAllClass(session);
+		return dao.countAllClass(session,stuId);
 	}
 
 	@Override
@@ -82,6 +82,18 @@ public class StudentServiceImpl1 implements StudentService1 {
 	public double averPoint(Map<String, Object> param) {
 		// TODO Auto-generated method stub
 		return dao.averPoint(session,param);
+	}
+
+	@Override
+	public int cancelClass(Map<String, Object> param) {
+		
+		return dao.cancelClass(session,param);
+	}
+
+	@Override
+	public List<Map> selectMyApplyClass(String stuId) {
+		
+		return dao.selectMyApplyClass(session,stuId);
 	}
 
 	
