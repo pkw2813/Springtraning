@@ -81,8 +81,15 @@
 
 <script>
 	$("#updateBoard").click(function(){
-		location.href="${pageContext.request.contextPath}/profBoard/updateBoard?profBoardNo=${profBoard.profBoardNo}";
-	})
+			location.href="${pageContext.request.contextPath}/profBoard/updateBoard?profBoardNo=${profBoard.profBoardNo}";
+	});
+	$("#deleteBoard").click(function(){
+		if(confirm("삭제하시겠습니까?")==true){
+			location.href="${pageContext.request.contextPath}/profBoard/deleteBoard?profBoardNo=${profBoard.profBoardNo}";
+		}else{
+			return false;
+		}
+	});
 
 	/* 파일 다운로드 */
 	function fileDownload(oName, rName){

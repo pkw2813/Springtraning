@@ -27,10 +27,9 @@
 			<div class="card-body">
 				<div class="row gap1">
 					<div class="col-6">
-						<table class="scrolltable" style="text-align:center;overflow-y:scroll;height:270px;">
+						<table id="noGaekang" class="scrolltable" style="text-align:center;overflow-y:scroll;height:270px;">
 							<tr style="background-color:lightgray;">
 								<th style="text-align:center;">이수구분</th>
-								<th style="text-align:center;">개설학기</th>
 								<th style="text-align:center;">과목명</th>
 								<th style="text-align:center;">강의시간</th>
 								<th style="text-align:center;">학과코드</th>
@@ -39,47 +38,67 @@
 								<th style="text-align:center;">정원</th>
 								<th style="text-align:center;">개설여부</th>
 							</tr>
-							<%-- <c:forEach items="" var=""> --%>
-							<tr style="height:30px;">
-								<td>임시</td>
-								<td>임시</td>
-								<td><a href="#">임시</a></td>
-								<td>임시</td>
-								<td>임시</td>
-								<td>임시</td>
-								<td>임시</td>
-								<td>임시</td>
-								<td>임시</td>
-							</tr>
-							<%-- </c:forEach> --%>
+							<c:forEach items="${iClassView }" var="cv">
+							<c:if test="${loginMember.profId eq cv.PROF_ID }">
+								<c:set value="${cv.OPEN_YN }" var="yn"/> <!-- 개설여부가 N만 보이게하는 if문 -->
+								<c:if test="${yn eq 'N' }">
+									<tr style="height:20px;">
+										<td style="text-align:center;">${cv.SUB_TYPE }</td>
+										<input class="subCodeYn" type='hidden' value="${cv.SUB_CODE }" name='subCode'/>
+										<td style="text-align:center;font-size:5px;">
+											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
+											${cv.SUB_NAME }
+											</a>
+										</td>
+										<td style="text-align:center;">${cv.SUB_TIME }</td>
+										<td style="text-align:center;">${cv.DEPT_CODE }</td>
+										<td style="text-align:center;">${cv.T_GRADE }</td>
+										<td style="text-align:center;">${cv.SUB_SEMESTER }</td>
+										<td style="text-align:center;">${cv.CAPACITY }</td>
+										<td style="text-align:center;">
+											<select class="ynCheck" id="ynCheck" name="openYn">
+												<option value="Y">Y</option>
+												<option value="N" selected>N</option>
+											</select>
+										</td>
+									</tr>
+								</c:if>
+							</c:if>
+							</c:forEach>
 						</table>
 					</div>
 					<div class="col-6">
-						<table id="" class="scrolltable" style="text-align:center;overflow-y:scroll;height:270px;">
+						<table class="scrolltable" style="text-align:center;overflow-y:scroll;height:270px;">
 							<tr style="background-color:lightgray;">
 								<th style="text-align:center;">이수구분</th>
-								<th style="text-align:center;">개설학기</th>
 								<th style="text-align:center;">과목명</th>
 								<th style="text-align:center;">강의시간</th>
 								<th style="text-align:center;">학과코드</th>
 								<th style="text-align:center;">수강학년</th>
 								<th style="text-align:center;">수강학과</th>
-								<th style="text-align:center;">교수명</th>
 								<th style="text-align:center;">정원</th>
+								<th style="text-align:center;">개설여부</th>
 							</tr>
-							<%-- <c:forEach items="" var=""> --%>
-							<tr style="height:30px;">
-								<td>임시</td>
-								<td>임시</td>
-								<td><a href="#">임시</a></td>
-								<td>임시</td>
-								<td>임시</td>
-								<td>임시</td>
-								<td>임시</td>
-								<td>임시</td>
-								<td>임시</td>
-							</tr>
-							<%-- </c:forEach> --%>
+							<c:forEach items="${iClassView }" var="cv">
+								<c:set value="${cv.OPEN_YN }" var="yn"/> <!-- 개설여부가 N만 보이게하는 if문 -->
+								<c:if test="${yn eq 'Y' }">
+									<tr style="height:20px;">
+										<td style="text-align:center;">${cv.SUB_TYPE }</td>
+										<input class="subCodeYn" type='hidden' value="${cv.SUB_CODE }" name='subCode'/>
+										<td style="text-align:center;font-size:5px;">
+											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
+											${cv.SUB_NAME }
+											</a>
+										</td>
+										<td style="text-align:center;">${cv.SUB_TIME }</td>
+										<td style="text-align:center;">${cv.DEPT_CODE }</td>
+										<td style="text-align:center;">${cv.T_GRADE }</td>
+										<td style="text-align:center;">${cv.SUB_SEMESTER }</td>
+										<td style="text-align:center;">${cv.CAPACITY }</td>
+										<td style="text-align:center;">${cv.OPEN_YN }</td>
+									</tr>
+								</c:if>
+							</c:forEach>
 						</table>
 					</div>
 				</div>
@@ -103,13 +122,13 @@
 							<table class="">
 								<tr>
 									<th>개설학기</th>
-									<td><input name="classYear" id="fn_year" type='number' min="2019" max="2050" style="width:100px;"  value='<fmt:formatDate value="<%=new java.util.Date() %>" pattern="yyyy"/>' /> 년도 </td>
-									<td><input type='text' id="tSemester" name="tSemester" style="width:15px;text-align:center;" readonly/> 학기</td>
+									<td><input name="subYear" id="subYear" type='number' min="2019" max="2050" style="width:100px;" readonly /> 년도 </td>
+									<td><input type='text' id="subSemester" name="subSemester" style="width:15px;text-align:center;" readonly/> 학기</td>
 								</tr>
 								<tr>
 									<th>교수명</th>
 									<input type='hidden' name="profId" value="${loginMember.profId }"/>
-									<td><input name="profName" type='text' value="${profName }" readonly/></td>
+									<td><input name="profName" type='text' value="${loginMember.profName }" readonly/></td>
 								</tr>
 								<tr>
 									<th>연락처</th>
@@ -128,7 +147,7 @@
 								</tr>
 								<tr>
 									<th>수강학년</th>
-									<td><input type='text' id="tGrade" name="tGrade" readonly/></td>
+									<td><input type='text' id="tGrade" name="tGrade" style="width:15px;text-align:center;" readonly/> 학년</td>
 								</tr>
 								<tr>
 									<th>수강학과</th>
@@ -180,20 +199,20 @@
 								</tr>
 								<tr>
 									<th>교재 사용</th>
-									<td><select name="useBook" class="selectBox">
-										<option value="사용">사용</option>
-										<option value="미사용" selected="selected">미사용</option>
+									<td><select id="noBook" name="useBook" class="selectBox">
+										<option value="Y" selected="selected">사용</option>
+										<option value="N">미사용</option>
 									</select></td>
 								</tr>
 								<tr>
 									<th>교재 제목 입력</th>
-									<td><input name="bookName" type='text'/></td>
+									<td><input id="noBookName" name="bookName" type='text'/></td>
 								</tr>
 								<tr>
 									<th>평가 기준</th>
 									<td><select name="evaStan" class="selectBox">
-										<option value="상대" selected>상대</option>
-										<option value="절대">절대</option>
+										<option value="상대평가" selected>상대</option>
+										<option value="절대평가">절대</option>
 									</select></td>
 								</tr>
 								<tr>
@@ -213,8 +232,8 @@
 								<tr>
 									<th>개설여부</th>
 									<td><select name="openYn" class="selectBox">
-										<option value="Y" selected>Y</option>
-										<option value="N">N</option>
+										<option value="Y" disabled>Y</option>
+										<option value="N" selected>N</option>
 									</select></td>
 								</tr>
 								<tr>
@@ -257,7 +276,53 @@
 
 
 <script>
+//yn check
+/* $(function(){
+	$(".openYnCheck").change(function(){
+		console.log($(this).val());
+		if($(this).val()=='Y'){
+			if(confirm("등록하시겠습니까?")==true){
+				$(this).val('Y');
+				var subCode = $(".subCode").val();
+				console.log(subCode);
+				
+				
+			}else{
+				$(this).val('N');
+				return false;
+			}
+		}
+	});
+}); */
+$(function(){
+	$(".ynCheck").change(function(){
+		var code = $(this).parent().parent().find('.subCodeYn').val();
+		console.log(code);
+		if($(this).val()=='Y'){
+			if(confirm("등록하시겠습니까?")==true){
+				console.log($(this).val());
+				$(this).val('Y');
+				
+				location.href="${pageContext.request.contextPath}/professor/subjectYn?subCode="+code;
+				
+			}else{
+				$(this).val('N');
+				return false;
+			}
+		}
+	});
+});
 
+//교재 사용안함
+$(function(){
+	$("#noBook").change(function(){
+		console.log($("#noBook").val());
+		if($("#noBook").val()=="N"){
+			$("#noBookName").attr("readonly",true).css("color","red").val("교재 사용 안함");
+		}
+	})
+});
+//과목코드 팝업창
 $(function(){
 	$("#fn_subjectCode").click(function(){
 		var url="${pageContext.request.contextPath }/professor/subjectCodeView?profId=${loginMember.profId}";
@@ -272,17 +337,17 @@ function selectSubject(subCode){
 		data:{"subCode":subCode},
 		success:function(data){
 			console.log("성공");
+			console.log(subCode);
 			console.log(data);
 			//var subject = new Array();
 			var subject = JSON.parse(data);
-			console.log(subject.DEPT_CODE);
-			console.log(subject.SUB_CODE);
+			$("#subYear").val(subject.SUB_YEAR);
 			$("#deptCode").val(subject.DEPT_CODE);
 			$("#fn_subjectCode").val(subject.SUB_CODE);
 			$("#tDept").val(subject.T_DEPT);
 			$("#tGrade").val(subject.T_GRADE);
 			$("#completePt").val(subject.COMPLETE_PT);
-			$("#tSemester").val(subject.T_SEMESTER);
+			$("#subSemester").val(subject.SUB_SEMESTER);
 			$("#subType").val(subject.SUB_TYPE);
 			$("#subName").val(subject.SUB_NAME);
 			$("#tSubject").val(subject.T_SUBJECT);
@@ -304,7 +369,7 @@ $(function(){
 });
 
 $(function(){
-	$("#fn_year").on('blur', function(){
+	$("#subYear").on('blur', function(){
 		if($(this).val()<'2019'){
 			alert("이전 년도는 불가능합니다.");
 			$(this).val('');
@@ -326,6 +391,8 @@ $(function(){
 						data.append(name,value);
 					}
 			});
+			console.log(data);
+
 			
 		$.ajax({
 			url:"${path}/professor/insertSubjectEnd",
@@ -335,11 +402,20 @@ $(function(){
 			contentType:false,
 			success:function(data){
 				var d=JSON.parse(data);
-				console.log(d);
-				var tr= $("<tr>");
-				var data="<td>"+d[0]["subCode"])"</td>";
-				tr.append(data);
-				
+				console.log(d[1]);
+					var tr= $("<tr>");
+					var td="<td>"+d[0]["SUB_TYPE"]+"</td>";
+					td+="<td style='text-align:center;font-size:5px;'>"+"<a href='javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode='+d[0]['SUB_CODE'],'개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))'>"+d[0]["SUB_NAME"]+"</a>"+"</td>";
+					td+="<td>"+d[0]["SUB_TIME"]+"</td>";
+					td+="<td>"+d[0]["DEPT_CODE"]+"</td>";
+					td+="<td>"+d[0]["T_GRADE"]+"</td>";
+					//td+="<td>"+d[0]["T_DEPT"]+"</td>";
+					td+="<td>"+d[0]["SUB_SEMESTER"]+"</td>";
+					td+="<td>"+d[0]["CAPACITY"]+"</td>";
+					td+="<td>"+"<select><option value='N'>"+d[0]["OPEN_YN"]+"</option><option value='Y'>"+d[0]["OPEN_YN"]+"</option></select>"+"</td>";
+					tr.append(td);
+					console.log(tr);
+					$("#noGaekang").children().last().after(tr);
 			}
 		});
 		}else{
@@ -362,7 +438,7 @@ $(function(){
 		font-size:10px;
 	}
 	div{
-		/* border:0.5px solid coral; */
+/* 		border:0.5px solid coral; */
 		font-size:10px;
 	}
 	.gap1{

@@ -15,9 +15,15 @@ public interface ProfessorService1 {
 	//페이징 토탈데이타
 	int selectBoardCount();
 	String selectProfName();
-	//강의개설
+	//강의뷰
+	List<InsertClass> insertSubject();
 //	Map<String,String> insertSubjectEnd(MultipartFile upfile,Map<String, String>map) throws RuntimeException;
+	//강의개설
 	List<InsertClass> insertSubjectEnd(Map<String, String>map) throws RuntimeException;
+	//강의 상세조회
+	Map<String,String> selectSubjectView(String subCode);
+	//강의개설 YN
+	int subjectYn(String subCode) throws RuntimeException;
 	//교수뷰
 	Professor professorView();
 	//교수 정보수정
@@ -30,6 +36,8 @@ public interface ProfessorService1 {
 	int insertBoardEnd(ProfessorBoard pb, List<ProfBoardAttachment> list) throws RuntimeException;
 	//게시판 수정
 	int updateBoardEnd(ProfessorBoard pb, List<ProfBoardAttachment> list) throws RuntimeException;
+	//게시판 삭제
+	int deleteBoard(ProfessorBoard pb, ProfBoardAttachment pba) throws RuntimeException;
 	//게시판select
 	ProfessorBoard selectBoardView(int profBoardNo);
 	List<ProfBoardAttachment> selectProfAttachment(int profBoardNo);

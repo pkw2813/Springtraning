@@ -26,7 +26,16 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	public int selectBoardCount(SqlSessionTemplate session) {
 		return session.selectOne("professor1.selectBoardCount");
 	}
+	//강의 개설뷰
+	@Override
+	public List<InsertClass> insertSubject(SqlSessionTemplate session){
+		return session.selectList("professor1.insertSubject");
+	}
 	//강의 개설
+	@Override
+	public int selectSubCode(SqlSessionTemplate session, Map<String,String> map) {
+		return session.selectOne("professor1.selectSubCode",map);
+	}
 	@Override
 	public int insertSubjectEnd(SqlSessionTemplate session, Map<String, String> map) {
 		return session.insert("professor1.insertSubjectEnd",map);
@@ -35,12 +44,20 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	public List<InsertClass> subjectView(SqlSessionTemplate session, Map<String,String> map){
 		return session.selectList("professor1.subjectView",map);
 	}
+	//강의 상세조회
+	public Map<String,String> selectSubjectView(SqlSessionTemplate session, String subCode){
+		return session.selectOne("professor1.selectSubjectView",subCode);
+	}
 
 //	@Override
 //	public int insertClassEnd(SqlSessionTemplate session, MultipartFile upfile, Map<String, String> map) {
 //		return session.insert("professor1.insertClassEnd", map);
 //	}
-	
+	//강의 개설 YN
+	@Override
+	public int subjectYn(SqlSessionTemplate session, String subCode) {
+		return session.update("professor1.subjectYn", subCode);
+	}
 	//교수뷰
 	@Override
 	public Professor professorView(SqlSessionTemplate session) {
@@ -85,6 +102,15 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	public int updateAttachment(SqlSessionTemplate session, ProfBoardAttachment pba) {
 		return session.update("professor1.updateAttachment",pba);
 	}
+	//게시판 삭제
+	@Override
+	public int deleteBoard(SqlSessionTemplate session, ProfessorBoard pb) {
+		return session.delete("professor1.deleteBoard", pb);
+	}
+	@Override
+	public int deleteAttachment(SqlSessionTemplate session, ProfBoardAttachment pba) {
+		return session.delete("professor1.deleteAttachment", pba);
+	}
 	//게시판 상세
 	@Override
 	public ProfessorBoard selectBoardView(SqlSessionTemplate session, int profBoardNo) {
@@ -102,5 +128,10 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	@Override
 	public Map<String,String> selectSubject(SqlSessionTemplate session, String subCode) {
 		return session.selectOne("professor1.selectSubject",subCode);
+	}
+//	과목코드 눌렀을때 보이는 뷰
+	@Override
+	public int selectSubjectCode(SqlSessionTemplate session, String profId) {
+		return session.selectOne("professor1.selectSubjectCode",profId);
 	}
 }

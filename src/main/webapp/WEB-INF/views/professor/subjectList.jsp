@@ -39,33 +39,35 @@
 <div class="row gap1"></div>
 	<table class="table">
 		<tr>
-			<th>과목코드</th>
-			<th>교과목명</th>
-			<th>강의목표</th>
-			<th>강의대상 학과</th>
+			<th>개설년도</th>
 			<th>강의대상 학년</th>
-			<th>이수학점</th>
 			<th>학기구분</th>
+			<th>교과목명</th>
+			<th>이수학점</th>
+			<th>과목코드</th>
+			<th>강의대상 학과</th>
+			<th>강의목표</th>
 			<th>이수구분</th>
 			<th>학과번호</th>
 			<th>강의실</th>
-			<th>강의시간</th>
 			<th>강의요일</th>
+			<th>강의시간</th>
 		</tr>
 		<c:forEach items="${list }" var="subject">
 			<tr>
-				<td>${subject.SUB_CODE }</td>
-				<td><input style="color:blue;" type='button' class="btn btn-default selectSubject" value="${subject.SUB_NAME }"/></td>
-				<td>${subject.T_SUBJECT }</td>
-				<td>${subject.T_DEPT }</td>
+				<td>${subject.SUB_YEAR }</td>
 				<td>${subject.T_GRADE }학년</td>
+				<td>${subject.SUB_SEMESTER }학기</td>
+				<td><input style="color:blue;" type='button' class="btn btn-default selectSubject" value="${subject.SUB_NAME }"/></td>
 				<td>${subject.COMPLETE_PT }점</td>
-				<td>${subject.T_SEMESTER }학기</td>
+				<td>${subject.SUB_CODE }</td>
+				<td>${subject.T_DEPT }</td>
+				<td>${subject.T_SUBJECT }</td>
 				<td>${subject.SUB_TYPE }</td>
 				<td>${subject.DEPT_CODE }</td>
 				<td>${subject.SUB_ROOM }</td>
-				<td>${subject.SUB_TIME }</td>
 				<td>${subject.SUB_DATE }</td>
+				<td>${subject.SUB_TIME }</td>
 			</tr>
 		</c:forEach>
 
@@ -77,7 +79,7 @@
 <script>
 $(function(){
 	$(".selectSubject").click(function(){
-		var subCode = $(this).parent().prev().html();
+		var subCode = $(this).parent().next().next().html();
 		console.log(subCode);
 		window.opener.selectSubject(subCode);
 		self.close();

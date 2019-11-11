@@ -1,5 +1,7 @@
 package com.kh.finalProject.professor.model.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,21 +39,60 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		int totalData = dao.selectBoardCount(session);
 		return totalData;
 	}
+	//강의 개설뷰
+	@Override
+	public List<InsertClass> insertSubject(){
+		return dao.insertSubject(session);
+	}
 	//강의 개설
 	@Override
 	@Transactional
 	public List<InsertClass> insertSubjectEnd(Map<String, String> map) throws RuntimeException {
 		int result = 0;
 		
-		result = dao.insertSubjectEnd(session, map); // insertClass
+		result = dao.selectSubCode(session,map);
 		if(result==0) {
-				throw new RuntimeException();
+			result = dao.insertSubjectEnd(session, map); // insertClass
+		}else {
+			throw new RuntimeException();
 		}
-		List<InsertClass> list = dao.subjectView(session,map); 
+		if(result==0) {
+			throw new RuntimeException();
+		}
+		List<InsertClass> list = dao.subjectView(session,map);
 		
 		return list;
+		
+//		int result = 0;
+//		
+//		result = dao.insertSubjectEnd(session, map); // insertClass
+//		if(result==0) {
+//			throw new RuntimeException();
+//		}
+//		List<InsertClass> list = dao.subjectView(session,map); 
+//		
+//		return list;
 	}
-
+	//강의 상세조회
+	@Override
+	public Map<String,String> selectSubjectView(String subCode){
+		Map<String,String> map = dao.selectSubjectView(session, subCode);
+		return map;
+	}
+	//강의 개설 YN
+	@Override
+	@Transactional
+	public int subjectYn(String subCode) throws RuntimeException {
+		int result = 0;
+		
+		result = dao.subjectYn(session, subCode);
+		
+		if(result==0) {
+			throw new RuntimeException();
+		}
+		
+		return result;
+	}
 	//교수뷰
 	@Override
 	public Professor professorView() {
@@ -95,10 +136,9 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		for(ProfBoardAttachment pba : list) {
 			pba.setProfBoardNo(pb.getProfBoardNo());
 			result = dao.insertBoardAttachment(session, pba);
-			
-		}
-		if(result==0) {
-			throw new RuntimeException();
+			if(result==0) {
+				throw new RuntimeException();
+			}
 		}
 		
 		return result;
@@ -122,6 +162,24 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		return result;
 		
 	}
+	//게시판 삭제
+	@Override
+	@Transactional
+	public int deleteBoard(ProfessorBoard pb, ProfBoardAttachment pba) throws RuntimeException {
+		int result = 0;
+		
+		result = dao.deleteAttachment(session, pba);
+		
+		
+		pb.setProfBoardNo(pba.getProfBoardNo());
+		result = dao.deleteBoard(session, pb);
+		
+		if(result == 0) {
+			throw new RuntimeException();
+		}
+		
+		return result;
+	}
 //	게시판select
 	@Override
 	public ProfessorBoard selectBoardView(int profBoardNo) {
@@ -131,18 +189,26 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	public List<ProfBoardAttachment> selectProfAttachment(int profBoardNo) {
 		return dao.selectProfAttachment(session, profBoardNo);
 	}
-//	subject
+//	과목코드 눌렀을때 보이는 뷰
 	@Override
 	public List<Subject> subjectCodeView(String profId){
+		List<Subject> list = new ArrayList<Subject>();
 		
-		List<Subject> list = dao.subjectCodeView(session,profId);
+		int result = dao.selectSubjectCode(session,profId);
 		
+		if(result==0) {
+			list = dao.subjectCodeView(session,profId);
+		}else {
+			
+		}
 		return list;
 	}
-	//코드불러오기
+	//과목 코드불러오기
 	@Override
 	public Map<String,String> selectSubject(String subCode) {
-		Map<String,String> map = dao.selectSubject(session, subCode);
+		
+		 Map<String,String> map = dao.selectSubject(session, subCode);
+		
 		return map;
 	}
 }

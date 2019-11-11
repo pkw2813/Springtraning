@@ -17,13 +17,19 @@ public interface ProfessorDao1 {
 	String selectProfName(SqlSessionTemplate session);
 	//페이징 토탈데이타
 	int selectBoardCount(SqlSessionTemplate session);
+	//강의 개설뷰
+	List<InsertClass> insertSubject(SqlSessionTemplate session);
 	//강의 개설
+	int selectSubCode(SqlSessionTemplate session, Map<String,String> map);
 	int insertSubjectEnd(SqlSessionTemplate session, Map<String, String> map);
 	List<InsertClass> subjectView(SqlSessionTemplate session,Map<String,String> map);
+	//강의 상세조회
+	Map<String,String> selectSubjectView(SqlSessionTemplate session, String subCode);
 //	int insertClassEnd(SqlSessionTemplate session, MultipartFile upfile, Map<String, String> map);
 //	
 //	Map<String,String> selectSubjectView(SqlSessionTemplate session, int subcode);
-	
+	//강의 개설 YN
+	int subjectYn(SqlSessionTemplate session, String subCode);
 	//교수뷰
 	Professor professorView(SqlSessionTemplate session);
 	//교수 정보수정
@@ -38,10 +44,15 @@ public interface ProfessorDao1 {
 	//게시판 수정
 	int updateBoardEnd(SqlSessionTemplate session, ProfessorBoard pb);
 	int updateAttachment(SqlSessionTemplate session, ProfBoardAttachment pba);
+	//게시판 삭제
+	int deleteBoard(SqlSessionTemplate session, ProfessorBoard pb);
+	int deleteAttachment(SqlSessionTemplate session, ProfBoardAttachment pba);
 	//게시판 상세
 	ProfessorBoard selectBoardView(SqlSessionTemplate session, int profBoardNo);
 	List<ProfBoardAttachment> selectProfAttachment(SqlSessionTemplate session, int profBoardNo);
 //	subject
 	List<Subject> subjectCodeView(SqlSessionTemplate session,String profId);
 	Map<String,String> selectSubject(SqlSessionTemplate session, String subCode);
+//	과목코드 눌렀을때 보이는 뷰
+	int selectSubjectCode(SqlSessionTemplate session, String profId);
 }

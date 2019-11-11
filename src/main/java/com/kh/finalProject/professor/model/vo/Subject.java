@@ -14,7 +14,7 @@ public class Subject {
 	private String tDept;
 	private int tGrade;
 	private int completePt;
-	private int tSemester;
+	private int subSemester;
 	private String subType;
 	private String deptCode;
 	private String subDate;

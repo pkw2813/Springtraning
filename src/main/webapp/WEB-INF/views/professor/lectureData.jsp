@@ -38,6 +38,7 @@
 								<th>조회수</th>
 							</tr>
 							<c:forEach items="${board }" var="board">
+							<c:if test="${board!=null }">
 							<tr>
 								<td style="width:80px;">${board.PROF_BOARD_NO}</td>
 								<td style="width:100px;">[${board.PROF_BOARD_TYPE }]</td>
@@ -52,6 +53,7 @@
 								<td style="width:50px;"><fmt:formatDate value="${board.PROF_BOARD_DATE }" pattern="yyyy-MM-dd"/></td>
 								<td style="width:40px;">임시</td>
 							</tr>
+							</c:if>
 							</c:forEach>
 						</table>
 					<div style="height:25px;"></div>

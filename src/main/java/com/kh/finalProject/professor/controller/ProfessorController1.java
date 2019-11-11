@@ -41,14 +41,9 @@ public class ProfessorController1 {
 	private Logger logger = LoggerFactory.getLogger(ProfessorController1.class);
 	@Autowired
 	private ProfessorService1 service;
-	//강의조회
-	@RequestMapping("/professor/subjectView")
-	public String subjectView() {
-		
-		
-		
-		return "professor/subjectView";
-	}
+	
+	
+	
 	//과목선택
 	@RequestMapping(value="/professor/selectSubject", produces = "application/text; charset=utf8")
 	@ResponseBody
@@ -70,14 +65,19 @@ public class ProfessorController1 {
 		
 		return jsonStr; // <- 받아온 객체가 넘어간다
 	}
-	//강의개설
+	//강의개설 뷰
 	@RequestMapping("/professor/insertSubject")
-	public String insertSubject(Model model) {
+	public ModelAndView insertSubject(Model model) {
 		
-		String profName = service.selectProfName();
-		model.addAttribute("profName",profName);
+		ModelAndView mv  = new ModelAndView();
 		
-		return "professor/insertSubject";
+		List<InsertClass> list = service.insertSubject();
+		
+		mv.addObject("iClassView",list);
+		
+		mv.setViewName("professor/insertSubject");
+		
+		return mv;
 	}
 //	강의개설 END
 	@RequestMapping("/professor/insertSubjectEnd")
@@ -94,7 +94,7 @@ public class ProfessorController1 {
 			dir.mkdirs();
 		}
 		
-		if(!upfile.isEmpty()) {
+		if(upfile != null && !upfile.isEmpty()) {
 			String oriFileName = upfile.getOriginalFilename();
 			String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
 			
@@ -111,9 +111,10 @@ public class ProfessorController1 {
 			map.put("upFile", reName);
 			map.put("oriFile",oriFileName);
 			
+		}else {
+			map.put("upFile","파일없음");
+			map.put("oriFile","파일없음");
 		}
-		
-		logger.info("파일이름 : "+upfile.getOriginalFilename());
 		
 		logger.info("맵 : "+map);
 		
@@ -138,6 +139,43 @@ public class ProfessorController1 {
 		
 		
 		return jsonStr;
+	}
+	//강의 상세 조회
+	@RequestMapping("/professor/subjectView")
+	public String subjectView(Model model, String subCode) {
+		
+		Map<String,String> map = service.selectSubjectView(subCode);
+		
+		logger.info("강의상세조회map : "+map);
+		
+		model.addAttribute("selectSubjectView",map);
+		
+		return "professor/subjectView";
+	}
+	//강의 개설 YN
+	@RequestMapping("/professor/subjectYn")
+	public ModelAndView subjectYn(String subCode) {
+		String msg = "";
+		String loc = "";
+		ModelAndView mv = new ModelAndView();
+		logger.info("서브코드는? "+subCode);
+		
+		try {
+			service.subjectYn(subCode);
+			msg = "개설 완료!";
+			loc = "/professor/insertSubject";
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+			msg = "개설 실패!";
+			loc = "/professor/insertSubject";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		
+		mv.setViewName("common/msg");
+		
+		return mv;
 	}
 	//교수정보
 	@RequestMapping("/professor/professorView")
@@ -168,10 +206,10 @@ public class ProfessorController1 {
 		int result = service.updateProfessorEnd(p);
 		if(result>0) {
 			msg = "수정완료";
-			loc = "/son_n_index.jsp";
+			loc = "/index.jsp";
 		}else {
 			msg = "수정실패";
-			loc = "/son_n_index.jsp";
+			loc = "/index.jsp";
 		}
 		
 		model.addAttribute("msg",msg);
@@ -394,6 +432,30 @@ public class ProfessorController1 {
 			msg = "수정 실패";
 			loc = "/professor/insertBoardEnd";
 			logger.info("생성불가");
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	//게시판 삭제
+	@RequestMapping("/profBoard/deleteBoard")
+	public ModelAndView deleteBoard(ProfessorBoard pb, ProfBoardAttachment pba) {
+		String msg = "";
+		String loc = "";
+		ModelAndView mv = new ModelAndView();
+		
+		try {
+			int result = service.deleteBoard(pb,pba);
+			msg = "삭제 완료";
+			loc = "/professor/lectureData";
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+			msg = "삭제 실패";
+			loc = "/professor/lectureData";
 		}
 		
 		mv.addObject("msg",msg);

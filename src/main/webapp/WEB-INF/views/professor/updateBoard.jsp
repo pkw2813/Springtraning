@@ -75,7 +75,7 @@
 						<div class="col-4"></div>
 						<div class="col-4"></div>
 						<div class="col-4">&nbsp;
-							<input class="btn btn-dark" type='submit' value=" 글 수정 "/>&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="updateBoardCk" class="btn btn-dark" type='submit' value=" 글 수정 "/>&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 ">
 						</div>
 					</div>
@@ -86,6 +86,14 @@
 </div>
 
 <script>
+	$("#updateBoardCk").click(function(){
+		if(confirm("수정하시겠습니까?")==true){
+			document.from.submit();
+		}else{
+			return false;
+		}
+	});
+
 /* 	$(document).ready(function() {
 	    
 	    $(document).on("click","input[id=notice]",function(){
