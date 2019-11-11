@@ -28,7 +28,7 @@
 			<div class="col-md-12 grid-margin">
 				<div class="card">
 					<div class="card-header" style="height:50px;">
-						<h4>과목별 성적</h4>
+						<h4>현재학기 성적</h4>
 					</div>
 					<div class="card-body">
 						<!-- 부트스트랩에서는 화면 폭이 좁을 때(768px 이하) 하단에 스크롤바가 나타나며 수평으로 스크롤해서 테이블을 볼 수 있게 했습니다. 
@@ -63,19 +63,6 @@
 										<td>성적입력구분</td>
 										<td>성적상태</td>
 									</tr>
-									<tr>
-										<td>데이터1</td>
-										<td>데이터2</td>
-										<td>데이터3</td>
-										<td>데이터4</td>
-										<td>데이터5</td>
-										<td>데이터6</td>
-										<td>데이터1</td>
-										<td>데이터1</td>
-										<td>데이터1</td>
-										<td>데이터1</td>
-									</tr>
-									
 								</tbody>
 							</table>
 							</pre>

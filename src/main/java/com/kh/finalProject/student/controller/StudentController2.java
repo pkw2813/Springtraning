@@ -54,22 +54,12 @@ public class StudentController2 {
 		model.addAttribute("list", list);
 		
 		List<Map> list1 = service.gradeSearchSubType(stuNo);
-		List<Map<String,Map>> result=new ArrayList();
-		System.out.println(list1);
-		int count=0;
-		for(Map m : list1) {
-			String year=(String)m.get("ACA_YEAR_SEM");
-			if(count==0) {
-				result.add(new HashMap());
-				Map mTemp=new HashMap();
-				mTemp.put("subType",m.get("SUB_TYPE"));
-				mTemp.put("rcv",m.get("RCV"));				
-				result.get(count).put((String)m.get("ACA_YEAR_SEM"),mTemp);
-			}
-		}
+//		List<Map<String,Map>> result=new ArrayList();
 		model.addAttribute("list1",list1);
-		return "student/gradeSearchAll";
+		return "student/gradeSearchAll";	
 	}
+	
+	
 	
 	//페이지 전환용
 	@RequestMapping("/student/gradeSearchNow.hd")
