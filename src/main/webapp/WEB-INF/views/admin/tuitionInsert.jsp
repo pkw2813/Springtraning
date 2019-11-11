@@ -273,7 +273,7 @@
 		        		var selectValue1 = document.getElementById("year1");
 		        		var optionIndex = 0;
 	
-		        		for(var i=year;i<=year+20;i++){
+		        		for(var i=year;i<=year+10;i++){
 		        				selectValue.add(new Option(i,i),optionIndex++);
 		        		}
 		        		for(var i=year-5;i<=year+1;i++){
