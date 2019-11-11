@@ -7,9 +7,34 @@
 		SELECT A.*, B.SUB_TYPE FROM HD_GRADE_TB A JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B ON (A.SUB_CODE = B.SUB_CODE) WHERE STU_NO=#{stuNo} ORDER BY ACA_YEAR_SEM DESC, SUB_NAME ASC
 	</select>
 	<select id="selectGradeListSubType" parameterType="string" resultType="map">
-		select stu_no,aca_year_sem, sum(rcv_credits), sub_type 
-		from hd_grade_tb join hd_subject_tb using (sub_code) 
-		group by (stu_no, aca_year_sem, sub_type) having stu_no=#{stuNo}	
+		SELECT SUBSTR(aca_year_sem,1,4) as year,
+        SUBSTR(aca_year_sem,6) as semester,
+        (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) from hd_subject_tb
+        join hd_grade_tb using(sub_code) 
+        where sub_type='전공선택' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+        and 'A01'=SUBSTR(sub_code,1,3)) AS MAJORSELECT,
+        (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) 
+            from hd_subject_tb
+            join hd_grade_tb using(sub_code) 
+            where sub_type='전공필수' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+             and 'A01'=SUBSTR(sub_code,1,3)
+            ) AS MAJORNEED,
+        (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) from hd_subject_tb
+        join hd_grade_tb using(sub_code) 
+        where sub_type='교양선택' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+         and 'A01'=SUBSTR(sub_code,1,3)) AS ELECTRIVESELECT,
+        (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) from hd_subject_tb
+        join hd_grade_tb using(sub_code) 
+        where sub_type='교양필수' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+         and 'A01'=SUBSTR(sub_code,1,3)) AS ELECTRIVENEED,
+        (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) 
+            from hd_subject_tb
+            join hd_grade_tb using(sub_code) 
+            where sub_type like '전공%' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+            and 'A01'!=SUBSTR(sub_code,0,3)) AS OTHER
+	FROM (SELECT * from hd_grade_tb join hd_subject_tb using(sub_code)) MAIN
+	GROUP BY (ACA_YEAR_SEM)
+	ORDER BY 1,2
 	</select>
 	
 	
