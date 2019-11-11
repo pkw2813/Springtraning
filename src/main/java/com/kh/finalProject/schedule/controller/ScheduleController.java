@@ -27,11 +27,13 @@ public class ScheduleController {
 	public HashMap<String, Object> getCalendar(String start, String end) {
 		HashMap resultMap = new HashMap();		
 		HashMap map = new HashMap();
+		System.out.println(start);
+		System.out.println(end);
 		resultMap.put("start", start);
 		resultMap.put("end", end);
 		List<Schedule> list = service.getCalendar(resultMap);
 		map.put("list", list);
-		System.out.println(list.get(0));
+		System.out.println(list.size());
 		return map;
 	}
 }

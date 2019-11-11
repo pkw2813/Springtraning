@@ -10,7 +10,7 @@
   	</insert>
   	
   	<select id="selectLastNum" parameterType="string" resultType="int">
-  	    SELECT MAX(SUBSTR(STU_NO,9,10)) AS NUM FROM HD_STUDENT_TB WHERE DEPT_CODE = #{result} AND  STU_YEAR_SEM = '1-1'
+  	    SELECT MAX(SUBSTR(STU_NO,9,10)) AS NUM FROM HD_STUDENT_TB WHERE DEPT_CODE = #{result} AND  STU_YEAR_SEM = '1-0' OR STU_YEAR_SEM = '3-0'
   	</select>
   	
   	<select id="selectDeptCount" parameterType="string" resultType="_int">

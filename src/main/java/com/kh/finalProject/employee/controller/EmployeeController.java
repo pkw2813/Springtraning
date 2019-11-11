@@ -133,7 +133,8 @@ public class EmployeeController {
 		s.setDeptCode(bs.getBeforeDeptCode());
 		s.setStuEmail(bs.getBeforeEmail());
 		s.setRegStatus("재학");
-		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-1" : "미정");
+//		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-1" : "미정");
+		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-0" : "3-0");
 		return s;
 	}
 
