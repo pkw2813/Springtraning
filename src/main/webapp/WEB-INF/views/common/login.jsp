@@ -500,6 +500,7 @@ if (emailVal.match(regExp) != null) {
 					if(data == "complete"){
 					alert("인증이 완료되었습니다.");
 						let checkEmail = document.getElementById('saveEmail').value;
+						// 인증 완료후 다시 입력한 이메일을 readOnly로 띄워서 확인할수 있게 함
 						let emailHtml = "<input type='text' id='email' name='email' value="+checkEmail+" class='form-control' readonly >";
 					$('.emailCheck').children().remove();
 					 $('.emailCheck').append(emailHtml);

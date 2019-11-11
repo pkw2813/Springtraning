@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="schedule">
+<mapper namespace="cal">
+
+	<select id="getCalendar" parameterType="map" resultMap="scheduleResult">
+	SELECT * FROM HD_PLAN_TB WHERE PLAN_START_DATE BETWEEN #{start} AND #{end}
+	</select>
 
 
 
