@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalProject.professor.model.vo.InsertClass;
+import com.kh.finalProject.professor.model.vo.PlanBoard;
 import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
@@ -45,8 +46,8 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 		return session.selectList("professor1.subjectView",map);
 	}
 	//강의 상세조회
-	public Map<String,String> selectSubjectView(SqlSessionTemplate session, String subCode){
-		return session.selectOne("professor1.selectSubjectView",subCode);
+	public Map<String,String> selectSubjectView(SqlSessionTemplate session, Map<String,String> result){
+		return session.selectOne("professor1.selectSubjectView",result);
 	}
 
 //	@Override
@@ -133,5 +134,10 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	@Override
 	public int selectSubjectCode(SqlSessionTemplate session, String profId) {
 		return session.selectOne("professor1.selectSubjectCode",profId);
+	}
+	//강의 계획서 게시판
+	@Override
+	public List<PlanBoard> planBoardView(SqlSessionTemplate session){
+		return session.selectList("professor1.planBoardView");
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalProject.professor.model.dao.ProfessorDao1;
 import com.kh.finalProject.professor.model.vo.InsertClass;
+import com.kh.finalProject.professor.model.vo.PlanBoard;
 import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
@@ -75,8 +76,8 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	}
 	//강의 상세조회
 	@Override
-	public Map<String,String> selectSubjectView(String subCode){
-		Map<String,String> map = dao.selectSubjectView(session, subCode);
+	public Map<String,String> selectSubjectView(Map<String,String> result){
+		Map<String,String> map = dao.selectSubjectView(session, result);
 		return map;
 	}
 	//강의 개설 YN
@@ -210,5 +211,13 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		 Map<String,String> map = dao.selectSubject(session, subCode);
 		
 		return map;
+	}
+	//강의 계획서 게시판
+	@Override
+	public List<PlanBoard> planBoardView(){
+		
+		List<PlanBoard> list = dao.planBoardView(session);
+		
+		return list;
 	}
 }

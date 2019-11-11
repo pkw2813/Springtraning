@@ -23,7 +23,7 @@
 		SELECT * FROM HD_SUBJECT_TB S JOIN HD_CLASS_TB C USING (SUB_CODE) JOIN HD_PROFESSOR_TB USING (PROF_ID) WHERE SUB_CODE = #{subCode} AND PROF_ID = #{profId}
 	</select>
 	<!-- 강의 상세조회 -->
-	<select id="selectSubjectView" resultType="map" parameterType="string">
+	<select id="selectSubjectView" resultType="map" parameterType="map">
 		SELECT * FROM HD_SUBJECT_TB S JOIN HD_CLASS_TB C USING (SUB_CODE) JOIN HD_PROFESSOR_TB USING (PROF_ID) WHERE SUB_CODE=#{subCode} AND PROF_ID=#{profId}
 	</select>
 	<!-- 강의 개설 YN -->
@@ -96,6 +96,19 @@
 	<select id="selectSubjectCode" resultType="_int" parameterType="string">
 		SELECT COUNT(SUB_CODE) SUB_CODE FROM HD_CLASS_TB WHERE PROF_ID = #{profId} AND SUB_CODE = #{subCode}
 	</select>
+	
+	<!-- 강의계획서 게시판 -->
+	<select id="planBoardView" resultMap="planBoardMap">
+		SELECT * FROM HD_PROF_PLAN_TB
+	</select>
+
+<resultMap id="planBoardMap" type="com.kh.finalProject.professor.model.vo.PlanBoard">
+	<result column="PLAN_NO" property="planNo"/>
+	<result column="PROF_NAME" property="profName"/>
+	<result column="PLAN_TITLE" property="planTitle"/>
+	<result column="PLAN_CONTENT" property="planContent"/>
+	<result column="PLAN_DATE" property="planDate"/>
+</resultMap>
 
 <resultMap id="subjectMap" type="com.kh.finalProject.professor.model.vo.Subject">
 	<result column="SUB_CODE" property="subCode"/>

@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService1;
 import com.kh.finalProject.professor.model.vo.InsertClass;
+import com.kh.finalProject.professor.model.vo.PlanBoard;
 import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
@@ -142,9 +143,14 @@ public class ProfessorController1 {
 	}
 	//강의 상세 조회
 	@RequestMapping("/professor/subjectView")
-	public String subjectView(Model model, String subCode) {
+	public String subjectView(Model model, String subCode, String profId) {
 		
-		Map<String,String> map = service.selectSubjectView(subCode);
+		Map<String,String> result = new HashMap<String,String>();
+		
+		result.put("subCode",subCode);
+		result.put("profId",profId);
+		
+		Map<String,String> map = service.selectSubjectView(result);
 		
 		logger.info("강의상세조회map : "+map);
 		
@@ -260,7 +266,7 @@ public class ProfessorController1 {
 	}
 	//강의 자료 게시판
 	@RequestMapping("/professor/lectureData")
-	public String lecturePlan(@RequestParam(value="cPage",required=false,defaultValue="1")int cPage ,Model model) {
+	public String lectureData(@RequestParam(value="cPage",required=false,defaultValue="1")int cPage ,Model model) {
 //		Professor p1 = (Professor)session.getAttribute("loginMember");
 //		String id = p1.getProfId();
 //		Professor p = service.professorView();
@@ -520,6 +526,27 @@ public class ProfessorController1 {
 			}
 		}
 		
+	}
+	//교수 강의계획서 뷰
+	@RequestMapping("professor/lecturePlan")
+	public ModelAndView planView() {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		List<PlanBoard> list = service.planBoardView();
+		
+		mv.addObject("plan",list);
+		
+		mv.setViewName("professor/planView");
+		
+		return mv;
+	}
+	
+	//계획서 작성
+	@RequestMapping("/professor/insertPlan")
+	public String insertPlan() {
+		
+		return "professor/insertPlan";
 	}
 	
 }

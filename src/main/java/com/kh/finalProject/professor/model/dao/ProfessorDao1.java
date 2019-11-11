@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalProject.professor.model.vo.InsertClass;
+import com.kh.finalProject.professor.model.vo.PlanBoard;
 import com.kh.finalProject.professor.model.vo.ProfBoardAttachment;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.professor.model.vo.ProfessorBoard;
@@ -24,7 +25,7 @@ public interface ProfessorDao1 {
 	int insertSubjectEnd(SqlSessionTemplate session, Map<String, String> map);
 	List<InsertClass> subjectView(SqlSessionTemplate session,Map<String,String> map);
 	//강의 상세조회
-	Map<String,String> selectSubjectView(SqlSessionTemplate session, String subCode);
+	Map<String,String> selectSubjectView(SqlSessionTemplate session, Map<String,String> result);
 //	int insertClassEnd(SqlSessionTemplate session, MultipartFile upfile, Map<String, String> map);
 //	
 //	Map<String,String> selectSubjectView(SqlSessionTemplate session, int subcode);
@@ -55,4 +56,6 @@ public interface ProfessorDao1 {
 	Map<String,String> selectSubject(SqlSessionTemplate session, String subCode);
 //	과목코드 눌렀을때 보이는 뷰
 	int selectSubjectCode(SqlSessionTemplate session, String profId);
+	//강의 계획서 뷰
+	List<PlanBoard> planBoardView(SqlSessionTemplate session);
 }

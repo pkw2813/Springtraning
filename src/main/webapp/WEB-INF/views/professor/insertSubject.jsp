@@ -46,7 +46,7 @@
 										<td style="text-align:center;">${cv.SUB_TYPE }</td>
 										<input class="subCodeYn" type='hidden' value="${cv.SUB_CODE }" name='subCode'/>
 										<td style="text-align:center;font-size:5px;">
-											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
+											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }&profId=${loginMember.profId }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
 											${cv.SUB_NAME }
 											</a>
 										</td>
@@ -80,13 +80,14 @@
 								<th style="text-align:center;">개설여부</th>
 							</tr>
 							<c:forEach items="${iClassView }" var="cv">
+							<c:if test="${loginMember.profId eq cv.PROF_ID }">
 								<c:set value="${cv.OPEN_YN }" var="yn"/> <!-- 개설여부가 N만 보이게하는 if문 -->
 								<c:if test="${yn eq 'Y' }">
 									<tr style="height:20px;">
 										<td style="text-align:center;">${cv.SUB_TYPE }</td>
 										<input class="subCodeYn" type='hidden' value="${cv.SUB_CODE }" name='subCode'/>
 										<td style="text-align:center;font-size:5px;">
-											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
+											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }&profId=${loginMember.profId }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
 											${cv.SUB_NAME }
 											</a>
 										</td>
@@ -98,6 +99,7 @@
 										<td style="text-align:center;">${cv.OPEN_YN }</td>
 									</tr>
 								</c:if>
+							</c:if>
 							</c:forEach>
 						</table>
 					</div>
