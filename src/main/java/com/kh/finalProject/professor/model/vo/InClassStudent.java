@@ -15,6 +15,7 @@ public class InClassStudent {
 	private String gender;
 	private String subName;
 	private String grade;
+	private String deptName;
 	private String stuTel;
 	private String stuEmail;
 	private String stuAddr;

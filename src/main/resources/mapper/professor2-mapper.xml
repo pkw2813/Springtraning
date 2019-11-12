@@ -54,10 +54,10 @@
 	</select>
 	
 	<select id="selectInClass" parameterType="selectInClass" resultMap="inClassResult">
-		SELECT STU_NO, STU_NAME, GENDER , 
+		<!-- SELECT STU_NO, STU_NAME, GENDER , 
 		(SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_NAME,
-		(SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') AS SUB_CODE,
-        (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') AS SUB_YEAR,
+		(SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_CODE,
+        (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_YEAR,
 		SUBSTR(STU_YEAR_SEM,1,1) AS GRADE,
 		STU_TEL, STU_EMAIL, STU_ADDR
 		
@@ -78,26 +78,51 @@
 		<if test='subName != null &amp; subName != "" '>
 			AND SUB_NAME = #{subName}
 		</if>
-		AND (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subYear}
-		AND (SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subCode}
-		
+		AND (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) = #{subYear}
+		AND (SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) = #{subCode} -->
+		SELECT * 
+		FROM HD_SUB_REQ_TB A
+		      JOIN (SELECT A2.STU_NAME, A2.STU_NO, A2.DEPT_CODE, B2.DEPT_NAME, SUBSTR(STU_YEAR_SEM,1,1) AS GRADE, A2.STU_ADDR, A2.STU_EMAIL, A2.GENDER, A2.STU_TEL 
+		            FROM HD_STUDENT_TB A2
+		            JOIN (SELECT * FROM HD_DEPARTMENT_TB) B2 ON (A2.DEPT_CODE = B2.DEPT_CODE)
+		            ) 
+		      B ON (A.STU_NO = B.STU_NO)
+		WHERE SUB_CODE = #{subCode} AND SUBSTR(ACA_YEAR_SEM,1,4) = #{subYear}
+			<if test='grade != null &amp; grade != ""'>
+			AND GRADE = #{grade}
+		</if>
+		<if test='stuNo != null &amp; stuNo != ""'>
+			AND STU_NO = #{stuNo}
+		</if>
+		<if test='stuName != null &amp; stuName !'>
+			AND STU_NAME = #{stuName}
+		</if>
 	</select>
 	
 	<select id="countInClass" parameterType="selectInClass" resultType="_int">
-		<!-- SELECT COUNT(*),STU_NO, STU_NAME, GENDER , 
-		(SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_NAME,
-		SUBSTR(STU_YEAR_SEM,1,1) AS GRADE,
-		STU_TEL, STU_EMAIL, STU_ADDR
-		FROM HD_STUDENT_TB
-		WHERE STU_NO = (SELECT STU_NO
-        FROM HD_SUB_REQ_TB
-        WHERE SUB_CODE = #{subCode}) -->
-        SELECT COUNT(*)
+        SELECT COUNT(*) 
+		FROM HD_SUB_REQ_TB A
+		      JOIN (SELECT A2.STU_NAME, A2.STU_NO, A2.DEPT_CODE, B2.DEPT_NAME, SUBSTR(STU_YEAR_SEM,1,1) AS GRADE, A2.STU_ADDR, A2.STU_EMAIL, A2.GENDER, A2.STU_TEL 
+		            FROM HD_STUDENT_TB A2
+		            JOIN (SELECT * FROM HD_DEPARTMENT_TB) B2 ON (A2.DEPT_CODE = B2.DEPT_CODE)
+		            ) 
+		      B ON (A.STU_NO = B.STU_NO)
+		WHERE SUB_CODE = #{subCode} AND SUBSTR(ACA_YEAR_SEM,1,4) = #{subYear}
+		<if test='grade != null &amp; grade != ""'>
+			AND GRADE = #{grade}
+		</if>
+		<if test='stuNo != null &amp; stuNo != ""'>
+			AND STU_NO = #{stuNo}
+		</if>
+		<if test='stuName != null &amp; stuName !'>
+			AND STU_NAME = #{stuName}
+		</if>
+       <!--  SELECT COUNT(*)
 
 		FROM    (SELECT STU_NO, STU_NAME, GENDER , 
 				(SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_NAME,
-				(SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') AS SUB_CODE,
-        		(SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') AS SUB_YEAR,
+				(SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_CODE,
+        		(SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) AS SUB_YEAR,
 				SUBSTR(STU_YEAR_SEM,1,1) AS GRADE,
 				STU_TEL, STU_EMAIL, STU_ADDR
 				FROM HD_STUDENT_TB
@@ -114,12 +139,11 @@
 			AND STU_NAME = #{stuName}
 		</if>
 		<if test='subName != null &amp; subName != "" '>
-			AND (SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subName}
+			AND (SELECT SUB_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) = #{subName}
 		</if>
-		AND (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subYear}
-		AND (SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = 'A01-03') = #{subCode}
-        )
-        
+		AND (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) = #{subYear}
+		AND (SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) = #{subCode}
+        ) -->
 		
 	</select>
 	
@@ -164,6 +188,7 @@
 		<result column="STU_NAME" property="stuName" />
 		<result column="GENDER" property="gender" />
 		<result column="SUB_NAME" property="subName" />
+		<result column="DEPT_NAME" property="deptName" />
 		<result column="GRADE" property="grade" />
 		<result column="STU_TEL" property="stuTel" />
 		<result column="STU_EMAIL" property="stuEmail" />

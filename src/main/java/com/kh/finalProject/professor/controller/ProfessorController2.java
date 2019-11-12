@@ -100,6 +100,7 @@ public class ProfessorController2 {
 		
 		model.addAttribute("classInfo", sci);
 		}
+		model.addAttribute("sic",sic);
 		//=======================================
 		model.addAttribute("stuList",stuList);
 		model.addAttribute("totalCount",totalData);

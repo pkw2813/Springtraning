@@ -64,8 +64,8 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item dropdown mr-1">
-        	<button id="reqBtn" class="btn btn-inverse-info btn-fw">
-            	건의
+           <button id="reqBtn" class="btn btn-inverse-info btn-fw">
+               건의
             </button>
         </li>
           <li class="nav-item dropdown mr-1">
@@ -191,9 +191,9 @@
       <nav class="sidebar sidebar-offcanvas sidebar1" id="sidebar">
         <ul class="nav">
         <% if(session.getAttribute("loginMember") instanceof Professor){%>
-       	  <div class="sidebar-heading">
-	      	 교수
-	      </div>
+            <div class="sidebar-heading">
+             교수
+         </div>
             <!-- 강의정보 -->
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#class_info" aria-expanded="false" aria-controls="ui-basic">
@@ -293,8 +293,8 @@
           </li>
           <%} else if(session.getAttribute("loginMember") instanceof Student){%>
           <div class="sidebar-heading">
-	      	 학생
-	      </div>
+             학생
+         </div>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic4" aria-expanded="false" aria-controls="ui-basic4">
               <i class="ti-layout-list-post menu-icon"></i>
@@ -308,7 +308,7 @@
             </div>
           </li>
           <li class="nav-item">
-			<a class="nav-link" data-toggle="collapse" href="#ui-basic5" aria-expanded="false" aria-controls="ui-basic5">
+         <a class="nav-link" data-toggle="collapse" href="#ui-basic5" aria-expanded="false" aria-controls="ui-basic5">
               <i class="ti-layout-list-post menu-icon"></i>
               <span class="menu-title">성적 정보</span>
               <i class="menu-arrow"></i>
@@ -364,9 +364,9 @@
           </li>
           <%} else if(session.getAttribute("loginMember") instanceof Employee){%>
           <div class="sidebar-heading">
-	      	 관리자
-	      </div>
-	      <li class="nav-item">
+             관리자
+         </div>
+         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth5" aria-expanded="false" aria-controls="auth5">
               <i class="ti-write menu-icon"></i>
               <span class="menu-title">총괄 관리자</span>
@@ -423,27 +423,27 @@
       <!-- Modal content -->
       <div class="modal-content">
         <form action="${path}/req.hd">
-			<span class="close" id="close">&times;</span>
-			<p>건의사항</p>
-			<div class="form-group">
-			<hr>
-			<label class="control-label">제목</label>
-			<input type="text" id="reqTitle" name="reqTitle" placeholder="제목을 입력하세요" class="form-control" required />
-			<hr>
-			<input type="hidden" id="toName" name="toName" value="${userId }"/>
-			<label class="control-label">받는사람</label>
-			<input type="hidden" id="fromName" name="fromName" value="EA000000000"/>
-			<input type="text" class="form-control" value="관리자" readonly/>
-			
-			<hr>
-			<label class="control-label">내용</label>
-			<textarea name="reqContents" cols="40" rows="8" class="form-control" placeholder="내용을 입력하세요" ></textarea>
-			</div>
-			<input type="button" class="btn btn-inverse-info btn-fw" id="close1" value="취소" style="float: right; margin: 7px;">
-			<input type="submit" class="btn btn-inverse-info btn-fw" value="보내기" style="float: right; margin: 7px;">
-			<br>
-			<br>
-		</form>
+         <span class="close" id="close">&times;</span>
+         <p>건의사항</p>
+         <div class="form-group">
+         <hr>
+         <label class="control-label">제목</label>
+         <input type="text" id="reqTitle" name="reqTitle" placeholder="제목을 입력하세요" class="form-control" required />
+         <hr>
+         <input type="hidden" id="toName" name="toName" value="${userId }"/>
+         <label class="control-label">받는사람</label>
+         <input type="hidden" id="fromName" name="fromName" value="EA000000000"/>
+         <input type="text" class="form-control" value="관리자" readonly/>
+         
+         <hr>
+         <label class="control-label">내용</label>
+         <textarea name="reqContents" cols="40" rows="8" class="form-control" placeholder="내용을 입력하세요" ></textarea>
+         </div>
+         <input type="button" class="btn btn-inverse-info btn-fw" id="close1" value="취소" style="float: right; margin: 7px;">
+         <input type="submit" class="btn btn-inverse-info btn-fw" value="보내기" style="float: right; margin: 7px;">
+         <br>
+         <br>
+      </form>
       </div>
  
     </div>
@@ -460,15 +460,15 @@
         var close1 = document.getElementById("close1");  
         // When the user clicks on the button, open the modal 
         headerBtn.onclick = function() {
-        	headerModal.style.display = "block";
+           headerModal.style.display = "block";
         }
  
         // When the user clicks on <span> (x), close the modal
         close.onclick = function() {
-        	headerModal.style.display = "none";
+           headerModal.style.display = "none";
         }
         close1.onclick = function() {
-        	headerModal.style.display = "none";
+           headerModal.style.display = "none";
         }
  
         // When the user clicks anywhere outside of the modal, close it
