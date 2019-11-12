@@ -2,10 +2,10 @@ package com.kh.finalProject.schedule.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,22 +37,26 @@ public class ScheduleController {
 	
 	
 	@RequestMapping("/insertPlan.hd")
-		public String insertPlan(String start, String end, String title) {
-		HashMap map = new HashMap();
+		public String insertPlan(String start, String end, String title, Model model) {
 		System.out.println(start);
 		System.out.println(end);
 		System.out.println(title);
-		int result;
-		map.put("start", start);
-		map.put("end", end);
-		map.put("title", title);
+		String msg ="";
+		String loc = "/schedule.hd";
 		try {
-			result = service.insertPlan(map);
-		}catch(Exception e) {
-			e.printStackTrace();
+			HashMap map = new HashMap();
+			map.put("start", start);
+			map.put("end", end);
+			map.put("title", title);
+			service.insertPlan(map);
+			msg = "일정 등록 완료";
+		}catch(Exception e){
+			msg = "일정 등록 실패";
 		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("loc", loc);
+		return "common/msg";
 		
-		return "schedule/schedule";
 	}
 	
 	
