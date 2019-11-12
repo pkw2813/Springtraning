@@ -11,7 +11,8 @@ public interface StudentService3 {
 	StuTuition selectTuitionOne(StuTuition tuition);
 	List<StuTuition> selectTuitionCertList(String studentNo);
 	StuTuition selectBasicStudentInfo(String studentNo);
-	int updateTuitionOne(StuTuition tuition);
+	int updateTuitionOne(StuTuition tuition, Student student) throws Exception;
 	GraduationCon selectGraduationCon(String studentNo);
+	String selectStuYearSem(String studentNo);
 
 }

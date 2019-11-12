@@ -61,7 +61,7 @@
 	</tx:advice>
 	<!-- aop기능 활용 -->
 	<aop:config>
-		<aop:pointcut expression="execution(* com.kh.spring..*ServiceImpl.*(..))" id="txpoint"/>
+		<aop:pointcut expression="execution(* com.kh.finalProject..*ServiceImpl*.*(..))" id="txpoint"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txpoint"/> <!-- 위에 메소드에 해당하는 애 -->
 	</aop:config>
 	
@@ -83,30 +83,3 @@
 	
 	
 </beans>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

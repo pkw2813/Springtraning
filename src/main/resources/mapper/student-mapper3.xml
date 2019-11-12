@@ -29,6 +29,10 @@
 		UPDATE HD_STU_TUITION_TB SET PAYMENT_STAT='Y', PAYMENT_DATE=SYSDATE WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM=#{acaYearSem}
 	</update>
 	
+	<update id="updateStuYearSem" parameterType="student">
+		UPDATE HD_STUDENT_TB SET STU_YEAR_SEM=#{stuYearSem} WHERE STU_NO=#{stuNo}
+	</update>
+	
   	<select id="selectGraduationCon" parameterType="string" resultMap="graduationConResult">
   		SELECT GC.*, S.STU_NAME, S.STU_SSN, D.DEPT_NAME
 		FROM HD_GRADUATION_CON_TB GC
@@ -37,6 +41,10 @@
 		AND GC.STU_NO=S.STU_NO
 		JOIN HD_DEPARTMENT_TB D
 		ON S.DEPT_CODE=D.DEPT_CODE
+  	</select>
+  	
+  	<select id="selectStuYearSem" parameterType="string" resultType="string">
+  		SELECT STU_YEAR_SEM FROM HD_STUDENT_TB WHERE STU_NO=#{studentNo}
   	</select>
   	
   	

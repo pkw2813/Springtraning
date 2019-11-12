@@ -220,7 +220,7 @@
 			    //console.log("today:"+getFormatDate(today));
 			    
 				$("#todayDate").html(getFormatDate(today));
-				
+				//var msg="";
 				function payTuition() {
 					IMP.request_pay({
 					    pg : 'html5_inicis', // version 1.1.0부터 지원.
@@ -238,23 +238,40 @@
 					}, function(rsp) {
 					    if ( rsp.success ) {
 					    	// aJax 통신으로 해당 학년 학기 선택하기
+							var result='';
 							$.ajax({
 									url:"${path}/student/payTuitionAjax.hd",
+									type: 'POST',
 									data:{"acaYearSem": '${tuition.acaYearSem}'},
 									success:function(data) {
-										console.log("ajax 통신 성공:"+data);
-										//var tuitionObj=new Object();
-										//tuitionObj=JSON.parse(data); // JSON을 자바스크립트 객체로 변환하기
-										//var acaYearSemByAjax=tuitionObj.acaYearSem; // tuitionObj 객체의 acaYearSem 맴버변수 가져오기
+										//console.log("ajax 통신 성공:"+data);
+										var resultObj=new Object();
+										resultObj=JSON.parse(data); // JSON을 자바스크립트 객체로 변환하기
+										//console.log("resultObj:"+resultObj);
+										//console.log("typeof resultObj:"+typeof resultObj);
+										if(resultObj=='1') {
+											var msg = 'KH대학교 ${tuition.acaYearSem} 등록금 납부가 완료되었습니다.';
+											//alert("1:"+data);
+									        //console.log("1:"+data);
+									        alert(msg);
+									        location.href="${path}/student/tuitionBill.hd";
+										}else if(resultObj=='0') {
+											var msg = 'KH대학교 ${tuition.acaYearSem} 등록금 납부에 실패하였습니다.';
+											//alert("2:"+data);
+									        //console.log("2:"+data);
+											alert(msg);
+											location.href="${path}/student/tuitionBill.hd";
+										}
 									}
-								});
-					        var msg = 'KH대학교 ${tuition.acaYearSem} 등록금 납부가 완료되었습니다.';
+								})
+
+
 					    } else {
-					        var msg = '등록금 납부에 실패하였습니다.\n';
+					    	var msg = '등록금 납부에 실패하였습니다.\n';
 					        msg += rsp.error_msg; // 에러 내용
+						    alert(msg);
+					    	location.href="${path}/student/tuitionBill.hd";
 					    }
-					    alert(msg);
-					    location.href="${path}/student/tuitionBill.hd";
 					});
 				}
 			<%} %>

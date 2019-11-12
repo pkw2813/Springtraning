@@ -14,5 +14,7 @@ public interface StudentDao3 {
 	List<StuTuition> selectTuitionCertList(SqlSessionTemplate session, String studentNo);
 	StuTuition selectBasicStudentInfo(SqlSessionTemplate session, String studentNo);
 	int updateTuitionOne(SqlSessionTemplate session, StuTuition tuition);
+	int updateStuYearSem(SqlSessionTemplate session, Student student);
 	GraduationCon selectGraduationCon(SqlSessionTemplate session, String studentNo);
+	String selectStuYearSem(SqlSessionTemplate session, String studentNo);
 }

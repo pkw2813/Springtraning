@@ -30,12 +30,23 @@ public class StudentDaoImpl3 implements StudentDao3 {
 
 	@Override
 	public int updateTuitionOne(SqlSessionTemplate session, StuTuition tuition) {
+//		System.out.println("dao updateTuitionOne 들어옴");
 		return session.update("student3.updateTuitionOne", tuition);
+	}
+	
+	@Override
+	public int updateStuYearSem(SqlSessionTemplate session, Student student) {
+		return session.update("student3.updateStuYearSem", student);
 	}
 
 	@Override
 	public GraduationCon selectGraduationCon(SqlSessionTemplate session, String studentNo) {
 		return session.selectOne("student3.selectGraduationCon", studentNo);
+	}
+
+	@Override
+	public String selectStuYearSem(SqlSessionTemplate session, String studentNo) {
+		return session.selectOne("student3.selectStuYearSem", studentNo);
 	}
 	
 	
