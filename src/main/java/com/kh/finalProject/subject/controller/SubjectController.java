@@ -44,8 +44,9 @@ public class SubjectController {
 	 public String selectTime(Subject s) {
 		 ObjectMapper mapper=new ObjectMapper();
 		 String jsonStr="";
+
 		 List<Subject> list=service.selectTime(s);
-		 
+
 		/*
 		 * for(Subject s1 :list) { s1.getSubTime(); }
 		 */
@@ -57,6 +58,12 @@ public class SubjectController {
 		return jsonStr;
 	 }
 	 
+	 @RequestMapping("/subInsert.hd")
+	 public String 	subInsert(Subject s) {
+		 System.out.println(s);
+		 
+		 return "";
+	 }
 	 
 	 
 }

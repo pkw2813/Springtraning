@@ -18,28 +18,30 @@
 			</div>
 		</div>
 		<!-- Main Content start -->
+		
+		
+		
 		<div class="row">
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-header">
-						<form action="${path }/prof/viewInClass.hd" method="post" id="inClassForm">
-							<table class="table table-bordered table-hover col-md-10"
-								style="text-align: center;">
+						<form action="${path }/prof/viewInClass.hd" method="post" id="inClassForm" class="table-responsive">
+							<table class="table table-bordered table-hover " style="text-align: center;">
 								<thead class="thead-dark">
 									<tr>
-										<th>개설년도</th>
-										<th>강의명</th>
-										<th>학년</th>
-										<th>이름</th>
-										<th>학과</th>
-										<th>학번</th>
-										<th>검색하기</th>
+										<th >개설년도</th>
+										<th >강의명</th>
+										<th >학년</th>
+										<th >이름</th>
+										<th >학과</th>
+										<th >학번</th>
+										<th >검색하기</th>
 									</tr>
 								</thead>
 
 								<tbody>
 									<tr><!-- 개설연도 -->
-										<td><select name="subYear" required>
+										<td><select name="subYear"  required>
 												<option value="" selected>개설기간 선택</option>
 												<c:forEach items="${preSubjectList }" var='yearList'>
 												
@@ -67,7 +69,7 @@
 											value="" name="stuName" /></td>
 										<!-- 학과 -->
 										<td><input type="text" placeholder="학과검색" value=""
-											name="major" /></td>
+											name="deptName" /></td>
 										<!-- 학번 -->
 										<td><input type="text" placeholder="학번검색(미입력시 전체)"
 											value="" name="stuNo" /></td>
@@ -172,11 +174,11 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="form-group row">
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body">
-						<table class="table table-bordered table-hover"
+						<table class="table table-bordered table-hover table-responsive"
 							style="text-align: center;">
 							<thead class="thead-dark">
 								<tr>
@@ -204,7 +206,7 @@
 									<td>${stuList.stuNo }</td>
 									<td>${stuList.stuName }</td>
 									<td>${stuList.gender }</td>
-									<td>${stuList.subName }</td>
+									<td>${stuList.deptName }</td>
 									<td>${stuList.grade }학년</td>
 									<td>${stuList.stuTel }</td>
 									<td>${stuList.stuEmail }</td>
@@ -230,7 +232,7 @@
 
 					</div>
 					<div class="card-footer">
-						<c:if test="${pageBar ne null}">
+						<c:if test="${pageBar ne null}">	
 						${pageBar }
 						</c:if>
 					</div>

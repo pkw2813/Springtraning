@@ -16,6 +16,13 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		return session.selectList("cal.getCalendar", resultMap);
 	}
 
+	@Override
+	public int insertPlan(SqlSessionTemplate session, Map map) {
+		return session.insert("cal.insertPlan", map);
+	}
+
+	
+	
 	
 	
 }

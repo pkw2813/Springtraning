@@ -11,4 +11,5 @@ public interface ScheduleDao {
 
 	public List<Schedule> getCalendar(SqlSessionTemplate session, Map resultMap);
 	
+	public int insertPlan(SqlSessionTemplate session, Map map);
 }
