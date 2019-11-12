@@ -22,11 +22,11 @@
         (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) from hd_subject_tb
         join hd_grade_tb using(sub_code) 
         where sub_type='교양선택' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
-         and 'A01'=SUBSTR(sub_code,1,3)) AS ELECTRIVESELECT,
+         ) AS ELECTRIVESELECT,
         (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) from hd_subject_tb
         join hd_grade_tb using(sub_code) 
         where sub_type='교양필수' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
-         and 'A01'=SUBSTR(sub_code,1,3)) AS ELECTRIVENEED,
+         ) AS ELECTRIVENEED,
         (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) 
             from hd_subject_tb
             join hd_grade_tb using(sub_code) 
