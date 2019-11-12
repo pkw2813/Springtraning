@@ -10,9 +10,9 @@ public class Subject {
 	private String subYear;
 	private String subCode;
 	private String subName;
-	private String tSubject;
-	private String tDept;
-	private int tGrade;
+	private String targetSubject;
+	private String targetDept;
+	private int targetGrade;
 	private int completePt;
 	private int subSemester;
 	private String subType;

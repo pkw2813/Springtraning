@@ -5,19 +5,24 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page = "/WEB-INF/views/common/header.jsp"/>
-
+<style>
+	.but{
+		text-align:center;
+		
+	}
+</style>
 <div class="main-panel">
 	<div class="content-wrapper">
 		<div class="card">
                 <div class="card-body">
-                  <form class="form-sample">
+                  <form class="form-sample" action="${path }/subInsert.hd">
                     <h4 class="card-title">커리큘럼 등록</h4>
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">년도 선택</label>
                           <div class="col-sm-9">
-                            <select class="form-control" id="year">
+                            <select class="form-control" id="year" name="subYear">
                             </select>
                           </div>
                         </div>
@@ -27,7 +32,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">학년 선택</label>
                           <div class="col-sm-9">
-                            <select class="form-control" id="year">
+                            <select class="form-control" name="tGrade">
                             	<option value="1">1학년</option>
                             	<option value="2">2학년</option>
                             	<option value="3">3학년</option>
@@ -119,9 +124,9 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">이수 학점</label>
                           <div class="col-sm-9">
-                            <select class="form-control">
-                            	<option value="2">2점</option>
-                            	<option value="3">3점</option>
+                            <select class="form-control" id="comPt">
+                            	<option value="2">2학점</option>
+                            	<option value="3">3학점</option>
                             </select>
                           </div>
                         </div>
@@ -175,15 +180,16 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의 시작시간</label>
                           <div class="col-sm-9">
-                            <select class="form-control">
-                            	<option value="09:00">09:00</option>
-                            	<option value="10:00">10:00</option>
-                            	<option value="11:00">11:00</option>
-                            	<option value="12:00">12:00</option>
-                            	<option value="13:00">13:00</option>
-                            	<option value="14:00">14:00</option>
-                            	<option value="15:00">15:00</option>
-                            	<option value="16:00">16:00</option>
+                            <select class="form-control" id="roomTime">
+                            	<option id="roomTimec">시간선택</option>
+                            	<option value="09:00" class="roomT">09:00</option>
+                            	<option value="10:00" class="roomT">10:00</option>
+                            	<option value="11:00" class="roomT">11:00</option>
+                            	<option value="12:00" class="roomT">12:00</option>
+                            	<option value="13:00" class="roomT">13:00</option>
+                            	<option value="14:00" class="roomT">14:00</option>
+                            	<option value="15:00" class="roomT">15:00</option>
+                            	<option value="16:00" class="roomT">16:00</option>
                             </select>
                           </div>
                         </div>
@@ -192,10 +198,17 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의 종료시간</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" readonly>
+                            <input type="text" class="form-control" id="endTime" readonly>
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div class="row">
+                    	<div class="col-md-12 but">
+                    		<input type="hidden" id="subTime" name="subTime"/>
+	                    	<input type="submit" class="btn btn-inverse-info btn-fw" value="저장하기" id="submitBtn"/>&nbsp&nbsp&nbsp
+	                    	<input type="reset" class="btn btn-inverse-info btn-fw" value="초기화"/>
+	                    </div>
                     </div>
                   </form>
                 </div>
@@ -203,9 +216,25 @@
 
 	<script>
 	
+		 $("#submitBtn").click(function(){
+			var rt=$("#roomTime").val();
+			var cp=$("#comPt").val();
+			var intrt=parseInt(rt);
+			
+			if(cp==3){
+				$("#subTime").val(rt+"!@subTime"+(intrt+1)+":00!@subTime"+(intrt+2)+":00");
+			}
+			else if(cp==2){
+				$("#subTime").val(rt+"!@subTime"+intrt+1+":00");
+			}
+			
+			
+		}); 
+	
 		window.onload = function (){
 	  	  appendYear();
 	    }
+		
 		
 		function appendYear(){
 			var date = new Date();
@@ -239,9 +268,35 @@
      			})
      		})
      	});
+		 
 		 $("#roomTitle").change(function(){
 			$("#roomTitlec").attr('disabled',true);
 		 });
+		 
+
+		 $("#comPt").change(function(){
+			 timePlue();
+		 });
+		 
+		 
+		 
+			 $("#roomTime").change(function(){
+					$("#roomTimec").attr('disabled',true);
+					timePlue();
+			 });
+		 function timePlue(){
+				var comPt=$("#comPt").val();
+				var roomTime=$("#roomTime").val();
+
+				var intcom=parseInt(comPt);
+				var introomt=parseInt(roomTime);
+				
+				$("#endTime").val(intcom+introomt+":50");
+				if($("#endTime").val()=="NaN:50"){
+					$("#endTime").val("강의 시작시간 선택");
+				}
+		 }
+		 
        
         $(function(){
      	 	$('.selectColleage').change(function(){
@@ -280,34 +335,59 @@
         			
         				$('#classRoom').html(roomTitle);
 						$('#classRoom').change(function(){
-							$("#selectRoom").attr('disabled',true);
+							$("#selectDepartment").attr('disabled',true);
 						});
         			}
 	            });
 	        });
         });
         
-        $(function(){
-        	$("#classRoom").change(function(){
-        		 var day=$("#subDay").val();
-        		 var room=$("#classRoom").val();
-        		 var semester=$('input[name="membershipRadios"]:checked').val();
-        		 var year=$("#year").val();
-        		 console.log(year);
-        		 console.log(semester);
-        		 console.log(day);
-        		 console.log(room);
-        		 $.ajax({
-        			 url:"${path}/selectTime.hd",
-        			 data:{"subYear":year,"subSemester":semester,"subDate":day,"subRoom":room},
-        			 success:function(data){
-        				 let re=JSON.parse(data);
-        				 console.log(data);
-        				 console.log(re);
-        			 }
-        		 });
-        	});
-        });
+
+	        $(function(){
+	        	$("#classRoom").change(function(){
+	        		 var day=$("#subDay").val();
+	        		 var room=$("#classRoom").val();
+	        		 var semester=$('input[name="membershipRadios"]:checked').val();
+	        		 var year=$("#year").val();
+	
+	        		 $.ajax({
+	        			 url:"${path}/selectTime.hd",
+	        			 data:{"subYear":year,"subSemester":semester,"subDate":day,"subRoom":room},
+	        			 success:function(data){
+	        				 let re=JSON.parse(data);
+	        				 
+	        				 var arr = new Array;
+	     			        $("#roomTime option").each ( function() {
+	     			            arr.push ( $(this).val() );
+	     			        });
+	     			        
+	     			        for(var i=0; i<arr.length; i++){
+	     			        	var arrs=arr[i];
+	     			        }
+	     			        
+	         				$("#roomTime option").prop("disabled", false); // 초기화
+	        				 for(var i=0; i<re.length;i++){
+	     			       		 var res = [];
+	        					 var res=re[i]["subTime"].split(",");
+	        					 console.log(res);
+	       						// roomTime 하위의 옵션 중 res에 있는것들을 disable
+	        					for(var k=0; k < res.length; k++){
+	          						// disable
+	          						$("#roomTime option").each(function(){
+	          							 if ( res[k] == $(this).val() ) {
+	          								 console.log($(this).val(), res[k]==$(this).val());
+	          								 $(this).attr("disabled", true);
+	          								 var et=$("#endTime").val();
+	          								 
+	          							 }
+	          						 });
+	        					 }
+	        				 }
+	        			 }
+	        		 });
+	        	});
+	        });
+       
         
 	</script>
 
