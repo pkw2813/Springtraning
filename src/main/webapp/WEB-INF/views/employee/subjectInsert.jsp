@@ -32,7 +32,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">학년 선택</label>
                           <div class="col-sm-9">
-                            <select class="form-control" name="tGrade">
+                            <select class="form-control" name="targetGrade">
                             	<option value="1">1학년</option>
                             	<option value="2">2학년</option>
                             	<option value="3">3학년</option>
@@ -48,7 +48,7 @@
                           <div class="col-sm-4">
                             <div class="form-check">
                               <label class="form-check-label">
-                                <input type="radio" class="form-check-input seme" name="membershipRadios" value="1">
+                                <input type="radio" class="form-check-input seme" name="subSemester" value="1">
                                 1학기
                               <i class="input-helper"></i></label>
                             </div>
@@ -56,7 +56,7 @@
                           <div class="col-sm-4">
                             <div class="form-check">
                               <label class="form-check-label">
-                                <input type="radio" class="form-check-input seme" name="membershipRadios" value="2">
+                                <input type="radio" class="form-check-input seme" name="subSemester" value="2">
                                 2학기
                               <i class="input-helper"></i></label>
                             </div>
@@ -92,7 +92,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">과목 명</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="subName">
                           </div>
                         </div>
                       </div>
@@ -100,7 +100,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의 목표</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="targetSubject">
                           </div>
                         </div>
                       </div>
@@ -111,7 +111,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">이수 구분</label>
                           <div class="col-sm-9">
-                            <select class="form-control">
+                            <select class="form-control" name="subType">
                             	<option value="전공필수">전공필수</option>
                             	<option value="전공선택">전공선택</option>
                             	<option value="교양필수">교양필수</option>
@@ -124,7 +124,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">이수 학점</label>
                           <div class="col-sm-9">
-                            <select class="form-control" id="comPt">
+                            <select class="form-control" id="comPt" name="completePt">
                             	<option value="2">2학점</option>
                             	<option value="3">3학점</option>
                             </select>
@@ -139,7 +139,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의 요일</label>
                           <div class="col-sm-9">
-                            <select class="form-control" id="subDay">
+                            <select class="form-control" id="subDay" name="subDate">
                             	<option value="월">월</option>
                             	<option value="화">화</option>
                             	<option value="수">수</option>
@@ -166,7 +166,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의실</label>
                           <div class="col-sm-9">
-                            <select class="form-control" id="classRoom">
+                            <select class="form-control" id="classRoom" name="subRoom">
                             </select>
                           </div>
                         </div>
@@ -205,6 +205,7 @@
                     </div>
                     <div class="row">
                     	<div class="col-md-12 but">
+                    		<input type="hidden" id="targetDept" name="targetDept"/>
                     		<input type="hidden" id="subTime" name="subTime"/>
 	                    	<input type="submit" class="btn btn-inverse-info btn-fw" value="저장하기" id="submitBtn"/>&nbsp&nbsp&nbsp
 	                    	<input type="reset" class="btn btn-inverse-info btn-fw" value="초기화"/>
@@ -315,6 +316,7 @@
      					$('.selectDepartment').html(deptListHtml);
      						$('.selectDepartment').change(function(){
      						$("#selectDepartment").attr('disabled',true);
+     						$("#targetDept").val();
      			});
      	 	}
      	 });
@@ -347,7 +349,7 @@
 	        	$("#classRoom").change(function(){
 	        		 var day=$("#subDay").val();
 	        		 var room=$("#classRoom").val();
-	        		 var semester=$('input[name="membershipRadios"]:checked').val();
+	        		 var semester=$('input[name="subSemester"]:checked').val();
 	        		 var year=$("#year").val();
 	
 	        		 $.ajax({

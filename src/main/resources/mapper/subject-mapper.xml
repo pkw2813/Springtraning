@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="subject">
+	
+	<select id="selectRoom" resultType="map" parameterType="string">
+		SELECT * FROM HD_ROOM_TB WHERE SUBSTR(SUB_ROOM,1,1)=#{roomValue}
+	</select>
+	
+	<select id="selectTime" resultMap="subjectMap" parameterType="subject">
+		SELECT SUB_TIME FROM HD_SUBJECT_TB WHERE SUB_DATE=#{subDate} AND SUB_ROOM=#{subRoom} AND SUB_YEAR=${subYear} AND SUB_SEMESTER=${subSemester} 
+	</select>
+
+  <resultMap id="subjectMap" type="subject">
+	<result column="SUB_CODE" property="subCode"/>
+	<result column="SUB_NAME" property="subName"/>
+	<result column="TARGET_SUBJECT" property="targetSubject"/>
+	<result column="TARGET_DEPT" property="targetDept"/>
+	<result column="TARGET_GRADE" property="targetGrade"/>
+	<result column="COMPLETE_PT" property="completePt"/>
+	<result column="SUB_TYPE" property="subType"/>
+	<result column="DEPT_CODE" property="deptCode"/>
+	<result column="SUB_DATE" property="subDate"/>
+	<result column="SUB_TIME" property="subTime"/>
+	<result column="SUB_ROOM" property="subRoom"/>
+	<result column="SUB_YEAR" property="subYear"/>
+	<result column="SUB_SEMESTER" property="subSemester"/>
+</resultMap>
+
+</mapper>

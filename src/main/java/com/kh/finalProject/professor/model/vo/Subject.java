@@ -11,7 +11,6 @@ public class Subject {
 	private String subCode;
 	private String subName;
 	private String targetSubject;
-	private String targetDept;
 	private int targetGrade;
 	private int completePt;
 	private int subSemester;
