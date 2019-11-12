@@ -6,6 +6,9 @@
 	SELECT * FROM HD_PLAN_TB WHERE PLAN_START_DATE BETWEEN #{start} AND #{end}
 	</select>
 
+	<insert id="insertPlan">
+	INSERT INTO HD_PLAN_TB VALUES(PLAN_NO_SEQ.NEXTVAL, #{title}, #{start} ,#{end})
+	</insert>
 
 
   	<resultMap id="scheduleResult" type="schedule">
@@ -13,7 +16,6 @@
 		<result column="PLAN_NAME" property="planName" />
 		<result column="PLAN_START_DATE" property="stDate" />
 		<result column="PLAN_END_DATE" property="enDate" />
-		<result column="DEPT_CODE" property="deptCode" />	
 	</resultMap>
 
   

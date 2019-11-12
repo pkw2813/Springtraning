@@ -17,9 +17,8 @@ public class Schedule {
 	
 	private int planNo;
 	private String planName;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date stDate;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date enDate;
-	private String deptCode;
+//	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private String stDate;
+//	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private String enDate;
 }

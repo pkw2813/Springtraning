@@ -24,6 +24,14 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return dao.getCalendar(session, resultMap);
 	}
 
+	@Override
+	public int insertPlan(Map map) {
+		int result = dao.insertPlan(session, map);
+		if(result == 0) new Exception();
+		return result;
+	}
+
+	
 	
 	
 	

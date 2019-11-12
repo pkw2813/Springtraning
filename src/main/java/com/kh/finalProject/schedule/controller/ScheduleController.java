@@ -2,6 +2,7 @@ package com.kh.finalProject.schedule.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,13 +28,33 @@ public class ScheduleController {
 	public HashMap<String, Object> getCalendar(String start, String end) {
 		HashMap resultMap = new HashMap();		
 		HashMap map = new HashMap();
-		System.out.println(start);
-		System.out.println(end);
 		resultMap.put("start", start);
 		resultMap.put("end", end);
 		List<Schedule> list = service.getCalendar(resultMap);
 		map.put("list", list);
-		System.out.println(list.size());
 		return map;
 	}
+	
+	
+	@RequestMapping("/insertPlan.hd")
+		public String insertPlan(String start, String end, String title) {
+		HashMap map = new HashMap();
+		System.out.println(start);
+		System.out.println(end);
+		System.out.println(title);
+		int result;
+		map.put("start", start);
+		map.put("end", end);
+		map.put("title", title);
+		try {
+			result = service.insertPlan(map);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "schedule/schedule";
+	}
+	
+	
+	
 }
