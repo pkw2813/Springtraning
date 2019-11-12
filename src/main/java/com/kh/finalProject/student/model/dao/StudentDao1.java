@@ -9,10 +9,14 @@ import com.kh.finalProject.student.model.vo.Student;
 
 public interface StudentDao1 {
 	
+	
+	
+
+	
 	Student selectStudent(SqlSessionTemplate session,String studentNo);
 	int studentInfoUpdate(SqlSessionTemplate session,Student s);
-	List<Map> selectAllClass(SqlSessionTemplate session,String stuId);
-	List<Map> selectClass(SqlSessionTemplate session,Map<String,Object> param);
+	List<Map> selectAllClass(SqlSessionTemplate session,String stuId,int cPage,int numPerPage);
+	List<Map> selectClass(SqlSessionTemplate session,Map<String,Object> param,int cPage,int numPerPage);
 	int countAllClass(SqlSessionTemplate session,String stuId);
 	int countSelectClass(SqlSessionTemplate session,Map<String,Object>param);
 	List<Map> selectProfEval(SqlSessionTemplate session,Map<String,Object>param);
@@ -22,9 +26,9 @@ public interface StudentDao1 {
 	double averPoint(SqlSessionTemplate session,Map<String,Object>param);
 	int cancelClass(SqlSessionTemplate session,Map<String,Object> param);
 	List<Map> selectMyApplyClass(SqlSessionTemplate session,String stuId);
-	List<Map> myApplyClass(SqlSessionTemplate session,String stuId);
+	List<Map> myApplyClass(SqlSessionTemplate session,String stuId,int cPage,int numPerPage);
 	int countMyApplyClass(SqlSessionTemplate session,String stuId);
 	int cancelMyClass(SqlSessionTemplate session,Map<String,Object> param);
-	List<Map> selectMyClass(SqlSessionTemplate session,Map<String,Object> param);
+	List<Map> selectMyClass(SqlSessionTemplate session,Map<String,Object> param,int cPage,int numPerPage);
 	int countSelectMyClass(SqlSessionTemplate session,Map<String,Object>param);
 }

@@ -8,35 +8,37 @@
   	
   	 <select id="selectAllClass" resultType="map">
   		    SELECT ROWNUM, TOTAL.* FROM
-(SELECT * 
+	(SELECT * 
     FROM (SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,A.PROF_ID,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,
-        B.SUB_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+        B.SUB_SEMESTER,C.PROF_NAME,D.DEPT_NAME,B.SUB_DATE,
   		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
-        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
-        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C,HD_DEPARTMENT_TB D
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID AND C.DEPT_CODE=d.dept_code
         ) A1
      LEFT JOIN (   
-                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE
+                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE AS SUB_CODE_B
                 FROM HD_SUB_REQ_TB
-                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
+                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE_B = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
     ORDER BY OPEN_YN DESC) TOTAL
+                where 1=1
   	</select>
   	
   	 <select id="selectClass" parameterType="map" resultType="map">
   		  		    SELECT ROWNUM, TOTAL.* FROM
-(SELECT * 
+	(SELECT * 
     FROM (SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,A.PROF_ID,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,
-        B.SUB_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+        B.SUB_SEMESTER,C.PROF_NAME,D.DEPT_NAME,B.SUB_DATE,
   		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
-        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
-        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C,HD_DEPARTMENT_TB D
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID AND C.DEPT_CODE=d.dept_code
         ) A1
      LEFT JOIN (   
-                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE
+                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE AS SUB_CODE_B
                 FROM HD_SUB_REQ_TB
-                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
+                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE_B = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
     ORDER BY OPEN_YN DESC) TOTAL
-        where 1=1
+                where 1=1
+      
         <if test="chk_isu !=null and chk_isu != ''">
 			AND sub_type = #{chk_isu}
 		</if>
@@ -46,7 +48,7 @@
 		</if>
 		
 		<if test="chk_dept !=null and chk_dept != ''">
-			AND t_dept = #{chk_dept}
+			AND DEPT_NAME = #{chk_dept}
 		</if>
 		
 		 <if test="chk_year !=null and chk_year != ''">
@@ -67,16 +69,17 @@
   		SELECT COUNT(*) FROM (SELECT ROWNUM, TOTAL.* FROM
 	(SELECT * 
     FROM (SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,A.PROF_ID,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,
-        B.SUB_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+        B.SUB_SEMESTER,C.PROF_NAME,D.DEPT_NAME,B.SUB_DATE,
   		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
-        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
-        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C,HD_DEPARTMENT_TB D
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID AND C.DEPT_CODE=d.dept_code
         ) A1
      LEFT JOIN (   
-                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE
+                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE AS SUB_CODE_B
                 FROM HD_SUB_REQ_TB
-                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
+                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE_B = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
     ORDER BY OPEN_YN DESC) TOTAL)
+               
                 where 1=1
         <if test="chk_isu !=null and chk_isu != ''">
 			AND sub_type = #{chk_isu}
@@ -87,7 +90,7 @@
 		</if>
 		
 		<if test="chk_dept !=null and chk_dept != ''">
-			AND T_DEPT = #{chk_dept}
+			AND DEPT_NAME = #{chk_dept}
 		</if>
 		
 		 <if test="chk_year !=null and chk_year != ''">
@@ -111,16 +114,17 @@
   		SELECT COUNT(*) FROM (SELECT ROWNUM, TOTAL.* FROM
 	(SELECT * 
     FROM (SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,A.PROF_ID,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,
-        B.SUB_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+        B.SUB_SEMESTER,C.PROF_NAME,D.DEPT_NAME,B.SUB_DATE,
   		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
-        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
-        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C,HD_DEPARTMENT_TB D
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID AND C.DEPT_CODE=D.DEPT_CODE
         ) A1
      LEFT JOIN (   
-                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE
+                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE AS SUB_CODE_B
                 FROM HD_SUB_REQ_TB
-                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
+                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE_B = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
     ORDER BY OPEN_YN DESC) TOTAL)
+               
   	
   	</select>
   	
@@ -143,15 +147,15 @@
 		</choose>
   	</update>
   	<select id="selectProfEval" parameterType="map" resultType="map">
-  		SELECT ACA_YEAR_SEB,PROF_NAME,T_DEPT,SUB_NAME,EVAL_DATE,ACA_YEAR_SEB,EVAL_POINT,PHONE,GENDER,EVAL_COMMENT,A.PROF_ID
-        FROM  HD_PROF_ASSESS_TB A,HD_PROFESSOR_TB B,HD_SUBJECT_TB C
-        WHERE A.PROF_ID=B.PROF_ID AND A.SUB_CODE=C.SUB_CODE AND ACA_YEAR_SEB=#{semester} AND A.PROF_ID=#{profId} AND SUB_NAME=#{subName}
+  		SELECT ACA_YEAR_SEB,PROF_NAME,DEPT_NAME,SUB_NAME,EVAL_DATE,ACA_YEAR_SEB,EVAL_POINT,PHONE,GENDER,EVAL_COMMENT,A.PROF_ID
+        FROM  HD_PROF_ASSESS_TB A,HD_PROFESSOR_TB B,HD_SUBJECT_TB C,HD_DEPARTMENT_TB D
+        WHERE A.PROF_ID=B.PROF_ID AND A.SUB_CODE=C.SUB_CODE AND C.DEPT_CODE=D.DEPT_CODE AND ACA_YEAR_SEB=#{semester} AND A.PROF_ID=#{profId} AND SUB_NAME=#{subName}
         ORDER BY EVAL_DATE DESC
   	</select>
   	
   	<select id="selectProfInfo" parameterType="map" resultType="map">
-  		select * FROM HD_PROFESSOR_TB A ,HD_CLASS_TB B,HD_SUBJECT_TB C
-        WHERE A.PROF_ID = B.PROF_ID AND B.SUB_CODE=C.SUB_CODE 
+  		select * FROM HD_PROFESSOR_TB A ,HD_CLASS_TB B,HD_SUBJECT_TB C,HD_DEPARTMENT_TB D
+        WHERE A.PROF_ID = B.PROF_ID AND B.SUB_CODE=C.SUB_CODE AND C.DEPT_CODE=D.DEPT_CODE
         AND A.PROF_ID=#{profId} AND SUB_NAME=#{subName}
   	</select>
   	
@@ -178,51 +182,52 @@
   		SELECT ROWNUM, TOTAL.* FROM
 (SELECT * 
     FROM (SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,A.PROF_ID,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,
-        B.SUB_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+        B.SUB_SEMESTER,C.PROF_NAME,D.DEPT_NAME,B.SUB_DATE,
   		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
-        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
-        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C,HD_DEPARTMENT_TB D
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID AND C.DEPT_CODE=D.DEPT_CODE
         ) A1
      RIGHT JOIN (   
-                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE
+                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE AS SUB_CODE_B
                 FROM HD_SUB_REQ_TB
-                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
+                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE_B = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
     ORDER BY OPEN_YN DESC) TOTAL
   	
   	</select>
   	
   	
   	<select id="countMyApplyClass" parameterType="string" resultType="_int">
-  	SELECT COUNT(*) FROM(SELECT ROWNUM, TOTAL.* FROM
-(SELECT *
+  	SELECT COUNT(*) FROM (SELECT ROWNUM, TOTAL.* FROM
+	(SELECT * 
     FROM (SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,A.PROF_ID,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,
-        B.SUB_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+        B.SUB_SEMESTER,C.PROF_NAME,D.DEPT_NAME,B.SUB_DATE,
   		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
-        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
-        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C,HD_DEPARTMENT_TB D
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID AND C.DEPT_CODE=D.DEPT_CODE
         ) A1
-     RIGHT JOIN (
-                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE
+     RIGHT JOIN (   
+                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE AS SUB_CODE_B
                 FROM HD_SUB_REQ_TB
-                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
+                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE_B = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
     ORDER BY OPEN_YN DESC) TOTAL)
+                where 1=1
   	</select>
   	
   	<select id="selectMyClass" parameterType="map" resultType="map">
-  		  		    SELECT ROWNUM, TOTAL.* FROM
-(SELECT * 
+  		  		    SELECT COUNT(*) FROM (SELECT ROWNUM, TOTAL.* FROM
+	(SELECT * 
     FROM (SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,A.PROF_ID,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,
-        B.SUB_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+        B.SUB_SEMESTER,C.PROF_NAME,D.DEPT_NAME,B.SUB_DATE,
   		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
-        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
-        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C,HD_DEPARTMENT_TB D
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID AND C.DEPT_CODE=D.DEPT_CODE
         ) A1
      RIGHT JOIN (   
-                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE
+                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE AS SUB_CODE_B
                 FROM HD_SUB_REQ_TB
-                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
-    ORDER BY OPEN_YN DESC) TOTAL
-        where 1=1
+                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE_B = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
+    ORDER BY OPEN_YN DESC) TOTAL)
+                where 1=1
         <if test="chk_isu !=null and chk_isu != ''">
 			AND sub_type = #{chk_isu}
 		</if>
@@ -232,7 +237,7 @@
 		</if>
 		
 		<if test="chk_dept !=null and chk_dept != ''">
-			AND t_dept = #{chk_dept}
+			AND DEPT_NAME = #{chk_dept}
 		</if>
 		
 		 <if test="chk_year !=null and chk_year != ''">
@@ -255,15 +260,15 @@
   		SELECT COUNT(*) FROM (SELECT ROWNUM, TOTAL.* FROM
 	(SELECT * 
     FROM (SELECT A.SUB_CODE,A.PRE_CAPA,A.CAPACITY,A.PROF_ID,B.SUB_NAME,B.COMPLETE_PT,B.SUB_YEAR,
-        B.SUB_SEMESTER,C.PROF_NAME,B.T_DEPT,B.SUB_DATE,
+        B.SUB_SEMESTER,C.PROF_NAME,D.DEPT_NAME,B.SUB_DATE,
   		B.SUB_TIME,B.SUB_ROOM,A.OPEN_YN,B.SUB_TYPE
-        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C
-        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID
+        from HD_class_TB A,HD_SUBJECT_TB B,HD_PROFESSOR_TB C,HD_DEPARTMENT_TB D
+        WHERE A.SUB_CODE=B.SUB_CODE AND A.PROF_ID=C.PROF_ID AND C.DEPT_CODE=D.DEPT_CODE
         ) A1
      RIGHT JOIN (   
-                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE
+                SELECT STU_NO AS CHECK_IN , PROF_ID ,SUB_CODE AS SUB_CODE_B
                 FROM HD_SUB_REQ_TB
-                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
+                WHERE STU_NO = #{stuId}) B ON (B.SUB_CODE_B = A1.SUB_CODE AND B.PROF_ID = A1.PROF_ID)
     ORDER BY OPEN_YN DESC) TOTAL)
                 where 1=1
         <if test="chk_isu !=null and chk_isu != ''">
@@ -275,7 +280,7 @@
 		</if>
 		
 		<if test="chk_dept !=null and chk_dept != ''">
-			AND T_DEPT = #{chk_dept}
+			AND DEPT_NAME = #{chk_dept}
 		</if>
 		
 		 <if test="chk_year !=null and chk_year != ''">

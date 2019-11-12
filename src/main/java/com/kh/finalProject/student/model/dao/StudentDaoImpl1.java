@@ -3,6 +3,7 @@ package com.kh.finalProject.student.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,15 +25,19 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 
 	@Override
-	public List<Map> selectAllClass(SqlSessionTemplate session,String stuId) {
+	public List<Map> selectAllClass(SqlSessionTemplate session,String stuId,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("student1.selectAllClass",stuId);
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("student1.selectAllClass",stuId,row);
+		
+		
 	}
 
 	@Override
-	public List<Map> selectClass(SqlSessionTemplate session, Map<String, Object> param) {
+	public List<Map> selectClass(SqlSessionTemplate session, Map<String, Object> param,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("student1.selectClass",param);
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("student1.selectClass",param,row);
 	}
 
 	@Override
@@ -91,9 +96,10 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 
 	@Override
-	public List<Map> myApplyClass(SqlSessionTemplate session,String stuId) {
+	public List<Map> myApplyClass(SqlSessionTemplate session,String stuId,int cPage,int numPerPage) {
 		
-		return session.selectList("student1.myApplyClass",stuId);
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("student1.myApplyClass",stuId,row);
 		
 	}
 
@@ -111,9 +117,10 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 	
 	@Override
-	public List<Map> selectMyClass(SqlSessionTemplate session, Map<String, Object> param) {
+	public List<Map> selectMyClass(SqlSessionTemplate session, Map<String, Object> param,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return session.selectList("student1.selectMyClass",param);
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("student1.selectMyClass",param,row);
 	}
 
 	@Override
@@ -121,6 +128,7 @@ public class StudentDaoImpl1 implements StudentDao1 {
 		
 		return session.selectOne("student1.countSelectMyClass",param);
 	}
+
 	
 	
 	

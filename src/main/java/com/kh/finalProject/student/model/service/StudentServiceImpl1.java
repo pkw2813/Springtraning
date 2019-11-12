@@ -31,15 +31,15 @@ public class StudentServiceImpl1 implements StudentService1 {
 	}
 
 	@Override
-	public List<Map> selectAllClass(String stuId) {
+	public List<Map> selectAllClass(String stuId,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectAllClass(session,stuId);
+		return dao.selectAllClass(session,stuId,cPage,numPerPage);
 	}
 
 	@Override
-	public List<Map> selectClass(Map<String, Object> param) {
+	public List<Map> selectClass(Map<String, Object> param,int cPage,int numPerPage) {
 		// TODO Auto-generated method stub
-		return dao.selectClass(session,param);
+		return dao.selectClass(session,param,cPage,numPerPage);
 	}
 
 	@Override
@@ -97,9 +97,9 @@ public class StudentServiceImpl1 implements StudentService1 {
 	}
 
 	@Override
-	public List<Map> myApplyClass(String stuId) {
+	public List<Map> myApplyClass(String stuId,int cPage,int numPerPage) {
 	
-		return dao.myApplyClass(session,stuId);
+		return dao.myApplyClass(session,stuId,cPage,numPerPage);
 		
 	}
 
@@ -116,9 +116,9 @@ public class StudentServiceImpl1 implements StudentService1 {
 	}
 	
 	@Override
-	public List<Map> selectMyClass(Map<String, Object> param) {
+	public List<Map> selectMyClass(Map<String, Object> param,int cPage,int numPerPage) {
 		
-		return dao.selectMyClass(session,param);
+		return dao.selectMyClass(session,param,cPage,numPerPage);
 	}
 	
 	 

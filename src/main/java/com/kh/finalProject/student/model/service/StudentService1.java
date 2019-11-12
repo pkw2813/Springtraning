@@ -11,8 +11,11 @@ public interface StudentService1 {
 	List<Map> selectApplyClass(String stuNo);
 	Student selectStudent(String studentNo);
 	int studentInfoUpdate(Student s);
-	List<Map> selectAllClass(String stuId);
-	List<Map> selectClass(Map<String,Object>param); 
+	
+	List<Map> selectAllClass(String stuId,int cPage,int numPerPage);
+	List<Map> selectClass(Map<String,Object>param,int cPage,int numPerPage);
+	List<Map> myApplyClass(String stuId,int cPage,int numPerPage);
+	List<Map> selectMyClass(Map<String,Object>param,int cPage,int numPerPage);
 	int countAllClass(String stuId);
 	int countSelectClass(Map<String,Object>param);
 	Map selectProfInfo(Map<String,Object>param);
@@ -22,9 +25,7 @@ public interface StudentService1 {
 	int cancelClass(Map<String,Object>param);
 	List<Map> selectMyApplyClass(String stuId);
 	int cancelMyClass(Map<String,Object>param);
-	List<Map> myApplyClass(String stuId);
 	int countMyApplyClass(String stuId);
-	List<Map> selectMyClass(Map<String,Object>param);
 	int countSelectMyClass(Map<String,Object>param);
 	
 	

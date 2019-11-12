@@ -35,14 +35,14 @@ public class ClassController {
 		String stuId=loginMember.getStuNo();
 		int numPerPage=10;
 		int count=0;
-		List<Map> list=service.selectAllClass(stuId);
-		
-		
+		List<Map> list=service.selectAllClass(stuId,cPage,numPerPage);
 		int totalData = service.countAllClass(stuId);
+		/* int applyClassNow =service.alpplyClassNow() */
 	
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
 		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/applyClass.hd"));
+		
 		return "student/applyClass";
 
 	}
@@ -63,7 +63,7 @@ public class ClassController {
 		param.put("chk_year",req.getParameter("chk_year"));
 		param.put("chk_sem",req.getParameter("chk_sem"));
 		param.put("chk_subName",req.getParameter("chk_subName"));
-		List<Map> list=service.selectClass(param);
+		List<Map> list=service.selectClass(param,cPage,numPerPage);
 		int totalData = service.countSelectClass(param);
 		
 		m.addAttribute("list",list);
@@ -169,7 +169,7 @@ public class ClassController {
 		String stuId=loginMember.getStuNo();
 		int numPerPage=10;
 		int count=0;
-		List<Map> list=service.myApplyClass(stuId);
+		List<Map> list=service.myApplyClass(stuId,cPage,numPerPage);
 		int totalData = service.countMyApplyClass(stuId);
 	
 		
@@ -214,7 +214,7 @@ public class ClassController {
 		param.put("chk_year",req.getParameter("chk_year"));
 		param.put("chk_sem",req.getParameter("chk_sem"));
 		param.put("chk_subName",req.getParameter("chk_subName"));
-		List<Map> list=service.selectMyClass(param);
+		List<Map> list=service.selectMyClass(param,cPage,numPerPage);
 		int totalData = service.countSelectMyClass(param);
 
 		m.addAttribute("list",list);
@@ -223,10 +223,6 @@ public class ClassController {
 		return "student/myApplyClass";
 		
 	}
-	
-	
-	
-	
 	
 	
 	

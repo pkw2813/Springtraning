@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="${pageContext.request.contextPath }"/>
+	<c:set var="path" value="${pageContext.request.contextPath }"/>
 
 	<jsp:include page = "/WEB-INF/views/common/header.jsp">
 		<jsp:param name="pageTitle" value=""/>
@@ -157,23 +157,23 @@
 				<th>취소</th>
 				<th>신청결과</th>
 				</tr>
-				<c:if test='${list eq null}'>
+				<c:if test='${empty list}'>
 				</table>
 				<table>
 				<tr id=classInfo>
-				<td>
-				<image id="LoadImg" height="200px" width="150px" src="${path }/resources/images/image/selectNothing.png"/>
+				<td style="text-align:center">
+				<img id="LoadImg" height="200px" width="300px" src="${path}/resources/images/image/selectNothing.png"/>
 				</td>
 				</tr>
 				</c:if>
 				
-				<c:if test='${list ne null}'>
+				<c:if test='${!empty null}'>
 				<c:forEach items="${list}" var="e" varStatus="v">
 				
 				<tr id="classInfo">
 				<td><c:out value='${e["ROWNUM"] }'/></td>
 				<td><c:out value='${e["SUB_YEAR"]}'/>-<c:out value='${e["SUB_SEMESTER"]}'/></td>
-				<td><c:out value='${e["T_DEPT"] }'/></td>
+				<td><c:out value='${e["DEPT_NAME"] }'/></td>
 				<td><c:out value='${e["SUB_NAME"] }'/></td>
 				<td><c:out value='${e["PROF_NAME"] }'/></td>
 				<td><c:out value='${e["SUB_TYPE"] }'/></td>
@@ -186,12 +186,7 @@
 			
 				
 				<td style="text-align:center">
-				
-				<c:if test='${e["CHECK_IN"] eq null or e["CHECK_IN"] ne loginMember.stuNo}'>
-				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
-				value='${loginMember.stuNo },${e["SUB_CODE"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>신청</button>
-				</c:if>
-				
+						
 				<c:if test='${e["CHECK_IN"] eq loginMember.stuNo}'>
 				<button id="button-cancelClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="cancelClass(this.id,this.value)" class="btn btn-danger btn-xs"
 				value='${loginMember.stuNo},${e["SUB_CODE"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>취소</button>
@@ -212,7 +207,6 @@
 			    <input type="hidden" id="profEvalForm" name="profEvalForm" value=""/>
 				</form>
 				
-		
 
 	</div>
 	</div>
@@ -221,9 +215,9 @@
 	</div>
 	</div>
 	</div>
-	
+	</div>
 	<script>
-	console.log(${list});
+	
 	
 	
 		/* 년도 띄워주기 */

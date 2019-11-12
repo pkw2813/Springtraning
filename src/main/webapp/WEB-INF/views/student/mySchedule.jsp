@@ -74,13 +74,13 @@
 	<tr>
 	</tr>
       <tr>
-        <th colspan="11" style="font-size:25px;font-family:arial">강의조회/신청</th>
+        <th colspan="11" style="font-size:25px;font-family:arial">나의 수강신청 내역</th>
       </tr>
     </thead>
-    	<form method="post" action="${path }/student/selectClass.hd">
+    
     	
 				<tr>
-				<td>이수구분
+				<!-- <td>이수구분
 				<select id="chk_isu" name="chk_isu">
 					<option value="">전체</option>
 					<option value="전공필수">전공필수</option>
@@ -100,12 +100,12 @@
 				
 				<td>학과검색
 				<select id="chk_dept" name="chk_dept">
-					<option id="school0" value="">학과를선택하세요</option>
+					<option id="school0" value="">대학을선택하세요</option>
 					<option id="school1" value=""></option>
 					<option id="school2" value=""></option>
 					<option id="school3" value=""></option>
 				</select>
-			
+			 -->
 				<td>개설년도
 				<select id="chk_year" name="chk_year">
 					<option value="">전체</option>
@@ -124,8 +124,77 @@
 					<option value="2">2</option>
 				</select>
 				</td>
+				</tr>
+				</table>
+				<br><br>
+				<table class="table table-default table-striped" >
+				<tr>
+				<td style="width:200px;">교시</td>
+				<td>월</td>
+				<td>화</td>
+				<td>수</td>
+				<td>목</td>
+				<td>금</td>
+				</tr>
+				<tr>
+				<td>1교시 (09:00~09:50)</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>2교시 (10:00~10:50)</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>3교시 (11:00~11:50)</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>4교시 (12:00~12:50)</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>5교시 (13:00~13:50)</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>6교시 (14:00~14:50)</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>7교시 (14:00~14:50)</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				</tr>
+			
+				</table>
 				
-				</td>
+				<%-- </td>
 				<td >교과목명검색
 				<input type="text" name="chk_subName"></input>&nbsp&nbsp<button style="font-size:12px;font-weight:bold;height:25px;" class="btn btn-primary btn-xs"type="submit">검색</button>
 				</td>
@@ -139,32 +208,41 @@
 				<tr>
 				<thead class="thead-light">
 				      <tr>
-				        <th colspan="13" style="font-size:25px;font-family:arial">강의 시간표</th>
+				        <th colspan="13" style="font-size:25px;font-family:arial">신청내역</th>
 				      </tr>
 				    </thead>
 				</tr>
 				<tr id="classInfoTitle">
 				<th>순번</th>
 				<th>학기</th>
-				<th>학과</th>
+				<th>교과목명</th>
 				<th>과목명</th>
 				<th>담당교수</th>
 				<th>이수구분</th>
 				<th>이수학점</th>
 				<th>강의시간</th>
-				<th>수강여석</th>
+				<th>현재수강여석</th>
 				<th>강의실</th>
-				<th>수강평</th>
-				<th>신청/철회</th>
+				<th>취소</th>
+				<th>신청결과</th>
 				</tr>
+				<c:if test='${list eq null}'> --%>
+				</tr>
+				</table>
+				<%-- <table>
+				<tr id=classInfo>
+				<td>
+				<image id="LoadImg" height="200px" width="150px" src="${path }/resources/images/image/selectNothing.png"/>
+				</td>
+				</tr>
+				</c:if>
 				
+				<c:if test='${list ne null}'>
 				<c:forEach items="${list}" var="e" varStatus="v">
-				
 				<tr id="classInfo">
-				
 				<td><c:out value='${e["ROWNUM"] }'/></td>
 				<td><c:out value='${e["SUB_YEAR"]}'/>-<c:out value='${e["SUB_SEMESTER"]}'/></td>
-				<td><c:out value='${e["DEPT_NAME"] }'/></td>
+				<td><c:out value='${e["T_DEPT"] }'/></td>
 				<td><c:out value='${e["SUB_NAME"] }'/></td>
 				<td><c:out value='${e["PROF_NAME"] }'/></td>
 				<td><c:out value='${e["SUB_TYPE"] }'/></td>
@@ -174,11 +252,7 @@
 				<td><c:out value='${e["SUB_ROOM"] }'/></td>
 				
 				<c:if test='${e["OPEN_YN"] eq "Y"}'>
-				<td style="text-align:center">
-				<button id='button-profEval' style="font-size:12px;font-weight:bold;height:25px;" class="btn btn-primary btn-xs" onclick="profEval(this.id,this.value)" 
-				value='${e["SUB_NAME"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>보기
-				</button>
-				</td>
+			
 				
 				<td style="text-align:center">
 				
@@ -193,34 +267,33 @@
 				</td>		
 				</c:if>
 				</c:if>
-				<c:if test='${e["OPEN_YN"] eq "N"}'>
-				<td></td>
-				<td></td>
-				</c:if>
+				<td style="text-align:center">
+				결과출력
 				</td>
 				</tr>
 				
 				</c:forEach>
-				
+				</c:if>
 				</table>
 				<br><br>
 				${pageBar}
 				<form name="popForm">
 			    <input type="hidden" id="profEvalForm" name="profEvalForm" value=""/>
-				</form>
+				</form> --%>
 				
 		
 
+			</div>
+		</div>
 	</div>
 	</div>
 	</div>
 	</div>
 	</div>
 	</div>
-	</div>
-	</div>
-	
 	<script>
+		
+	
 		/* 년도 띄워주기 */
 		var today = new Date();
 		var yyyy = today.getFullYear();
@@ -240,7 +313,7 @@
 		$("#year5").text((yyyy-4));
 		
 	
-		
+	/* 	
 		$('#chk_school').change(function () {
 			
 			if (!$(this).val()) {
@@ -281,65 +354,7 @@
 			  }
 			});
 		
-		function profEval(clickedId,value){
-			console.log(clickedId,value)
-			$("#profEvalForm").attr("value",value);
-			console.log($("#profEvalForm").val());
-			 var myForm = document.popForm;
-			 var url= "${path}/student/profEval.hd";    //팝업창 페이지 URL
-			 var winWidth = 1000;
-		     var winHeight = 1000;
-		     var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
-			
-		   
-		    window.open("" ,"popForm",
-				       "toolbar=no, width=1000, height=700, directories=no, status=no,scrollorbars=no, resizable=no");
-		    myForm.action =url;
-			myForm.method="post";
-			myForm.target="popForm";
-			myForm.submit();
-		}
 		
-		function applyClass(id,value){
-			if (confirm("신청하시겠습니까??") == true){    //확인
-				var data={value};
-				 $.post({
-					 
-					 
-					 
-			            url: "${path}/student/applyClass.hd",
-			            type: "post",
-			            data: data,
-			            success: function(data){
-			                	alert("신청처리 됐습니다")
-			                	$("#applyButton").html("")
-			                	location.href="${path}/student/applyClass.hd"; 
-			                		
-			                	
-			                	
-			                	
-			            },
-			            error: function(){
-			                alert("에러처리");
-			            }
-			        });
-				
-				
-			 }else{   //취소
-
-			     return false;
-
-			 }
-			
-			
-			
-			
-			 
-		   
-		  
-		}
-		  
-	
 	
 		
  	function cancelClass(id,value){
@@ -348,12 +363,12 @@
  			
  			var data={value};
 			 $.post({
-		            url: "${path}/student/cancelClass.hd",
+		            url: "${path}/student/cancelMyClass.hd",
 		            type: "post",
 		            data: data,
 		            success: function(data){
-		                	alert("정상취소 됐습니다");
-		                	location.href="${path}/student/applyClass.hd"; 
+		                	alert("재신청은 기간내 조회/신청페이지에서 가능합니다");
+		                	location.href="${path}/student/myClassInfo.hd"; 
 		                	
 		            },
 		            error: function(){
@@ -371,7 +386,7 @@
 			 
  	}
 		
-	
+	 */
 	
 	</script>
 	
