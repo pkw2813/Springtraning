@@ -19,5 +19,6 @@
 		<typeAlias type="com.kh.finalProject.schedule.model.vo.Schedule" alias="schedule"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.Select_ClassInfo" alias="selectClassInfo"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.Subject" alias="subject"/>
+		<typeAlias type="com.kh.finalProject.professor.model.vo.SelectAttendList" alias="selectAttendList"/>
 	</typeAliases>
 </configuration>

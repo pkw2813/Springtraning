@@ -76,15 +76,19 @@ public class ProfessorController2 {
 		List<String> preSubjectYear = service.selectPreSubject(p);
 		if (preSubjectYear != null && !preSubjectYear.isEmpty()) {
 			model.addAttribute("preSubjectList", preSubjectYear);
+		}else {
+			preSubjectYear.add("개설과목 없음");
+			model.addAttribute("preSubjectList", preSubjectYear);
 		}
 		
 		
 		//=========현재 강의중인 과목 이름 리스트 조회=======
 		List<Select_SubjectNameCode> nameCodeList = service.selectPreSubjectNameo(p);
 		if(nameCodeList != null && !nameCodeList.isEmpty()) {
-			model.addAttribute("nameCodeList", nameCodeList);
+		} else {
+			nameCodeList.add(new Select_SubjectNameCode("","개설과목 없음"));
 		}
-		
+		model.addAttribute("nameCodeList", nameCodeList);		
 		//조건 검색에 따른 실 수강생 목록 조회 시작
 		if(sic != null && sic.getSubCode() != null && sic.getSubYear() != null) {
 		int totalData = service.countInClass(sic);
@@ -110,20 +114,20 @@ public class ProfessorController2 {
 
 	}
 	
-	@RequestMapping()
-	public String getAjaxInClass() {
-		
-		return "";
-	}
 
 	// 출결조회
 	@RequestMapping("prof/viewClassAttend.hd")
-	public String viewClassAttend(HttpServletRequest req, Model model) {
-		System.out.println(req.getParameter("attendDate"));
-		System.out.println(req.getParameter("subjectName"));
-		System.out.println(req.getParameter("studentName"));
-		System.out.println(req.getParameter("grade"));
-
+	public String viewClassAttend(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession session, Model model ) {
+		int numPerPage = 5;
+		Professor p = (Professor) session.getAttribute("loginMember");
+		
+		List<Select_SubjectNameCode> subNameCodeList = service.selectPreSubjectNameo(p);
+		if(subNameCodeList != null && !subNameCodeList.isEmpty()) {
+		} else {
+			subNameCodeList.add(new Select_SubjectNameCode("","개설과목 없음"));
+		}
+		model.addAttribute("subNameCodeList", subNameCodeList);		
+		
 		return "professor/stu_view_classAttend";
 	}
 

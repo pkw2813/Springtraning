@@ -286,7 +286,7 @@ public class PageFactory {
 		pageBar += "console.log(data);";
 		pageBar += "console.log(data.stuNo);";
 		pageBar += "console.log(data[\"grade\"]);";
-		pageBar += "location.href='" + url + "?cPage='+cPage+'&sunCode='+data[\"subCode\"]+'&"
+		pageBar += "location.href='" + url + "?cPage='+cPage+'&subCode='+data[\"subCode\"]+'&"
 				+ "subYear='+data[\"subYear\"]+'&subName='+data[\"subName\"]+'&grade='+data[\"grade\"]"
 				+ "&stuNo=[\"stuNo\"]&stuName=[\"stuName\"];";
 		pageBar += "} ";

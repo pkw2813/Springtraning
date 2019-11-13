@@ -88,19 +88,19 @@
 								</thead>
 								<tbody>
 
-									<tr>
-										<td><input type="text" placeholder="학번검색" value=""
+									<tr> 
+										<td><input type="text" placeholder="학번검색" value="" class="form-control"
 											name="stuNo"></td>
-										<td><input type="text" placeholder="이름검색" value=""
+										<td><input type="text" placeholder="이름검색" value="" class="form-control"
 											name="stuName"></td>
-										<td><select name="grade">
+										<td><select name="grade" class="form-control">
 												<option value="" selected>학년검색</option>
 												<option value="1">1학년</option>
 												<option value="2">2학년</option>
 												<option value="3">3학년</option>
 												<option value="4">4학년</option>
 										</select></td>
-										<td><select name="regStatus">
+										<td><select name="regStatus" class="form-control">
 												<option value="" selected>학적구분</option>
 												<option value="1">재학</option>
 												<option value="2">휴학</option>
@@ -108,7 +108,7 @@
 												<option value="4">졸업</option>
 												<option value="4">중퇴</option>
 										</select></td>
-										<td><input type="submit" value="검색"></td>
+										<td><input type="submit" value="검색" class="form-control btn btn-warning"></td>
 
 									</tr>
 

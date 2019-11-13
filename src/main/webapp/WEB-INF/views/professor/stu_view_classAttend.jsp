@@ -4,18 +4,26 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+<script type="text/javascript"
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+  crossorigin="anonymous"></script>
+<script type="text/javascript" src="${path }/resources/js/datepicker-ko.js"></script>
+
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <style>
-.modal-dialog {
+/* .modal-dialog {
 	overflow-y: initial !important
 }
 
 .modal-body {
 	height: 100%;
 	overflow-y: auto;
-}
+} */
+.modal{
+    		z-index:9999;
+    	}
 </style>
 
 
@@ -52,36 +60,38 @@
 
 								<tbody>
 									<tr>
-										<td><select name="subjectName" class="form-control form-control-sm">
-												<option value="*" selected>과목선택</option>
-												<option value="E1203">영어영문학</option>
-												<option value="J123">자바프로그래밍</option>
-												<option value="chul">철학입문1</option>
-												<option value="Muyeok">무역영어</option>
+										<td><select name="subCode" class="form-control form-control-sm">
+												<option value="" selected>과목선택</option>
+												<c:forEach items="${subNameCodeList }" var="subList">
+													<option value="${subList.subCode }">${subList.subName }</option>
+												</c:forEach>
 										</select></td>
 										<td>
-									        <input id="datepicker" class="form-control form-control-sm "/>
-										    <script>
-										        $('#datepicker').datepicker({
-										            uiLibrary: 'bootstrap4'
-										        });
+									        <input name="atDate" style="text-align : center;" id="dateInput" type="text" class="form-control form-control-sm "/>
+										    <script type="text/javascript" >
+												$("#dateInput").datepicker();
+												$.datepicker.setDefaults($.datepicker.regional["ko"]);
+												uiLibrary: 'bootstrap4';
+										        /* $('#dateInput').datepicker({*/
+										            
 										    </script>
 										</td>
 										<td>
-										<input type="text" name="" class="form-control form-control-sm" id="inlineFormInputName2" placeholder="이름검색" />
+										<input type="text" name="stuName" class="form-control form-control-sm" id="inlineFormInputName2" placeholder="이름검색" />
 											
 										</td>
 										<td><select name="grade" class="form-control form-control-sm">
-												<option value="*" selected>학년검색</option>
+												<option value="" selected>학년검색</option>
 												<option value="1">1학년</option>
 												<option value="2">2학년</option>
 												<option value="3">3학년</option>
 												<option value="4">4학년</option>
 										</select></td>
 										<td>
-										<input type="text" class="form-control form-control-sm" id="inlineFormInputName2" placeholder="학과검색">											
+										<input type="text" class="form-control form-control-sm" id="inlineFormInputName2"
+												name="deptName" placeholder="학과검색">											
 											</td>
-										<td><input type="submit" value="검색"></td>
+										<td><input type="submit" value="검색" class="btn btn-success"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -89,13 +99,12 @@
 
 					</div>
 
-					<div class="card-body">
+					<div class="card-body table-responsive">
 						<div class="col-md-12">
 							<table class="table table-bordered table-hover table-condensed"
 								style="text-align: center;">
 								<thead class="thead-dark">
 									<tr>
-										<th>학번</th>
 										<th>학과</th>
 										<th>학년</th>
 										<th>이름</th>
@@ -114,7 +123,6 @@
 								</thead>
 								<tbody>
 									<tr class="success">
-										<td>A2934</td>
 										<td>영문학과</td>
 										<td>4학년</td>
 										<td>박성술</td>
@@ -132,13 +140,13 @@
 										</select></td>
 										<td>
 											<button type="button" class="btn btn-success btn-toggle"
-												data-toggle="modal" data-target="#myModal">조회</button>
+												id='classViewBtn'>조회</button>
 										</td>
 									</tr>
 								</tbody>
 							</table>
 
-							<div class="modal fade" id="myModal">
+							<!-- <div class="modal fade" id="myModal">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -179,8 +187,94 @@
 										<div class="modal-footer"></div>
 									</div>
 								</div>
-							</div>
-							<script>
+							</div> -->
+
+
+					      <!-- @@Modal content Start@@ -->
+
+							<div id="classViewModal" class="modal">
+						      <div class="modal-content">
+						         <span class="close" id="closeClassView">&times;</span>
+						        <!-- Modal body start -->
+						        <div class="modal-header">
+											<table class="table table-bordered table-hover table-condensed">
+												<thead class="thead-dark">
+													<tr>
+														<th>철학 입문</th>
+														<th>박성술</th>
+														<th>영어과</th>
+														<th>3학년</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+										<div class="modal-body">
+											<table class="table table-bordered table-hover table-condensed">
+												<thead>
+													<tr>
+														<th>날짜</th>
+														<th>출석</th>
+														<th>지각</th>
+														<th>조퇴</th>
+														<th>결석</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>2019/11/01</td>
+														<td></td>
+														<td></td>
+														<td>O</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="modal-footer"></div>
+						        <!-- Modal body end -->
+						      </div>
+						 
+						    </div>
+    					      <!-- @@Modal content End@@ -->
+    
+    <script>
+     // Get the modal
+        var classViewModal = document.getElementById('classViewModal');
+ 
+        // Get the button that opens the modal
+        var classViewBtn = document.getElementById("classViewBtn");
+ 
+        // Get the <span> element that closes the modal
+        var closeClassView = document.getElementById("closeClassView");                                          
+        // When the user clicks on the button, open the modal 
+        classViewBtn.onclick = function() {
+           classViewModal.style.display = "block";
+        }
+ 
+        // When the user clicks on <span> (x), close the modal
+        closeClassView.onclick = function() {
+        	classViewModal.style.display = "none";
+        }
+
+ 
+        // When the user clicks anywhere outside of the modal, close it
+        /* window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        } */
+
+        </script>
+							
+							
+		<script type="text/javascript">
+		/* $(document).ready(function(){
+		$.datepicker.setDefaults($.datepicker.regional["ko"])
+		$("#dateInput").datepicker();
+			
+		}); */
+		</script>
+							<!-- <script>
 								$(document)
 										.ready(
 												function() {
@@ -199,7 +293,7 @@
 								// 모달창 열기
 								$('#myModal').modal("show"); */
 								// 모달창 닫음
-							</script>
+							</script> -->
 						</div>
 					</div>
 
@@ -213,12 +307,7 @@
 	</div>
 
 	<!-- Main-content End -->
-<script>
-$('#dateRangePicker').datepicker({
-	 format: "yyyy-mm-dd",
-	 language: "kr"
-	 });
-</script>
+
 
 
 	<!-- Body section End -->

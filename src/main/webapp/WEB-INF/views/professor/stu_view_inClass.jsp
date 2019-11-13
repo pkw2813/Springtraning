@@ -41,7 +41,7 @@
 
 								<tbody>
 									<tr><!-- 개설연도 -->
-										<td><select name="subYear"  required>
+										<td><select name="subYear" class="form-control"  required>
 												<option value="" selected>개설기간 선택</option>
 												<c:forEach items="${preSubjectList }" var='yearList'>
 												
@@ -49,7 +49,7 @@
 												</c:forEach>
 										</select></td>
 										<!-- 강의명 -->
-										<td><select name="subCode" required>
+										<td><select name="subCode" class="form-control" required>
 												<option value="" selected>강의선택</option>
 												<c:forEach items="${nameCodeList }" var="ncList">
 												<option value="${ncList.subCode }">${ncList.subName}</option>
@@ -57,7 +57,7 @@
 										</select></td>
 										<!-- 학년 -->
 								
-										<td><select name="grade">
+										<td><select name="grade" class="form-control" >
 												<option value="" selected>학년검색</option>
 												<option value="1">1학년</option>
 												<option value="2">2학년</option>
@@ -65,13 +65,13 @@
 												<option value="4">4학년</option>
 										</select></td>
 										<!-- 이름 -->
-										<td><input type="text" placeholder="이름검색(미입력시 전체)"
+										<td><input type="text" placeholder="이름검색(미입력시 전체)" class="form-control"
 											value="" name="stuName" /></td>
 										<!-- 학과 -->
-										<td><input type="text" placeholder="학과검색" value=""
+										<td><input type="text" placeholder="학과검색" value="" class="form-control"
 											name="deptName" /></td>
 										<!-- 학번 -->
-										<td><input type="text" placeholder="학번검색(미입력시 전체)"
+										<td><input type="text" placeholder="학번검색(미입력시 전체)" class="form-control"
 											value="" name="stuNo" /></td>
 										<td>
 											<button type="submit" class="btn btn-outline-primary">검색</button>

@@ -91,30 +91,32 @@
 			<if test='grade != null &amp; grade != ""'>
 			AND GRADE = #{grade}
 		</if>
-		<if test='stuNo != null &amp; stuNo != ""'>
+		<if test='stuNo != null &amp; stuNo != "" '>
 			AND STU_NO = #{stuNo}
 		</if>
-		<if test='stuName != null &amp; stuName !'>
+		<if test='stuName != null &amp; stuName !="" '>
 			AND STU_NAME = #{stuName}
 		</if>
 	</select>
 	
 	<select id="countInClass" parameterType="selectInClass" resultType="_int">
-        SELECT COUNT(*) 
-		FROM HD_SUB_REQ_TB A
-		      JOIN (SELECT A2.STU_NAME, A2.STU_NO, A2.DEPT_CODE, B2.DEPT_NAME, SUBSTR(STU_YEAR_SEM,1,1) AS GRADE, A2.STU_ADDR, A2.STU_EMAIL, A2.GENDER, A2.STU_TEL 
-		            FROM HD_STUDENT_TB A2
-		            JOIN (SELECT * FROM HD_DEPARTMENT_TB) B2 ON (A2.DEPT_CODE = B2.DEPT_CODE)
-		            ) 
-		      B ON (A.STU_NO = B.STU_NO)
-		WHERE SUB_CODE = #{subCode} AND SUBSTR(ACA_YEAR_SEM,1,4) = #{subYear}
-		<if test='grade != null &amp; grade != ""'>
+	    SELECT COUNT(*)
+	    FROM (SELECT * 
+			 FROM HD_SUB_REQ_TB A
+			      JOIN (SELECT A2.STU_NAME, A2.STU_NO, A2.DEPT_CODE, B2.DEPT_NAME, SUBSTR(STU_YEAR_SEM,1,1) AS GRADE, A2.STU_ADDR, A2.STU_EMAIL, A2.GENDER, A2.STU_TEL 
+			            FROM HD_STUDENT_TB A2
+			            JOIN (SELECT * FROM HD_DEPARTMENT_TB) B2 ON (A2.DEPT_CODE = B2.DEPT_CODE)
+			            ) 
+			      B ON (A.STU_NO = B.STU_NO)
+		     WHERE SUB_CODE = #{subCode} AND SUBSTR(ACA_YEAR_SEM,1,4) = #{subYear})
+		WHERE 1=1     
+		<if test='grade != null &amp; grade !="" '>
 			AND GRADE = #{grade}
 		</if>
-		<if test='stuNo != null &amp; stuNo != ""'>
+		<if test='stuNo != null &amp; stuNo != "" '>
 			AND STU_NO = #{stuNo}
 		</if>
-		<if test='stuName != null &amp; stuName !'>
+		<if test='stuName != null &amp; stuName !=""'>
 			AND STU_NAME = #{stuName}
 		</if>
        <!--  SELECT COUNT(*)
