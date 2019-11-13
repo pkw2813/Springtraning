@@ -166,8 +166,9 @@ public class StudentController3 {
 		if(!curStuYearSem.equals("")&&curStuYearSem.split("-").length==2) { // 현재 학년 학기가 ""가 아니고, 현재 학년 학기가 "-"로 배열로 나눠질때
 			curAcaYear=Integer.parseInt(curStuYearSem.split("-")[0]); // 현재 학년 저장
 			curSem=Integer.parseInt(curStuYearSem.split("-")[1]); // 현재 학기 저장
-			if(curAcaYear==1 && curSem==0) { // 신입생(1-0)이면
-				curStuYearSem="1-1"; // 1학년 1학기로 바꾸기
+			if(curSem==0) { // 신입생(1-0), 편입생(3-0)이면
+				curSem=1; // 현재 학기 1학기로 설정
+				curStuYearSem=curAcaYear+"-"+curSem;
 			}else if(curSem==1) { // 현재 학기가 1학기이면
 				curSem=2; // 현재 학기 2학기로 설정
 				curStuYearSem=curAcaYear+"-"+curSem;
@@ -236,5 +237,21 @@ public class StudentController3 {
 		model.addAttribute("birthday", birthday); // 학생 생년월일 넘기기
 		
 		return "student/myGraduation";
+	}
+	
+	@RequestMapping("/student/mySchedule.hd")
+	public String selectMySchedule(HttpSession session, Model model, HttpServletRequest req) {
+		System.out.println("/student/mySchedule.hd가 호출됨");
+		
+		Student stu=(Student)session.getAttribute("loginMember");
+		String studentNo=stu.getStuNo();
+		
+		System.out.println("로그인한 아이디:"+studentNo);
+		GraduationCon graduationCon=service.selectGraduationCon(studentNo);
+
+		String test="테스트 중123";
+		model.addAttribute("test", test); // 학생 졸업조건 넘기기
+		
+		return "student/mySchedule";
 	}
 }

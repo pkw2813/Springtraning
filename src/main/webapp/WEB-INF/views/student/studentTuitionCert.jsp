@@ -19,7 +19,7 @@
 	 }
 	 
 	 /* ui 테스트용 */
-	/*  div { 
+	 /* div { 
 	 	border: 1px solid black;
 	 } */
 	 
@@ -34,6 +34,14 @@
 	 }
 	 .textAlignRight {
 	 	text-align:right;
+	 }
+	 #signImg{
+	 	position: relative;
+	 	z-index: 2;
+	 	background-repeat: no-repeat;
+	 	background-image: url(${path }/resources/images/image/KH대학교_총장직인.png);
+	 	background-position: 1% 1%;
+	 	height:100px;
 	 }
 </style>
 <div class="main-panel">
@@ -113,8 +121,19 @@
 							</div>
 							<div class="divMarginBottom divMarginLeft font-weight-bold"  style="margin-top:10px;">
 								<div class="textAlignCenter" style="margin-top:10px; margin-bottom:10px;" id="todayDate"></div>
-								<div class="textAlignRight" style="padding-right:10px;">
-									<h3 class="font-weight-bold mb-0"><div id="sign"></div></h3>
+								<div class="row">
+									<div class="col-6" style="padding-right:0px;">
+										<div style="padding-top:30px; text-align:right;">
+										<h3 class="font-weight-bold mb-0">K&nbsp;H&nbsp;대&nbsp;학&nbsp;교</h3>
+										</div>
+									</div>
+									<div class="col-6">
+										<div id="signImg">
+											<div style="padding-top:29px; margin-left:10px; text-align:left;">
+											<h3 class="font-weight-bold mb-0">총&nbsp;장</h3>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -147,6 +166,13 @@
 			day=day.substring(0, 2);
 			
 			return year+'년 '+month+'월 '+day+'일';
+		}
+		
+		function transAcaYearSem(date) { // 문자열 매개변수를 학년도 학기로 변환해주는 함수
+			var acaYear=date.split('-')[0];
+			var semester=date.split('-')[1];
+			
+			return acaYear+'학년도 '+semester+'학기';
 		}
 		
 			function numberWithCommas(x) {
@@ -217,13 +243,13 @@
 				$("#paymentCompleteText").html("가상계좌 납부 완료");
 				
 				
-				$("#sign").html("KH대학교 총장");
+				//$("#sign").html("KH대학교 총장");
 				
 			<% 	}
 			} %>
 			
 			$("#selectYearSem").on('change', function(){
-				alert(this.value+" 등록금 납입 증명서 조회");
+				alert(transAcaYearSem(this.value)+" 등록금 납입 증명서 조회");
 				
 				// aJax 통신으로 해당 학년 학기 선택하기
 				$.ajax({
@@ -261,7 +287,7 @@
 			                	$("#paymentDate").html("납부일:"+transDate(tuitionObj.paymentDate));
 								$("#paymentCompleteText").html("가상계좌 납부 완료");
 								
-			                	$("#sign").html("KH대학교 총장");
+			                	//$("#sign").html("KH대학교 총장");
 			                }else if(tuitionObj.paymentStat=='N') { // 납부를 아직 안했으면
 			                	$("#paymentStat").show();
 				                $("#paymentStat").html(acaYearSemByAjax+" 등록금을 아직 납부하지 않았습니다.").css('color', 'royalblue');
@@ -273,7 +299,7 @@
 				                $("#paymentDate").html("");
 								$("#paymentCompleteText").html("");
 				                
-				                $("#sign").html(""); 
+				                //$("#sign").html(""); 
 			                }
 						}
 					});

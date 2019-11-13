@@ -35,6 +35,14 @@
 	 .textAlignRight {
 	 	text-align:right;
 	 }
+	 #signImg{
+	 	position: relative;
+	 	z-index: 2;
+	 	background-repeat: no-repeat;
+	 	background-image: url(${path }/resources/images/image/KH대학교_총장직인.png);
+	 	background-position: 1% 1%;
+	 	height:100px;
+	 }
 </style>
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -140,8 +148,19 @@
 							</div>
 							<div class="divMarginBottom divMarginLeft font-weight-bold">
 								<div class="textAlignCenter" id="todayDate"></div>
-								<div class="textAlignRight" style="padding-right:10px;">
-									<h3 class="font-weight-bold mb-0">KH대학교 총장</h3>
+								<div class="row">
+									<div class="col-6" style="padding-right:0px;">
+										<div style="padding-top:30px; text-align:right;">
+										<h3 class="font-weight-bold mb-0">K&nbsp;H&nbsp;대&nbsp;학&nbsp;교</h3>
+										</div>
+									</div>
+									<div class="col-6">
+										<div id="signImg">
+											<div style="padding-top:29px; margin-left:10px; text-align:left;">
+											<h3 class="font-weight-bold mb-0">총&nbsp;장</h3>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="divMarginBottom divMarginLeft font-weight-bold textAlignCenter">
