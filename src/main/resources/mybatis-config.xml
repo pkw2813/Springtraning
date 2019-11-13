@@ -20,5 +20,6 @@
 		<typeAlias type="com.kh.finalProject.professor.model.vo.Select_ClassInfo" alias="selectClassInfo"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.Subject" alias="subject"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.SelectAttendList" alias="selectAttendList"/>
+		<typeAlias type="com.kh.finalProject.professor.model.vo.AttendStudent" alias="attendStudent"/>
 	</typeAliases>
 </configuration>

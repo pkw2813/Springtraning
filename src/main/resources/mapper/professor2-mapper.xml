@@ -170,6 +170,23 @@
 	
 	</select>
 	
+	
+	
+	
+	
+	
+	
+	<!-- @@@@@@@@@@@@@@ ResultMap @@@@@@@@@@@@@@@@@@@2 생성  -->
+	<resultMap type="selectAttendList" id="attendlistResult">
+		<result column="SUB_CODE" property="subCode"/>
+		<result column="AT_DATE" property="atDate"/>
+		<result column="STU_NAME" property="stuName"/>
+		<result column="GRADE" property="grade"/>
+		<result column="DEPT_NAME" property="deptName"/>
+	
+	</resultMap>
+	
+	
 	<resultMap id="selectClassInfoResult" type="selectClassInfo">
 		<result column="SUB_CODE" property="subCode" />
 		<result column="SUB_YEAR" property="subYear" />

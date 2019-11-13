@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class SelectAttendList {
 	
 	private String subCode;
-	private Date atDate;
+	private Date   atDate;
 	private String stuName;
 	private String grade;
 	private String deptName;
