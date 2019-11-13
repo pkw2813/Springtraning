@@ -157,7 +157,20 @@
 				<th>수강평</th>
 				<th>신청/철회</th>
 				</tr>
+				<c:if test='${empty list}'>
+				</table>
+				<table>
+				<tr id=classInfo>
+				<td style="text-align:center">
+				<img id="LoadImg" height="300px" width="500px" src="${path}/resources/images/image/selectNothing.jpg"/>
+				</td>
+				</tr>
+				</c:if>
 				
+				
+				
+				
+				<c:if test="${!empty list}">
 				<c:forEach items="${list}" var="e" varStatus="v">
 				
 				<tr id="classInfo">
@@ -203,6 +216,7 @@
 				</c:forEach>
 				
 				</table>
+				</c:if>
 				<br><br>
 				${pageBar}
 				<form name="popForm">

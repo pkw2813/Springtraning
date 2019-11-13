@@ -162,12 +162,12 @@
 				<table>
 				<tr id=classInfo>
 				<td style="text-align:center">
-				<img id="LoadImg" height="200px" width="300px" src="${path}/resources/images/image/selectNothing.png"/>
+				<img id="LoadImg" height="300px" width="500px" src="${path}/resources/images/image/selectNothing.jpg"/>
 				</td>
 				</tr>
 				</c:if>
 				
-				<c:if test='${!empty null}'>
+				<c:if test='${!empty list}'>
 				<c:forEach items="${list}" var="e" varStatus="v">
 				
 				<tr id="classInfo">
@@ -194,7 +194,7 @@
 				</c:if>
 				</c:if>
 				<td style="text-align:center">
-				결과출력
+				
 				</td>
 				</tr>
 				
@@ -217,8 +217,6 @@
 	</div>
 	</div>
 	<script>
-	
-	
 	
 		/* 년도 띄워주기 */
 		var today = new Date();

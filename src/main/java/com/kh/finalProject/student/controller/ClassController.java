@@ -31,6 +31,7 @@ public class ClassController {
 	@RequestMapping("/student/applyClass.hd")
 	public String selectAllClass(HttpSession session, Model m,HttpServletRequest req,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage)
 	{
+		
 		Student loginMember=(Student)session.getAttribute("loginMember");
 		String stuId=loginMember.getStuNo();
 		int numPerPage=10;
@@ -51,7 +52,9 @@ public class ClassController {
 	@RequestMapping(value = "/student/selectClass.hd", method = RequestMethod.POST)
 	public String selectClass(HttpSession session, Model m,HttpServletRequest req,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
 		Student loginMember=(Student)session.getAttribute("loginMember");
+		
 		String stuId=loginMember.getStuNo();
+		
 		
 		
 		int numPerPage=10;

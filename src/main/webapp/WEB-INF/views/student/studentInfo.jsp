@@ -60,7 +60,7 @@ table {
 								
 								<c:if test="${student.stuImgRename eq null }">
 						
-								<image height="200px" width="150px" src="${path }/resources/images/image/default.jpg"/>
+								<image height="200px" width="150px" src="${path }/resources/images/image/default.jpg"/> 
 								</c:if>
 								<c:if test="${student.stuImgRename ne null }">
 						
@@ -151,40 +151,42 @@ table {
 			</div>
 		</div>
 
-	<!-- 	<div class="row">
-			<div class="col-md-8 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-body">
-					<h3>gdgd</h3>
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<form action="${path}/beforeStudent/enroll.hd" method="POST">
+			<span class="close">&times;</span>
+			<p>입학 신청</p>
+			<div class="form-group">
+			<hr>
+				<label class="control-label">이름</label>
+					<input type="text" id="beforeName" name="beforeName" placeholder="이름 을 입력하세요" class="form-control" required />
+			<hr>
+			<label class="control-label">입학 유형</label>
+			<select class="form-control" name="beforeType">				<option value="정시" class="enrollType" >정시</option>
+				<option value="수시" class="enrollType">수시</option>
+				<option value="편입" class="enrollType">편입</option>				
+			</select>		
+				<hr>
+			<label class="control-label">연락처</label>
+					<input type="tel" id="beforePhone" name="beforePhone" placeholder=" '-' 제외 입력" autocomplete=off class="form-control" />
+					<input type="hidden" class="saveEmail" id="saveEmail" name="beforeEmail" value="">
+					<input type="hidden" class="flagEmail" id="flagEmail" name="flagEmail" value="false">
+					<br>
+					<label class="control-label">E-mail</label>					
+					<div class="emailCheck">
+					<input type="email" id="email" name="email" placeholder="이메일을 입력하세요" class="form-control" required >
+					<button type="button" class="btn btn-info" id="emailBtn">이메일 발송</button>
 					</div>
-				</div>
-			</div>
-			<div class="col-md-4 grid-margin stretch-card">
-				<div class="card">
-					<div class="card-header">
-						<h4>aseas</h4>
-					</div>
-					<div class="card-body">
-						<h3>gdgd</h3>
-					</div>
-					
-					</div>
-				</div>
-			</div>
-		</div>
-		 -->
-		<!-- main panel end -->
-
-		<!-- 테스트 -->
-		<!-- <script>
-		console.log('테스트');
-		console.log('${path }');
-			console.log('${student.stuImgRename}');
-		
-		</script> -->
+	
+					<br>
+			
+	
+	
+	
 		<script>
 			$("#regStatus").val('${student.regStatus}');
 			$("#gender").val('${student.gender}');
+		
 		</script>
 
 

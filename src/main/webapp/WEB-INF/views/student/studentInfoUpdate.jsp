@@ -13,6 +13,7 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	
 	<style>
+	@import url('https://fonts.googleapis.com/css?family=Jua&display=swap');
 	
 		tr, td, th {
 			text-align: left;
@@ -36,6 +37,14 @@
 			
 		}
 	
+	
+		.modal fade{
+			z-index: 1000;
+		}
+		.modal-header,.modal-body,.modal-footer{
+			z-index:1001;
+		}
+		
 	</style>
 	
 
@@ -71,9 +80,12 @@
 								<image id="LoadImg" height="200px" width="150px"  src="${path }/resources/images/image/${student.stuImgRename}"/>
 								</c:if>
 						<br><br>
-							<input type="file" id="imgAttach"  name="imgAttach" class="btn btn-primary"/>
-								<label for="imgAttach" class="btn btn-primary">사진 변경</label>
+							<input type="file" id="imgAttach"  name="imgAttach"/>
+								<label for="imgAttach" class="btn btn-primary btn-xs" style="font-size:13px">사진 변경</label>
 								<input type="hidden" name="LoadImgStat" id="LoadImgStat" value="false" />
+								<br>
+								<button type="button" id="pwChange"class="btn btn-primary btn-xs" style="font-size:13px">비밀번호변경</button>
+								<br/>
 								</tr>
 			<th>학생번호</th>
 			<td><input type="text" value="${student.stuNo}" style="width:130px" required disabled/>
@@ -116,7 +128,7 @@
 			
 			<td>
 			주소 &nbsp;<input type="text" id="stuAddr" name="stuAddr" value="${student.stuAddr}" style="width:200px" readonly/>
-			<button  class="btn btn-outline-primary btn-sm" id="stuAddrButton" type="button" onclick="sample6_execDaumPostcode()">주소변경</button><br>
+			<button  class="btn btn-outline-primary btn-sm" id="stuAddrButton" type="button" onclick="sample6_execDaumPostcode()" style="height:28px;margin-top:-6px"">주소변경</button><br>
 			(우)&nbsp;&nbsp;&nbsp;<input type="text" id="stuPostCode" name="stuPostCode" value="222222" style="width:70px" readonly />
 			<input type="text" id="stuAddrDt" name="stuAddr" style="width:130px" value=" " placeholder="상세주소입력" required/>
 			<input type="hidden" class="totalAddress" name="totalAddress" id="totalAddress"/>
@@ -146,6 +158,44 @@
 	<div class="card-footer" style="text-align : center;">
 	 <input type="submit" id="submit" value="수정완료" class="btn btn-primary"/>
 	 
+	<!-- 비번교체 모달 -->
+	 <div id="pwChangeModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content" style="width:400px">
+      	<div id="topCloseBotton" style="text-align:right">
+         <span class="close" id="closePw" Style="width:50px;">&times;</span>
+  		</div>
+        <form action="${path}/req.hd">
+
+         <p style="font-family:jua;font-size:40px;font-style: ">비밀번호변경</p>
+         <div class="form-group">
+         <hr>
+         <p style="font-family:jua;font-size:15px;font-style: ">현재비밀번호</p>
+         <input type="text" id="reqTitle" name="pwNow" class="form-control" required />
+         <hr>
+         <p style="font-family:jua;font-size:15px;font-style: ">변경하실 비밀번호</p>
+         <input type="text" class="form-control" id="pw-Change" name="toName" value="${userId }"/>
+         <hr>
+         <p style="font-family:jua;font-size:15px;font-style: ">비밀번호 확인</p>
+ 		<input type="text" class="form-control" id="pw-checkChange" name="toName" value="${userId }"/>
+ 
+         <hr>
+         </div>
+         <div style="text-align:center">
+         <input type="button" class="btn btn-inverse-info btn-fw" id="closePw2" value="확인" style="float: right; margin: 7px;">
+       	</div>
+         </div>
+         <br>
+         <br>
+      </form>
+      </div>
+ 
+    </div>
+    
+	
+
+
+
 
 	</form>
 	</div>
@@ -156,7 +206,35 @@
 	</div>
 	</div>
 	
+	
+	
 	<script>
+
+	
+	var headerModal1 = document.getElementById('pwChangeModal');
+	 
+    // Get the button that opens the modal
+    var headerBtn1 = document.getElementById("pwChange");
+
+    // Get the <span> element that closes the modal
+    var closePw = document.getElementById("closePw");                                          
+    var closePw2 = document.getElementById("closePw2");  
+    // When the user clicks on the button, open the modal 
+    headerBtn1.onclick = function() {
+       headerModal1.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    closePw.onclick = function() {
+       headerModal1.style.display = "none";
+    }
+    closePw2.onclick = function() {
+       headerModal1.style.display = "none";
+    }
+		
+		
+
+	
 	$("#stuAddrDt").hide(); 
 	$("#regStatus").val('${student.regStatus}');
 	$("#gender").val('${student.gender}');
@@ -171,6 +249,8 @@
 		 }
 
 	});
+	
+	
 	$("#totalAddress").val($("#stuPostCode").val()+"PSTC"+$("#stuAddr").val());
 	
 		function LoadImg(value){ // 변경된 그림을 보여주는 함수
@@ -198,7 +278,15 @@
 		});
 		
 		
-
+		//비밀번호 변경 
+		
+		function pwChange(){
+			
+			
+			
+			
+			
+		}
 		// 카카오 주소검색 서비스
 	
 	     function sample6_execDaumPostcode() {
