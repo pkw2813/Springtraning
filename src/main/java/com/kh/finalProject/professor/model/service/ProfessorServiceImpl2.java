@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.professor.model.dao.ProfessorDao2;
+import com.kh.finalProject.professor.model.vo.AttendStudent;
 import com.kh.finalProject.professor.model.vo.InClassStudent;
 import com.kh.finalProject.professor.model.vo.Professor;
+import com.kh.finalProject.professor.model.vo.SelectAttendList;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
@@ -24,6 +26,12 @@ public class ProfessorServiceImpl2 implements ProfessorService2{
 	SqlSessionTemplate session;
 	
 	
+	@Override
+	public String selectSysdate() {
+		String sysdate = dao.selectSysdate(session);
+		return sysdate;
+	}
+
 	@Override
 	public Professor selectOne(String loginId, String loginPwd) {
 		// TODO Auto-generated method stub
@@ -70,6 +78,19 @@ public class ProfessorServiceImpl2 implements ProfessorService2{
 	public Select_ClassInfo selectClassInfo(Map<String, String> map) {
 		Select_ClassInfo ic = dao.selectClassInfo(session, map);
 		return ic;
+	}
+
+	@Override
+	public List<AttendStudent> selectAttendList(SelectAttendList sal, int cPage, int numPerPage) {
+		List<AttendStudent> list = dao.selectAttendList(session , sal, cPage, numPerPage);
+		return list;
+	}
+
+	@Override
+	public int countAttendList(SelectAttendList sal) {
+		int result = dao.countAttendList(session, sal);
+		
+		return result;
 	}
 	
 	

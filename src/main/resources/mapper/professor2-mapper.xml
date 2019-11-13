@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="prof2">
 
+
+	<select id="selectSysdate" resultType="string">
+		SELECT SYSDATE FROM DUAL
+	</select>
+
+
+
+	<!--  학과생 조회  -->
 	<select id="selectInMajor" parameterType="selectInMajor" resultMap="studentResult">
 		SELECT STU_NO, STU_NAME, GENDER, STU_TEL, STU_EMAIL, 
 			   STU_ADDR, REG_STATUS, DEPT_CODE, 
@@ -22,7 +30,7 @@
 			AND DEPT_CODE = #{deptCode} 
 			ORDER BY STU_NAME
 	</select>
-	
+	<!--  학과생 리스트 카운트 (페이징용) -->
 	<select id="countInDept"  resultType="_int" parameterType="selectInMajor">
 	
 		SELECT COUNT(*) 
@@ -170,19 +178,102 @@
 	
 	</select>
 	
+	<select id="selectAttendList" parameterType="selectAttendList" resultMap="attendlistResult">
+		SELECT * 
+		FROM    (SELECT ORI.*, 
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='출석') AS ATTEND,
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS DISMISS,
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='지각') AS LATE,
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='조퇴') AS EALRY_LEAVE
+		            
+		        FROM   (SELECT STU_NO, SUB_CODE, PROF_ID,GRADE  , STU_NAME, DEPT_CODE, DEPT_NAME, ACA_YEAR_SEM,
+		    
+		                (SELECT SUB_YEAR AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_YEAR,
+		                (SELECT SUB_SEMESTER AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_SEMESTER
+		            
+		            FROM HD_SUB_REQ_TB A
+		            LEFT JOIN ( SELECT DISTINCT(STU_NO) AS STN, STU_NAME, DEPT_CODE, SUBSTR(STU_YEAR_SEM , 1,1) AS GRADE 
+		                                                                            ,(SELECT DEPT_NAME 
+		                                                                              FROM HD_DEPARTMENT_TB A 
+		                                                                              WHERE A.DEPT_CODE = B1.DEPT_CODE) AS DEPT_NAME
+		                        FROM HD_STUDENT_TB B1
+		                        LEFT JOIN HD_SUB_REQ_TB USING(STU_NO)
+		                        ) B ON (A.STU_NO = B.STN)
+		            WHERE 1 = 1 
+		            <if test='subCode != null and subCode != "" '>
+		            AND SUB_CODE = #{subCode} 
+		            </if>
+		            AND PROF_ID = #{profId}
+		        ) ORI
+        )
+      <if test='subCode != null and subCode != "" '>
+       	 	WHERE 1 = 1
+        
+	      </if>
+	      <!--  첫화면 출력 용 -->
+	      <if test='subCode == null or subCode == "" '>
+	       WHERE 1 = 2
+	      </if>
+	</select>
 	
+	<select id="countAttendList" parameterType="selectAttendList" resultType="_int">
 	
-	
+		SELECT COUNT(*) 
+		FROM    (SELECT ORI.*, 
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='출석') AS ATTEND,
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS DISMISS,
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='지각') AS LATE,
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='조퇴') AS EALRY_LEAVE
+		            
+		         FROM   (SELECT STU_NO, SUB_CODE, PROF_ID,GRADE  , STU_NAME, DEPT_CODE, DEPT_NAME, ACA_YEAR_SEM,
+		    
+			                (SELECT SUB_YEAR AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_YEAR,
+			                (SELECT SUB_SEMESTER AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_SEMESTER
+		            
+			            FROM HD_SUB_REQ_TB A
+			            LEFT JOIN ( SELECT DISTINCT(STU_NO) AS STN, STU_NAME, DEPT_CODE, SUBSTR(STU_YEAR_SEM , 1,1) AS GRADE 
+			                                                                            ,(SELECT DEPT_NAME 
+			                                                                              FROM HD_DEPARTMENT_TB A 
+			                                                                              WHERE A.DEPT_CODE = B1.DEPT_CODE) AS DEPT_NAME
+			                        FROM HD_STUDENT_TB B1
+			                        LEFT JOIN HD_SUB_REQ_TB USING(STU_NO)
+			                        ) B ON (A.STU_NO = B.STN)
+		            WHERE 1 = 1 
+		            <if test='subCode != null and subCode != "" '>
+		            AND SUB_CODE = #{subCode} 
+		            </if>
+		            AND PROF_ID = #{profId}
+		        ) ORI
+        )
+		<if test='subCode != null and subCode != "" '>
+       	 	WHERE 1 = 1
+        
+	      </if>
+	      <!--  첫화면 출력 용 -->
+	      <if test='subCode == null or subCode == "" '>
+	       WHERE 1 = 2
+	      </if>
+      
+	</select>
 	
 	
 	
 	<!-- @@@@@@@@@@@@@@ ResultMap @@@@@@@@@@@@@@@@@@@2 생성  -->
-	<resultMap type="selectAttendList" id="attendlistResult">
+	<resultMap type="attendStudent" id="attendlistResult">
+		<result column="STU_NO" property="stuNo"/>
 		<result column="SUB_CODE" property="subCode"/>
-		<result column="AT_DATE" property="atDate"/>
-		<result column="STU_NAME" property="stuName"/>
+		<result column="PROF_ID" property="profId"/>
 		<result column="GRADE" property="grade"/>
+		<result column="STU_NAME" property="stuName"/>
+		<result column="DEPT_COODE" property="deptCode"/>		
 		<result column="DEPT_NAME" property="deptName"/>
+		<result column="ACA_YEAR_SEM" property="acaYearSem"/>
+		<result column="SUB_YEAR" property="subYear"/>
+		<result column="SUB_SEMESTER" property="subSemester"/>
+		<result column="ATTEND" property="attend"/>
+		<result column="DISMISS" property="dismiss"/>
+		<result column="LATE" property="late"/>
+		<result column="EALRY_LEAVE" property="ealryLeave"/>		
 	
 	</resultMap>
 	

@@ -112,7 +112,7 @@
 										<th>결석</th>
 										<th>지각</th>
 										<th>조퇴</th>
-										<th>(금일 출결상태)2019-11-04</th>
+										<th>(금일 출결상태)${attendList[0].sysdate }</th>
 										<th>
 											금일출석입력
 										</th>
@@ -122,17 +122,18 @@
 									</tr>
 								</thead>
 								<tbody>
+								<c:forEach items="${attendList }" var="list">
 									<tr class="success">
-										<td>영문학과</td>
-										<td>4학년</td>
-										<td>박성술</td>
-										<td>12</td>
-										<td>1</td>
-										<td>2</td>
-										<td>2</td>
+										<td>${list.deptName }</td>
+										<td>${list.grade }</td>
+										<td>${list.stuName }</td>
+										<td>${list.attend }</td>
+										<td>${list.dismiss }</td>
+										<td>${list.late }</td>
+										<td>${list.ealryLeave}</td>
 										<td>미입력</td>
 										<td><select name="attendStatus" class="form-control form-control-sm">
-												<option value="*" selected>출결입력</option>
+												<option value="" selected>출결입력</option>
 												<option value="출석">출석</option>
 												<option value="결석">결석</option>
 												<option value="지각">지각</option>
@@ -143,51 +144,9 @@
 												id='classViewBtn'>조회</button>
 										</td>
 									</tr>
+								</c:forEach>
 								</tbody>
 							</table>
-
-							<!-- <div class="modal fade" id="myModal">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<table class="table table-bordered table-hover table-condensed">
-												<thead class="thead-dark">
-													<tr>
-														<th>철학 입문</th>
-														<th>박성술</th>
-														<th>영어과</th>
-														<th>3학년</th>
-													</tr>
-												</thead>
-											</table>
-										</div>
-										<div class="modal-body">
-											<table class="table table-bordered table-hover table-condensed">
-												<thead>
-													<tr>
-														<th>날짜</th>
-														<th>출석</th>
-														<th>지각</th>
-														<th>조퇴</th>
-														<th>결석</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>2019/11/01</td>
-														<td></td>
-														<td></td>
-														<td>O</td>
-														<td></td>
-													</tr>
-												</tbody>
-											</table>
-
-										</div>
-										<div class="modal-footer"></div>
-									</div>
-								</div>
-							</div> -->
 
 
 					      <!-- @@Modal content Start@@ -->
@@ -230,7 +189,9 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="modal-footer"></div>
+										<div class="modal-footer">
+											${pageBar }
+										</div>
 						        <!-- Modal body end -->
 						      </div>
 						 

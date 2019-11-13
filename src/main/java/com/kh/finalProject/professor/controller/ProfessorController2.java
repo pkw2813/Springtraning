@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService2;
+import com.kh.finalProject.professor.model.vo.AttendStudent;
 import com.kh.finalProject.professor.model.vo.InClassStudent;
 import com.kh.finalProject.professor.model.vo.Professor;
+import com.kh.finalProject.professor.model.vo.SelectAttendList;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
@@ -85,10 +86,11 @@ public class ProfessorController2 {
 		//=========현재 강의중인 과목 이름 리스트 조회=======
 		List<Select_SubjectNameCode> nameCodeList = service.selectPreSubjectNameo(p);
 		if(nameCodeList != null && !nameCodeList.isEmpty()) {
+			model.addAttribute("nameCodeList", nameCodeList);		
 		} else {
 			nameCodeList.add(new Select_SubjectNameCode("","개설과목 없음"));
+			model.addAttribute("nameCodeList", nameCodeList);		
 		}
-		model.addAttribute("nameCodeList", nameCodeList);		
 		//조건 검색에 따른 실 수강생 목록 조회 시작
 		if(sic != null && sic.getSubCode() != null && sic.getSubYear() != null) {
 		int totalData = service.countInClass(sic);
@@ -117,16 +119,44 @@ public class ProfessorController2 {
 
 	// 출결조회
 	@RequestMapping("prof/viewClassAttend.hd")
-	public String viewClassAttend(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession session, Model model ) {
+	public String viewClassAttend(SelectAttendList sal ,@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession session, Model model ) {
 		int numPerPage = 5;
 		Professor p = (Professor) session.getAttribute("loginMember");
+		sal.setProfId(p.getProfId());
+		String sysdate = service.selectSysdate();
+		sysdate = sysdate.substring(0, 10);
+		
 		
 		List<Select_SubjectNameCode> subNameCodeList = service.selectPreSubjectNameo(p);
 		if(subNameCodeList != null && !subNameCodeList.isEmpty()) {
+			model.addAttribute("subNameCodeList", subNameCodeList);		
 		} else {
 			subNameCodeList.add(new Select_SubjectNameCode("","개설과목 없음"));
+			model.addAttribute("subNameCodeList", subNameCodeList);		
 		}
-		model.addAttribute("subNameCodeList", subNameCodeList);		
+		
+		
+		List<AttendStudent> attendList = service.selectAttendList(sal,cPage, numPerPage);
+		if(attendList != null && !attendList.isEmpty()) {
+			attendList.get(0).setSysdate(sysdate);
+			System.out.println("리스트 sysdate : " + attendList.get(0).getSysdate());
+			model.addAttribute("attendList",attendList);
+		} else {
+			attendList.add(new AttendStudent("조회결과 없음"));
+			model.addAttribute("attendList",attendList);
+		}
+		
+		int totalData = service.countAttendList(sal);
+		
+		//--------------페이징 처리 시작
+		model.addAttribute("sal",sal);
+		//=======================================
+		model.addAttribute("subNameCodeList",subNameCodeList); //() 해당 과목에 수강중인 학생의 기본정보와 출결정보 출력
+														 ///SUB_CODE 와 PROF_ID 베이스 + sal의 조건들 사용
+		
+		
+		model.addAttribute("totalCount",totalData);
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/viewClassAttend.hd"));
 		
 		return "professor/stu_view_classAttend";
 	}

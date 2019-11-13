@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SelectAttendList {
-	
+	private String profId;
 	private String subCode;
-	private Date   atDate;
+	private String checkDate;
 	private String stuName;
 	private String grade;
 	private String deptName;

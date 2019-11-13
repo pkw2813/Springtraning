@@ -7,8 +7,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalProject.professor.model.vo.AttendStudent;
 import com.kh.finalProject.professor.model.vo.InClassStudent;
 import com.kh.finalProject.professor.model.vo.Professor;
+import com.kh.finalProject.professor.model.vo.SelectAttendList;
 import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
@@ -17,6 +19,13 @@ import com.kh.finalProject.student.model.vo.Student;
 
 @Repository
 public class ProfessorDaoImpl2 implements ProfessorDao2 {
+
+	
+	
+	@Override
+	public String selectSysdate(SqlSessionTemplate session) {
+		return session.selectOne("selectSysdate");
+	}
 
 	@Override
 	public List<Student> selectInMajor(SqlSessionTemplate session, SelectInMajor sim, int cPage, int numPerPage) {
@@ -54,6 +63,17 @@ public class ProfessorDaoImpl2 implements ProfessorDao2 {
 	@Override
 	public Select_ClassInfo selectClassInfo(SqlSessionTemplate session, Map<String, String> map) {
 		return session.selectOne("prof2.selectClassInfo", map);
+	}
+
+	@Override
+	public List<AttendStudent> selectAttendList(SqlSessionTemplate session, SelectAttendList sal ,int cPage, int numPerPage) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("selectAttendList",sal,row);
+	}
+
+	@Override
+	public int countAttendList(SqlSessionTemplate session, SelectAttendList sal) {
+		return session.selectOne("countAttendList",sal);
 	}
 	
 	
