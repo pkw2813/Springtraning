@@ -155,6 +155,9 @@
 				<td><input type="text" value="${student.conSemester}" required disabled/></td>
 			</tr>
 	</table>
+	 </form>
+	
+	
 	<div class="card-footer" style="text-align : center;">
 	 <input type="submit" id="submit" value="수정완료" class="btn btn-primary"/>
 	 
@@ -166,12 +169,13 @@
          <span class="close" id="closePw" Style="width:50px;">&times;</span>
   		</div>
         <form action="${path}/req.hd">
-
-         <p style="font-family:jua;font-size:40px;font-style: ">비밀번호변경</p>
+         <p style="font-family:jua;font-size:40px;">비밀번호변경</p>
          <div class="form-group">
          <hr>
          <p style="font-family:jua;font-size:15px;font-style: ">현재비밀번호</p>
-         <input type="text" id="reqTitle" name="pwNow" class="form-control" required />
+         <p id="pwTrue" style="font-family:jua;font-size:10px;color:green">비밀번호가 일치합니다</p>
+         <p id="pwFalse" style="font-family:jua;font-size:10px;color:red">비밀번호가 일치하지 않습니다</p>
+         <input type="text" id="pwNow" name="pwNow" class="form-control" required />
          <hr>
          <p style="font-family:jua;font-size:15px;font-style: ">변경하실 비밀번호</p>
          <input type="text" class="form-control" id="pw-Change" name="toName" value="${userId }"/>
@@ -185,19 +189,13 @@
          <input type="button" class="btn btn-inverse-info btn-fw" id="closePw2" value="확인" style="float: right; margin: 7px;">
        	</div>
          </div>
-         <br>
-         <br>
-      </form>
+       
+     </form>
       </div>
- 
-    </div>
+
     
+
 	
-
-
-
-
-	</form>
 	</div>
 	</div>
 	</div>
@@ -210,6 +208,29 @@
 	
 	<script>
 
+	$("#pwTrue").hide();
+	$("#pwFalse").hide();
+	$("#pwNow").keyup(function(){
+		var pwNow=$("#pwNow").val();
+		var data22=pwNow;
+		$.post({
+            url: "${path}/student/changePw.hd",
+            type: "post",
+            data: {"pwNow", "sdf"},
+            dataType: "text",
+            success: function(data){
+            	 console.log(data);
+                	
+            		},
+            error: function(){
+                alert("에러처리");
+            }
+        });
+ 	
+ 	
+		
+		
+	});
 	
 	var headerModal1 = document.getElementById('pwChangeModal');
 	 
@@ -278,15 +299,7 @@
 		});
 		
 		
-		//비밀번호 변경 
 		
-		function pwChange(){
-			
-			
-			
-			
-			
-		}
 		// 카카오 주소검색 서비스
 	
 	     function sample6_execDaumPostcode() {

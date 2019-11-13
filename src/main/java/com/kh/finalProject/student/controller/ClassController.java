@@ -202,6 +202,7 @@ public class ClassController {
 		return "student/myApplyClass";
 	
 	}
+	
 	@RequestMapping(value = "/student/selectMyClass.hd", method = RequestMethod.POST)
 	public String selectMyClass(HttpSession session, Model m,HttpServletRequest req,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
 		Student loginMember=(Student)session.getAttribute("loginMember");

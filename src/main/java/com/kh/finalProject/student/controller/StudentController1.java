@@ -3,6 +3,8 @@ package com.kh.finalProject.student.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -133,6 +135,26 @@ public class StudentController1 {
 		return "redirect:/student/studentInfo.hd";	
 
 	}	
+	
+	@RequestMapping(value = "/student/changePw.hd", method = RequestMethod.POST)
+	public String pwChange(HttpSession session,HttpServletRequest req) {
+		
+		Student loginMember=(Student)session.getAttribute("loginMember");
+		String stuPw=loginMember.getStuPw();
+		String changePwck=req.getParameter("pwNow");
+		System.out.println("changePwck:"+changePwck);
+		boolean pwck=false;
+		if(stuPw.equals(changePwck)) {
+			pwck=true;
+		}else {pwck=false;}
+		
+			
+		String stuId=loginMember.getStuNo();
+		System.out.println(pwck);
+		return "student/studentInfoUpdate";
+	}
+	
+	
 
 }
 
