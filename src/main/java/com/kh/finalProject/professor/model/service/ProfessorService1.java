@@ -26,7 +26,7 @@ public interface ProfessorService1 {
 	//강의개설 YN
 	int subjectYn(String subCode) throws RuntimeException;
 	//교수뷰
-	Professor professorView();
+	List<Subject> professorView(String profId);
 	//교수 정보수정
 	int updateProfessorEnd(Professor p);
 	//교수 비번변경
@@ -46,5 +46,11 @@ public interface ProfessorService1 {
 	List<Subject> subjectCodeView(String profId);
 	Map<String,String> selectSubject(String subCode);
 	//강의 계획서 게시판
-	List<PlanBoard> planBoardView();
+	List<PlanBoard> planBoardView(int cPage, int numPerPage);
+	//강의 계획서 작성
+	int insertPlanEnd(PlanBoard p) throws RuntimeException;
+	//강의 계획서 select
+	PlanBoard selectPlanView(int planNo);
+	//강의 계획서 수정
+	int updatePlanEnd(Map<String,String> map) throws RuntimeException;
 }

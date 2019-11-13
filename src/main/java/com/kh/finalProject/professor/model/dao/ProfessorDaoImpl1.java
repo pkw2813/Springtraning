@@ -61,8 +61,8 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	}
 	//교수뷰
 	@Override
-	public Professor professorView(SqlSessionTemplate session) {
-		return session.selectOne("professor1.professorView");
+	public List<Subject> professorView(SqlSessionTemplate session, String profId) {
+		return session.selectList("professor1.professorView",profId);
 	}
 
 	@Override
@@ -137,7 +137,23 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	}
 	//강의 계획서 게시판
 	@Override
-	public List<PlanBoard> planBoardView(SqlSessionTemplate session){
-		return session.selectList("professor1.planBoardView");
+	public List<PlanBoard> planBoardView(SqlSessionTemplate session,int cPage,int numPerPage){
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("professor1.planBoardView",null,row);
+	}
+	//강의 계획서 작성
+	@Override
+	public int insertPlanEnd(SqlSessionTemplate session, PlanBoard p) {
+		return session.insert("professor1.insertPlanEnd",p);
+	}
+	//강의 계획서 select
+	@Override
+	public PlanBoard selectPlanView(SqlSessionTemplate session, int planNo) {
+		return session.selectOne("professor1.selectPlanView",planNo);
+	}
+	//강의 계획서 수정
+	@Override
+	public int updatePlanEnd(SqlSessionTemplate session, Map<String,String> map) {
+		return session.update("professor1.updatePlanEnd",map);
 	}
 }

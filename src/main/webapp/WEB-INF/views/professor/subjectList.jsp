@@ -56,13 +56,13 @@
 		<c:forEach items="${list }" var="subject">
 			<tr>
 				<td>${subject.SUB_YEAR }</td>
-				<td>${subject.T_GRADE }학년</td>
+				<td>${subject.TARGET_GRADE }학년</td>
 				<td>${subject.SUB_SEMESTER }학기</td>
 				<td><input style="color:blue;" type='button' class="btn btn-default selectSubject" value="${subject.SUB_NAME }"/></td>
 				<td>${subject.COMPLETE_PT }점</td>
 				<td>${subject.SUB_CODE }</td>
-				<td>${subject.T_DEPT }</td>
-				<td>${subject.T_SUBJECT }</td>
+				<td>${subject.DEPT_NAME }</td>
+				<td>${subject.TARGET_SUBJECT }</td>
 				<td>${subject.SUB_TYPE }</td>
 				<td>${subject.DEPT_CODE }</td>
 				<td>${subject.SUB_ROOM }</td>

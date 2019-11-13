@@ -50,7 +50,7 @@
 				</tr>
 				<tr>
 					<th>과목설명</th>
-					<td><input type='text' value="${selectSubjectView.T_SUBJECT }" readonly/></td>
+					<td><input type='text' value="${selectSubjectView.TARGET_SUBJECT }" readonly/></td>
 				</tr>
 				<tr>
 					<th>교수명</th>
@@ -58,7 +58,7 @@
 				</tr>
 				<tr>
 					<th>수강학과</th>
-					<td><input type='text' value="${selectSubjectView.T_DEPT }" readonly/></td>
+					<td><input type='text' value="${selectSubjectView.DEPT_NAME }" readonly/></td>
 				</tr>
 			</table>
 		</div>
@@ -86,7 +86,7 @@
 					<table class="spacing">
 						<tr>
 							<th>수강학년</th>
-							<td><input type='text' value="${selectSubjectView.T_GRADE }" style="width:25px;" readonly/> 학년</td>
+							<td><input type='text' value="${selectSubjectView.TARGET_GRADE }" style="width:25px;" readonly/> 학년</td>
 							<%-- <td><div style="text-align:center;">${selectSubjectView.T_GRADE } 학년</div></td> --%>
 						</tr>
 						<tr>
@@ -100,7 +100,7 @@
 						</tr>
 						<tr>
 							<th>전공</th>
-							<td><input type='text' value="${selectSubjectView.T_DEPT }" readonly/></td>
+							<td><input type='text' value="${selectSubjectView.DEPT_NAME }" readonly/></td>
 						</tr>
 						<tr>
 							<th>이수구분</th>

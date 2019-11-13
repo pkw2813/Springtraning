@@ -96,9 +96,9 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	}
 	//교수뷰
 	@Override
-	public Professor professorView() {
+	public List<Subject> professorView(String profId) {
 		
-		Professor p = dao.professorView(session);
+		List<Subject> p = dao.professorView(session,profId);
 		
 		return p;
 	}
@@ -214,10 +214,44 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	}
 	//강의 계획서 게시판
 	@Override
-	public List<PlanBoard> planBoardView(){
+	public List<PlanBoard> planBoardView(int cPage, int numPerPage){
 		
-		List<PlanBoard> list = dao.planBoardView(session);
+		List<PlanBoard> list = dao.planBoardView(session,cPage,numPerPage);
 		
 		return list;
+	}
+	//강의 계획서 작성
+	@Override
+	public int insertPlanEnd(PlanBoard p) throws RuntimeException {
+		int result = 0;
+		
+		result = dao.insertPlanEnd(session,p);
+		
+		if(result==0) {
+			throw new RuntimeException();
+		}
+		
+		return result;
+	}
+	//강의 계획서 select
+	@Override
+	public PlanBoard selectPlanView(int planNo) {
+		
+		PlanBoard p = dao.selectPlanView(session, planNo);
+		
+		return p;
+	}
+	//강의 계획서 수정
+	@Override
+	public int updatePlanEnd(Map<String,String> map) throws RuntimeException {
+		
+		int result = 0;
+		
+		result = dao.updatePlanEnd(session,map);
+		
+		if(result == 0) {
+			throw new RuntimeException();
+		}
+		return result;
 	}
 }

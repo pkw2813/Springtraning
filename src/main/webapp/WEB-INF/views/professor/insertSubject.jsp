@@ -52,7 +52,7 @@
 										</td>
 										<td style="text-align:center;">${cv.SUB_TIME }</td>
 										<td style="text-align:center;">${cv.DEPT_CODE }</td>
-										<td style="text-align:center;">${cv.T_GRADE }</td>
+										<td style="text-align:center;">${cv.TARGET_GRADE }</td>
 										<td style="text-align:center;">${cv.SUB_SEMESTER }</td>
 										<td style="text-align:center;">${cv.CAPACITY }</td>
 										<td style="text-align:center;">
@@ -93,7 +93,7 @@
 										</td>
 										<td style="text-align:center;">${cv.SUB_TIME }</td>
 										<td style="text-align:center;">${cv.DEPT_CODE }</td>
-										<td style="text-align:center;">${cv.T_GRADE }</td>
+										<td style="text-align:center;">${cv.TARGET_GRADE }</td>
 										<td style="text-align:center;">${cv.SUB_SEMESTER }</td>
 										<td style="text-align:center;">${cv.CAPACITY }</td>
 										<td style="text-align:center;">${cv.OPEN_YN }</td>
@@ -106,7 +106,7 @@
 				</div>
 				
 				<form action="" method="post" id="insertSubject">
-				<input type='hidden' value="${profId }"/>
+				<input type='hidden' value="${profId }" name="profId"/>
 				<div class="row" style="height:7px;border-top:0.5px solid black;"></div>
 				<div class="row">
 					<div class="col-6">
@@ -149,11 +149,11 @@
 								</tr>
 								<tr>
 									<th>수강학년</th>
-									<td><input type='text' id="tGrade" name="tGrade" style="width:15px;text-align:center;" readonly/> 학년</td>
+									<td><input type='text' id="tGrade" name="targetGrade" style="width:15px;text-align:center;" readonly/> 학년</td>
 								</tr>
 								<tr>
 									<th>수강학과</th>
-									<td><input id="tDept" name="tDept" type='text' readonly/></td>
+									<td><input id="tDept" name="deptName" type='text' readonly/></td>
 								</tr>
 							</table>
 						</div>
@@ -173,7 +173,7 @@
 								</tr>
 								<tr>
 									<th>강의목표</th>
-									<td><input id="tSubject" name="tSubject" type='text' readonly/></td>
+									<td><input id="tSubject" name="targetSubject" type='text' readonly/></td>
 								</tr>
 								<tr>
 									<th>학과코드</th>
@@ -346,13 +346,13 @@ function selectSubject(subCode){
 			$("#subYear").val(subject.SUB_YEAR);
 			$("#deptCode").val(subject.DEPT_CODE);
 			$("#fn_subjectCode").val(subject.SUB_CODE);
-			$("#tDept").val(subject.T_DEPT);
-			$("#tGrade").val(subject.T_GRADE);
+			$("#tDept").val(subject.DEPT_NAME);
+			$("#tGrade").val(subject.TARGET_GRADE);
 			$("#completePt").val(subject.COMPLETE_PT);
 			$("#subSemester").val(subject.SUB_SEMESTER);
 			$("#subType").val(subject.SUB_TYPE);
 			$("#subName").val(subject.SUB_NAME);
-			$("#tSubject").val(subject.T_SUBJECT);
+			$("#tSubject").val(subject.TARGET_SUBJECT);
 			$("#classDate").val(subject.SUB_DATE);
 			$("#classTime").val(subject.SUB_TIME);
 			$("#classRoom").val(subject.SUB_ROOM);
@@ -410,7 +410,7 @@ $(function(){
 					td+="<td style='text-align:center;font-size:5px;'>"+"<a href='javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode='+d[0]['SUB_CODE'],'개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))'>"+d[0]["SUB_NAME"]+"</a>"+"</td>";
 					td+="<td>"+d[0]["SUB_TIME"]+"</td>";
 					td+="<td>"+d[0]["DEPT_CODE"]+"</td>";
-					td+="<td>"+d[0]["T_GRADE"]+"</td>";
+					td+="<td>"+d[0]["TARGET_GRADE"]+"</td>";
 					//td+="<td>"+d[0]["T_DEPT"]+"</td>";
 					td+="<td>"+d[0]["SUB_SEMESTER"]+"</td>";
 					td+="<td>"+d[0]["CAPACITY"]+"</td>";

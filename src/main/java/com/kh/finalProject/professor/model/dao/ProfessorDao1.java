@@ -32,7 +32,7 @@ public interface ProfessorDao1 {
 	//강의 개설 YN
 	int subjectYn(SqlSessionTemplate session, String subCode);
 	//교수뷰
-	Professor professorView(SqlSessionTemplate session);
+	List<Subject> professorView(SqlSessionTemplate session,String profId);
 	//교수 정보수정
 	int updateProfessorEnd(SqlSessionTemplate session, Professor p);
 	//교수 비번
@@ -57,5 +57,11 @@ public interface ProfessorDao1 {
 //	과목코드 눌렀을때 보이는 뷰
 	int selectSubjectCode(SqlSessionTemplate session, String profId);
 	//강의 계획서 뷰
-	List<PlanBoard> planBoardView(SqlSessionTemplate session);
+	List<PlanBoard> planBoardView(SqlSessionTemplate session,int cPage,int numPerPage);
+	//강의 계획서 작성
+	int insertPlanEnd(SqlSessionTemplate session,PlanBoard p);
+	//강의 계획서 select
+	PlanBoard selectPlanView(SqlSessionTemplate session, int planNo);
+	//강의 계획서 수정
+	int updatePlanEnd(SqlSessionTemplate session, Map<String,String> map);
 }

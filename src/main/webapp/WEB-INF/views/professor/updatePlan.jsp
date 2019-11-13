@@ -34,16 +34,19 @@
 				</div>
 				
 				<br/><br/>
-				<form action="${pageContext.request.contextPath }/professor/insertPlanEnd" method="post">
+				<form action="${pageContext.request.contextPath}/professor/updatePlanEnd?planNo=${plan.planNo}" method="post">
+				
 				<input type='hidden' name="profName" value="${loginMember.profName }" />
-				<input type='hidden' name="planTitle" />
+				<input type='hidden' name="planTitle" value="${plan.planSubName }" />
+
+
 				
 					<div class="row">
 						<div class="col-9" style="text-align:left;">
-							학년도 / 학기 : <input type='text' name="planYear" style="width:50px;text-align:center;"/>&nbsp; / &nbsp;<input type='text' name="planSemester" style="width:20px;text-align:center;"/>
+							학년도 / 학기 : <input type='text' name="planYear" value="${plan.planYear }" style="width:80px;text-align:center;border:none;"  />&nbsp; / &nbsp;<input type='text' name="planSemester" value="${plan.planSemester}" style="width:50px;text-align:center;border:none;"  />
 						</div>
 						<div class="col-3" style="text-align:right;">
-							${loginMember.profName } 수업계획서
+							${plan.profName } 수업계획서
 						</div>
 					</div>
 					
@@ -51,7 +54,7 @@
 					
 					<div class="row">
 						<div class="col-6" style="text-align:left;">
-							교 과 목 명 : <input name="planSubName" type='text'/>
+							교 과 목 명 : <input name="planSubName" value="${plan.planSubName}" type='text' style="border:none;"  />
 						</div>
 						<!-- <div class="col-6" style="text-align:right;">
 							교 과 목 명 : 국어국문
@@ -75,12 +78,12 @@
 						<div class="col-8">
 							<div class="row" style="height:60px;">
 								<div class="col-12" style="text-align:left;border:1px solid black;border-bottom:none;"><br/>
-									<input class="col-12" name="planSubTime" style="border:none;" type='text'/>
+									<input class="col-12" name="planSubTime" value="${plan.planSubTime}" style="border:none;" type='text'  />
 								</div>
 							</div>
 							<div class="row" style="height:60px;">
 								<div class="col-12" style="text-align:left;border:1px solid black;"><br/>
-									<input class="col-12" name="planSubRoom" style="border:none;" type='text'/>
+									<input class="col-12" name="planSubRoom" value="${plan.planSubRoom}" style="border:none;" type='text'  />
 								</div>
 							</div>
 						</div>
@@ -142,28 +145,28 @@
 						<div class="col-3" style="border:1px solid black;border-top:none;border-right:none;">
 							<table>
 								<tr>
-									<td><br/><input type='text' name="planBookName" class='col-12' style="border:none;"/></td>
+									<td><br/><input type='text' name="planBookName" value="${plan.planBookName}" class='col-12' style="border:none;"  /></td>
 								</tr>
 							</table>
 						</div>
 						<div class="col-2" style="border:1px solid black;border-top:none;border-right:none;">
 							<table>
 								<tr>
-									<td><br/><input type='text' name="planBookAuthor" class='col-12' style="border:none;"/></td>
+									<td><br/><input type='text' name="planBookAuthor" value="${plan.planBookAuthor}" class='col-12' style="border:none;"  /></td>
 								</tr>
 							</table>
 						</div>
 						<div class="col-2" style="border:1px solid black;border-top:none;border-right:none;">
 							<table>
 								<tr>
-									<td><br/><input type='text' name="planBookYear" class='col-12' style="border:none;"/></td>
+									<td><br/><input type='text' name="planBookYear" value="${plan.planBookYear}" class='col-12' style="border:none;"  /></td>
 								</tr>
 							</table>
 						</div>
 						<div class="col-3" style="border:1px solid black;border-top:none;">
 							<table>
 								<tr>
-									<td><br/><input type='text' name="planBookWhere" class='col-12' style="border:none;"/></td>
+									<td><br/><input type='text' name="planBookWhere" value="${plan.planBookWhere}" class='col-12' style="border:none;"  /></td>
 								</tr>
 							</table>
 						</div>
@@ -174,7 +177,7 @@
 					<div class="row" style="height:60px;">
 						<div class="col-2" style="border:1px solid black;text-align:center;"><br/>강좌 진행 방법</div>
 						<div class="col-10" style="border:1px solid black;border-left:none;"><div style="height:5px;"></div>
-							<input type='text' name="planWay" class='btn btn-default col-10' style="text-align:left;"/>
+							<input type='text' name="planWay" value="${plan.planWay}" class='btn btn-default col-10' style="text-align:left;"  />
 						</div>
 					</div>
 					
@@ -183,7 +186,7 @@
 					<div class="row" style="height:65px;">
 						<div class="col-2" style="text-align:center;border:1px solid black;"><br/>교과목 목표</div>
 						<div class="col-10" style="border:1px solid black;border-left:none;"><div style="height:10px;"></div>
-							<input type='text' name="planGoal" class="btn btn-default col-10" style="text-align:left;"/>
+							<input type='text' name="planGoal" value="${plan.planGoal}" class="btn btn-default col-10" style="text-align:left;"  />
 						</div>
 					</div>
 
@@ -195,7 +198,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<textarea class="col-12 form-control" name="planContent" rows='40' style="border:1px solid black;border-top:none;"></textarea>
+						<textarea class="col-12 form-control" name="planContent" rows='40' style="border:1px solid black;border-top:none;"  >${plan.planContent}</textarea>
 					</div>
 					
 					<br/>
@@ -217,16 +220,16 @@
 								<tr>
 									<th style="width:100px;border:1px solid black;text-align:center;">비율</th>
 									<td style="border:1px solid black;text-align:center;">
-										<input type='text' name="planStatus" class='col-12' style="border:none;text-align:center;"/>
+										<input type='text' name="planStatus" value="${plan.planStatus}" class='col-12' style="border:none;text-align:center;"  />
 									</td>
 									<td style="border:1px solid black;text-align:center;">
-										<input type='text' name="planAssign" class='col-12' style="border:none;text-align:center;"/>
+										<input type='text' name="planAssign" value="${plan.planAssign}" class='col-12' style="border:none;text-align:center;"  />
 									</td>
 									<td style="border:1px solid black;text-align:center;">
-										<input type='text' name="planMterm" class='col-12' style="border:none;text-align:center;"/>
+										<input type='text' name="planMterm" value="${plan.planMterm}" class='col-12' style="border:none;text-align:center;"  />
 									</td>
 									<td style="border:1px solid black;text-align:center;">
-										<input type='text' name="planFterm" class='col-12' style="border:none;text-align:center;"/>
+										<input type='text' name="planFterm" value="${plan.planFterm}" class='col-12' style="border:none;text-align:center;"  />
 									</td>
 								</tr>
 							</table>
@@ -238,13 +241,12 @@
 					<div class="row">
 						<div class="col-4"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<div class="col-4">
-							<input class="btn btn-dark" type='submit' value=" 글 작성 "/>&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 ">
+							<input id="updatePlan" class="btn btn-dark" type='submit' value=" 글 수정 "/>&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="backPlan" type='button' class="btn btn-dark" value=" 글 목록">
 						</div>
 						<div class="col-4"></div>
 					</div>
 				</form>
-				
 				
 			</div>
 		</div>
@@ -252,12 +254,18 @@
 </div>
 
 <script>
-	
-	$(function(){
-		$("#boardView").click(function(){
-			history.back();
-		});
-	});
+
+$("#updatePlan").click(function(){
+	if(confirm("수정하시겠습니까?")==true){
+		document.from.submit();
+	}else{
+		return false;
+	}
+});
+
+$("#backPlan").click(function(){
+	history.back();
+});
 
 </script>
 

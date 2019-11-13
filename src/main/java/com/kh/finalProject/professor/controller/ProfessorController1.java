@@ -185,11 +185,11 @@ public class ProfessorController1 {
 	}
 	//교수정보
 	@RequestMapping("/professor/professorView")
-	public String professorView(Model model) {
+	public String professorView(Model model, String profId) {
 		
-//		Professor p = service.professorView();
-//		
-//		model.addAttribute("prof",p);
+		List<Subject> p = service.professorView(profId);
+		
+		model.addAttribute("prof",p);
 		
 		return "professor/professorView";
 	}
@@ -475,7 +475,7 @@ public class ProfessorController1 {
 	@RequestMapping("/professor/subjectCodeView")
 	public String subjectCodeView(Model model,String profId) {
 		
-		List<Subject> list = service.subjectCodeView(profId);
+		List<Subject> list = service.subjectCodeView(profId); //
 		
 		model.addAttribute("list",list);
 		
@@ -529,17 +529,24 @@ public class ProfessorController1 {
 	}
 	//교수 강의계획서 뷰
 	@RequestMapping("professor/lecturePlan")
-	public ModelAndView planView() {
+	public String planView(@RequestParam(value="cPage",required=false,defaultValue="1")int cPage, Model model) {
 		
-		ModelAndView mv = new ModelAndView();
+		int numPerPage=10;
 		
-		List<PlanBoard> list = service.planBoardView();
+//		ModelAndView mv = new ModelAndView();
 		
-		mv.addObject("plan",list);
+		List<PlanBoard> list = service.planBoardView(cPage, numPerPage);
 		
-		mv.setViewName("professor/planView");
+		int totalData = service.selectBoardCount();
 		
-		return mv;
+
+		model.addAttribute("plan",list);
+		model.addAttribute("totalCount",totalData);
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/planView"));
+		
+//		mv.setViewName("professor/planView");
+		
+		return "professor/planView";
 	}
 	
 	//계획서 작성
@@ -549,6 +556,85 @@ public class ProfessorController1 {
 		return "professor/insertPlan";
 	}
 	
+	//계획서 작성 End
+	@RequestMapping("/professor/insertPlanEnd")
+	public ModelAndView insertPlanEnd(PlanBoard p) {
+		String msg = "";
+		String loc = "";
+		ModelAndView mv = new ModelAndView();
+		
+		try {
+			service.insertPlanEnd(p);
+			msg = "작성 완료!";
+			loc = "/professor/lecturePlan";
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+			msg = "작성 실패!";
+			loc = "/professor/lecturePlan";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		
+		mv.setViewName("common/msg");
+		
+		return mv;
+		
+	}
+	//강의 계획서 select
+	@RequestMapping("/professor/selectPlanView")
+	public ModelAndView selectPlanView(int planNo) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		PlanBoard p = service.selectPlanView(planNo);
+		
+		mv.addObject("plan",p);
+		
+		mv.setViewName("professor/selectPlanView");
+		
+		return mv;
+	}
+	//강의 계획서 수정
+	@RequestMapping("/professor/updatePlan")
+	public ModelAndView updatePlan(int planNo) {
+		ModelAndView mv = new ModelAndView();
+		
+		PlanBoard p = service.selectPlanView(planNo);
+		
+		mv.addObject("plan",p);
+		
+		mv.setViewName("professor/updatePlan");
+		
+		return mv;
+	}
+	//강의 계획서 수정 END
+	@RequestMapping("/professor/updatePlanEnd")
+	public ModelAndView updatePlanEnd(@RequestParam Map<String,String> map) {
+		ModelAndView mv = new ModelAndView();
+		
+		
+		String msg = "";
+		String loc = "";
+		
+		try {
+			service.updatePlanEnd(map);
+			msg = "수정 완료!";
+			loc = "/professor/lecturePlan";
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+			msg = "수정 실패!";
+			loc = "/professor/lecturePlan";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	//강의 계획서 삭제
 }
 
 

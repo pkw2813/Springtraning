@@ -35,14 +35,14 @@
 								<th>글쓴이</th>
 								<th>작성일</th>
 							</tr>
-							<c:forEach items="${board }" var="board">
-							<c:if test="${board!=null }">
+							<c:forEach items="${plan }" var="plan">
+							<c:if test="${plan!=null }">
 							<tr>
-								<td style="width:80px;">${board.PROF_BOARD_NO}</td>
-								<td style="width:100px;">강의계획서</td>
-								<td><a href="${pageContext.request.contextPath }/professor/selectBoardView?profBoardNo=${board.PROF_BOARD_NO}">${board.PROF_BOARD_TITLE }</a></td>
-								<td style="width:100px;"><c:out value="${ board.PROF_NAME}"/></td>
-								<td style="width:50px;"><fmt:formatDate value="${board.PROF_BOARD_DATE }" pattern="yyyy-MM-dd"/></td>
+								<td style="width:80px;">${plan.planNo}</td>
+								<td style="width:100px;">강의 계획서</td>
+								<td><a href="${pageContext.request.contextPath }/professor/selectPlanView?planNo=${plan.planNo}">${plan.planSubName }수업 - ${plan.profName } 교수 계획서</a></td>
+								<td style="width:100px;"><c:out value="${ plan.profName}"/></td>
+								<td style="width:50px;"><fmt:formatDate value="${plan.planDate }" pattern="yyyy-MM-dd"/></td>
 							</tr>
 							</c:if>
 							</c:forEach>
