@@ -3,12 +3,12 @@ package com.kh.finalProject.student.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.javassist.expr.Instanceof;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.student.model.service.StudentService1;
 import com.kh.finalProject.student.model.vo.Student;	
@@ -137,21 +138,23 @@ public class StudentController1 {
 	}	
 	
 	@RequestMapping(value = "/student/changePw.hd", method = RequestMethod.POST)
-	public String pwChange(HttpSession session,HttpServletRequest req) {
-		
+	public ModelAndView pwChange(HttpSession session,HttpServletRequest req,HttpServletResponse res) {
+		ModelAndView mv=new ModelAndView();
 		Student loginMember=(Student)session.getAttribute("loginMember");
 		String stuPw=loginMember.getStuPw();
 		String changePwck=req.getParameter("pwNow");
 		System.out.println("changePwck:"+changePwck);
-		boolean pwck=false;
+		String pwck="false";
 		if(stuPw.equals(changePwck)) {
-			pwck=true;
-		}else {pwck=false;}
-		
-			
+			pwck="true";
+		}else {pwck="false";
+		}
+	
+		mv.addObject("pwck",pwck);
+		mv.setViewName("jsonView");
 		String stuId=loginMember.getStuNo();
 		System.out.println(pwck);
-		return "student/studentInfoUpdate";
+		return mv;
 	}
 	
 	

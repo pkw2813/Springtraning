@@ -173,16 +173,20 @@
          <div class="form-group">
          <hr>
          <p style="font-family:jua;font-size:15px;font-style: ">현재비밀번호</p>
-         <p id="pwTrue" style="font-family:jua;font-size:10px;color:green">비밀번호가 일치합니다</p>
-         <p id="pwFalse" style="font-family:jua;font-size:10px;color:red">비밀번호가 일치하지 않습니다</p>
-         <input type="text" id="pwNow" name="pwNow" class="form-control" required />
+         
+         <input type="password" id="pwNow" name="pwNow"  style="font-family:jua" class="form-control" placeholder="현재비밀번호입력" required />
+         <p id="pwTrue" style="font-family:jua;font-size:12px;color:green">비밀번호가 일치합니다</p>
+         <p id="pwFalse" style="font-family:jua;font-size:12px;color:red">비밀번호가 일치하지 않습니다</p>
          <hr>
-         <p style="font-family:jua;font-size:15px;font-style: ">변경하실 비밀번호</p>
-         <input type="text" class="form-control" id="pw-Change" name="toName" value="${userId }"/>
+         <p style="font-family:jua;font-size:15px;">변경하실 비밀번호</p>
+         <input type="password" class="form-control" id="pw-Change" name="toName" required/>
+         <p id="pwChangeTrue" style="font-family:jua;font-size:12px;color:green">올바른 비밀번호입니다</p>
+         <p id="pwChangeFalse" style="font-family:jua;font-size:12px;color:red"></p>
          <hr>
-         <p style="font-family:jua;font-size:15px;font-style: ">비밀번호 확인</p>
- 		<input type="text" class="form-control" id="pw-checkChange" name="toName" value="${userId }"/>
- 
+         <p style="font-family:jua;font-size:15px;">비밀번호 확인</p>
+ 		<input type="password" class="form-control" id="pw-checkChange" name="toName" required/>
+ 		<p id="pw-checkChangeTrue" style="font-family:jua;font-size:12px;color:green">새비밀번호와 일치합니다</p>
+         <p id="pw-checkChangeFalse" style="font-family:jua;font-size:12px;color:red">새 비밀번호와 일치하지 않습니다</p>
          <hr>
          </div>
          <div style="text-align:center">
@@ -207,30 +211,130 @@
 	
 	
 	<script>
+	var pwNow;
+	var reg_pwd = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
 
-	$("#pwTrue").hide();
-	$("#pwFalse").hide();
+		 $("#pwTrue").hide();
+		 $("#pwFalse").hide();
+		 $("#pwChangeTrue").hide();
+		 $("#pwChangeFalse").hide();
+		 $("#pw-checkChangeTrue").hide();
+		 $("#pw-checkChangeFalse").hide();
+		
+
+		
+		
+	
+	
+	 
 	$("#pwNow").keyup(function(){
-		var pwNow=$("#pwNow").val();
-		var data22=pwNow;
+		pwNow=$("#pwNow").val();
+		if(pwNow.length>3){
 		$.post({
             url: "${path}/student/changePw.hd",
             type: "post",
-            data: {"pwNow", "sdf"},
-            dataType: "text",
+            data: {"pwNow":pwNow},
+            dataType:"json",
             success: function(data){
-            	 console.log(data);
+            	 
+            	 
+            	 if(data.pwck === "true"){
+            	  $("#pwTrue").show();
+            	   $("#pwFalse").hide();   
+            	 }else{
+            	  $("#pwFalse").show(); 
+            	  $("#pwTrue").hide();
+            	 }
                 	
             		},
             error: function(){
                 alert("에러처리");
+             
+                
             }
         });
- 	
- 	
+		}else{$("#pwTrue").hide();
+		$("#pwFalse").hide();}
 		
+		 
 		
 	});
+	
+	
+	$("#pw-Change").keyup(function(){
+		console.log(chkPwd($("#pw-Change").val()));
+
+		$("#pwChangeFalse").show();
+		$("#pwChangeFalse").text(chkPwd($("#pw-Change").val()));
+		
+		
+		
+		
+		if(chkPwd($("#pw-Change").val())==true){
+			 $("#pwChangeTrue").show();
+			 $("#pwChangeFalse").hide()
+			
+		}
+		
+		
+		$("#pw-checkChange").keyup(function(){
+			
+			
+			
+			
+			if($("#pw-Change").val()===$("#pw-checkChange").val()){
+				$("#pw-checkChangeTrue").show();
+				$("#pw-checkChangeFalse").hide();					
+			}else{
+				$("#pw-checkChangeFalse").show();
+				$("#pw-checkChangeTrue").hide();	
+				
+				
+			}
+			
+		});
+		
+			
+			
+		
+		
+		
+		
+	})
+	
+	
+	
+	
+	
+	function chkPwd(str){
+		var status="";
+		 var pw = str;
+
+		 var num = pw.search(/[0-9]/g);
+		 var eng = pw.search(/[a-z]/ig);
+		 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+		 if(pw.length < 8 || pw.length > 20){	 
+			status="8글자이상 20자이내로 가능합니다"
+		  return status;
+		 }
+
+		 if(pw.search(/₩s/) != -1){
+			status="공백은(spacebar) 사용할수 없습니다"
+		  	return status;
+
+		 } if(num < 0 || eng < 0 || spe < 0 ){
+		
+			status="영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요."
+		  	return status;
+		 }
+
+			 return true;
+		}
+		
+
+	
+	
 	
 	var headerModal1 = document.getElementById('pwChangeModal');
 	 
