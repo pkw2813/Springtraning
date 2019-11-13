@@ -21,5 +21,15 @@ public interface EmployeeService {
 
 	int selectDeptCount(String deptCode);
 	
-	List<Professor> selectProfList();
+	List<Professor> selectProfList(int cPage, int numPerPage);
+	
+	int profCount();
+	
+	List<Professor> changeProfessor(int cPage, int numPerPage, String deptCode);
+	
+	int changeProfessorCount(String deptCode);
+	
+	List<Employee> selectEmpList(int cPage, int numPerPage);
+	
+	int empListCount();
 	}

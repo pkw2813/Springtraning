@@ -10,35 +10,27 @@
 
 		<div class="main-panel">
    		<div class="content-wrapper">
-<div class="container-fluid">
-<div class="row">
+<div class="card card-body">
 	<div class="col-6">
-		<hr>
-		<div>
-			<h4 style="margin: 0 auto; text-align: center;" ><b class="titleCol">${p['COL_NAME']}</b></h4> 
-		</div>				
-		<hr>
 		<select class="form-control selectCol col-sm-5" style="display: inline-block; margin-right: 5px;" name ='beforeColCode'>								
 			</select>
 			<!-- 여기에 학과 선택 넣어야함 .selectCol -->
 			<select class="form-control selectdep col-sm-5"  style="display: inline-block; margin-left: 5px;" name='beforeDeptCode' required>
 				</select>
 				
-				<c:forEach var="p" items="${colList}" varStatus="pv">
-			<table class="table">
-			<tr>
-		<th>번 호</th>
-		<th>학과 명</th>
-		<th>교수 번호</th>
-		<th>교수 이름</th>
-		<th>전화 번호</th>
-		<th>이메일</th>
-		<th> 주소</th>
-		<th><input type="button" class="btn btn-outline-success btn-fw" onclick="insertNewStu(${stu.beforeStu});" value="등록"/></th>
-	</tr>
+				<table class="table">
+					<tr>
+						<th>번 호</th>
+						<th>학과 명</th>
+						<th>교수 번호</th>
+						<th>교수 이름</th>
+						<th>전화 번호</th>
+						<th>이메일</th>
+						<th> 주소</th>
+						<th><input type="button" class="btn btn-outline-success btn-fw" onclick="insertNewProf();" value="등록"/></th>
+					</tr>
 			<c:forEach var="pro" items="${list}" varStatus="v">
 						
-					<c:if test ="${p['COL_CODE'] == pro['COL_CODE']}">
 					<tr>
 						<td>${v.count}</td>
 						<td>${pro['DEPT_NAME'] }</td>
@@ -48,22 +40,21 @@
 						<td>${pro['EMAIL'] }</td>
 						<td>${pro['ADDRESS'] }</td>
 						<td>
-					<input type="button" class="btn btn-outline-danger btn-fw" onclick="deleteBeforeStu(${stu.beforeStu});" value="삭제"/>
+					<input type="button" class="btn btn-outline-danger btn-fw" onclick="deleteProf();" value="삭제"/>
 				</td>					
 			</tr>
-			</c:if>
-			</c:forEach>
-		</table>
-	</c:forEach>
+		</c:forEach>
+	</table>
 	</div>
-		
-	</div>
-	
+	<div class="card-footer">
+			${pageBar }
+		</div>
+
 </div>
+	
 
 <script>
-
-function insertNewStu(result) {
+function insertNewProf(result) {
 	console.log(result);
 	$.ajax({
 		type : 'post',
@@ -77,7 +68,7 @@ function insertNewStu(result) {
 }
 
 
-function deleteBeforeStu() {
+function deleteProf() {
 
 }
 
@@ -133,6 +124,7 @@ $(function() {
 				$('.selectdep').html(deptListHtml);
 					$('.selectdep').change(function(){
 					$("#selDept").attr('disabled',true);
+					chahgeProf();
 		});
  	}
  });
@@ -140,7 +132,23 @@ $(function() {
  });
 
 
+ 			function chahgeProf() {
+						location.href="${pageContext.request.contextPath}/changeProfessor.hd?deptCode="+$('.selectdep').val()+"";
+						// $.ajax({
+						// 	type : "post",
+						// 	url: "${pageContext.request.contextPath}/changeProfessor.hd",
+						// 	data: {"deptCode" : $('.selectdep').val()},
+						// 	success: function(data) {
+						// 		console.log(data);
 
+
+
+
+
+						// 	}
+												
+						// })
+			 }
 
 </script>
 	

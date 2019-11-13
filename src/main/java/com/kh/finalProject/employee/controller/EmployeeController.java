@@ -20,7 +20,10 @@ import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.common.encrypt.MyEncrypt;
 import com.kh.finalProject.email.controller.MailController;
 import com.kh.finalProject.employee.model.service.EmployeeService;
+import com.kh.finalProject.employee.model.vo.Employee;
+import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.vo.Professor;
+import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Controller
@@ -68,21 +71,45 @@ public class EmployeeController {
 	
 	//교수 등록 삭제 리스트
 	@RequestMapping("/enrollprofessor.hd")
-	public ModelAndView enrollprofrssor() {
+	public ModelAndView enrollprofrssor(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage) {
 		ModelAndView mv = new ModelAndView();
-		List<Professor> list = service.selectProfList();
-		List<Map> colList = bService.selectColList();
+		int numPerPage = 10;
+		List<Professor> list = service.selectProfList(cPage, numPerPage);
+		int totalData = service.profCount();
 		mv.setViewName("admin/enrollProfessor");
-		mv.addObject("colList", colList);
 		mv.addObject("list",list);
+		mv.addObject("totalData", totalData);
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/enrollprofessor.hd"));
+		return mv;
+	}
+
+	
+	@RequestMapping("/changeProfessor.hd")
+	public ModelAndView changeProfessor(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, String deptCode) {
+		ModelAndView mv = new ModelAndView();
+		int numPerPage = 5;
+		List<Professor> list = service.changeProfessor(cPage, numPerPage, deptCode);
+		int totalData = service.changeProfessorCount(deptCode);
+		mv.addObject("list",list);
+		mv.addObject("totalData", totalData);
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/changeProfessor.hd"));
+		mv.setViewName("admin/enrollProfessor");
 		return mv;
 	}
 	
+	
+	
+	
+	// 직원
 	@RequestMapping("/enrollemployee.hd")
-	public ModelAndView enrollemployee() {
+	public ModelAndView enrollemployee(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage) {
 		ModelAndView mv = new ModelAndView();
-		
-		
+		int numPerPage = 10;
+		List<Employee> list = service.selectEmpList(cPage, numPerPage);
+		int totalData = service.empListCount();
+		mv.addObject("list",list);
+		mv.addObject("totalData", totalData);
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/enrollemployee.hd"));
 		mv.setViewName("admin/enrollEmp");
 		return mv;
 	}

@@ -25,6 +25,15 @@ public interface EmployeeDao {
 	
 	int selectDeptCount(SqlSessionTemplate session, String deptCode);
 	
-	List<Professor> selectProfList(SqlSessionTemplate session);
+	List<Professor> selectProfList(SqlSessionTemplate session, int cPage, int numPerPage);
 	
+	int profCount(SqlSessionTemplate session);
+	
+	List<Professor> changeProfessor(SqlSessionTemplate session, int cPage, int numPerPage, String deptCode);
+	
+	int changeProfessorCount(SqlSessionTemplate session, String deptCode);
+	
+	List<Employee> selectEmpList(SqlSessionTemplate session, int cPage, int numPerPage);
+	
+	int empListCount(SqlSessionTemplate session);
 }

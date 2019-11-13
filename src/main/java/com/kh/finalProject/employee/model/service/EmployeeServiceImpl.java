@@ -60,9 +60,36 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Professor> selectProfList() {
-		return dao.selectProfList(session);
+	public List<Professor> selectProfList(int cPage, int numPerPage) {
+		return dao.selectProfList(session, cPage, numPerPage);
 	}
+
+	@Override
+	public int profCount() {
+		return dao.profCount(session);
+	}
+
+	@Override
+	public List<Professor> changeProfessor(int cPage, int numPerPage, String deptCode) {
+		return dao.changeProfessor(session, cPage, numPerPage, deptCode);
+	}
+
+	@Override
+	public int changeProfessorCount(String deptCode) {
+		return dao.changeProfessorCount(session, deptCode);
+	}
+
+	@Override
+	public List<Employee> selectEmpList(int cPage, int numPerPage) {
+		return dao.selectEmpList(session, cPage, numPerPage);
+	}
+
+	@Override
+	public int empListCount() {
+		return dao.empListCount(session);
+	}
+	
+	
 	
 	
 	

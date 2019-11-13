@@ -45,7 +45,8 @@
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            // right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: ''
         },
          editable: true,
         
@@ -143,19 +144,6 @@
         });
    
       });
-        
-		    
-        // //클릭 했을때 이벤트
-    //     $('.fc-day').on('click',function (){
-    //     //     //클릭한 날짜에 일일 스케쥴로 이동시키기
-    //         let day = this.attributes['data-date'].nodeValue;
-    //     //     //인덱스
-    //         let index = $('.fc-day').index(this);	
-    //         console.log(this.attributes['data-date'].nodeValue);
-    //             console.log(index);
-    //         alert(day);
-            
-    //     });
         });  
     
         // 모달창 close 하는 함수
@@ -181,20 +169,6 @@
           let end = $('#ends-at').val();
           let title = $('#title').val();
           location.href='${pageContext.request.contextPath}/insertPlan.hd?start='+start+'&end='+end+'&title='+title+'';
-          // $.ajax({
-          //   url: '${pageContext.request.contextPath}/insertPlan.hd',
-          //   type: 'post',
-          //   //인포 저장
-          //   data: {"start": start,
-          //           "end": end,
-          //           "title": title},
-          //   success: function(data) {
-          //     console.log(data);
-
-
-          //   }
-          // })
-
         }
 
      

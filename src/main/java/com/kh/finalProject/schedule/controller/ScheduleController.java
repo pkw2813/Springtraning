@@ -38,9 +38,6 @@ public class ScheduleController {
 	
 	@RequestMapping("/insertPlan.hd")
 		public String insertPlan(String start, String end, String title, Model model) {
-		System.out.println(start);
-		System.out.println(end);
-		System.out.println(title);
 		String msg ="";
 		String loc = "/schedule.hd";
 		try {

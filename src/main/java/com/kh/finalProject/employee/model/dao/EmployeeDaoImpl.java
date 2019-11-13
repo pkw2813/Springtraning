@@ -2,6 +2,7 @@ package com.kh.finalProject.employee.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -52,8 +53,36 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public List<Professor> selectProfList(SqlSessionTemplate session) {
-		return session.selectList("professor.selectProfList");
+	public List<Professor> selectProfList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("professor.selectProfList",null, row);
+	}
+
+	@Override
+	public int profCount(SqlSessionTemplate session) {
+		return session.selectOne("professor.profCount");
+	}
+
+	@Override
+	public List<Professor> changeProfessor(SqlSessionTemplate session, int cPage, int numPerPage, String deptCode) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("professor.changeProfessor", deptCode, row);
+	}
+
+	@Override
+	public int changeProfessorCount(SqlSessionTemplate session, String deptCode) {
+		return session.selectOne("professor.changeProfessorCount", deptCode);
+	}
+
+	@Override
+	public List<Employee> selectEmpList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("employee.selectEmpList", null, row);
+	}
+
+	@Override
+	public int empListCount(SqlSessionTemplate session) {
+		return session.selectOne("employee.empListCount");
 	}
 	
 	

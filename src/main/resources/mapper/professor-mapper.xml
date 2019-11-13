@@ -9,6 +9,18 @@
 		SELECT *FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'P' ORDER BY DEPT_CODE
 	</select>	
 
+	<select id="profCount" resultType="_int">
+		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
+	</select>
+	
+	<select id="changeProfessor" parameterType="string" resultType="map">
+			SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'P' AND DEPT_CODE = #{deptCode} ORDER BY PROF_NAME
+	</select>
+	
+	<select id="changeProfessorCount" resultType="_int" parameterType="string">
+		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P' AND DEPT_CODE = #{deptCode}
+	</select>
+	
   <resultMap id="professorResult" type="professor">
 		<result column="PROF_ID" property="profId" />
 		<result column="PROF_PW" property="profPw" />
