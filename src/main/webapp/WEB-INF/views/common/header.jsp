@@ -205,14 +205,12 @@
             
             <div class="collapse" id="class_info">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/insertSubject"">개설과목입력</a></li>
-                <li class="nav-item"> <a class="nav-link" href="javascript:popupSubject()">개설과목조회</a></li>
-                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lecturePlan"">강의계획서</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/insertSubject">개설과목입력</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lecturePlan">강의계획서</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">주별강의계획서</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lectureData">강의자료업로드</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">강의내역</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">담당교수별 강의시간표</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">결/보강 신청</a></li>
               </ul>
             </div>
           </li>

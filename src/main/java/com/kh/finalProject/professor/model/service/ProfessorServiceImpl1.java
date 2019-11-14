@@ -34,10 +34,22 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		
 		return profName;
 	}
-	//페이징 토탈데이타
+	//게시판 페이징 토탈데이타
 	@Override
 	public int selectBoardCount() {
 		int totalData = dao.selectBoardCount(session);
+		return totalData;
+	}
+	//강의계획서 토탈데이타
+	@Override
+	public int selectPlanCount() {
+		int totalData = dao.selectPlanCount(session);
+		return totalData;
+	}
+	//subject 토탈데이타
+	@Override
+	public int selectSubjectCount(String profId) {
+		int totalData = dao.selectSubjectCount(session,profId);
 		return totalData;
 	}
 	//강의 개설뷰
@@ -192,13 +204,13 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	}
 //	과목코드 눌렀을때 보이는 뷰
 	@Override
-	public List<Subject> subjectCodeView(String profId){
+	public List<Subject> subjectCodeView(int cPage, int numPerPage, String profId){
 		List<Subject> list = new ArrayList<Subject>();
 		
 		int result = dao.selectSubjectCode(session,profId);
 		
 		if(result==0) {
-			list = dao.subjectCodeView(session,profId);
+			list = dao.subjectCodeView(session,cPage, numPerPage, profId);
 		}else {
 			
 		}

@@ -106,7 +106,7 @@
 				</div>
 				
 				<form action="" method="post" id="insertSubject">
-				<input type='hidden' value="${profId }" name="profId"/>
+				<%-- <input type='hidden' value="${profId }" name="profId"/> --%>
 				<div class="row" style="height:7px;border-top:0.5px solid black;"></div>
 				<div class="row">
 					<div class="col-6">
@@ -329,7 +329,7 @@ $(function(){
 	$("#fn_subjectCode").click(function(){
 		var url="${pageContext.request.contextPath }/professor/subjectCodeView?profId=${loginMember.profId}";
     	var name="subject";
-    	var option="width=1000,height=500,top=100,left=265,resizable=no";
+    	var option="width=1250,height=500,top=100,left=140,resizable=no";
     	window.open(url,name,option);
 	});
 });

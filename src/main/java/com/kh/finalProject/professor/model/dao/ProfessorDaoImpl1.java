@@ -22,10 +22,20 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	public String selectProfName(SqlSessionTemplate session) {
 		return session.selectOne("professor1.selectProfName");
 	}
-	//페이징 토탈데이타
+	//게시판 페이징 토탈데이타
 	@Override
 	public int selectBoardCount(SqlSessionTemplate session) {
 		return session.selectOne("professor1.selectBoardCount");
+	}
+	//강의계획서 토탈데이타
+	@Override
+	public int selectPlanCount(SqlSessionTemplate session) {
+		return session.selectOne("professor1.selectPlanCount");
+	}
+	//subject 토탈데이타
+	@Override
+	public int selectSubjectCount(SqlSessionTemplate session, String profId) {
+		return session.selectOne("professor1.selectSubjectCount",profId);
 	}
 	//강의 개설뷰
 	@Override
@@ -123,8 +133,9 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	}
 //	subject
 	@Override
-	public List<Subject> subjectCodeView(SqlSessionTemplate session,String profId){
-		return session.selectList("professor1.subjectCodeView",profId);
+	public List<Subject> subjectCodeView(SqlSessionTemplate session,int cPage, int numPerPage, String profId){
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("professor1.subjectCodeView",profId,row);
 	}
 	@Override
 	public Map<String,String> selectSubject(SqlSessionTemplate session, String subCode) {

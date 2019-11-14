@@ -4,9 +4,17 @@
 	<select id="selectProfName" resultType="string">
 		SELECT PROF_NAME FROM HD_PROFESSOR_TB WHERE PROF_NAME='교수1'
 	</select>
-	<!-- 페이징 토탈데이타 -->
+	<!-- 게시판 페이징 토탈데이타 -->
 	<select id="selectBoardCount" resultType="_int">
 		SELECT COUNT(*) FROM HD_PROF_BOARD_TB
+	</select>
+	<!-- 강의계획서 게시판 토탈데이타 -->
+	<select id="selectPlanCount" resultType="_int">
+		SELECT COUNT(*) FROM HD_PROF_PLAN_TB
+	</select>
+	<!-- SUBJECT 토탈데이타 -->
+	<select id="selectSubjectCount" resultType="_int" parameterType="string">
+		SELECT COUNT(*) FROM HD_SUBJECT_TB JOIN HD_PROFESSOR_TB USING(DEPT_CODE) WHERE PROF_ID=#{profId}
 	</select>
 	<!-- 강의개설 뷰 -->
 	<select id="insertSubject" resultType="map">
@@ -32,9 +40,9 @@
 	<update id="subjectYn" parameterType="string">
 		UPDATE HD_CLASS_TB SET OPEN_YN = 'Y' WHERE SUB_CODE = #{subCode}
 	</update>
-	<!-- 교수 뷰 -->
+	<!-- 교수 뷰 --> <!-- 에러 수정해야함-->
 	<select id="professorView" resultMap="subjectMap" parameterType="string">
-		SELECT * FROM HD_SUBJECT_TB S JOIN HD_CLASS_TB C USING (SUB_CODE) JOIN HD_PROFESSOR_TB USING (PROF_ID) WHERE PROF_ID=${profId}
+		SELECT * FROM HD_SUBJECT_TB S JOIN HD_CLASS_TB C USING (SUB_CODE) JOIN HD_PROFESSOR_TB USING (PROF_ID) WHERE PROF_ID=#{profId}
 	</select>
 	
 	<!-- 교수 정보수정 -->
@@ -89,13 +97,13 @@
 	
 	<!-- subject -->
 	<select id="subjectCodeView" resultType="map" parameterType="string"> <!-- 에러 수정해야함-->
-		SELECT * FROM HD_SUBJECT_TB A JOIN HD_PROFESSOR_TB P USING(DEPT_CODE) WHERE P.PROF_ID=${profId}
+		SELECT * FROM HD_SUBJECT_TB A JOIN HD_PROFESSOR_TB P USING(DEPT_CODE) JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE P.PROF_ID=#{profId}
 		<!-- SELECT S.*,P.DEPT_CODE,P.PROF_NAME FROM HD_SUBJECT_TB S,HD_PROFESSOR_TB P WHERE S.DEPT_CODE = P.DEPT_CODE(+) AND P.PROF_ID=#{profId} -->
 		<!-- SELECT S.*,P.DEPT_CODE,P.PROF_NAME,D.DEPT_NAME FROM HD_SUBJECT_TB S,HD_PROFESSOR_TB P,HD_DEPARTMENT_TB D WHERE S.DEPT_CODE = P.DEPT_CODE(+) AND S.DEPT_CODE = D.DEPT_CODE AND PROF_ID=#{profId}; -->
 		<!-- SELECT * FROM HD_SUBJECT_TB S JOIN HD_CLASS_TB C USING (SUB_CODE) JOIN HD_DEPARTMENT_TB D USING(DEPT_CODE) JOIN HD_PROFESSOR_TB USING (PROF_ID) WHERE PROF_ID=#{profId} -->
 	</select>
 	<select id="selectSubject" resultType="map" parameterType="string">
-		SELECT * FROM HD_SUBJECT_TB S JOIN HD_CLASS_TB C USING (SUB_CODE) JOIN HD_DEPARTMENT_TB D USING(DEPT_CODE) JOIN HD_PROFESSOR_TB USING (PROF_ID) WHERE SUB_CODE=#{subCode}
+		SELECT * FROM HD_SUBJECT_TB S JOIN HD_DEPARTMENT_TB USING (DEPT_CODE) WHERE SUB_CODE=#{subCode}
 	</select>
 	<!-- 과목코드 눌렀을때 보이는 뷰 -->
 	<select id="selectSubjectCode" resultType="_int" parameterType="string">

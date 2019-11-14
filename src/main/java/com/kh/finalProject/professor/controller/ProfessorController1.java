@@ -195,11 +195,11 @@ public class ProfessorController1 {
 	}
 	//교수 정보 수정
 	@RequestMapping("/professor/updateProf")
-	public String updateProfessor(Model model) {
+	public String updateProfessor(Model model, String profId) {
 		
-//		Professor p = service.professorView();
-//		
-//		model.addAttribute("prof",p);
+		List<Subject> p = service.professorView(profId);
+		
+		model.addAttribute("prof",p);
 		
 		return "professor/updateProfessor";
 	}
@@ -473,11 +473,17 @@ public class ProfessorController1 {
 	}
 //	과목조회
 	@RequestMapping("/professor/subjectCodeView")
-	public String subjectCodeView(Model model,String profId) {
+	public String subjectCodeView(@RequestParam(value="cPage",required=false,defaultValue="1")int cPage, Model model,String profId) {
 		
-		List<Subject> list = service.subjectCodeView(profId); //
+		int numPerPage = 5;
+		
+		List<Subject> list = service.subjectCodeView(cPage,numPerPage,profId); //
+		int totalData = service.selectSubjectCount(profId);
 		
 		model.addAttribute("list",list);
+		model.addAttribute("totalCount",totalData);
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/subjectList"));
+		
 		
 		return "professor/subjectList";
 	}
@@ -537,7 +543,7 @@ public class ProfessorController1 {
 		
 		List<PlanBoard> list = service.planBoardView(cPage, numPerPage);
 		
-		int totalData = service.selectBoardCount();
+		int totalData = service.selectPlanCount();
 		
 
 		model.addAttribute("plan",list);
@@ -635,6 +641,13 @@ public class ProfessorController1 {
 		return mv;
 	}
 	//강의 계획서 삭제
+	
+	//교수 시간표
+	@RequestMapping("/professor/profSchedule")
+	public String profSchedule() {
+		
+		return "professor/profSchedule";
+	}
 }
 
 

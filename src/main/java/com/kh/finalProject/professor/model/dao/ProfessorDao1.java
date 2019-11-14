@@ -16,8 +16,12 @@ import com.kh.finalProject.professor.model.vo.Subject;
 public interface ProfessorDao1 {
 
 	String selectProfName(SqlSessionTemplate session);
-	//페이징 토탈데이타
+	//게시판 페이징 토탈데이타
 	int selectBoardCount(SqlSessionTemplate session);
+	//강의계획서 토탈데이타
+	int selectPlanCount(SqlSessionTemplate session);
+	//subject 토탈데이타
+	int selectSubjectCount(SqlSessionTemplate session, String profId);
 	//강의 개설뷰
 	List<InsertClass> insertSubject(SqlSessionTemplate session);
 	//강의 개설
@@ -52,7 +56,7 @@ public interface ProfessorDao1 {
 	ProfessorBoard selectBoardView(SqlSessionTemplate session, int profBoardNo);
 	List<ProfBoardAttachment> selectProfAttachment(SqlSessionTemplate session, int profBoardNo);
 //	subject
-	List<Subject> subjectCodeView(SqlSessionTemplate session,String profId);
+	List<Subject> subjectCodeView(SqlSessionTemplate session,int cPage, int numPerPage, String profId);
 	Map<String,String> selectSubject(SqlSessionTemplate session, String subCode);
 //	과목코드 눌렀을때 보이는 뷰
 	int selectSubjectCode(SqlSessionTemplate session, String profId);
