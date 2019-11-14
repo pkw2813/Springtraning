@@ -11,5 +11,6 @@ public interface SubjectDao {
 	
 	List<Map> selectRoom(SqlSessionTemplate session, String roomValue);
 	List<Subject> selectTime(SqlSessionTemplate session, Subject s);
-
+	List<Map> selectCurri(SqlSessionTemplate session, String deptCode);
+	int subInsert(SqlSessionTemplate session, Subject s);
 }

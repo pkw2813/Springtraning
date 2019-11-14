@@ -9,5 +9,6 @@ public interface SubjectService {
 	
 	List<Map> selectRoom(String roomValue);
 	List<Subject> selectTime(Subject s);
-
+	List<Map> selectCurri(String deptCode);
+	int subInsert(Subject s);
 }

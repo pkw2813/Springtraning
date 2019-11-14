@@ -1,10 +1,12 @@
 package com.kh.finalProject.subject.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,9 +49,6 @@ public class SubjectController {
 
 		 List<Subject> list=service.selectTime(s);
 
-		/*
-		 * for(Subject s1 :list) { s1.getSubTime(); }
-		 */
 		 	try {
 				jsonStr=mapper.writeValueAsString(list);
 			} catch (JsonProcessingException e) {
@@ -59,10 +58,49 @@ public class SubjectController {
 	 }
 	 
 	 @RequestMapping("/subInsert.hd")
-	 public String 	subInsert(Subject s) {
-		 System.out.println(s);
+	 public String subInsert(Subject s,Model model) {
+		String[] subT=(String[])s.getSubTime().split(",");
+		String subTime=subT[subT.length-1];
+		
+		List<Subject> list=service.selectTime(s);
+		String[] listT;
+		String msg="";
+		String loc="/curriculum.hd";
+		int count=0;
+		for(Subject sub : list) {
+			listT=sub.getSubTime().split(",");
+			for(int i=0; i<listT.length; i++) {
+				if(listT[i].equals(subTime)) {
+					count++;
+				}
+			}
+		}
+		if(count>0) {
+			msg="이미 사용중인 강의장입니다.";
+		}else {
+			msg="정상적으로 등록되었습니다.";
+			int result=service.subInsert(s);
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		
+		 return "common/msg";
+	 }
+	 
+	 @RequestMapping("/selectCurri.hd")
+	 @ResponseBody
+	 public String selectCurri(@RequestParam String deptCode, Model model) {
+		 ObjectMapper mapper=new ObjectMapper();
+		 String jsonStr="";
+		 Map map=new HashMap();
+		 List<Map> list=service.selectCurri(deptCode);
+		 try {
+				jsonStr=mapper.writeValueAsString(list);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 		 
-		 return "";
+		 return jsonStr;
 	 }
 	 
 	 

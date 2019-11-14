@@ -20,6 +20,19 @@ public class SubjectDaoImpl implements SubjectDao{
 	public List<Subject> selectTime(SqlSessionTemplate session, Subject s) {
 		return session.selectList("subject.selectTime",s);
 	}
+
+	@Override
+	public List<Map> selectCurri(SqlSessionTemplate session, String deptCode) {
+		return session.selectList("subject.selectCurri",deptCode);
+	}
+
+	@Override
+	public int subInsert(SqlSessionTemplate session, Subject s) {
+		return session.insert("subject.subInsert", s);
+	}
+	
+	
+	
 	
 	
 

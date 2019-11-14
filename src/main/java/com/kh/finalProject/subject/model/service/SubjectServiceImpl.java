@@ -28,6 +28,22 @@ public class SubjectServiceImpl implements SubjectService {
 		List<Subject> list=dao.selectTime(session, s);
 		return list;
 	}
+
+	@Override
+	public List<Map> selectCurri(String deptCode) {
+		List<Map> list=dao.selectCurri(session, deptCode);
+		return list;
+	}
+
+	@Override
+	public int subInsert(Subject s) {
+		int result=dao.subInsert(session, s);
+		return result;
+	}
+	
+	
+	
+	
 	
 	
 

@@ -92,7 +92,8 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">과목 명</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="subName">
+                          	<select class="form-control" name="subName" id="subName">
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -100,7 +101,8 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의 목표</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="targetSubject">
+                          	<select class="form-control" name="targetSubject" id="targetSubject">
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -203,9 +205,11 @@
                         </div>
                       </div>
                     </div>
+                    <div id="lastForm">
+                    	
+                    </div>
                     <div class="row">
                     	<div class="col-md-12 but">
-                    		<input type="hidden" id="targetDept" name="targetDept"/>
                     		<input type="hidden" id="subTime" name="subTime"/>
 	                    	<input type="submit" class="btn btn-inverse-info btn-fw" value="저장하기" id="submitBtn"/>&nbsp&nbsp&nbsp
 	                    	<input type="reset" class="btn btn-inverse-info btn-fw" value="초기화"/>
@@ -223,10 +227,10 @@
 			var intrt=parseInt(rt);
 			
 			if(cp==3){
-				$("#subTime").val(rt+"!@subTime"+(intrt+1)+":00!@subTime"+(intrt+2)+":00");
+				$("#subTime").val(rt+","+(intrt+1)+":00,"+(intrt+2)+":00");
 			}
 			else if(cp==2){
-				$("#subTime").val(rt+"!@subTime"+intrt+1+":00");
+				$("#subTime").val(rt+","+(intrt+1)+":00");
 			}
 			
 			
@@ -252,7 +256,7 @@
      		$(document).ready(function(){
      			$.ajax({
      				type : "post",
-     				url: "${pageContext.request.contextPath}/selectColList.do",
+     				url : "${pageContext.request.contextPath}/selectColList.do",
      				success: function(data) {
      					let colListHtml = "";
      					colListHtml = "<option value='select' id='selColleage'>학부 선택</option>";
@@ -316,12 +320,45 @@
      					$('.selectDepartment').html(deptListHtml);
      						$('.selectDepartment').change(function(){
      						$("#selectDepartment").attr('disabled',true);
-     						$("#targetDept").val();
+     					
      			});
      	 	}
      	 });
      		 });
      	 }); 
+        
+        $(function(){
+        	$(".selectDepartment").change(function(){
+        		var dep=$(".selectDepartment").val();
+        		$.ajax({
+        			url:"${path}/selectCurri.hd",
+        			data:{"deptCode":dep},
+        			success:function(data){
+        			var subNameArr="<option id='selectSubName'>과목명 선택</option>";
+        			var targetSubjectArr="<option id='selecttargetSubject'>강의목표 선택</option>";
+        			var subCodeArr="";
+        					console.log(data);
+        					let re=JSON.parse(data);
+        				for(let i = 0; i < re.length; i++) {
+        					console.log(re.length);
+        					var dataDept=re[i];
+	        				subNameArr+="<option value='"+dataDept['SUB_NAME']+"'  class='subName'>"+dataDept['SUB_NAME']+"</option>";
+	        				targetSubjectArr+="<option value='"+dataDept['TARGET_SUBJECT']+"'  class='targetSubject'>"+dataDept['TARGET_SUBJECT']+"</option>";
+	        				subCodeArr="<input type='hidden' name='subCode' value='"+dataDept["SUB_CODE"]+"'>";
+        				}
+        				$('#subName').html(subNameArr);
+            			$("#targetSubject").html(targetSubjectArr);
+    						$('#subName').change(function(){
+    							$("#selectSubName").attr('disabled',true);
+            				});
+    						$('#targetSubject').change(function(){
+    							$("#selecttargetSubject").attr('disabled',true);
+            				});
+    					$("#lastForm").html(subCodeArr);
+        			}
+	        	});
+	        });
+        });
         
         $(function(){
         	$("#roomTitle").change(function(){
