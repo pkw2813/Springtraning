@@ -60,20 +60,22 @@
 
 								<tbody>
 									<tr>
-										<td><select name="subCode" class="form-control form-control-sm">
-												<option value="" selected>과목선택</option>
-												<c:forEach items="${subNameCodeList }" var="subList">
-													<option value="${subList.subCode }">${subList.subName }</option>
-												</c:forEach>
-										</select></td>
 										<td>
-									        <input name="atDate" style="text-align : center;" id="dateInput" type="text" class="form-control form-control-sm "/>
+											<select name="subCode" class="form-control form-control-sm">
+													<option value="" selected>과목선택</option>
+													<c:forEach items="${subNameCodeList }" var="subList">
+														<option value="${subList.subCode }">${subList.subName }</option>
+													</c:forEach>
+											</select>
+										</td>
+										<td>
+									        <input name="checkDate" style="text-align : center;" id="dateInput" type="text" class="form-control form-control-sm "/>
+									        
 										    <script type="text/javascript" >
 												$("#dateInput").datepicker();
 												$.datepicker.setDefaults($.datepicker.regional["ko"]);
 												uiLibrary: 'bootstrap4';
-										        /* $('#dateInput').datepicker({*/
-										            
+												
 										    </script>
 										</td>
 										<td>
@@ -92,6 +94,7 @@
 												name="deptName" placeholder="학과검색">											
 											</td>
 										<td><input type="submit" value="검색" class="btn btn-success"></td>
+										
 									</tr>
 								</tbody>
 							</table>
@@ -112,9 +115,9 @@
 										<th>결석</th>
 										<th>지각</th>
 										<th>조퇴</th>
-										<th>(금일 출결상태)${attendList[0].sysdate }</th>
+										<th>${sal.checkDate }</th>
 										<th>
-											금일출석입력
+											출석입력
 										</th>
 										<th>
 											전체출석조회
@@ -128,10 +131,15 @@
 										<td>${list.grade }</td>
 										<td>${list.stuName }</td>
 										<td>${list.attend }</td>
-										<td>${list.dismiss }</td>
+										<td>${list.absent }</td>
 										<td>${list.late }</td>
 										<td>${list.ealryLeave}</td>
-										<td>미입력</td>
+										<td>
+											<c:choose>
+												<c:when test="${list.status eq null }">미입력</c:when>
+												<c:when test="${list.status ne null }">${list.status }</c:when>
+											</c:choose>
+										</td>
 										<td><select name="attendStatus" class="form-control form-control-sm">
 												<option value="" selected>출결입력</option>
 												<option value="출석">출석</option>
@@ -141,15 +149,46 @@
 										</select></td>
 										<td>
 											<button type="button" class="btn btn-success btn-toggle"
-												id='classViewBtn'>조회</button>
+												id='classViewBtn' onclick="viewStuAttend('${list.stuNo}');">조회</button>
+										
 										</td>
 									</tr>
 								</c:forEach>
 								</tbody>
 							</table>
-
-
-					      <!-- @@Modal content Start@@ -->
+							<br/>
+								${pageBar }
+						
+					      <!-- 출석부 조회 스크립트 -->
+					      <script>
+					    	  
+					      	function viewStuAttend(no){
+					      		var a = no;
+					      		console.log(a);
+					      		var id = '${sal.profId}';
+					      		var code = '${sal.subCode}';
+					      		$.ajax({
+					      			url : "${path}/prof/ajax_view_attend.hd", 
+									type : "POST",
+									data : {
+				      					'stuNo' : no,
+				      					'profId' : id,
+				      					'subCode' : code
+				      					},
+									dataType : "json", // 데이터 타입을 제이슨 꼭해야한다, 다른방법도 2가지있다
+									cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안된다
+					      			
+									success : function(data){
+										
+										
+										
+									}
+					      		});
+					   	   }
+					      
+					      	
+					      </script>
+					      <!-- @@출석부 Modal content Start@@ -->
 
 							<div id="classViewModal" class="modal">
 						      <div class="modal-content">
@@ -172,25 +211,18 @@
 												<thead>
 													<tr>
 														<th>날짜</th>
-														<th>출석</th>
-														<th>지각</th>
-														<th>조퇴</th>
-														<th>결석</th>
+														<th>상태</th>
 													</tr>
 												</thead>
 												<tbody>
 													<tr>
 														<td>2019/11/01</td>
-														<td></td>
-														<td></td>
-														<td>O</td>
-														<td></td>
 													</tr>
 												</tbody>
 											</table>
 										</div>
 										<div class="modal-footer">
-											${pageBar }
+											
 										</div>
 						        <!-- Modal body end -->
 						      </div>

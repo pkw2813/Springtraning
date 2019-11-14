@@ -25,10 +25,11 @@ public class AttendStudent {
 	private String subYear;
 	private String subSemester;
 	private String attend;
-	private String dismiss;
+	private String absent;
 	private String late;
 	private String ealryLeave;
-	private String sysdate;
+	private String status;
+	private String atDate;
 	
 	
 

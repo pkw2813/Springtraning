@@ -4,7 +4,7 @@
 
 
 	<select id="selectSysdate" resultType="string">
-		SELECT SYSDATE FROM DUAL
+		SELECT TO_CHAR(SYSDATE,'YYYY-MM-DD') FROM DUAL
 	</select>
 
 
@@ -182,14 +182,14 @@
 		SELECT * 
 		FROM    (SELECT ORI.*, 
 		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='출석') AS ATTEND,
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS DISMISS,
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS ABSENT,
 		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='지각') AS LATE,
 		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='조퇴') AS EALRY_LEAVE
 		            
 		        FROM   (SELECT STU_NO, SUB_CODE, PROF_ID,GRADE  , STU_NAME, DEPT_CODE, DEPT_NAME, ACA_YEAR_SEM,
 		    
-		                (SELECT SUB_YEAR AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_YEAR,
-		                (SELECT SUB_SEMESTER AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_SEMESTER
+		                (SELECT DISTINCT(SUB_YEAR) AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_YEAR,
+		                (SELECT DISTINCT(SUB_SEMESTER) AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_SEMESTER
 		            
 		            FROM HD_SUB_REQ_TB A
 		            LEFT JOIN ( SELECT DISTINCT(STU_NO) AS STN, STU_NAME, DEPT_CODE, SUBSTR(STU_YEAR_SEM , 1,1) AS GRADE 
@@ -207,6 +207,9 @@
 		        ) ORI
         )
       <if test='subCode != null and subCode != "" '>
+      				LEFT JOIN (SELECT STU_NO,STATUS, TO_CHAR(AT_DATE,'YYYY//MM/DD') AS AT_DATE 
+					   FROM HD_ATTENDANCE_TB
+					   WHERE  TO_CHAR(AT_DATE,'YYYY/MM/DD') = #{checkDate}) USING(STU_NO)
        	 	WHERE 1 = 1
         
 	      </if>
@@ -221,14 +224,14 @@
 		SELECT COUNT(*) 
 		FROM    (SELECT ORI.*, 
 		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='출석') AS ATTEND,
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS DISMISS,
+		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS ABSENT,
 		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='지각') AS LATE,
 		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='조퇴') AS EALRY_LEAVE
 		            
 		         FROM   (SELECT STU_NO, SUB_CODE, PROF_ID,GRADE  , STU_NAME, DEPT_CODE, DEPT_NAME, ACA_YEAR_SEM,
 		    
-			                (SELECT SUB_YEAR AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_YEAR,
-			                (SELECT SUB_SEMESTER AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_SEMESTER
+			                (SELECT DISTINCT(SUB_YEAR) AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_YEAR,
+			                (SELECT DISTINCT(SUB_SEMESTER) AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_SEMESTER
 		            
 			            FROM HD_SUB_REQ_TB A
 			            LEFT JOIN ( SELECT DISTINCT(STU_NO) AS STN, STU_NAME, DEPT_CODE, SUBSTR(STU_YEAR_SEM , 1,1) AS GRADE 
@@ -245,7 +248,11 @@
 		            AND PROF_ID = #{profId}
 		        ) ORI
         )
+        <!-- 날짜가 바뀜에 따라 해당 날짜에 출석여부를 알 수 있다 // 조인을 이용해서 기존  테이블과 별개로 동작하게 한다.  -->
 		<if test='subCode != null and subCode != "" '>
+			LEFT JOIN (SELECT STU_NO,STATUS, TO_CHAR(AT_DATE,'YYYY//MM/DD') AS AT_DATE 
+					   FROM HD_ATTENDANCE_TB
+					   WHERE  TO_CHAR(AT_DATE,'YYYY/MM/DD') = #{checkDate}) USING(STU_NO)
        	 	WHERE 1 = 1
         
 	      </if>
@@ -271,9 +278,11 @@
 		<result column="SUB_YEAR" property="subYear"/>
 		<result column="SUB_SEMESTER" property="subSemester"/>
 		<result column="ATTEND" property="attend"/>
-		<result column="DISMISS" property="dismiss"/>
+		<result column="ABSENT" property="absent"/>
 		<result column="LATE" property="late"/>
 		<result column="EALRY_LEAVE" property="ealryLeave"/>		
+		<result column="STATUS" property="status"/>		
+		<result column="AT_DATE" property="atDate"/>		
 	
 	</resultMap>
 	

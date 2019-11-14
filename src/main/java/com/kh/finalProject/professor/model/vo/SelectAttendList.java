@@ -19,6 +19,9 @@ public class SelectAttendList {
 	private String stuName;
 	private String grade;
 	private String deptName;
+	private String sysdate;
 	
+	//ajax용 변수
+	private String stuNo;
 	
 }
