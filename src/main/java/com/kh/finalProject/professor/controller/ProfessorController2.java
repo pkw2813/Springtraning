@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
@@ -34,7 +35,7 @@ public class ProfessorController2 {
 	ProfessorService2 service;
 
 	@RequestMapping("prof/viewInMajor.hd")
-	public String viewInMajor(SelectInMajor sim,
+	public String viewInMajor(SelectInMajor sim, HttpServletRequest req,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, Model model,
 			HttpSession session) throws JsonProcessingException {
 //		@RequestParam(required = false) ? 왜 
@@ -61,14 +62,14 @@ public class ProfessorController2 {
 		model.addAttribute("list", list);
 		model.addAttribute("totalCount", totalData);
 		model.addAttribute("pageBar",
-				PageFactory.getInMajorPageBar(totalData, cPage, numPerPage, "/finalProject/prof/viewInMajor.hd", sim));
+				PageFactory.getInMajorPageBar(totalData, cPage, numPerPage, req.getContextPath() + "/prof/viewInMajor.hd", sim));
 
 		return "professor/stu_view_inMajor";
 	}
 
 	// 수강생 조회
 	@RequestMapping("prof/viewInClass.hd")
-	public String viewInClass(SelectInClass sic,
+	public String viewInClass(SelectInClass sic, HttpServletRequest req,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, Model model,
 			HttpSession session) {
 		int numPerPage = 5;
@@ -111,7 +112,7 @@ public class ProfessorController2 {
 			model.addAttribute("stuList", stuList);
 			model.addAttribute("totalCount", totalData);
 			model.addAttribute("pageBar",
-					PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/viewInClass.hd"));
+					PageFactory.getPageBar(totalData, cPage, numPerPage, req.getContextPath()+"/prof/viewInClass.hd"));
 		}
 		return "professor/stu_view_inClass";
 
@@ -119,7 +120,7 @@ public class ProfessorController2 {
 
 	// 출결조회
 	@RequestMapping("prof/viewClassAttend.hd")
-	public String viewClassAttend(SelectAttendList sal , @RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession session, Model model ) {
+	public String viewClassAttend(SelectAttendList sal,HttpServletRequest req , @RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession session, Model model ) {
 		int numPerPage = 5;
 		Professor p = (Professor) session.getAttribute("loginMember");
 		sal.setProfId(p.getProfId());
@@ -160,7 +161,7 @@ public class ProfessorController2 {
 		model.addAttribute("subNameCodeList",subNameCodeList); //() 해당 과목에 수강중인 학생의 기본정보와 출결정보 출력
 														 ///SUB_CODE 와 PROF_ID 베이스 + sal의 조건들 사용
 		model.addAttribute("totalCount",totalData);
-		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/viewClassAttend.hd"));
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, req.getContextPath()+"/prof/viewClassAttend.hd"));
 		
 		return "professor/stu_view_classAttend";
 	}
