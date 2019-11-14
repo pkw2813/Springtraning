@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalProject.student.model.service.StudentService2;
 import com.kh.finalProject.student.model.vo.Grade;
@@ -27,6 +28,7 @@ public class StudentController2 {
 	//페이지 전환용
 	@RequestMapping("/student/gradeSearchAll.hd")
 	public String gradeSearchAll(HttpSession session, Model model) {
+		
 		Student student = (Student)session.getAttribute("loginMember");
 		String stuNo=student.getStuNo();
 		String deptCode=student.getStuNo().substring(5,8);
