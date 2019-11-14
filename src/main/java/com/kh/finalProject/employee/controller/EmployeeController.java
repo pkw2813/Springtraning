@@ -332,5 +332,10 @@ public class EmployeeController {
 		return prof;
 	}
 
+	@RequestMapping("/deleteEmployee.hd")
+	public String deleteProf(@RequestParam int num) {
+		
+		return "";
+	}
 
 }

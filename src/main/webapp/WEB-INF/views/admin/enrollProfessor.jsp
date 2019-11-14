@@ -10,17 +10,22 @@
 
 		<div class="main-panel">
    		<div class="content-wrapper">
-<div class="card card-body">
-	<div class="col-6">
+<div class="card">
+	<div class="card-body">
+	<div class="row">
+	<div class="col-md-6">
 		<select class="form-control selectCol col-sm-5" style="display: inline-block; margin-right: 5px;" name ='beforeColCode'>								
 			</select>
 			<!-- 여기에 학과 선택 넣어야함 .selectCol -->
 			<select class="form-control selectdep col-sm-5"  style="display: inline-block; margin-left: 5px;" name='beforeDeptCode' required>
 				</select>
-				
+			</div>
+			</div>
+			<div class="row">	
+					<div class="table-responsive">		
 				<table class="table">
 					<tr>
-						<th>번 호</th>
+						<!-- <th>번 호</th> -->
 						<th>학과 명</th>
 						<th>교수 번호</th>
 						<th>교수 이름</th>
@@ -31,8 +36,8 @@
 					</tr>
 			<c:forEach var="pro" items="${list}" varStatus="v">
 						
-					<tr>
-						<td>${v.count}</td>
+					<tr class="listFor">
+						<!-- <td>${v.count}</td> -->
 						<td>${pro['DEPT_NAME'] }</td>
 						<td>${pro['PROF_ID'] }</td>
 						<td>${pro['PROF_NAME']}</td>
@@ -40,16 +45,18 @@
 						<td>${pro['EMAIL'] }</td>
 						<td>${pro['ADDRESS'] }</td>
 						<td>
-					<input type="button" class="btn btn-outline-danger btn-fw" onclick="deleteProf();" value="삭제"/>
+					<input type="button" class="btn btn-outline-danger btn-fw" onclick="deleteProf('${pro['PROF_ID']}');" value="삭제"/>
 				</td>					
 			</tr>
 		</c:forEach>
 	</table>
+	
+	</div>
 	</div>
 	<div class="card-footer">
 			${pageBar }
 		</div>
-
+	</div>
 </div>
 
 
@@ -103,7 +110,7 @@
 	
 			</div>
 			<input type="button"  class="btn btn-info btn_close" value="취소" style="float: right; margin: 7px;">
-			<input type="submit" class="btn btn-info" id="enrollBtn" value="입학 신청" style="float: right; margin: 7px;">
+			<input type="submit" class="btn btn-info" id="enrollBtn" value="등록" style="float: right; margin: 7px;">
 			<br>
 			<br>
 		</form>
@@ -189,14 +196,9 @@ $(function() {
 
 function setJumin(obj) {
 	let ju = obj.value;
-	console.log("ju : "+ju);
-	console.log("ck" + ju.indexOf("*") != -1);
 	if(ju.indexOf("*") == -1) {
-		console.log("if문 내부")
-	 $("#profSsn").val(ju);
+		 $("#profSsn").val(ju);
 	}
-	console.log("ckjumin :" + document.getElementById('profSsn').value);
-	console.log(ju);
 	ju = ju.replace("-","");
 		if(ju.length > 6) {
 			ju1 = ju.substring(0,6);
@@ -204,8 +206,7 @@ function setJumin(obj) {
 		for(i=1; i<ju.substring(6).length && i < 7; i++) {
 			ju2 = ju2 + "*";
 		}
-		
-		obj.value = ju1+"-"+ju2;
+				obj.value = ju1+"-"+ju2;
 		$('#jumin').prop("readonly", true);
 		}
 	
@@ -217,8 +218,11 @@ function setJumin(obj) {
 
 function insertNewProf() {
    $(".modal").css("display","block");
-   console.log()
-   
+
+}
+
+function deleteProf(result) {
+	location.href="${pageContext.request.contextPath}/deleteEmployee.hd?num="+result+"";
 }
 
 $(function(){
@@ -386,6 +390,11 @@ $(function() {
 	
 
 <style>
+
+	.listFor > td {
+		font-size: 13px;
+		
+	}
 	.gap0{
 		height:50px;
 	}
