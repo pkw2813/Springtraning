@@ -182,17 +182,13 @@
 				<td><c:out value='${e["PRE_CAPA"] }'/>/<c:out value='${e["CAPACITY"] }'/></td>
 				<td><c:out value='${e["SUB_ROOM"] }'/></td>
 				
-				<c:if test='${e["OPEN_YN"] eq "Y"}'>
-			
 				
 				<td style="text-align:center">
-						
-				<c:if test='${e["CHECK_IN"] eq loginMember.stuNo}'>
+				
 				<button id="button-cancelClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="cancelClass(this.id,this.value)" class="btn btn-danger btn-xs"
 				value='${loginMember.stuNo},${e["SUB_CODE"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>취소</button>
 				</td>		
-				</c:if>
-				</c:if>
+				
 				<td style="text-align:center">
 				
 				</td>

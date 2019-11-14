@@ -162,19 +162,16 @@
 				<table>
 				<tr id=classInfo>
 				<td style="text-align:center">
-				<img id="LoadImg" height="300px" width="500px" src="${path}/resources/images/image/selectNothing.jpg"/>
+				<img id="LoadImg" height="300px" width="400px" style="padding:20px;"src="${path}/resources/images/image/selectNothing.jpg"/>
 				</td>
 				</tr>
+				</table>
 				</c:if>
-				
-				
-				
 				
 				<c:if test="${!empty list}">
 				<c:forEach items="${list}" var="e" varStatus="v">
 				
 				<tr id="classInfo">
-				
 				<td><c:out value='${e["ROWNUM"] }'/></td>
 				<td><c:out value='${e["SUB_YEAR"]}'/>-<c:out value='${e["SUB_SEMESTER"]}'/></td>
 				<td><c:out value='${e["DEPT_NAME"] }'/></td>
@@ -197,12 +194,12 @@
 				
 				<c:if test='${e["CHECK_IN"] eq null or e["CHECK_IN"] ne loginMember.stuNo}'>
 				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
-				value='${loginMember.stuNo },${e["SUB_CODE"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>신청</button>
+				value='${loginMember.stuNo },${SUB_SEQ}'>신청</button>
 				</c:if>
 				
 				<c:if test='${e["CHECK_IN"] eq loginMember.stuNo}'>
 				<button id="button-cancelClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="cancelClass(this.id,this.value)" class="btn btn-danger btn-xs"
-				value='${loginMember.stuNo},${e["SUB_CODE"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>취소</button>
+				value='${loginMember.stuNo},${SUB_SEQ}'>취소</button>
 				</td>		
 				</c:if>
 				</c:if>

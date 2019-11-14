@@ -14,6 +14,7 @@ public interface StudentService1 {
 	
 	List<Map> selectAllClass(String stuId,int cPage,int numPerPage);
 	List<Map> selectClass(Map<String,Object>param,int cPage,int numPerPage);
+	List<Map> selectPlan();
 	List<Map> myApplyClass(String stuId,int cPage,int numPerPage);
 	List<Map> selectMyClass(Map<String,Object>param,int cPage,int numPerPage);
 	int countAllClass(String stuId);

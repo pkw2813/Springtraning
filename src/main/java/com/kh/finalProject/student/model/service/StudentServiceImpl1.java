@@ -139,6 +139,13 @@ public class StudentServiceImpl1 implements StudentService1 {
 		
 		return dao.selectNowPw(session,stuId);
 	}
+
+	@Override
+	public List<Map> selectPlan() {
+		
+		
+		return dao.selectPlan(session);
+	}
 	
 	
 	

@@ -141,6 +141,12 @@ public class StudentDaoImpl1 implements StudentDao1 {
 		return session.selectOne("student1.selectNowPw",stuId);
 	}
 
+	@Override
+	public List<Map> selectPlan(SqlSessionTemplate session) {
+	
+		return session.selectList("student1.selectPlan");
+	}
+
 	
 	
 	

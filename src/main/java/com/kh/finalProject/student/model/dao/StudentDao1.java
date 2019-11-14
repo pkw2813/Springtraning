@@ -17,6 +17,7 @@ public interface StudentDao1 {
 	int studentInfoUpdate(SqlSessionTemplate session,Student s);
 	List<Map> selectAllClass(SqlSessionTemplate session,String stuId,int cPage,int numPerPage);
 	List<Map> selectClass(SqlSessionTemplate session,Map<String,Object> param,int cPage,int numPerPage);
+	List<Map> selectPlan(SqlSessionTemplate session);
 	int countAllClass(SqlSessionTemplate session,String stuId);
 	int countSelectClass(SqlSessionTemplate session,Map<String,Object>param);
 	List<Map> selectProfEval(SqlSessionTemplate session,Map<String,Object>param);
