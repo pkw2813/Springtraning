@@ -8,7 +8,9 @@
 <style>
 	.but{
 		text-align:center;
-		
+	}
+	th, td{
+		text-align:center;
 	}
 </style>
 <div class="main-panel">
@@ -216,6 +218,41 @@
 	                    </div>
                     </div>
                   </form>
+                </div>
+              </div>
+              <br/><br/>
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Basic Table</h4>
+                  <p class="card-description">
+                    Add class <code>.table</code>
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>년도</th>
+                          <th>학년</th>
+                          <th>학기</th>
+                          <th>학부</th>
+                          <th>요일</th>
+                          <th>강의실</th>
+                          <th>강의시간</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Jacob</td>
+                          <td>53275531</td>
+                          <td>12 May 2017</td>
+                          <td><label class="badge badge-danger">Pending</label></td>
+                          <td><label class="badge badge-danger">Pending</label></td>
+                          <td><label class="badge badge-danger">Pending</label></td>
+                          <td><label class="badge badge-danger">Pending</label></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
 

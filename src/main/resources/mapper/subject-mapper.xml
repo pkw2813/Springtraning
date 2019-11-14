@@ -16,7 +16,7 @@
 	
 	<insert id="subInsert" parameterType="subject">
 		INSERT INTO HD_SUBJECT_TB VALUES(#{subCode},#{subName},#{targetSubject},#{targetGrade},#{completePt}
-		,#{subType},#{deptCode},#{subDate},#{subTime},#{subRoom},#{subYear},#{subSemester})
+		,#{subType},#{deptCode},#{subDate},#{subTime},#{subRoom},#{subYear},#{subSemester},SUB_SEQ_SEQ.NEXTVAL)
 	</insert>
 
   <resultMap id="subjectMap" type="subject">

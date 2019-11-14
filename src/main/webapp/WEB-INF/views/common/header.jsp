@@ -36,6 +36,11 @@
   
     <!-- 웹소켓 js파일 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.js"></script>
+  <style>
+  	.sidebar{
+  		width:180px;
+  	}
+  </style>
   
 </head>
 <body>
