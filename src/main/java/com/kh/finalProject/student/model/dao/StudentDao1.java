@@ -31,4 +31,6 @@ public interface StudentDao1 {
 	int cancelMyClass(SqlSessionTemplate session,Map<String,Object> param);
 	List<Map> selectMyClass(SqlSessionTemplate session,Map<String,Object> param,int cPage,int numPerPage);
 	int countSelectMyClass(SqlSessionTemplate session,Map<String,Object>param);
+	int updatePw(SqlSessionTemplate session,Map<String,String> userInfo);
+	String selectNowPw(SqlSessionTemplate session,String stuId);
 }

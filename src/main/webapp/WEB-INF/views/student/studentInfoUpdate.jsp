@@ -168,7 +168,7 @@
       	<div id="topCloseBotton" style="text-align:right">
          <span class="close" id="closePw" Style="width:50px;">&times;</span>
   		</div>
-        <form action="${path}/req.hd">
+        
          <p style="font-family:jua;font-size:40px;">비밀번호변경</p>
          <div class="form-group">
          <hr>
@@ -190,7 +190,7 @@
          <hr>
          </div>
          <div style="text-align:center">
-         <input type="button" class="btn btn-inverse-info btn-fw" id="closePw2" value="확인" style="float: right; margin: 7px;">
+         <button class="btn btn-inverse-info btn-fw" id="pwChangeConfirm" value="확인" style="float: right; margin: 7px" disable>확인</button>
        	</div>
          </div>
        
@@ -211,20 +211,70 @@
 	
 	
 	<script>
+	
 	var pwNow;
 	var reg_pwd = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
-
+	var pwcheck1
+	var pwcheck2
+	var pwcheck3
 		 $("#pwTrue").hide();
 		 $("#pwFalse").hide();
 		 $("#pwChangeTrue").hide();
 		 $("#pwChangeFalse").hide();
 		 $("#pw-checkChangeTrue").hide();
 		 $("#pw-checkChangeFalse").hide();
-		
+	
 
 		
+		$("#pwChangeConfirm").click(function(){
+			var pwfinal=$("#pw-checkChange").val();
+			if(pwcheck1==="true"&&pwcheck2==="true"&&pwcheck3==="true"){
+				
+				confirm("변경하시겠습니까?");
+				
+						$.post({
+					
+				            url: "${path}/student/changePwEnd.hd",
+				            type: "post",
+				            data: {"pwfinal":pwfinal},
+				            
+				            success: function(data){
+				            	
+				            	 headerModal1.style.display = "none";
+				            	 $("#pwNow").val("");
+				            	 $("#pw-Change").val("");
+				            	 $("#pw-checkChange").val("");
+				            	 $("#pwTrue").hide();
+				        		 $("#pwFalse").hide();
+				        		 $("#pwChangeTrue").hide();
+				        		 $("#pwChangeFalse").hide();
+				        		 $("#pw-checkChangeTrue").hide();
+				        		 $("#pw-checkChangeFalse").hide();
+				            	 
+				            	 
+				            	alert("변경되었습니다");
+				            	
+				                	
+				            		},
+				         	  	error: function(){
+				               alert("관리자에게 문의바랍니다 1588-5588");
+				                pwcheck1="false";
+				                
+				            }
+				        });
+						
+				
+				
+				
+				
+				
+				
+				
+				}else{alert("비밀번호를 확인하세요");}
+			
+				});
+			
 		
-	
 	
 	 
 	$("#pwNow").keyup(function(){
@@ -240,16 +290,18 @@
             	 
             	 if(data.pwck === "true"){
             	  $("#pwTrue").show();
-            	   $("#pwFalse").hide();   
+            	   $("#pwFalse").hide();
+            	   pwcheck1="true";
             	 }else{
             	  $("#pwFalse").show(); 
             	  $("#pwTrue").hide();
+            	  pwcheck1="false";
             	 }
                 	
             		},
             error: function(){
-                alert("에러처리");
-             
+                alert("관리자에게 문의바랍니다 1588-5588");
+                pwcheck1="false";
                 
             }
         });
@@ -262,33 +314,32 @@
 	
 	
 	$("#pw-Change").keyup(function(){
-		console.log(chkPwd($("#pw-Change").val()));
+		
 
-		$("#pwChangeFalse").show();
-		$("#pwChangeFalse").text(chkPwd($("#pw-Change").val()));
-		
-		
 		
 		
 		if(chkPwd($("#pw-Change").val())==true){
 			 $("#pwChangeTrue").show();
 			 $("#pwChangeFalse").hide()
-			
-		}
+			 pwcheck2="true";
+		}else{$("#pwChangeFalse").show();
+		$("#pwChangeFalse").text(chkPwd($("#pw-Change").val()));
+		$("#pwChangeTrue").hide();
+		pwcheck2="false";
+			}	
 		
 		
 		$("#pw-checkChange").keyup(function(){
 			
 			
-			
-			
 			if($("#pw-Change").val()===$("#pw-checkChange").val()){
 				$("#pw-checkChangeTrue").show();
-				$("#pw-checkChangeFalse").hide();					
+				$("#pw-checkChangeFalse").hide();
+				pwcheck3="true";
 			}else{
 				$("#pw-checkChangeFalse").show();
 				$("#pw-checkChangeTrue").hide();	
-				
+				pwcheck3="false";
 				
 			}
 			
@@ -314,19 +365,29 @@
 		 var eng = pw.search(/[a-z]/ig);
 		 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-		 if(pw.length < 8 || pw.length > 20){	 
+		 	if(pw.length < 8 || pw.length > 20){	 
 			status="8글자이상 20자이내로 가능합니다"
-		  return status;
+		
+			return status;
+			
 		 }
 
 		 if(pw.search(/₩s/) != -1){
 			status="공백은(spacebar) 사용할수 없습니다"
-		  	return status;
+		
+			return status;
+			
 
 		 } if(num < 0 || eng < 0 || spe < 0 ){
 		
 			status="영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요."
+			
 		  	return status;
+			
+		 } if($("#pwNow").val()===$("#pw-Change").val()){
+			 
+			 status="현재 비밀번호와 같습니다 현재비밀번호와 다르게 설정하세요";
+			 return status;
 		 }
 
 			 return true;
@@ -343,7 +404,6 @@
 
     // Get the <span> element that closes the modal
     var closePw = document.getElementById("closePw");                                          
-    var closePw2 = document.getElementById("closePw2");  
     // When the user clicks on the button, open the modal 
     headerBtn1.onclick = function() {
        headerModal1.style.display = "block";
@@ -352,12 +412,18 @@
     // When the user clicks on <span> (x), close the modal
     closePw.onclick = function() {
        headerModal1.style.display = "none";
+     	 $("#pwNow").val("");
+	  	 $("#pw-Change").val("");
+	  	 $("#pw-checkChange").val("");
+	  	 $("#pwTrue").hide();
+		 $("#pwFalse").hide();
+		 $("#pwChangeTrue").hide();
+		 $("#pwChangeFalse").hide();
+		 $("#pw-checkChangeTrue").hide();
+		 $("#pw-checkChangeFalse").hide();
+       
     }
-    closePw2.onclick = function() {
-       headerModal1.style.display = "none";
-    }
-		
-		
+    
 
 	
 	$("#stuAddrDt").hide(); 
@@ -379,10 +445,9 @@
 	$("#totalAddress").val($("#stuPostCode").val()+"PSTC"+$("#stuAddr").val());
 	
 		function LoadImg(value){ // 변경된 그림을 보여주는 함수
-			console.log($("#LoadImgStat").val());
+			
 			$("#LoadImgStat").val("true");
-			console.log($("#LoadImgStat").val());
-			if(value.files && value.files[0]){
+						if(value.files && value.files[0]){
 				var reader=new FileReader();
 				reader.onload=function(e){
 					$('#LoadImg').attr('src',e.target.result);
@@ -393,13 +458,13 @@
 	
 		$("#imgAttach").change(function(){ // 첨부파일이 변경되면
 			LoadImg(this); // 해당 이미지로 변경하기
-			console.log("loadImg가 변경됨!!!!!");
+			
 		})
 		
 		
 		$("#LoadImg").change(function(){ // 보류
 			//$("#imgAttach").attr("value","true");
-			console.log("loadImg가 변경됨");
+			
 		});
 		
 		
@@ -456,7 +521,7 @@
                     $("#stuAddrDt").blur(function(){
                     	 $("#totalAddress").val($("#stuPostCode").val()+"PSTC"+$("#stuAddr").val()+" "+$("#stuAddrDt").val());
                     });
-                    console.log($("#totalAddress").val())
+                    
                 }
             }).open();
         }

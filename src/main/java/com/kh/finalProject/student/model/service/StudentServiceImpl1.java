@@ -127,6 +127,21 @@ public class StudentServiceImpl1 implements StudentService1 {
 		
 		return dao.countSelectMyClass(session,param);
 	}
+
+	@Override
+	public int updatePw(Map<String,String> userInfo) {
+		
+		return dao.updatePw(session,userInfo);
+	}
+
+	@Override
+	public String selectNowPw(String stuId) {
+		
+		return dao.selectNowPw(session,stuId);
+	}
+	
+	
+	
 	
 	
 

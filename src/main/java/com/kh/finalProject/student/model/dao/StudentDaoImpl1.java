@@ -129,6 +129,18 @@ public class StudentDaoImpl1 implements StudentDao1 {
 		return session.selectOne("student1.countSelectMyClass",param);
 	}
 
+	@Override
+	public int updatePw(SqlSessionTemplate session, Map<String,String> userInfo) {
+		
+		return session.update("student1.updatePw",userInfo);
+	}
+
+	@Override
+	public String selectNowPw(SqlSessionTemplate session, String stuId) {
+		
+		return session.selectOne("student1.selectNowPw",stuId);
+	}
+
 	
 	
 	

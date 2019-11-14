@@ -3,12 +3,13 @@ package com.kh.finalProject.student.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.javassist.expr.Instanceof;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,7 +87,7 @@ public class StudentController1 {
 		s.setStuAddr(stuAddr);	
 		s.setStuAccount(stuAccount);	
 		s.setStuImgRename(stuFile);	
-		System.out.println(stuAddr);	
+		
 		String saveDir = req.getSession().getServletContext().getRealPath("/resources/images/image");	
 		File dir = new File(saveDir);	
 
@@ -116,14 +117,14 @@ public class StudentController1 {
 			}	
 			s.setStuImgOriname(oriFileName);	
 			s.setStuImgRename(reName);	
-			System.out.println(reName);	
+			
 
 			 try { 	
 				 result = service.studentInfoUpdate(s); 	
 			 }catch (Exception e) { 	
 				 // 파일삭제로직. 	
 				 // 에러메세지 출력로직! 	
-				 System.out.println("에러파일저장안됨");	
+				
 
 
 				 del=new File(saveDir+"/"+s.getStuImgRename());	
@@ -141,9 +142,10 @@ public class StudentController1 {
 	public ModelAndView pwChange(HttpSession session,HttpServletRequest req,HttpServletResponse res) {
 		ModelAndView mv=new ModelAndView();
 		Student loginMember=(Student)session.getAttribute("loginMember");
-		String stuPw=loginMember.getStuPw();
+		String stuId=loginMember.getStuNo();
+		String stuPw=service.selectNowPw(stuId);
 		String changePwck=req.getParameter("pwNow");
-		System.out.println("changePwck:"+changePwck);
+		
 		String pwck="false";
 		if(stuPw.equals(changePwck)) {
 			pwck="true";
@@ -152,10 +154,26 @@ public class StudentController1 {
 	
 		mv.addObject("pwck",pwck);
 		mv.setViewName("jsonView");
-		String stuId=loginMember.getStuNo();
-		System.out.println(pwck);
+		
+	
 		return mv;
 	}
+	
+	@RequestMapping(value = "/student/changePwEnd.hd", method = RequestMethod.POST)
+	public String pwChangeEnd(HttpSession session,HttpServletRequest req) {
+		Map<String,String> userInfo = new HashMap();
+		Student loginMember=(Student)session.getAttribute("loginMember");
+		String stuId=loginMember.getStuNo();
+		String stuPw=req.getParameter("pwfinal");
+		System.out.println("id:"+stuId);
+		System.out.println("pw:"+stuPw);
+		userInfo.put("stuId", stuId);
+		userInfo.put("stuPw", stuPw);
+		int result=service.updatePw(userInfo);
+		
+		return "/student/studentInfoUpdate";
+	}
+	
 	
 	
 

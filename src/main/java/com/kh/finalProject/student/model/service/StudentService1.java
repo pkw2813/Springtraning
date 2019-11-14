@@ -27,6 +27,6 @@ public interface StudentService1 {
 	int cancelMyClass(Map<String,Object>param);
 	int countMyApplyClass(String stuId);
 	int countSelectMyClass(Map<String,Object>param);
-	
-	
+	int updatePw(Map<String,String> userInfo);
+	String selectNowPw(String stuId);
 }
