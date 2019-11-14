@@ -320,8 +320,7 @@ $(function(){
             let detailAddr = document.getElementById("sample6_detailAddress").value;
 			let beforeAddr = "<input type='hidden' name='beforeAddr' value='"+postCode+" / "+addrCode+" / "+detailAddr+"'/>"; 
 			document.getElementsByClassName("inputAddress")[0].innerHTML += beforeAddr;
-			console.log("주소값 :"+beforeAddr);
-            
+	        
             
 
 	})

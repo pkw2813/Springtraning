@@ -36,4 +36,8 @@ public interface EmployeeDao {
 	List<Employee> selectEmpList(SqlSessionTemplate session, int cPage, int numPerPage);
 	
 	int empListCount(SqlSessionTemplate session);
+	
+	int selectEmpLastNum(SqlSessionTemplate session, String deptCode);
+	
+	int insertNewEmp(SqlSessionTemplate session, Employee e);
 }

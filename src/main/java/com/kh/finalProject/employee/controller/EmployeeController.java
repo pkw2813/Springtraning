@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +24,6 @@ import com.kh.finalProject.employee.model.service.EmployeeService;
 import com.kh.finalProject.employee.model.vo.Employee;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.vo.Professor;
-import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Controller
@@ -193,5 +193,70 @@ public class EmployeeController {
 		return count;
 	}
 
+	
+	@RequestMapping("/employee/insertEmp.hd")
+	public String insertEmp(Employee emp, HttpServletRequest req) {
+		System.out.println(emp);
+		String msg = "";
+		String loc = "";
+		Employee e = settingNewEmployee(emp);
+		try {
+			int result = service.insertNewEmp(e);
+			handler.forSendEmail(e.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!", "아이디 : " + e.getEmpId()
+			+ "   \r\n    비밀번호 : " + enc.decrypt(e.getEmpPw()) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
+		} catch (Exception x) {
+			System.out.println("에러");
+		}
 		
+		return "common/msg";
+	}
+	
+
+
+	public Employee settingNewEmployee(Employee e) {
+		Employee emp = new Employee();
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String sysdate = sdf.format(date);
+		int empNum = service.selectEmpLastNum(e.getDeptCode());
+		System.out.println(empNum);
+		String empNo = "E" + sysdate.substring(0, 4) + e.getDeptCode() + String.format("%03d", empNum);
+		emp.setEmpId(empNo);
+		emp.setEmpName(e.getEmpName());
+		try {
+			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
+			emp.setEmpPw(enc.decrypt(e.getEmpSsn()).substring(0, 6));
+			// 패스워드 초기 패스워드 암호화함
+			emp.setEmpPw(enc.encrypt(e.getEmpPw()));
+
+			// 성별땜에
+			emp.setEmpSsn(enc.decrypt(e.getEmpSsn()));
+			// 성별 설정
+			emp.setGender(e.getEmpSsn().substring(6, 7).equals("1") || e.getEmpSsn().substring(6, 7).equals("3")
+					? "남"
+					: e.getEmpSsn().substring(6, 7).equals("2") || e.getEmpSsn().substring(6, 7).equals("4") ? "여"
+							: "");
+
+			// 다시 암호화
+			emp.setEmpSsn(enc.encrypt(e.getEmpSsn()));
+
+			// 로그인 matches 양식
+//			String su = "911010";
+//			System.out.println("매치 :" + s.getStuPw().matches(su));
+
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+		emp.setPhone(e.getPhone());
+		emp.setAddress(e.getAddress());
+		emp.setEmpSsn(e.getEmpSsn());
+		emp.setDeptCode(e.getDeptCode());
+		emp.setEmail(e.getEmail());
+		System.out.println(emp);
+//		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-1" : "미정");
+		return emp;
+	}
+	
+	
+	
 }

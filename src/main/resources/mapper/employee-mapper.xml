@@ -21,7 +21,13 @@
 		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
 	</select>
 	
+	<select id="selectEmpLastNum" resultType="_int" parameterType="string">
+		SELECT MAX(SUBSTR(PROF_ID,9,2)) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
+	</select>
 	
+	<insert id="insertNewEmp" parameterType="employee">
+        INSERT INTO HD_PROFESSOR_TB VALUES(#{empId},#{empPw},#{empName},#{empSsn},#{deptCode},#{email},#{address},#{address},#{gender},DEFAULT,'profImg.PNG')		
+	</insert>
 	<resultMap id="employeeResult" type="employee">
 		<result column="PROF_ID" property="empId" />
 		<result column="PROF_PW" property="empPw" />

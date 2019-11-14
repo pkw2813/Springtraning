@@ -32,4 +32,8 @@ public interface EmployeeService {
 	List<Employee> selectEmpList(int cPage, int numPerPage);
 	
 	int empListCount();
+	
+	int selectEmpLastNum(String deptCode);
+	
+	int insertNewEmp(Employee e);
 	}

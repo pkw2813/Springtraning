@@ -84,6 +84,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int empListCount(SqlSessionTemplate session) {
 		return session.selectOne("employee.empListCount");
 	}
+
+	@Override
+	public int selectEmpLastNum(SqlSessionTemplate session, String deptCode) {
+		return session.selectOne("employee.selectEmpLastNum", deptCode);
+	}
+
+	@Override
+	public int insertNewEmp(SqlSessionTemplate session, Employee e) {
+		return session.insert("employee.insertNewEmp", e);
+	}
 	
 	
 	
