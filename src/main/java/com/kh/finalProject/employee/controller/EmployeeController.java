@@ -196,10 +196,11 @@ public class EmployeeController {
 	
 	@RequestMapping("/employee/insertEmp.hd")
 	public String insertEmp(Employee emp, HttpServletRequest req) {
-		System.out.println(emp);
+		System.out.println("인서트 시작 : " + emp);
 		String msg = "";
 		String loc = "";
 		Employee e = settingNewEmployee(emp);
+		 System.out.println(e);
 		try {
 			int result = service.insertNewEmp(e);
 			handler.forSendEmail(e.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!", "아이디 : " + e.getEmpId()
@@ -214,23 +215,30 @@ public class EmployeeController {
 
 
 	public Employee settingNewEmployee(Employee e) {
+		System.out.println("세팅 진입 : " + e);
+		System.out.println("번호 : " + e.getEmpSsn());
 		Employee emp = new Employee();
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String sysdate = sdf.format(date);
-		int empNum = service.selectEmpLastNum(e.getDeptCode());
-		System.out.println(empNum);
-		String empNo = "E" + sysdate.substring(0, 4) + e.getDeptCode() + String.format("%03d", empNum);
+		int empNum = 0;
+		if(service.empLastNumCheck(e.getDeptCode()) > 0) {
+			empNum = service.selectEmpLastNum(e.getDeptCode());
+		}else {
+			empNum = 1;
+		}
+		System.out.println("번호 세팅 : " + empNum);
+		String empNo = "E" + sysdate.substring(0, 4) + e.getDeptCode() + String.format("%02d", empNum);
 		emp.setEmpId(empNo);
 		emp.setEmpName(e.getEmpName());
 		try {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
-			emp.setEmpPw(enc.decrypt(e.getEmpSsn()).substring(0, 6));
+			emp.setEmpPw(e.getEmpSsn().substring(0, 6));
+			System.out.println(emp.getEmpPw());
 			// 패스워드 초기 패스워드 암호화함
-			emp.setEmpPw(enc.encrypt(e.getEmpPw()));
-
+			emp.setEmpPw(enc.encrypt(emp.getEmpPw()));
+			System.out.println(emp.getEmpPw());
 			// 성별땜에
-			emp.setEmpSsn(enc.decrypt(e.getEmpSsn()));
 			// 성별 설정
 			emp.setGender(e.getEmpSsn().substring(6, 7).equals("1") || e.getEmpSsn().substring(6, 7).equals("3")
 					? "남"
@@ -249,14 +257,80 @@ public class EmployeeController {
 		}
 		emp.setPhone(e.getPhone());
 		emp.setAddress(e.getAddress());
-		emp.setEmpSsn(e.getEmpSsn());
 		emp.setDeptCode(e.getDeptCode());
 		emp.setEmail(e.getEmail());
-		System.out.println(emp);
+		System.out.println("세팅 끝 : " + emp);
 //		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-1" : "미정");
 		return emp;
 	}
 	
+	@RequestMapping("/professor/insertProf.hd")
+	public String insertProf(Professor p, HttpServletRequest req) {
+		System.out.println("인서트 시작 : " + p);
+		String msg = "";
+		String loc = "";
+		Professor prof = settingNewProfessor(p);
+		 System.out.println(prof);
+		try {
+			int result = service.insertNewProf(prof);
+			handler.forSendEmail(prof.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!", "아이디 : " + prof.getProfId()
+			+ "   \r\n    비밀번호 : " + enc.decrypt(prof.getProfPw()) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
+		} catch (Exception x) {
+			System.out.println("에러");
+		}
+		
+		return "common/msg";
+	}	
 	
-	
+	public Professor settingNewProfessor(Professor p) {
+		System.out.println("세팅 진입 : " + p);
+		System.out.println("번호 : " + p.getProfSsn());
+		Professor prof = new Professor();
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String sysdate = sdf.format(date);
+		int profNum = 0;
+		if(service.empLastNumCheck(p.getDeptCode()) > 0) {
+			profNum = service.selectProfLastNum(p.getDeptCode());
+		}else {
+			profNum = 1;
+		}
+		System.out.println("번호 세팅 : " + profNum);
+		String rofNo = "P" + sysdate.substring(0, 4) + p.getDeptCode() + String.format("%02d", profNum);
+		prof.setProfId(rofNo);
+		prof.setProfName(p.getProfName());
+		try {
+			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
+			prof.setProfPw(p.getProfSsn().substring(0, 6));
+			System.out.println(prof.getProfPw());
+			// 패스워드 초기 패스워드 암호화함
+			prof.setProfPw(enc.encrypt(prof.getProfPw()));
+			System.out.println(prof.getProfPw());
+			// 성별땜에
+			// 성별 설정
+			prof.setGender(p.getProfSsn().substring(6, 7).equals("1") || p.getProfSsn().substring(6, 7).equals("3")
+					? "남"
+					: p.getProfSsn().substring(6, 7).equals("2") || p.getProfSsn().substring(6, 7).equals("4") ? "여"
+							: "");
+
+			// 다시 암호화
+			prof.setProfSsn(enc.encrypt(p.getProfSsn()));
+
+			// 로그인 matches 양식
+//			String su = "911010";
+//			System.out.println("매치 :" + s.getStuPw().matches(su));
+
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+		prof.setPhone(p.getPhone());
+		prof.setAddress(p.getAddress());
+		prof.setDeptCode(p.getDeptCode());
+		prof.setEmail(p.getEmail());
+		System.out.println("세팅 끝 : " + prof);
+//		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-1" : "미정");
+		return prof;
+	}
+
+
 }

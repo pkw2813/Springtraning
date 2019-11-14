@@ -56,29 +56,20 @@
 
 <div id="myModal" class="modal">
 		<div class="modal-content">
-			<form action="${path}/beforeStudent/insertEmp.hd" method="POST">
+			<form action="${path}/professor/insertProf.hd" method="POST">
 			<span class="close">&times;</span>
-			<p>입학 신청</p>
+			<p>교수 등록</p>
 			<div class="form-group">
 			<hr>
 				<label class="control-label">이름</label>
-					<input type="text" id="beforeName" name="beforeName" placeholder="이름 을 입력하세요" class="form-control" required />
-			<hr>
-			<label class="control-label">입학 유형</label>
-			<select class="form-control" name="beforeType">				<option value="정시" class="enrollType" >정시</option>
-				<option value="수시" class="enrollType">수시</option>
-				<option value="편입" class="enrollType">편입</option>				
-			</select>		
-				<hr>
+				<input type="text" id="profName" name="profName" placeholder="이름 을 입력하세요" class="form-control" required />
+
 			<label class="control-label">연락처</label>
-					<input type="tel" id="beforePhone" name="beforePhone" placeholder=" '-' 제외 입력" autocomplete=off class="form-control" />
-					<input type="hidden" class="saveEmail" id="saveEmail" name="beforeEmail" value="">
-					<input type="hidden" class="flagEmail" id="flagEmail" name="flagEmail" value="false">
+					<input type="tel" id="phone" name="phone" placeholder=" '-' 제외 입력" autocomplete=off class="form-control" />
 					<br>
 					<label class="control-label">E-mail</label>					
 					<div class="emailCheck">
 					<input type="email" id="email" name="email" placeholder="이메일을 입력하세요" class="form-control" required >
-					<button type="button" class="btn btn-info" id="emailBtn">이메일 발송</button>
 					</div>
 	
 					<br>
@@ -86,15 +77,16 @@
 				
 			<label class="control-label">학과 코드</label>				
 				
-						<select class="form-control selectCol" name ='beforeColCode'>								
+						
+						<select class="form-control selectColModal" name ='colCode'>								
 						</select>
 						<!-- 여기에 학과 선택 넣어야함 .selectCol -->
-						<select class="form-control selectdep"  name='beforeDeptCode' required>
+						<select class="form-control selectdepModal"  name='deptCode' readonly>
 						</select>
 						<br>
 						<label class="control-label">주민 등록 번호</label>	
 						<input type="text" id="jumin" name="jumin" placeholder="주민등록번호 13자리를 입력하세요" class="form-control" onblur="setJumin(this)" />
-					<input type="hidden" id="beforeNo" value="" name="beforeNo">
+					<input type="hidden" id="profSsn" value="" name="profSsn">
 					<br>														
 					<br>
 			<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -110,7 +102,6 @@
 	
 	
 			</div>
-			<input type="hidden" path="random" id="random" name="random1" value="${random}" />
 			<input type="button"  class="btn btn-info btn_close" value="취소" style="float: right; margin: 7px;">
 			<input type="submit" class="btn btn-info" id="enrollBtn" value="입학 신청" style="float: right; margin: 7px;">
 			<br>
@@ -123,8 +114,110 @@
 
 
 <script>
+
+
+$(function() {
+	$('#enrollBtn').click(function() {
+		//이름
+		let name = $("#profName").val();
+		if(name == null || name == '') {
+			alert("이름을 입력해 주세요.");
+		}
+		
+		
+    // //전화번호 정규표현식
+    let regPhone = /^\d{3}\d{3,4}\d{4}$/;
+    
+ 	let phone = $('#phone');
+            if (!phone.val()) {
+                alert('전화번호를 입력해주세요.');
+                phone.focus();
+                return false;
+            } else {
+                if (!regPhone.test(phone.val().trim())) {
+                    alert('전화번호 형식이 유효하지 않습니다.');
+                    phone.focus();
+                    return false;
+                }
+            }
+
+	// //이메일 인증을 완료했는지 확인
+
+			let checkEmail = $('#email').val();
+			if(checkEmail == null) {
+				alert("이메일 인증을 완료해주세요.");
+				   return false;
+			}
+			//주민등록 번호
+			let jumin = document.getElementById('profSsn').value;
+			if(jumin == "") {
+				alert("주민번호를 입력해주세요");
+				return false;
+			}else if(jumin.length < 13){
+				alert("정확한 주민번호를 입력해 주세요.");
+				return false;
+			}
+
+	// //주소
+			let postcode = $('#sample6_postcode');
+            //상세주소
+            let detailAddress = $('#sample6_detailAddress');
+            if (!postcode.val()) {
+                alert('주소를 입력해주세요.');
+                postcode.focus();
+                return false;
+            }
+            if (!detailAddress.val()) {
+                alert('상세주소를 입력해주세요.');
+                detailAddress.focus();
+                return false;
+            }
+
+
+            let postCode = document.getElementById('sample6_postcode').value;
+            let addrCode = document.getElementById("sample6_address").value;
+            let detailAddr = document.getElementById("sample6_detailAddress").value;
+			let beforeAddr = "<input type='hidden' name='address' value='"+postCode+" / "+addrCode+" / "+detailAddr+"'/>"; 
+			document.getElementsByClassName("inputAddress")[0].innerHTML += beforeAddr;
+	
+	});
+});
+
+
+
+
+
+function setJumin(obj) {
+	let ju = obj.value;
+	console.log("ju : "+ju);
+	console.log("ck" + ju.indexOf("*") != -1);
+	if(ju.indexOf("*") == -1) {
+		console.log("if문 내부")
+	 $("#profSsn").val(ju);
+	}
+	console.log("ckjumin :" + document.getElementById('profSsn').value);
+	console.log(ju);
+	ju = ju.replace("-","");
+		if(ju.length > 6) {
+			ju1 = ju.substring(0,6);
+			ju2 = ju.substring(6,7);
+		for(i=1; i<ju.substring(6).length && i < 7; i++) {
+			ju2 = ju2 + "*";
+		}
+		
+		obj.value = ju1+"-"+ju2;
+		$('#jumin').prop("readonly", true);
+		}
+	
+	}
+
+
+
+
+
 function insertNewProf() {
    $(".modal").css("display","block");
+   console.log()
    
 }
 
@@ -199,6 +292,7 @@ $(function() {
 			url: "${pageContext.request.contextPath}/selectColList.do",
 			success: function(data) {
 				let colListHtml = "";
+				let colListHtmlModal = "";
 				
 				colListHtml = "<option value='select' id='selCol'>대학 선택</option>";
 				for(let i = 0; i < data.list.length; i++) {
@@ -206,6 +300,7 @@ $(function() {
 					console.log(cols['COL_CODE']);
 
 					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
+					colListHtmlModal += "<option value='"+cols['COL_CODE']+"'  class='colListModal'>"+cols['COL_NAME']+"</option>";
 				}
 				 	
 				$('.selectCol').html(colListHtml);
@@ -213,9 +308,14 @@ $(function() {
 						$('.titleCol').val($('.selectCol').val());
 					$("#selCol").attr('disabled',true);
 			
-		
-	})
+	}),
+					$('.selectColModal').html(colListHtmlModal);
+					$('.selectColModal').change(function(){
+						$('.titleCol').val($('.selectColModal').val());
+					$("#selColModal").attr('disabled',true);
 			
+			
+			})
 			}
 		})
 	})
@@ -252,21 +352,35 @@ $(function() {
 
  			function chahgeProf() {
 						location.href="${pageContext.request.contextPath}/changeProfessor.hd?deptCode="+$('.selectdep').val()+"";
-						// $.ajax({
-						// 	type : "post",
-						// 	url: "${pageContext.request.contextPath}/changeProfessor.hd",
-						// 	data: {"deptCode" : $('.selectdep').val()},
-						// 	success: function(data) {
-						// 		console.log(data);
-
-
-
-
-
-						// 	}
-												
-						// })
 			 }
+
+
+
+			 $(function(){
+ 	$('.selectColModal').change(function(){
+ 		let val = $('.selectColModal').val();
+		$.ajax({
+			type : "post",
+			url: "${pageContext.request.contextPath}/selectDeptList.do",
+			data: {"result" : $('.selectColModal').val()},
+			success: function(data) {
+				let deptListHtml = "<option value='select' id='selDeptModal'>학과 선택</option>";
+				for(let i = 0; i < data.list.length; i++) {
+					let depts = data.list[i];
+
+					deptListHtml += "<option value='"+depts['DEPT_CODE']+"'  class='deptList'>"+depts['DEPT_NAME']+"</option>";
+				}
+				
+				$('.selectdepModal').html(deptListHtml);
+					$('.selectdepModal').change(function(){
+					$("#selDeptModal").attr('disabled',true);
+		});
+ 	}
+ });
+	 });
+ });
+
+
 
 </script>
 	
@@ -284,9 +398,40 @@ $(function() {
 	.gap3{
 		height:300px;
 	}
-	/* div{
-		border:0.3px solid coral;
-	} */
+	.modal{
+		display: none;
+		position : fixed;
+		z-index: 1;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height:100%;	
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+    
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%; /* Could be more or less, depending on screen size */                          
+        }
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 </style>
 
 	<jsp:include page = "/WEB-INF/views/common/footer.jsp"/>

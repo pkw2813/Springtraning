@@ -36,4 +36,10 @@ public interface EmployeeService {
 	int selectEmpLastNum(String deptCode);
 	
 	int insertNewEmp(Employee e);
+	
+	int empLastNumCheck(String deptCode);
+	
+	int selectProfLastNum(String deptCode);
+	
+	int insertNewProf(Professor p);
 	}

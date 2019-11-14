@@ -40,4 +40,10 @@ public interface EmployeeDao {
 	int selectEmpLastNum(SqlSessionTemplate session, String deptCode);
 	
 	int insertNewEmp(SqlSessionTemplate session, Employee e);
+	
+	int empLastNumCheck(SqlSessionTemplate session, String deptCode);
+	
+	int selectProfLastNum(SqlSessionTemplate session, String deptCode);
+	
+	int insertNewProf(SqlSessionTemplate session, Professor p);
 }

@@ -98,6 +98,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int insertNewEmp(Employee e) {
 		return dao.insertNewEmp(session, e);
 	}
+
+	@Override
+	public int empLastNumCheck(String deptCode) {
+		return dao.empLastNumCheck(session, deptCode);
+	}
+
+	@Override
+	public int selectProfLastNum(String deptCode) {
+		return dao.selectProfLastNum(session, deptCode);
+	}
+
+	@Override
+	public int insertNewProf(Professor p) {
+		return dao.insertNewProf(session, p);
+	}
 	
 	
 	

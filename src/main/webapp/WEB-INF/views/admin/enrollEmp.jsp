@@ -59,10 +59,10 @@
 		<div class="form-group">
 		<hr>
 			<label class="control-label">이름</label>
-				<input type="text" id="beforeName" name="beforeName" placeholder="이름 을 입력하세요" class="form-control" required />
+				<input type="text" id="empName" name="empName" placeholder="이름 을 입력하세요" class="form-control" required />
 
 				<label class="control-label">연락처</label>
-				<input type="tel" id="beforePhone" name="beforePhone" placeholder=" '-' 제외 입력" autocomplete=off class="form-control" />
+				<input type="tel" id="phone" name="phone" placeholder=" '-' 제외 입력" autocomplete=off class="form-control" />
 				<br>
 				<label class="control-label">E-mail</label>					
 				<div class="emailCheck">
@@ -74,14 +74,14 @@
 			
 		<label class="control-label">학과 명</label>				
 					<!-- 여기에 학과 선택 넣어야함 .selectCol -->
-					<select class="form-control selectdep"  name='beforeDeptCode' required>
+					<select class="form-control selectdep"  name='deptCode' readonly>
 					</select>
 					<br>
 					<label class="control-label">주민 등록 번호</label>	
 					<input type="text" id="jumin" name="jumin" placeholder="주민등록번호 13자리를 입력하세요" class="form-control" onblur="setJumin(this)" />
-				<input type="hidden" id="beforeNo" value="" name="beforeNo">
-				<br>														
-				<br>
+					<input type="hidden" id="empSsn" name="empSsn">
+					<br>														
+					<br>
 		<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<fieldset style="board:1px black">
 		<legend><label class="control-label">주소 / 상세 주소</label></legend>
@@ -111,7 +111,7 @@
 $(function() {
 	$('#enrollBtn').click(function() {
 		//이름
-		let name = $("#beforeName").val();
+		let name = $("#empName").val();
 		if(name == null || name == '') {
 			alert("이름을 입력해 주세요.");
 		}
@@ -120,7 +120,7 @@ $(function() {
     // //전화번호 정규표현식
     let regPhone = /^\d{3}\d{3,4}\d{4}$/;
     
- 	let phone = $('#beforePhone');
+ 	let phone = $('#phone');
             if (!phone.val()) {
                 alert('전화번호를 입력해주세요.');
                 phone.focus();
@@ -141,7 +141,7 @@ $(function() {
 				   return false;
 			}
 			//주민등록 번호
-			let jumin = document.getElementById('jumin').value;
+			let jumin = document.getElementById('empSsn').value;
 			if(jumin == "") {
 				alert("주민번호를 입력해주세요");
 				return false;
@@ -169,7 +169,7 @@ $(function() {
             let postCode = document.getElementById('sample6_postcode').value;
             let addrCode = document.getElementById("sample6_address").value;
             let detailAddr = document.getElementById("sample6_detailAddress").value;
-			let beforeAddr = "<input type='hidden' name='beforeAddr' value='"+postCode+" / "+addrCode+" / "+detailAddr+"'/>"; 
+			let beforeAddr = "<input type='hidden' name='address' value='"+postCode+" / "+addrCode+" / "+detailAddr+"'/>"; 
 			document.getElementsByClassName("inputAddress")[0].innerHTML += beforeAddr;
 	
 	});
@@ -183,9 +183,9 @@ function setJumin(obj) {
 	console.log("ck" + ju.indexOf("*") != -1);
 	if(ju.indexOf("*") == -1) {
 		console.log("if문 내부")
- 	document.getElementById('beforeNo').value = ju;
+	 $("#empSsn").val(ju);
 	}
-	console.log("ckjumin :" + document.getElementById('beforeNo').value);
+	console.log("ckjumin :" + document.getElementById('empSsn').value);
 	console.log(ju);
 	ju = ju.replace("-","");
 		if(ju.length > 6) {
