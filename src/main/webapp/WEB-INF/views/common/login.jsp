@@ -33,7 +33,7 @@ $(function(){
 		    emparr+="<a href='#'>학번 / 비밀번호 찾기 </a><br/></div>";
 		    emparr+="<label><input type='checkbox' name='idSave' /><small>아이디 저장</small></label>";
 		    emparr+="<input type='submit' class='btn btn-info btn-sm pull-right' value='로그인'>";
-		    emparr+="<button type='button' id='adm_btn' class='btn btn-info btn-sm pull-right adm_btn'>입학신청</button></form>"
+		    emparr+="<button type='button' id='adm_btn' class='btn btn-info btn-sm pull-right adm_btn' onclick='enrollStudent();'>입학신청</button></form>"
 			$(".panel-heading").html("<h3 class='panel-title'>학생 로그인</h3>");
 		    $(".col-md-7").html(emparr);
 		    }
