@@ -53,10 +53,11 @@
 									<th>첨부파일</th>
 									  <c:forEach items="${profAttachment }" var="file" varStatus="vs">
 									<td><button type="button" class="btn btn-outline-success btn-block" onclick="fileDownload('${file.boardOrifilename}','${file.boardRefilename }');">
-								       <c:out value="${file.boardOrifilename }"/>
+										<c:out value="${file.boardOrifilename }"/>
 							         	</button></td>
 							          </c:forEach>
 								</tr>
+								
 								<tr><td><br/></td></tr>
 								<tr>
 									<th>내용</th>

@@ -13,9 +13,13 @@ import com.kh.finalProject.professor.model.vo.ProfessorBoard;
 import com.kh.finalProject.professor.model.vo.Subject;
 
 public interface ProfessorService1 {
-	//페이징 토탈데이타
+	//게시판 페이징 토탈데이타
 	int selectBoardCount();
 	String selectProfName();
+	//강의계획서 토탈데이타
+	int selectPlanCount();
+	//subject 토탈데이타
+	int selectSubjectCount(String profId);
 	//강의뷰
 	List<InsertClass> insertSubject();
 //	Map<String,String> insertSubjectEnd(MultipartFile upfile,Map<String, String>map) throws RuntimeException;
@@ -43,7 +47,7 @@ public interface ProfessorService1 {
 	ProfessorBoard selectBoardView(int profBoardNo);
 	List<ProfBoardAttachment> selectProfAttachment(int profBoardNo);
 	//subject조회
-	List<Subject> subjectCodeView(String profId);
+	List<Subject> subjectCodeView(int cPage, int numPerPage, String profId);
 	Map<String,String> selectSubject(String subCode);
 	//강의 계획서 게시판
 	List<PlanBoard> planBoardView(int cPage, int numPerPage);

@@ -201,7 +201,7 @@
                 <li class="nav-item"> <a class="nav-link" href="#">주별강의계획서</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lectureData">강의자료업로드</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">강의내역</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">담당교수별 강의시간표</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/profSchedule">담당교수별 강의시간표</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">결/보강 신청</a></li>
               </ul>
             </div>
