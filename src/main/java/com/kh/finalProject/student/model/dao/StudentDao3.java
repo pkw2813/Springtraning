@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.finalProject.student.model.vo.Student;
 import com.kh.finalProject.student.model.vo.GraduationCon;
+import com.kh.finalProject.student.model.vo.MySchedule;
+import com.kh.finalProject.student.model.vo.MyScheduleForInfo;
 import com.kh.finalProject.student.model.vo.StuTuition;
 
 public interface StudentDao3 {
@@ -17,4 +19,5 @@ public interface StudentDao3 {
 	int updateStuYearSem(SqlSessionTemplate session, Student student);
 	GraduationCon selectGraduationCon(SqlSessionTemplate session, String studentNo);
 	String selectStuYearSem(SqlSessionTemplate session, String studentNo);
+	List<MySchedule> selectMySchedule(SqlSessionTemplate session, MyScheduleForInfo msfi);
 }

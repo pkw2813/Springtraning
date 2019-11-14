@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.student.model.service.StudentService3;
 import com.kh.finalProject.student.model.vo.Student;
 import com.kh.finalProject.student.model.vo.GraduationCon;
+import com.kh.finalProject.student.model.vo.MySchedule;
+import com.kh.finalProject.student.model.vo.MyScheduleForInfo;
 import com.kh.finalProject.student.model.vo.StuTuition;
 
 
@@ -246,11 +248,16 @@ public class StudentController3 {
 		Student stu=(Student)session.getAttribute("loginMember");
 		String studentNo=stu.getStuNo();
 		
-		System.out.println("로그인한 아이디:"+studentNo);
-		GraduationCon graduationCon=service.selectGraduationCon(studentNo);
-
-		String test="테스트 중123";
-		model.addAttribute("test", test); // 학생 졸업조건 넘기기
+		String acaYearSem="2019-1"; // 2019학년도 1학기
+		MyScheduleForInfo msfi=new MyScheduleForInfo();
+		msfi.setStuNo(studentNo);
+		msfi.setAcaYearSem(acaYearSem);
+		
+		System.out.println("msfi:"+msfi);
+		List<MySchedule> myScheduleList=service.selectMySchedule(msfi);
+		System.out.println("myScheduleList:"+myScheduleList);
+		
+		model.addAttribute("myScheduleList", myScheduleList); // 학생 시간표 넘기기
 		
 		return "student/mySchedule";
 	}

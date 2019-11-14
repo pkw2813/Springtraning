@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.finalProject.student.model.dao.StudentDao3;
 import com.kh.finalProject.student.model.vo.Student;
 import com.kh.finalProject.student.model.vo.GraduationCon;
+import com.kh.finalProject.student.model.vo.MySchedule;
+import com.kh.finalProject.student.model.vo.MyScheduleForInfo;
 import com.kh.finalProject.student.model.vo.StuTuition;
 
 @Service
@@ -19,7 +21,6 @@ public class StudentServiceImpl3 implements StudentService3 {
 	private StudentDao3 dao;
 	@Autowired
 	private SqlSessionTemplate session;
-	
 
 
 	@Override
@@ -66,6 +67,12 @@ public class StudentServiceImpl3 implements StudentService3 {
 	@Override
 	public String selectStuYearSem(String studentNo) {
 		return dao.selectStuYearSem(session, studentNo);
+	}
+
+
+	@Override
+	public List<MySchedule> selectMySchedule(MyScheduleForInfo msfi) {
+		return dao.selectMySchedule(session, msfi);
 	}
 
 	

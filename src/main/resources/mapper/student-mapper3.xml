@@ -47,6 +47,17 @@
   		SELECT STU_YEAR_SEM FROM HD_STUDENT_TB WHERE STU_NO=#{studentNo}
   	</select>
   	
+  	<select id="selectMySchedule" parameterType="myScheduleForInfo" resultMap="myScheduleResult">
+  		SELECT SR.ACA_YEAR_SEM, S.SUB_NAME, S.SUB_DATE, S.SUB_TIME, S.SUB_ROOM, P.PROF_NAME
+		FROM HD_SUB_REQ_TB SR
+		JOIN HD_SUBJECT_TB S
+		ON SR.SUB_CODE=S.SUB_CODE
+		AND SR.STU_NO=#{stuNo}
+		AND SR.ACA_YEAR_SEM=#{acaYearSem}
+		JOIN HD_PROFESSOR_TB P
+		ON SR.PROF_ID=P.PROF_ID
+  	</select>
+  	
   	
   	<resultMap id="tuitionResult" type="stuTuition">
 		<result column="STU_NO" property="stuNo" />
@@ -73,6 +84,16 @@
 		<result column="STU_NAME" property="stuName" />	
 		<result column="STU_SSN" property="stuSSn" />
 		<result column="DEPT_NAME" property="deptName" />	
+	</resultMap>
+	
+	
+	<resultMap id="myScheduleResult" type="mySchedule">
+		<result column="ACA_YEAR_SEM" property="acaYearSem" />
+		<result column="SUB_NAME" property="subName" />
+		<result column="SUB_DATE" property="subDate" />
+		<result column="SUB_TIME" property="subTime" />
+		<result column="SUB_ROOM" property="subRoom" />
+		<result column="PROF_NAME" property="profName" />	
 	</resultMap>
 
   

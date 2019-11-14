@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.finalProject.student.model.vo.Student;
 import com.kh.finalProject.student.model.vo.GraduationCon;
+import com.kh.finalProject.student.model.vo.MySchedule;
+import com.kh.finalProject.student.model.vo.MyScheduleForInfo;
 import com.kh.finalProject.student.model.vo.StuTuition;
 
 @Repository
@@ -47,6 +49,11 @@ public class StudentDaoImpl3 implements StudentDao3 {
 	@Override
 	public String selectStuYearSem(SqlSessionTemplate session, String studentNo) {
 		return session.selectOne("student3.selectStuYearSem", studentNo);
+	}
+
+	@Override
+	public List<MySchedule> selectMySchedule(SqlSessionTemplate session, MyScheduleForInfo msfi) {
+		return session.selectList("student3.selectMySchedule", msfi);
 	}
 	
 	
