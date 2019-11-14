@@ -42,7 +42,7 @@
 	</update>
 	<!-- 교수 뷰 --> <!-- 에러 수정해야함-->
 	<select id="professorView" resultMap="subjectMap" parameterType="string">
-		SELECT * FROM HD_SUBJECT_TB S JOIN HD_CLASS_TB C USING (SUB_CODE) JOIN HD_PROFESSOR_TB USING (PROF_ID) WHERE PROF_ID=#{profId}
+		SELECT * FROM HD_CLASS_TB S JOIN HD_PROFESSOR_TB C USING (PROF_ID) WHERE PROF_ID=#{profId} AND OPEN_YN='Y'
 	</select>
 	
 	<!-- 교수 정보수정 -->

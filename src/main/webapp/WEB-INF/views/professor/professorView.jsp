@@ -66,7 +66,9 @@
 								</tr>
 								<tr>
 									<th>주민번호</th>
-									<td><c:out value="${loginMember.profSsn }"/></td>
+									<td>
+										<c:out value="${loginMember.profSsn }"/>
+									</td>
 								</tr>
 								<tr>
 									<th>학과번호</th>
@@ -124,7 +126,7 @@
 							
 							<div style="font-weight:bold;text-align:center;">
 								<c:forEach items="${prof }" var="p" varStatus="v">
-									<div style="border-bottom:1px solid lightgray;">${v.count} - ${p.subName }</div><br/>
+									<div style="border-bottom:1px solid lightgray;">${v.count} - ${p.subCode }</div><br/>
 								</c:forEach>
 							</div>
 						</div>

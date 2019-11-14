@@ -98,7 +98,7 @@
 							
 							<div style="font-weight:bold;text-align:center;">
 								<c:forEach items="${prof }" var="p" varStatus="v">
-									<div style="border-bottom:1px solid lightgray;">${v.count} - ${p.subName }</div><br/>
+									<div style="border-bottom:1px solid lightgray;">${v.count} - ${p.subCode }</div><br/>
 								</c:forEach>
 							</div>
 						</div>
