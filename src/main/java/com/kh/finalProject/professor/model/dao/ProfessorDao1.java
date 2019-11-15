@@ -70,5 +70,7 @@ public interface ProfessorDao1 {
 	int updatePlanEnd(SqlSessionTemplate session, Map<String,String> map);
 	//교수 시간표
 	List<Map<String,String>> profSchedule(SqlSessionTemplate session, String profId);
+	//교수별 시간표
+	List<Map<String,String>> deptProfScheduleView(SqlSessionTemplate session);
 
 }

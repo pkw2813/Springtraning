@@ -274,4 +274,12 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		
 		return schedule;
 	}
+	//교수별 시간표
+	@Override
+	public List<Map<String,String>> deptProfScheduleView(){
+		
+		List<Map<String,String>> schedule = dao.deptProfScheduleView(session);
+		
+		return schedule;
+	}
 }

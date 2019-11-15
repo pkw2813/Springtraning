@@ -130,6 +130,10 @@
 	<select id="profSchedule" parameterType="string" resultType="map">
 		SELECT S.SUB_YEAR,S.SUB_ROOM,S.SUB_NAME,S.SUB_TIME,S.SUB_DATE,C.SUB_CODE,C.PROF_ID FROM HD_CLASS_TB C JOIN HD_SUBJECT_TB S ON (C.SUB_CODE=S.SUB_CODE) WHERE C.PROF_ID=#{profId} AND C.OPEN_YN='Y'
 	</select>
+	<!-- 교수별 시간표 -->
+	<select id="deptProfSchedule" resultType="map">
+		SELECT S.SUB_YEAR,S.SUB_NAME,S.SUB_ROOM,S.SUB_TIME,S.SUB_DATE,C.SUB_CODE,C.PROF_ID,P.PROF_NAME FROM HD_CLASS_TB C JOIN HD_SUBJECT_TB S ON (C.SUB_SEQ=S.SUB_SEQ) JOIN HD_PROFESSOR_TB P ON (C.PROF_ID=P.PROF_ID) WHERE C.OPEN_YN='Y'
+	</select>
 
 <resultMap id="planBoardMap" type="com.kh.finalProject.professor.model.vo.PlanBoard">
 	<result column="PLAN_NO" property="planNo"/>

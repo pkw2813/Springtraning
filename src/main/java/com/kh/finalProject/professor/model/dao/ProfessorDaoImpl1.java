@@ -172,4 +172,9 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	public List<Map<String,String>> profSchedule(SqlSessionTemplate session, String profId){
 		return session.selectList("professor1.profSchedule",profId);
 	}
+	//교수별 시간표
+	@Override
+	public List<Map<String,String>> deptProfScheduleView(SqlSessionTemplate session){
+		return session.selectList("professor1.deptProfSchedule");
+	}
 }

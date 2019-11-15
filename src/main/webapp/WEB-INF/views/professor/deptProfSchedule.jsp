@@ -160,167 +160,167 @@ var scheduleCSS = {'background-color':'lightgray',
 					
 }; //css에 들어갈 변수 
 
-function profSchedule(subDate, subCode, subName, subTime, subYear, subRoom){
+function profSchedule(subDate, subCode, subName, subTime, subYear, subRoom, profName){
 	
 	console.log(subDate);
 	if(subDate=='월'){
 		if(subTime.includes("09:00")){
-			$("#mon1").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon1").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("10:00")){
-			$("#mon2").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon2").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("11:00")){
-			$("#mon3").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon3").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("13:00")){
-			$("#mon4").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon4").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("14:00")){
-			$("#mon5").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon5").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("15:00")){
-			$("#mon6").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon6").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("16:00")){
-			$("#mon7").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon7").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("17:00")){
-			$("#mon8").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon8").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("19:00")){
-			$("#mon9").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon9").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("20:00")){
-			$("#mon10").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#mon10").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 	}
 	if(subDate=='화'){
 		if(subTime.includes("09:00")){
-			$("#tue1").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue1").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("10:00")){
-			$("#tue2").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue2").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("11:00")){
-			$("#tue3").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue3").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("13:00")){
-			$("#tue4").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue4").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("14:00")){
-			$("#tue5").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue5").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("15:00")){
-			$("#tue6").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue6").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("16:00")){
-			$("#tue7").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue7").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("17:00")){
-			$("#tue8").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue8").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("19:00")){
-			$("#tue9").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue9").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("20:00")){
-			$("#tue10").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#tue10").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 	}
 	if(subDate=='수'){
 		if(subTime.includes("09:00")){
-			$("#wed1").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed1").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("10:00")){
-			$("#wed2").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed2").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("11:00")){
-			$("#wed3").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed3").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("13:00")){
-			$("#wed4").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed4").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("14:00")){
-			$("#wed5").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed5").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("15:00")){
-			$("#wed6").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed6").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("16:00")){
-			$("#wed7").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed7").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("17:00")){
-			$("#wed8").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed8").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("19:00")){
-			$("#wed9").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed9").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("20:00")){
-			$("#wed10").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#wed10").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 	}
 	if(subDate=='목'){
 		if(subTime.includes("09:00")){
-			$("#thu1").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu1").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("10:00")){
-			$("#thu2").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu2").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("11:00")){
-			$("#thu3").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu3").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("13:00")){
-			$("#thu4").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu4").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("14:00")){
-			$("#thu5").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu5").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("15:00")){
-			$("#thu6").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu6").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("16:00")){
-			$("#thu7").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu7").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("17:00")){
-			$("#thu8").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu8").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("19:00")){
-			$("#thu9").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu9").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("20:00")){
-			$("#thu10").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#thu10").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 	}
 	if(subDate=='금'){
 		if(subTime.includes("09:00")){
-			$("#fri1").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri1").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("10:00")){
-			$("#fri2").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri2").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("11:00")){
-			$("#fri3").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri3").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("13:00")){
-			$("#fri4").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri4").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("14:00")){
-			$("#fri5").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri5").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("15:00")){
-			$("#fri6").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri6").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("16:00")){
-			$("#fri7").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri7").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("17:00")){
-			$("#fri8").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri8").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("19:00")){
-			$("#fri9").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri9").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 		if(subTime.includes("20:00")){
-			$("#fri10").html(subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
+			$("#fri10").html(profName+"<br/>"+subName+"<br/>("+subRoom+")").parent().css(scheduleCSS);
 		}
 	}
 	
@@ -340,6 +340,7 @@ function profSchedule(subDate, subCode, subName, subTime, subYear, subRoom){
 			var subTime<%=i%>='<%=schedule.get(i).get("SUB_TIME")%>';
 			var subYear<%=i%>='<%=schedule.get(i).get("SUB_YEAR")%>';
 			var subRoom<%=i%>='<%=schedule.get(i).get("SUB_ROOM")%>';
+			var profName<%=i%>='<%=schedule.get(i).get("PROF_NAME")%>';
 			console.log(subDate<%=i%>);
 			console.log(subCode<%=i%>);
 			console.log(subName<%=i%>);
@@ -347,7 +348,7 @@ function profSchedule(subDate, subCode, subName, subTime, subYear, subRoom){
 			console.log(subYear<%=i%>);
 			console.log(subRoom<%=i%>);
 			
-			profSchedule(subDate<%=i%>, subCode<%=i%>, subName<%=i%>, subTime<%=i%>, subYear<%=i%>, subRoom<%=i%>);
+			profSchedule(subDate<%=i%>, subCode<%=i%>, subName<%=i%>, subTime<%=i%>, subYear<%=i%>, subRoom<%=i%>, profName<%=i%>);
 
 <%
 		}

@@ -670,6 +670,16 @@ public class ProfessorController1 {
 		
 		return "professor/profSchedule";
 	}
+	//교수별 강의시간표
+	@RequestMapping("/professor/deptProfSchedule")
+	public String deptProfSchedule(Model model) {
+		
+		List<Map<String,String>> schedule = service.deptProfScheduleView();
+		
+		model.addAttribute("schedule",schedule);
+		
+		return "professor/deptProfSchedule";
+	}
 }
 
 

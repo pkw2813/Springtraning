@@ -59,4 +59,6 @@ public interface ProfessorService1 {
 	int updatePlanEnd(Map<String,String> map) throws RuntimeException;
 	//교수 스케줄
 	List<Map<String,String>> profSchedule(String profId);
+	//교수별 스케줄
+	List<Map<String,String>> deptProfScheduleView();
 }
