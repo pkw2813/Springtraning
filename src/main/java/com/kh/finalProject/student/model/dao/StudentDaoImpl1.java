@@ -142,9 +142,21 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 
 	@Override
-	public List<Map> selectPlan(SqlSessionTemplate session) {
+	public Map selectPlan(SqlSessionTemplate session) {
 	
-		return session.selectList("student1.selectPlan");
+		return session.selectOne("student1.selectPlan");
+	}
+
+	@Override
+	public int updatePreCapa(SqlSessionTemplate session,Map<String,Object> param) {
+		
+		return session.update("student1.updatePrecapa");
+	}
+
+	@Override
+	public int updatePreCapaCancel(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.update("student1.updatePrecapaCancel");
 	}
 
 	

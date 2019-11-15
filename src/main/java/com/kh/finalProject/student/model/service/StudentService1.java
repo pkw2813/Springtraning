@@ -14,7 +14,7 @@ public interface StudentService1 {
 	
 	List<Map> selectAllClass(String stuId,int cPage,int numPerPage);
 	List<Map> selectClass(Map<String,Object>param,int cPage,int numPerPage);
-	List<Map> selectPlan();
+	Map selectPlan();
 	List<Map> myApplyClass(String stuId,int cPage,int numPerPage);
 	List<Map> selectMyClass(Map<String,Object>param,int cPage,int numPerPage);
 	int countAllClass(String stuId);
@@ -30,4 +30,6 @@ public interface StudentService1 {
 	int countSelectMyClass(Map<String,Object>param);
 	int updatePw(Map<String,String> userInfo);
 	String selectNowPw(String stuId);
+	int updatePreCapa(Map<String,Object> param);
+	int updatePreCapaCancel(Map<String,Object> param);
 }

@@ -7,40 +7,43 @@
 		SELECT * FROM HD_STUDENT_TB WHERE STU_NO=#{studentNo}
 	</select>
 
-	<select id="selectAllClass" resultType="map">
-		<!-- select rownum,ta.* from(select * from hd_class_tb A left join hd_subject_tb 
-			B on a.sub_seq = b.sub_seq join hd_professor_tb p on a.prof_id = p.prof_id 
-			join HD_DEPARTMENT_TB d on p.dept_code = d.dept_code order by sub_year desc 
-			) ta -->
-		select rownum,ta.* from(select
-		A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
-		B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
-		D.DEPT_NAME,D.DEPT_OPEN
-
-		from hd_class_tb A
-		left join hd_subject_tb B on a.sub_seq = b.sub_seq
-		join hd_professor_tb p on a.prof_id = p.prof_id
-		join HD_DEPARTMENT_TB d on p.dept_code = d.dept_code
-		order by sub_year desc
-		)ta
+	<select id="selectAllClass" parameterType="string" resultType="map">
+		
+		select rownum,ta.* 
+             from(select A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
+             B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
+             D.DEPT_NAME,D.DEPT_OPEN,SUB_REQ.STU_NO
+		         from  hd_class_tb A
+		         join hd_subject_tb B on a.sub_seq = b.sub_seq
+		         join hd_professor_tb p on a.prof_id = p.prof_id
+		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
+                 LEFT JOIN (select R.STU_NO,r.sub_seq
+		         from  hd_class_tb A
+                 join hd_sub_req_tb r on a.sub_seq=r.sub_seq
+                 WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
+		         order by sub_year desc
+		         )ta
 
 	</select>
 	<select id="selectPlan" resultType="map">
-		select * from hd_plan_tb
+		select * from hd_plan_tb where PLAN_NAME='수강신청' AND SYSDATE <![CDATA[<]]> PLAN_END_DATE AND SYSDATE<![CDATA[>]]> PLAN_START_DATE
 	</select>
 	<select id="selectClass" parameterType="map" resultType="map">
 
-		select rownum,ta.* from(select
-		A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
-		B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
-		D.DEPT_NAME,D.DEPT_OPEN
-
-		from hd_class_tb A
-		left join hd_subject_tb B on a.sub_seq = b.sub_seq
-		join hd_professor_tb p on a.prof_id = p.prof_id
-		join HD_DEPARTMENT_TB d on p.dept_code = d.dept_code
-		order by sub_year desc
-		)ta
+		select rownum,ta.* 
+             from(select A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
+             B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
+             D.DEPT_NAME,D.DEPT_OPEN,SUB_REQ.STU_NO
+		         from  hd_class_tb A
+		         join hd_subject_tb B on a.sub_seq = b.sub_seq
+		         join hd_professor_tb p on a.prof_id = p.prof_id
+		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
+                 LEFT JOIN (select R.STU_NO,r.sub_seq
+		         from  hd_class_tb A
+                 join hd_sub_req_tb r on a.sub_seq=r.sub_seq
+                 WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
+		         order by sub_year desc
+		         )ta
 
 		where 1=1
 
@@ -72,19 +75,22 @@
 
 	<select id="countSelectClass" parameterType="map"
 		resultType="_int">
-		SELECT COUNT(*) FROM (select rownum,ta.* from(select
-		A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
-		B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
-		D.DEPT_NAME,D.DEPT_OPEN
+		SELECT COUNT(*) FROM (select rownum,ta.* 
+             from(select A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
+             B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
+             D.DEPT_NAME,D.DEPT_OPEN,SUB_REQ.STU_NO
+		         from  hd_class_tb A
+		         join hd_subject_tb B on a.sub_seq = b.sub_seq
+		         join hd_professor_tb p on a.prof_id = p.prof_id
+		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
+                 LEFT JOIN (select R.STU_NO,r.sub_seq
+		         from  hd_class_tb A
+                 join hd_sub_req_tb r on a.sub_seq=r.sub_seq
+                 WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
+		         order by sub_year desc
+		         )ta)
 
-		from hd_class_tb A
-		left join hd_subject_tb B on a.sub_seq = b.sub_seq
-		join hd_professor_tb p on a.prof_id = p.prof_id
-		join HD_DEPARTMENT_TB d on p.dept_code = d.dept_code
-		order by sub_year desc
-		)ta)
-
-		where 1=1
+			where 1=1
 		<if test="chk_isu !=null and chk_isu != ''">
 			AND sub_type = #{chk_isu}
 		</if>
@@ -115,17 +121,20 @@
 
 
 	<select id="countAllClass" resultType="_int">
-		select count(*) from(select rownum,ta.* from(select
-		A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
-		B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
-		D.DEPT_NAME,D.DEPT_OPEN
-
-		from hd_class_tb A
-		left join hd_subject_tb B on a.sub_seq = b.sub_seq
-		join hd_professor_tb p on a.prof_id = p.prof_id
-		join HD_DEPARTMENT_TB d on p.dept_code = d.dept_code
-		order by sub_year desc
-		)ta)
+		SELECT COUNT(*) FROM (select rownum,ta.* 
+             from(select A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
+             B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
+             D.DEPT_NAME,D.DEPT_OPEN,SUB_REQ.STU_NO
+		         from  hd_class_tb A
+		         join hd_subject_tb B on a.sub_seq = b.sub_seq
+		         join hd_professor_tb p on a.prof_id = p.prof_id
+		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
+                 LEFT JOIN (select R.STU_NO,r.sub_seq
+		         from  hd_class_tb A
+                 join hd_sub_req_tb r on a.sub_seq=r.sub_seq
+                 WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
+		         order by sub_year desc
+		         )ta)
 	</select>
 
 	<select id="selectApplyClass" parameterType="string"
@@ -170,16 +179,16 @@
 	</select>
 
 	<insert id="applyClass" parameterType="map">
-		INSERT INTO HD_SUB_REQ_TB VALUES(#{stuNo},#{sem},#{subId},#{profId})
+		INSERT INTO HD_SUB_REQ_TB VALUES(#{stuId},${subSeq},default)
 
 	</insert>
 
 	<delete id="cancelClass" parameterType="map">
-		DELETE FROM HD_SUB_REQ_TB WHERE SUB_NO=#{stuNo} AND SUB_SEQ=${subSeq}
-
+		DELETE FROM HD_SUB_REQ_TB WHERE STU_NO=#{stuId} AND SUB_SEQ=${subSeq}
 	</delete>
+	
 	<delete id="cancelMyClass" parameterType="map">
-		DELETE FROM HD_SUB_REQ_TB WHERE SUB_NO=#{stuNo} AND SUB_SEQ=${subSeq}
+		DELETE FROM HD_SUB_REQ_TB WHERE STU_NO=#{stuId} AND SUB_SEQ=${subSeq}
 	</delete>
 
 
@@ -189,51 +198,57 @@
 
 	<select id="myApplyClass" parameterType="string" resultType="map">
 
-		select rownum,ta.* from(select
-		A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
-		B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
-		D.DEPT_NAME,D.DEPT_OPEN,R.STU_NO
-		from hd_class_tb A
-		join hd_subject_tb B on a.sub_seq = b.sub_seq
-		join hd_professor_tb p on a.prof_id = p.prof_id
-		join HD_DEPARTMENT_TB d on p.dept_code = d.dept_code
-		RIGHT join hd_sub_req_tb r on a.sub_code=r.sub_code
-		WHERE STU_NO=#{stuId}
-		order by sub_year desc
-		)ta
+		select rownum,ta.* 
+             from(select A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
+             B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
+             D.DEPT_NAME,D.DEPT_OPEN,SUB_REQ.STU_NO
+		         from  hd_class_tb A
+		         join hd_subject_tb B on a.sub_seq = b.sub_seq
+		         join hd_professor_tb p on a.prof_id = p.prof_id
+		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
+                 right JOIN (select R.STU_NO,r.sub_seq
+		         from  hd_class_tb A
+                 join hd_sub_req_tb r on a.sub_seq=r.sub_seq
+                 WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
+		         order by sub_year desc
+		         )ta
 
 	</select>
 
 
 	<select id="countMyApplyClass" parameterType="string" resultType="_int">
-		select count(*)from(select rownum,ta.* from(select
-		A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
-		B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
-		D.DEPT_NAME,D.DEPT_OPEN,R.STU_NO
-		from hd_class_tb A
-		join hd_subject_tb B on a.sub_seq = b.sub_seq
-		join hd_professor_tb p on a.prof_id = p.prof_id
-		join HD_DEPARTMENT_TB d on p.dept_code = d.dept_code
-		RIGHT join hd_sub_req_tb r on a.sub_code=r.sub_code
-		WHERE STU_NO=#{stuId}
-		order by sub_year desc
-		)ta)
+		select count(*)from(select rownum,ta.* 
+             from(select A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
+             B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
+             D.DEPT_NAME,D.DEPT_OPEN,SUB_REQ.STU_NO
+		         from  hd_class_tb A
+		         join hd_subject_tb B on a.sub_seq = b.sub_seq
+		         join hd_professor_tb p on a.prof_id = p.prof_id
+		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
+                 right JOIN (select R.STU_NO,r.sub_seq
+		         from  hd_class_tb A
+                 join hd_sub_req_tb r on a.sub_seq=r.sub_seq
+                 WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
+		         order by sub_year desc
+		         )ta)
 
 	</select>
 
 	<select id="selectMyClass" parameterType="map" resultType="map">
-		select rownum,ta.* from(select
-		A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
-		B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
-		D.DEPT_NAME,D.DEPT_OPEN,R.STU_NO
-		from hd_class_tb A
-		join hd_subject_tb B on a.sub_seq = b.sub_seq
-		join hd_professor_tb p on a.prof_id = p.prof_id
-		join HD_DEPARTMENT_TB d on p.dept_code = d.dept_code
-		RIGHT join hd_sub_req_tb r on a.sub_code=r.sub_code
-		WHERE STU_NO=#{stuId}
-		order by sub_year desc
-		)ta
+		select rownum,ta.* 
+             from(select A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
+             B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
+             D.DEPT_NAME,D.DEPT_OPEN,SUB_REQ.STU_NO
+		         from  hd_class_tb A
+		         join hd_subject_tb B on a.sub_seq = b.sub_seq
+		         join hd_professor_tb p on a.prof_id = p.prof_id
+		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
+                 right JOIN (select R.STU_NO,r.sub_seq
+		         from  hd_class_tb A
+                 join hd_sub_req_tb r on a.sub_seq=r.sub_seq
+                 WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
+		         order by sub_year desc
+		         )ta
 		where 1=1
 		<if test="chk_isu !=null and chk_isu != ''">
 			AND sub_type = #{chk_isu}
@@ -265,18 +280,20 @@
 
 	<select id="countSelectMyClass" parameterType="map"
 		resultType="_int">
-		SELECT COUNT(*) FROM (select rownum,ta.* from(select
-		A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
-		B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
-		D.DEPT_NAME,D.DEPT_OPEN,R.STU_NO
-		from hd_class_tb A
-		join hd_subject_tb B on a.sub_seq = b.sub_seq
-		join hd_professor_tb p on a.prof_id = p.prof_id
-		join HD_DEPARTMENT_TB d on p.dept_code = d.dept_code
-		RIGHT join hd_sub_req_tb r on a.sub_code=r.sub_code
-		WHERE STU_NO=#{stuId}
-		order by sub_year desc
-		)ta)
+		select rownum,ta.* 
+             from(select A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
+             B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
+             D.DEPT_NAME,D.DEPT_OPEN,SUB_REQ.STU_NO
+		         from  hd_class_tb A
+		         join hd_subject_tb B on a.sub_seq = b.sub_seq
+		         join hd_professor_tb p on a.prof_id = p.prof_id
+		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
+                 LEFT JOIN (select R.STU_NO,r.sub_seq
+		         from  hd_class_tb A
+                 join hd_sub_req_tb r on a.sub_seq=r.sub_seq
+                 WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
+		         order by sub_year desc
+		         )ta)
 		where 1=1
 		<if test="chk_isu !=null and chk_isu != ''">
 			AND sub_type = #{chk_isu}
@@ -311,6 +328,16 @@
 		UPDATE HD_STUDENT_TB SET STU_PW=#{stuPw} WHERE STU_NO=#{stuId}
 
 	</update>
+
+	<update id="updatePrecapa" parameterType="map">
+		UPDATE HD_CLASS_TB SET PRE_CAPA = PRE_CAPA+1 WHERE SUB_SEQ=${subSeq}
+	
+	</update>
+	
+	<update id="updatePrecapaCancel" parameterType="map">
+		UPDATE HD_CLASS_TB SET PRE_CAPA = PRE_CAPA-1 WHERE SUB_SEQ=${subSeq}
+	</update>
+
 
 	<select id="selectNowPw" parameterType="string"
 		resultType="string">

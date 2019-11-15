@@ -186,7 +186,7 @@
 				<td style="text-align:center">
 				
 				<button id="button-cancelClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="cancelClass(this.id,this.value)" class="btn btn-danger btn-xs"
-				value='${loginMember.stuNo},${e["SUB_CODE"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>취소</button>
+				value='${loginMember.stuNo},${e["SUB_SEQ"]}'>취소</button>
 				</td>		
 				
 				<td style="text-align:center">

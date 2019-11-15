@@ -180,36 +180,38 @@
 				<td><c:out value='${e["SUB_TYPE"] }'/></td>
 				<td>최대: <c:out value='${e["COMPLETE_PT"] }'/></td>
 				<td>매주: <c:out value='${e["SUB_DATE"] }'/> <c:out value='${e["SUB_TIME"] }'/></td>
-				<td><c:out value='${e["PRE_CAPA"] }'/>/<c:out value='${e["CAPACITY"] }'/></td>
+				<td><c:out value='${e["PRE_CAPA"] }'/>/<c:out value='${e["CAPACITY"]}'/></td>
 				<td><c:out value='${e["SUB_ROOM"] }'/></td>
 				
-				<c:if test='${e["OPEN_YN"] eq "Y"}'>
+				
 				<td style="text-align:center">
 				<button id='button-profEval' style="font-size:12px;font-weight:bold;height:25px;" class="btn btn-primary btn-xs" onclick="profEval(this.id,this.value)" 
-				value='${e["SUB_NAME"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>보기
+				value='${e["SUB_NAME"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>보기 
 				</button>
 				</td>
 				
 				<td style="text-align:center">
 				
-				<c:if test='${e["CHECK_IN"] eq null or e["CHECK_IN"] ne loginMember.stuNo}'>
+				<c:if test='${planDay["NO_SEQ"] eq null or planDay["NO_SEQ"] eq ""}'>
+				<c:if test='${e["STU_NO"] ne loginMember.stuNo}'>
 				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
-				value='${loginMember.stuNo },${SUB_SEQ}'>신청</button>
+				value='${loginMember.stuNo },${e["SUB_SEQ"]},${e["CAPACITY"]}'>신청</button>
 				</c:if>
 				
-				<c:if test='${e["CHECK_IN"] eq loginMember.stuNo}'>
+				
+				<c:if test='${e["STU_NO"] eq loginMember.stuNo}'>
 				<button id="button-cancelClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="cancelClass(this.id,this.value)" class="btn btn-danger btn-xs"
-				value='${loginMember.stuNo},${SUB_SEQ}'>취소</button>
+				value='${loginMember.stuNo},${e["SUB_SEQ"]}'>취소</button>
 				</td>		
 				</c:if>
 				</c:if>
+				
 				<c:if test='${e["OPEN_YN"] eq "N"}'>
 				<td></td>
 				<td></td>
 				</c:if>
 				</td>
 				</tr>
-				
 				</c:forEach>
 				
 				</table>

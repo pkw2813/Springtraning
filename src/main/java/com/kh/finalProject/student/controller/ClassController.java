@@ -39,8 +39,12 @@ public class ClassController {
 		List<Map> list=service.selectAllClass(stuId,cPage,numPerPage);
 		int totalData = service.countAllClass(stuId);
 		/* int applyClassNow =service.alpplyClassNow() */
-		List<Map> planList=service.selectPlan();
-		m.addAttribute("planList",list);
+		Map planList=service.selectPlan();
+		
+		
+		
+		
+		m.addAttribute("applyDay",planList);
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
 		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/applyClass.hd"));
@@ -87,6 +91,8 @@ public class ClassController {
 		  String profId=profInfo[1];
 		  String semester=profInfo[2];
 		  String[] sem1 =semester.split("-");
+		  System.out.println(sem1[0]);
+		  System.out.println(sem1[1]);
 		  int year=Integer.parseInt(sem1[0]);
 		  int sem=Integer.parseInt(sem1[1]);
 		  if(sem==2) {
@@ -97,22 +103,22 @@ public class ClassController {
 			  sem=sem+1;
 			  semester=year+"-"+sem;
 		  }
-		  
-		  System.out.println(subName);
-		  System.out.println(profId);
-		  System.out.println(semester);
+
 		  Map<String,Object> param=new HashMap();
 		  param.put("subName", subName);
 		  param.put("profId", profId);
 		  param.put("semester", semester);
+		  
 		  Map<String,Object> reprofInfo=service.selectProfInfo(param);
-		  double averPoint=service.averPoint(param);
 		  
 		  List<Map> list=service.selectProfEval(param);
+		  System.out.println(list);
+		  if(!list.isEmpty()) {
+		  double averPoint=service.averPoint(param);
 		  m.addAttribute("averPoint",averPoint);
-		  m.addAttribute("profInfo",reprofInfo);
+		  }
 		  m.addAttribute("list",list);
-		  
+		  m.addAttribute("profInfo",reprofInfo);
 	
 		  
 		  
@@ -124,21 +130,19 @@ public class ClassController {
 	
 	public String applyClass(HttpServletRequest req,Model m)
 	{
-		Map param=new HashMap();
+		Map<String,Object> param=new HashMap();
 		String value=req.getParameter("value");
 		String[] value1=value.split(",");
-		String stuNo=value1[0];
-		String subId=value1[1];
-		String profId=value1[2];
-		String sem=value1[3];
+		String stuId=value1[0];
+		String subSeq=value1[1];
+		System.out.println(stuId);
+		System.out.println(subSeq);
+		param.put("stuId",stuId);
+		param.put("subSeq",subSeq);
 		
-		param.put("stuNo",stuNo);
-		param.put("subId",subId);
-		param.put("profId",profId);
-		param.put("sem",sem);
 	
 		int result=service.applyClass(param);
-		
+		int result1=service.updatePreCapa(param);
 		
 		
 		return "student/applyClass";
@@ -150,17 +154,15 @@ public class ClassController {
 		Map param=new HashMap();
 		String value=req.getParameter("value");
 		String[] value1=value.split(",");
-		String stuNo=value1[0];
-		String subId=value1[1];
-		String profId=value1[2];
-		String sem=value1[3];
+		String stuId=value1[0];
+		String subSeq=value1[1];
 		
-		param.put("stuNo",stuNo);
-		param.put("subId",subId);
-		param.put("profId",profId);
-		param.put("sem",sem);
+		
+	
+		param.put("stuId",stuId);
+		param.put("subSeq",subSeq);
 		int result=service.cancelClass(param);
-		
+		int result1=service.updatePreCapaCancel(param);
 		
 		
 		return "student/applyClass";
@@ -190,15 +192,11 @@ public class ClassController {
 		Map param=new HashMap();
 		String value=req.getParameter("value");
 		String[] value1=value.split(",");
-		String stuNo=value1[0];
-		String subId=value1[1];
-		String profId=value1[2];
-		String sem=value1[3];
+		String stuId=value1[0];
+		String subSeq=value1[1];
 		
-		param.put("stuNo",stuNo);
-		param.put("subId",subId);
-		param.put("profId",profId);
-		param.put("sem",sem);
+		param.put("stuId",stuId);
+		param.put("subSeq",subSeq);
 		int result=service.cancelClass(param);
 		return "student/myApplyClass";
 	

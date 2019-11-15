@@ -63,6 +63,13 @@ table {
 							</td>
 						</tr>
 							<tr>
+							 <c:if test="${profInfo.PROF_NAME eq null}">
+					   		<td>
+					   		교수 평가가 없습니다.
+					   		</td>
+					   		</tr>
+					    	</c:if>
+					    	<c:if test="${profInfo.PROF_NAME ne null}">
 								<td rowspan="5" style="width:130px;text-align: center;">
 								<c:if test="${student.stuImgRename eq null }">
 								<image height="150px" width="120px" src="${path }/resources/images/image/default.jpg"/>
@@ -79,7 +86,7 @@ table {
 								<th style="width:300px;">성별</th>
 							<tr>
 								<th>${profInfo.PROF_NAME}</th>
-								<th>${profInfo.T_DEPT}</th>
+								<th>${profInfo.DEPT_NAME}</th>
 								<th>${profInfo.SUB_NAME}</th>
 								<th>${profInfo.GENDER}</th>
 							</tr>
@@ -91,7 +98,14 @@ table {
 								<th>연락처</th>
 							<tr>
 								<th><fmt:formatDate value="${profInfo.PROF_ENROLL}" pattern="yyyy-MM-dd"/></th>
-								<th><fmt:formatNumber value="${averPoint}" pattern="#.##"/></th>
+								<th>
+								<c:if test="${!empty averPoint}">
+								<fmt:formatNumber value="${averPoint}" pattern="#.##"/>
+								</c:if>
+								<c:if test="${empty averPoint}">
+								0
+								</c:if>
+								</th>
 								<th>${profInfo.EMAIL}</th>
 								<th>${profInfo.PHONE}</th>
 							</tr>
@@ -104,13 +118,25 @@ table {
 							<th style="width:500px;">평가내용</th>
 							<th style="width:70px">평가점수</th>
 						</tr>
+						<c:if test="${empty list}">
+						<tr>
+					
+						<td colspan="3" style="text-align:center;padding:20px;">
+						<img id="LoadImg" height="300px" width="500px" src="${path}/resources/images/image/selectNothing.jpg"/>
+						</td>
+						</tr>
+						</c:if>
+						<c:if test="${!empty list}">
 						<c:forEach items="${list}" var="e" varStatus="v">
 						<tr>
 						<td style="width:100px"><fmt:formatDate value="${e.EVAL_DATE}" pattern="yyyy-MM-dd일 hh:mm"/></td>
 						<td>${e.EVAL_COMMENT}</td>
 						<td id="point">${e.EVAL_POINT }</td>
+					
 						</tr>
 						</c:forEach>
+						</c:if>
+					</c:if>
 					</table>
 						</div>
 					</div>

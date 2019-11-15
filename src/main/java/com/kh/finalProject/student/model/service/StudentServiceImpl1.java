@@ -141,10 +141,22 @@ public class StudentServiceImpl1 implements StudentService1 {
 	}
 
 	@Override
-	public List<Map> selectPlan() {
+	public Map selectPlan() {
 		
 		
 		return dao.selectPlan(session);
+	}
+
+	@Override
+	public int updatePreCapa(Map<String,Object> param) {
+		
+		return dao.updatePreCapa(session,param);
+	}
+
+	@Override
+	public int updatePreCapaCancel(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.updatePreCapaCancel(session,param);
 	}
 	
 	
