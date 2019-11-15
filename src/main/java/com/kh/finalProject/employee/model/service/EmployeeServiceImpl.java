@@ -113,6 +113,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int insertNewProf(Professor p) {
 		return dao.insertNewProf(session, p);
 	}
+
+	@Override
+	public List<Student> selectStuList(int cPage, int numPerPage) {
+		return dao.selectStuList(session, cPage, numPerPage);
+	}
+
+	@Override
+	public int stuCount() {
+		return dao.stuCount(session);
+	}
 	
 	
 	

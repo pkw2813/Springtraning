@@ -109,6 +109,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int insertNewProf(SqlSessionTemplate session, Professor p) {
 		return session.insert("professor.insertNewProf", p);
 	}
+
+	@Override
+	public List<Student> selectStuList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("student.selectStuList", null, row);
+	}
+
+	@Override
+	public int stuCount(SqlSessionTemplate session) {
+		return session.selectOne("student.stuCount");
+	}
 	
 	
 	

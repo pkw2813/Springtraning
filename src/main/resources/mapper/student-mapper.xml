@@ -17,6 +17,14 @@
       		SELECT COUNT(*) FROM HD_STUDENT_TB WHERE DEPT_CODE = #{result} AND CON_SEMESTER IS NULL
   	</select>
   	
+  	<select id="selectStuList" resultType="map">
+  		SELECT STU_NO AS PROF_ENROLL, STU_NAME AS PROF_NAME, DEPT_NAME, STU_TEL AS PHONE, STU_EMAIL AS EMAIL, STU_ADDR AS ADDRESS FROM HD_STUDENT_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) ORDER BY ENTER_DATE DESC
+  	</select>
+  	
+  	<select id="stuCount" resultType="_int">
+  		SELECT COUNT(*) FROM HD_STUDENT_TB
+  	</select>
+  	
   	<resultMap id="studentResult" type="student">
 		<result column="STU_NO" property="stuNo" />
 		<result column="STU_NAME" property="stuName" />

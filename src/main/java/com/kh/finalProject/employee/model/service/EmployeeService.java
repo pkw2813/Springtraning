@@ -42,4 +42,8 @@ public interface EmployeeService {
 	int selectProfLastNum(String deptCode);
 	
 	int insertNewProf(Professor p);
+	
+	List<Student> selectStuList(int cPage, int numPerPage);
+	
+	int stuCount();
 	}

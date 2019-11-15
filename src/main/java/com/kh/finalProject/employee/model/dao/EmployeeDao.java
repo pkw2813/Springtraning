@@ -46,4 +46,8 @@ public interface EmployeeDao {
 	int selectProfLastNum(SqlSessionTemplate session, String deptCode);
 	
 	int insertNewProf(SqlSessionTemplate session, Professor p);
+	
+	List<Student> selectStuList(SqlSessionTemplate session, int cPage, int numParPage);
+	
+	int stuCount(SqlSessionTemplate saession);
 }
