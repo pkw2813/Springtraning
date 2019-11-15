@@ -130,19 +130,25 @@ public class ClassController {
 	
 	public String applyClass(HttpServletRequest req,Model m)
 	{
-		Map<String,Object> param=new HashMap();
+		Map<String,String> param=new HashMap();
 		String value=req.getParameter("value");
 		String[] value1=value.split(",");
 		String stuId=value1[0];
 		String subSeq=value1[1];
-		System.out.println(stuId);
-		System.out.println(subSeq);
+		String capaCity=value1[2];
+		
+		Map capacityNow=service.capacityNow(subSeq);
+		
+		int capacityNow1=(int)capacityNow.get("PRE_CAPA");
+		
+		System.out.println(capacityNow1);
 		param.put("stuId",stuId);
 		param.put("subSeq",subSeq);
 		
 	
 		int result=service.applyClass(param);
 		int result1=service.updatePreCapa(param);
+		
 		
 		
 		return "student/applyClass";
@@ -198,6 +204,8 @@ public class ClassController {
 		param.put("stuId",stuId);
 		param.put("subSeq",subSeq);
 		int result=service.cancelClass(param);
+		int result1=service.updatePreCapaCancel(param);
+		
 		return "student/myApplyClass";
 	
 	}

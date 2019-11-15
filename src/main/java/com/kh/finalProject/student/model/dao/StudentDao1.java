@@ -22,7 +22,7 @@ public interface StudentDao1 {
 	int countSelectClass(SqlSessionTemplate session,Map<String,Object>param);
 	List<Map> selectProfEval(SqlSessionTemplate session,Map<String,Object>param);
 	Map selectProfInfo(SqlSessionTemplate session,Map<String,Object> param);
-	int applyClass(SqlSessionTemplate session,Map<String,Object> param);
+	int applyClass(SqlSessionTemplate session,Map<String,String> param);
 	List<Map> selectApplyClass(SqlSessionTemplate session,String stuNo);
 	double averPoint(SqlSessionTemplate session,Map<String,Object>param);
 	int cancelClass(SqlSessionTemplate session,Map<String,Object> param);
@@ -34,7 +34,8 @@ public interface StudentDao1 {
 	int countSelectMyClass(SqlSessionTemplate session,Map<String,Object>param);
 	int updatePw(SqlSessionTemplate session,Map<String,String> userInfo);
 	String selectNowPw(SqlSessionTemplate session,String stuId);
-	int updatePreCapa(SqlSessionTemplate session,Map<String,Object> param);
-	int updatePreCapaCancel(SqlSessionTemplate session,Map<String,Object> param);
+	int updatePreCapa(SqlSessionTemplate session,Map<String,String> param);
+	int updatePreCapaCancel(SqlSessionTemplate session,Map<String,String> param);
+	Map capacityNow(SqlSessionTemplate session,String subSeq);
 	
 }

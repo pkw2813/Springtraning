@@ -179,7 +179,9 @@
 				<td><c:out value='${e["SUB_TYPE"] }'/></td>
 				<td>최대: <c:out value='${e["COMPLETE_PT"] }'/></td>
 				<td>매주: <c:out value='${e["SUB_DATE"] }'/> <c:out value='${e["SUB_TIME"] }'/></td>
+				
 				<td><c:out value='${e["PRE_CAPA"] }'/>/<c:out value='${e["CAPACITY"] }'/></td>
+				
 				<td><c:out value='${e["SUB_ROOM"] }'/></td>
 				
 				
@@ -203,6 +205,7 @@
 			    <input type="hidden" id="profEvalForm" name="profEvalForm" value=""/>
 				</form>
 				
+				
 
 	</div>
 	</div>
@@ -213,6 +216,10 @@
 	</div>
 	</div>
 	<script>
+		
+	
+	
+	
 	
 		/* 년도 띄워주기 */
 		var today = new Date();

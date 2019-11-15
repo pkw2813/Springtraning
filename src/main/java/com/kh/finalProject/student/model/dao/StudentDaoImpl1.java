@@ -65,7 +65,7 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 
 	@Override
-	public int applyClass(SqlSessionTemplate session, Map<String, Object> param) {
+	public int applyClass(SqlSessionTemplate session, Map<String, String> param) {
 		
 		return session.insert("student1.applyClass",param);
 	}
@@ -148,15 +148,21 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 
 	@Override
-	public int updatePreCapa(SqlSessionTemplate session,Map<String,Object> param) {
+	public int updatePreCapa(SqlSessionTemplate session,Map<String,String> param) {
 		
-		return session.update("student1.updatePrecapa");
+		return session.update("student1.updatePrecapa",param);
 	}
 
 	@Override
-	public int updatePreCapaCancel(SqlSessionTemplate session, Map<String, Object> param) {
+	public int updatePreCapaCancel(SqlSessionTemplate session, Map<String, String> param) {
 		
-		return session.update("student1.updatePrecapaCancel");
+		return session.update("student1.updatePrecapaCancel",param);
+	}
+
+	@Override
+	public Map capacityNow(SqlSessionTemplate session, String subSeq) {
+	
+		return session.selectOne("student1.capacityNow",subSeq);
 	}
 
 	

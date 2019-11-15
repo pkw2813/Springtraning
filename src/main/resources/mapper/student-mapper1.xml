@@ -330,6 +330,7 @@
 	</update>
 
 	<update id="updatePrecapa" parameterType="map">
+	
 		UPDATE HD_CLASS_TB SET PRE_CAPA = PRE_CAPA+1 WHERE SUB_SEQ=${subSeq}
 	
 	</update>
@@ -343,6 +344,12 @@
 		resultType="string">
 
 		SELECT STU_PW FROM HD_STUDENT_TB WHERE STU_NO = #{stuId}
+	</select>
+	
+	<select id="capacityNow" parameterType="string"
+		resultType="map">
+
+		SELECT * FROM HD_CLASS_TB WHERE SUB_SEQ=#{subSeq}
 	</select>
 
 

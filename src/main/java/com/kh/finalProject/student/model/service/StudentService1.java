@@ -21,7 +21,7 @@ public interface StudentService1 {
 	int countSelectClass(Map<String,Object>param);
 	Map selectProfInfo(Map<String,Object>param);
 	List<Map> selectProfEval(Map<String,Object>param);
-	int applyClass(Map<String,Object>param);
+	int applyClass(Map<String,String>param);
 	double averPoint(Map<String,Object>param);
 	int cancelClass(Map<String,Object>param);
 	List<Map> selectMyApplyClass(String stuId);
@@ -30,6 +30,8 @@ public interface StudentService1 {
 	int countSelectMyClass(Map<String,Object>param);
 	int updatePw(Map<String,String> userInfo);
 	String selectNowPw(String stuId);
-	int updatePreCapa(Map<String,Object> param);
-	int updatePreCapaCancel(Map<String,Object> param);
+	int updatePreCapa(Map<String,String> param);
+	int updatePreCapaCancel(Map<String,String> param);
+	Map capacityNow(String subSeq);
+	
 }

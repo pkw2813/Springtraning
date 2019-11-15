@@ -67,7 +67,7 @@ public class StudentServiceImpl1 implements StudentService1 {
 	}
 
 	@Override
-	public int applyClass(Map<String, Object> param) {
+	public int applyClass(Map<String, String> param) {
 	
 		return dao.applyClass(session,param);
 	}
@@ -148,20 +148,22 @@ public class StudentServiceImpl1 implements StudentService1 {
 	}
 
 	@Override
-	public int updatePreCapa(Map<String,Object> param) {
+	public int updatePreCapa(Map<String,String> param) {
 		
 		return dao.updatePreCapa(session,param);
 	}
 
 	@Override
-	public int updatePreCapaCancel(Map<String, Object> param) {
+	public int updatePreCapaCancel(Map<String, String> param) {
 		// TODO Auto-generated method stub
 		return dao.updatePreCapaCancel(session,param);
 	}
+
+	@Override
+	public Map capacityNow(String subSeq) {
+		
+		return dao.capacityNow(session,subSeq);
 	
-	
-	
-	
-	
+	}
 
 }
