@@ -11,6 +11,9 @@
 		heigth:20px !important;
 		text-align:center !important;
 	}
+	.ahref{
+		cursor:pointer;
+	}
 </style>
 <jsp:include page = "/WEB-INF/views/common/header.jsp"/>
 
@@ -22,13 +25,13 @@
         <div class="col">
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab">전체</a>
+                <a class="nav-link active ahref" data-toggle="tab">전체</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" data-toggle="tab">접수</a>
+                <a class="nav-link ahref" data-toggle="tab">접수</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" data-toggle="tab">처리완료</a>
+                <a class="nav-link ahref" data-toggle="tab">처리완료</a>
               </li>
             </ul>
             
