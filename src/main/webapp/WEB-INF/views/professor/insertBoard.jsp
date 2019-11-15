@@ -74,8 +74,10 @@
 						<div class="col-4"></div>
 						<div class="col-4"></div>
 						<div class="col-4">&nbsp;
+						<c:if test="${loginMember != null }">
 							<input class="btn btn-dark" type='submit' value=" 글 작성 "/>&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 ">
+						</c:if>
 						</div>
 					</div>
 				</form>

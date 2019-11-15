@@ -57,7 +57,7 @@ public interface ProfessorDao1 {
 	List<ProfBoardAttachment> selectProfAttachment(SqlSessionTemplate session, int profBoardNo);
 //	subject
 	List<Subject> subjectCodeView(SqlSessionTemplate session,int cPage, int numPerPage, String profId);
-	Map<String,String> selectSubject(SqlSessionTemplate session, String subCode);
+	Map<String,String> selectSubject(SqlSessionTemplate session, Map<String,String> param);
 //	과목코드 눌렀을때 보이는 뷰
 	int selectSubjectCode(SqlSessionTemplate session, String profId);
 	//강의 계획서 뷰
@@ -68,4 +68,7 @@ public interface ProfessorDao1 {
 	PlanBoard selectPlanView(SqlSessionTemplate session, int planNo);
 	//강의 계획서 수정
 	int updatePlanEnd(SqlSessionTemplate session, Map<String,String> map);
+	//교수 시간표
+	List<Map<String,String>> profSchedule(SqlSessionTemplate session, String profId);
+
 }

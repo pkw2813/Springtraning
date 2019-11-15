@@ -46,7 +46,7 @@
 										<td style="text-align:center;">${cv.SUB_TYPE }</td>
 										<input class="subCodeYn" type='hidden' value="${cv.SUB_CODE }" name='subCode'/>
 										<td style="text-align:center;font-size:5px;">
-											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }&profId=${loginMember.profId }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
+											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }&profId=${loginMember.profId }&subTime=${cv.SUB_TIME }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
 											${cv.SUB_NAME }
 											</a>
 										</td>
@@ -58,7 +58,7 @@
 										<td style="text-align:center;">
 											<select class="ynCheck" id="ynCheck" name="openYn">
 												<option value="Y">Y</option>
-												<option value="N" selected>N</option>
+												<option value="N" selected="selected">N</option>
 											</select>
 										</td>
 									</tr>
@@ -81,13 +81,13 @@
 							</tr>
 							<c:forEach items="${iClassView }" var="cv">
 							<c:if test="${loginMember.profId eq cv.PROF_ID }">
-								<c:set value="${cv.OPEN_YN }" var="yn"/> <!-- 개설여부가 N만 보이게하는 if문 -->
+								<c:set value="${cv.OPEN_YN }" var="yn"/> <!-- 개설여부가 Y만 보이게하는 if문 -->
 								<c:if test="${yn eq 'Y' }">
 									<tr style="height:20px;">
 										<td style="text-align:center;">${cv.SUB_TYPE }</td>
 										<input class="subCodeYn" type='hidden' value="${cv.SUB_CODE }" name='subCode'/>
 										<td style="text-align:center;font-size:5px;">
-											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }&profId=${loginMember.profId }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
+											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }&profId=${loginMember.profId }&subTime=${cv.SUB_TIME }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
 											${cv.SUB_NAME }
 											</a>
 										</td>
@@ -110,11 +110,12 @@
 				<div class="row" style="height:7px;border-top:0.5px solid black;"></div>
 				<div class="row">
 					<div class="col-6">
-						<button class="" style="background-color:skyblue;border:none;">개설강좌</button>
-						<button class="" style="background-color:skyblue;border:none;">시간표</button>
+						<button type="button" id="subjectGo" style="background-color:skyblue;border:none;">개설강좌</button>
+						<button type="button" id="subjectTime" style="background-color:skyblue;border:none;">시간표</button>
 					</div>
 					<div class="col-6">
 						<input id="insertButton" type='button' style="float:right;" value="강의 등록"/>
+						<input id="subjectSeq" name="subSeq" type='hidden'/>
 					</div>
 				</div>
 					<div class="row" style="height:5px;"></div>
@@ -278,6 +279,14 @@
 
 
 <script>
+
+$("#subjectGo").click(function(){
+	location.href="${pageContext.request.contextPath}/professor/insertSubject";
+});
+$("#subjectTime").click(function(){
+	location.href="${pageContext.request.contextPath}/professor/profSchedule?profId=${loginMember.profId}";
+});
+
 //yn check
 /* $(function(){
 	$(".openYnCheck").change(function(){
@@ -333,10 +342,12 @@ $(function(){
     	window.open(url,name,option);
 	});
 });
-function selectSubject(subCode){
+
+function selectSubject(subCode,subTime){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/professor/selectSubject",
-		data:{"subCode":subCode},
+		data:{"subCode":subCode,"subTime":subTime},
+		async:false,
 		success:function(data){
 			console.log("성공");
 			console.log(subCode);
@@ -356,6 +367,8 @@ function selectSubject(subCode){
 			$("#classDate").val(subject.SUB_DATE);
 			$("#classTime").val(subject.SUB_TIME);
 			$("#classRoom").val(subject.SUB_ROOM);
+			$("#subjectSeq").val(subject.SUB_SEQ);
+
    	 	}
 	});
 	
@@ -395,7 +408,6 @@ $(function(){
 			});
 			console.log(data);
 
-			
 		$.ajax({
 			url:"${path}/professor/insertSubjectEnd",
 			data:data,
@@ -414,7 +426,7 @@ $(function(){
 					//td+="<td>"+d[0]["T_DEPT"]+"</td>";
 					td+="<td>"+d[0]["SUB_SEMESTER"]+"</td>";
 					td+="<td>"+d[0]["CAPACITY"]+"</td>";
-					td+="<td>"+"<select><option value='N'>"+d[0]["OPEN_YN"]+"</option><option value='Y'>"+d[0]["OPEN_YN"]+"</option></select>"+"</td>";
+					td+="<td>"+"<select class='ynCheck' id='ynCheck' name='openYn'><option value='Y'>"+'Y'+"</option><option value='N' selected>"+d[0]["OPEN_YN"]+"</option></select>"+"</td>";
 					tr.append(td);
 					console.log(tr);
 					$("#noGaekang").children().last().after(tr);

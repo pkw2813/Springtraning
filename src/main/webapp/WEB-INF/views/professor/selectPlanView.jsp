@@ -239,10 +239,12 @@
 
 					<div class="row">
 						<div class="col-4"></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<c:if test="${loginMember.profId != null && loginMember.profName==plan.profName}">
 						<div class="col-4">
 							<input id="updatePlan" class="btn btn-dark" type='button' value=" 글 수정 "/>&nbsp;&nbsp;&nbsp;&nbsp;
 							<input id="deletePlan" type='button' id="boardView" class="btn btn-dark" value=" 글 삭제">
 						</div>
+						</c:if>
 						<div class="col-4"></div>
 					</div>
 				

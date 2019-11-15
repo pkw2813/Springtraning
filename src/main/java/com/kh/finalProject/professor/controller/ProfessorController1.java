@@ -48,12 +48,19 @@ public class ProfessorController1 {
 	//과목선택
 	@RequestMapping(value="/professor/selectSubject", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String seletcSubject(String subCode,HttpServletResponse res) {
+	public String seletcSubject(String subCode,String subTime,HttpServletResponse res) {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		logger.info("subCode : "+subCode);
+		logger.info("subTime : "+subTime);
 		
-		Map<String,String> map = service.selectSubject(subCode);
+		Map<String,String> param = new HashMap<String,String>();
+		param.put("subCode",subCode);
+		param.put("subTime",subTime);
+		
+		logger.info("param : "+param);
+		
+		Map<String,String> map = service.selectSubject(param);
 
 		
 		String jsonStr = "";
@@ -119,6 +126,8 @@ public class ProfessorController1 {
 		
 		logger.info("맵 : "+map);
 		
+//		map.put("");
+		
 		List<InsertClass> list = new ArrayList<InsertClass>();
 		try {
 			list=service.insertSubjectEnd(map);
@@ -143,12 +152,15 @@ public class ProfessorController1 {
 	}
 	//강의 상세 조회
 	@RequestMapping("/professor/subjectView")
-	public String subjectView(Model model, String subCode, String profId) {
+	public String subjectView(Model model, String subCode, String profId, String subTime) {
 		
 		Map<String,String> result = new HashMap<String,String>();
 		
 		result.put("subCode",subCode);
 		result.put("profId",profId);
+		result.put("subTime",subTime);
+		
+		logger.info("result : ",result);
 		
 		Map<String,String> map = service.selectSubjectView(result);
 		
@@ -644,7 +656,17 @@ public class ProfessorController1 {
 	
 	//교수 시간표
 	@RequestMapping("/professor/profSchedule")
-	public String profSchedule() {
+	public String profSchedule(String profId, Model model) {
+//		Map<String,String> map = new HashMap<String,String>();
+//		map.put("profId",profId);
+		
+		
+		logger.info("profId : "+profId);
+		
+		List<Map<String,String>> schedule = service.profSchedule(profId);
+		logger.info("스케줄map : "+schedule);
+		
+		model.addAttribute("schedule",schedule);
 		
 		return "professor/profSchedule";
 	}

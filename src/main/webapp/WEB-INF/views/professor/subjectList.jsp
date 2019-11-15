@@ -57,6 +57,7 @@
 				<td>${subject.SUB_DATE }</td>
 				<td>${subject.SUB_TIME }</td>
 			</tr>
+			<input type='hidden' value="${subject.SUB_SEQ }"/>
 		</c:forEach>
 
 	</table>
@@ -69,8 +70,10 @@
 $(function(){
 	$(".selectSubject").click(function(){
 		var subCode = $(this).parent().next().next().html();
+		var subTime = $(this).parent().next().next().next().next().next().next().next().next().next().html();
 		console.log(subCode);
-		window.opener.selectSubject(subCode);
+		console.log(subTime);
+		window.opener.selectSubject(subCode,subTime);
 		self.close();
 	});
 });

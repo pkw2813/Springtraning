@@ -51,11 +51,13 @@
 								<tr><td><br/></td></tr>
 								<tr>
 									<th>첨부파일</th>
+									<td><div>
 									  <c:forEach items="${profAttachment }" var="file" varStatus="vs">
-									<td><button type="button" class="btn btn-outline-success btn-block" onclick="fileDownload('${file.boardOrifilename}','${file.boardRefilename }');">
+									<button type="button" class="btn btn-outline-dark btn-block" onclick="fileDownload('${file.boardOrifilename}','${file.boardRefilename }');">
 										<c:out value="${file.boardOrifilename }"/>
-							         	</button></td>
+							         	</button>
 							          </c:forEach>
+							        </div></td>
 								</tr>
 								
 								<tr><td><br/></td></tr>
@@ -70,9 +72,11 @@
 						<div class="col-3"></div>
 						<div class="col-3"></div>
 						<div class="col-6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<c:if test="${loginMember.profId != null && loginMember.profName == profBoard.profName }">
 							<input type='button' id="updateBoard" class="btn btn-dark" value=" 글 수정 "/>
 							<input class="btn btn-dark" type='button' id="deleteBoard" value=" 글 삭제 "/>
 							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 "/>
+						</c:if>
 						</div>
 					</div>
 			</div>

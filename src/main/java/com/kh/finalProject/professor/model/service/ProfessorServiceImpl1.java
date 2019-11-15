@@ -218,9 +218,9 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	}
 	//과목 코드불러오기
 	@Override
-	public Map<String,String> selectSubject(String subCode) {
+	public Map<String,String> selectSubject(Map<String,String> param) {
 		
-		 Map<String,String> map = dao.selectSubject(session, subCode);
+		 Map<String,String> map = dao.selectSubject(session, param);
 		
 		return map;
 	}
@@ -265,5 +265,13 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 			throw new RuntimeException();
 		}
 		return result;
+	}
+	//교수 시간표
+	@Override
+	public List<Map<String,String>> profSchedule(String profId){
+		
+		List<Map<String,String>> schedule = dao.profSchedule(session,profId);
+		
+		return schedule;
 	}
 }

@@ -48,7 +48,7 @@ public interface ProfessorService1 {
 	List<ProfBoardAttachment> selectProfAttachment(int profBoardNo);
 	//subject조회
 	List<Subject> subjectCodeView(int cPage, int numPerPage, String profId);
-	Map<String,String> selectSubject(String subCode);
+	Map<String,String> selectSubject(Map<String,String> param);
 	//강의 계획서 게시판
 	List<PlanBoard> planBoardView(int cPage, int numPerPage);
 	//강의 계획서 작성
@@ -57,4 +57,6 @@ public interface ProfessorService1 {
 	PlanBoard selectPlanView(int planNo);
 	//강의 계획서 수정
 	int updatePlanEnd(Map<String,String> map) throws RuntimeException;
+	//교수 스케줄
+	List<Map<String,String>> profSchedule(String profId);
 }

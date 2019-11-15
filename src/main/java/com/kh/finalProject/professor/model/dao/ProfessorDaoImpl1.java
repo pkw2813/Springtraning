@@ -138,8 +138,8 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 		return session.selectList("professor1.subjectCodeView",profId,row);
 	}
 	@Override
-	public Map<String,String> selectSubject(SqlSessionTemplate session, String subCode) {
-		return session.selectOne("professor1.selectSubject",subCode);
+	public Map<String,String> selectSubject(SqlSessionTemplate session, Map<String,String> param) {
+		return session.selectOne("professor1.selectSubject",param);
 	}
 //	과목코드 눌렀을때 보이는 뷰
 	@Override
@@ -166,5 +166,10 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	@Override
 	public int updatePlanEnd(SqlSessionTemplate session, Map<String,String> map) {
 		return session.update("professor1.updatePlanEnd",map);
+	}
+	//교수 시간표
+	@Override
+	public List<Map<String,String>> profSchedule(SqlSessionTemplate session, String profId){
+		return session.selectList("professor1.profSchedule",profId);
 	}
 }
