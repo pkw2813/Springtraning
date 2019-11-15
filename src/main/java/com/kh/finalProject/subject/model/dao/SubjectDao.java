@@ -13,4 +13,6 @@ public interface SubjectDao {
 	List<Subject> selectTime(SqlSessionTemplate session, Subject s);
 	List<Map> selectCurri(SqlSessionTemplate session, String deptCode);
 	int subInsert(SqlSessionTemplate session, Subject s);
+	List<Subject> subAllSelect(SqlSessionTemplate session);
+	List<Subject> curriSearch(SqlSessionTemplate session, Subject s);
 }

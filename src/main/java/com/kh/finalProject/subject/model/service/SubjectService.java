@@ -11,4 +11,6 @@ public interface SubjectService {
 	List<Subject> selectTime(Subject s);
 	List<Map> selectCurri(String deptCode);
 	int subInsert(Subject s);
+	List<Subject> subAllSelect();
+	List<Subject> curriSearch(Subject s);
 }

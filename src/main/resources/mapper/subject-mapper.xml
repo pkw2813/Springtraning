@@ -18,8 +18,30 @@
 		INSERT INTO HD_SUBJECT_TB VALUES(#{subCode},#{subName},#{targetSubject},#{targetGrade},#{completePt}
 		,#{subType},#{deptCode},#{subDate},#{subTime},#{subRoom},#{subYear},#{subSemester},SUB_SEQ_SEQ.NEXTVAL)
 	</insert>
+	
+	<select id="subselectAll" resultMap="subjectMap">
+		SELECT SUB_NAME, TARGET_GRADE, SUB_DATE, SUB_TIME, SUB_ROOM, SUB_YEAR, SUB_SEMESTER, DEPT_NAME AS DEPT_CODE FROM HD_SUBJECT_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUB_YEAR=#{subYear}
+	</select>
+	
+	<select id="curriSearch" parameterType="subject" resultMap="subjectMap">
+				SELECT SUB_NAME, TARGET_GRADE, SUB_DATE, SUB_TIME, SUB_ROOM, SUB_YEAR, SUB_SEMESTER, DEPT_NAME AS DEPT_CODE FROM HD_SUBJECT_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE)
+				WHERE 1=1
+				<if test='subYear !="" &amp; subYear != null'>
+					AND SUB_YEAR=#{subYear}
+				</if>
+				<if test='targetGrade !="" &amp; targetGrade != null'>
+					AND TARGET_GRADE=#{targetGrade}
+				</if>
+				<if test='subSemester !="" &amp; subSemester != null'>
+					AND SUB_SEMESTER=#{subSemester}
+				</if>
+				<if test='deptCode !="" &amp; deptCode != null'>
+					AND DEPT_CODE=#{deptCode}
+				</if>
+	</select>
 
   <resultMap id="subjectMap" type="subject">
+  	<result column="SUB_SEQ" property="subSeq"/>
 	<result column="SUB_CODE" property="subCode"/>
 	<result column="SUB_NAME" property="subName"/>
 	<result column="TARGET_SUBJECT" property="targetSubject"/>

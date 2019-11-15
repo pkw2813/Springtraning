@@ -40,6 +40,9 @@
   	.sidebar{
   		width:180px;
   	}
+  	.nav-link{
+  		font-size:13px !important;
+  	}
   </style>
   
 </head>
@@ -210,12 +213,12 @@
             
             <div class="collapse" id="class_info">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/insertSubject">개설과목입력</a></li>
-                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lecturePlan">강의계획서</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">주별강의계획서</a></li>
-                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lectureData">강의자료업로드</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/insertSubject">개설과목 입력</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lecturePlan">강의 계획서</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">주별 강의계획서</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lectureData">강의자료 업로드</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">강의내역</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">담당교수별 강의시간표</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#">교수별 강의시간표</a></li>
               </ul>
             </div>
           </li>
@@ -331,7 +334,7 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="${path }/student/applyClass.hd"> 강의조회 및 수강신청 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/applyClass.hd"> 강의조회/수강신청 </a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/student/myClassInfo.hd"> 수강신청 내역 </a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/student/allClassInfo.hd"> 전체 시간표조회 </a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/student/mySchedule.hd"> 개인 시간표조회 </a></li>
@@ -392,13 +395,14 @@
             </a>
             <div class="collapse" id="auth3">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기타</a></li>
-                <li class="nav-item"> <a class="nav-link" href="${path}/schedule.hd">행사 관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">학과 관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">리스트</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기자재</a></li>
-                <li class="nav-item"> <a class="nav-link" href="${path }/tuition.hd">등록금 등록</a></li>
-                <li class="nav-item"> <a class="nav-link" href="${path }/curriculum.hd">커리큘럼 등록</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path}/schedule.hd">일정 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/school.hd">대학 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/col/colList.hd">전체 인원 조회</a></li>
+                <!-- <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기자재</a></li> -->
+                <li class="nav-item"> <a class="nav-link" href="${path }/tuition.hd">등록금 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/curriculum.hd">커리큘럼 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/subRoom.hd">강의장 사용현황</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/notice.hd">공지 게시판</a></li>
                </ul>
             </div>
           </li>
@@ -410,10 +414,10 @@
             </a>
             <div class="collapse" id="auth4">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기자재 신청</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">행사 신청</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">학과 리스트</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">학생 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/deptSchedule.hd">학과 일정</a></li>
+				<!-- <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기자재 신청</a></li> -->
+                <li class="nav-item"> <a class="nav-link" href="${path }/deptPro.hd">교수 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/deptStu.hd">학생 조회</a></li>
                </ul>
             </div>
           </li>

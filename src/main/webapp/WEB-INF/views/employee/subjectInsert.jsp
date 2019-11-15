@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page = "/WEB-INF/views/common/header.jsp"/>
@@ -10,6 +11,9 @@
 		text-align:center;
 	}
 	th, td{
+		text-align:center;
+	}
+	.searchBtn{
 		text-align:center;
 	}
 </style>
@@ -129,8 +133,8 @@
                           <label class="col-sm-3 col-form-label">이수 학점</label>
                           <div class="col-sm-9">
                             <select class="form-control" id="comPt" name="completePt">
-                            	<option value="2">2학점</option>
-                            	<option value="3">3학점</option>
+                            	<option value="1">2학점</option>
+                            	<option value="2">3학점</option>
                             </select>
                           </div>
                         </div>
@@ -223,10 +227,83 @@
               <br/><br/>
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Basic Table</h4>
-                  <p class="card-description">
-                    Add class <code>.table</code>
-                  </p>
+                  <h4 class="card-title">커리큘럼 조회</h4>
+                  <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">년도 선택</label>
+                          <div class="col-sm-9">
+                            <select class="form-control" id="year1" name="subYear">
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">학년 선택</label>
+                          <div class="col-sm-9">
+                            <select class="form-control" name="targetGrade" id="grade1">
+                            	<option value="1">1학년</option>
+                            	<option value="2">2학년</option>
+                            	<option value="3">3학년</option>
+                            	<option value="4">4학년</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">학기 선택</label>
+                          <div class="col-sm-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input seme" name="subSemester1" value="1">
+                                1학기
+                              <i class="input-helper"></i></label>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input seme" name="subSemester1" value="2">
+                                2학기
+                              <i class="input-helper"></i></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">학부 선택</label>
+                          <div class="col-sm-9">
+                            <select class="form-control selectColleage1">
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">학과 선택</label>
+                          <div class="col-sm-9">
+                            <select class="form-control selectDepartment1" name="deptCode" id="deptCode1">
+                            </select>
+                          </div>
+                        </div>
+                       </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+	                          <div class="col-sm-12 searchBtn">
+	                            <button class="btn btn-inverse-info btn-fw btStyle" id="inquiry">조회</button>
+	                          </div>
+                          </div>
+                      </div>
+                    </div>
+                    </form>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
@@ -234,22 +311,37 @@
                           <th>년도</th>
                           <th>학년</th>
                           <th>학기</th>
-                          <th>학부</th>
+                          <th>학과</th>
+                          <th>과목명</th>
                           <th>요일</th>
                           <th>강의실</th>
                           <th>강의시간</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td><label class="badge badge-danger">Pending</label></td>
-                          <td><label class="badge badge-danger">Pending</label></td>
-                          <td><label class="badge badge-danger">Pending</label></td>
-                          <td><label class="badge badge-danger">Pending</label></td>
-                        </tr>
+                      <tbody id="curTb">
+                      	<h4 class="card-title">2019년 커리큘럼</h4>
+                      	<c:forEach items="${list1 }" var="l">
+	                        <tr>
+	                          <td>${l.subYear }년</td>
+	                          <td>${l.targetGrade }학년</td>
+	                          <td>${l.subSemester }학기</td>
+	                          <td>${l.deptCode }</td>
+	                          <td>${l.subName }</td>
+	                          <td>${l.subDate }</td>
+	                          <td>${l.subRoom }</td>
+	                          	<td>
+	                          <c:forEach items="${l.subTime.split(',')}" var="subT" varStatus="v">
+		                          	<c:if test="${v.first }">
+		                          		${subT }~	
+		                          	</c:if>
+		                          	<c:if test="${v.last }">
+		                          		<c:set var="seme" value="${subT } }" />
+		                          		${fn:substring(seme,0,3)}50	
+		                          	</c:if> 
+	                          </c:forEach>
+	                          	</td>                         
+	                        </tr>
+                        </c:forEach>
                       </tbody>
                     </table>
                   </div>
@@ -257,6 +349,34 @@
               </div>
 
 	<script>
+	
+		$("#inquiry").click(function(){
+			var year=$("#year1").val();
+			var grade=$("#grade1").val();
+			var seme=$("input:radio[name='subSemester1']:checked").val();
+			var deptCode=$("#deptCode1").val();
+			$.ajax({
+				url:"${path}/curriSearch.hd",
+				data:{"subYear":year,"targetGrade":grade,"subSemester":seme,"deptCode":deptCode},
+				success:function(data){
+					var re=JSON.parse(data);
+					var currArr="";						
+					var subT=new Array;;
+					for(var i=0; i<re.length; i++){
+						subT=re[i]["subTime"].split(",");
+						currArr+="<tr><td>"+re[i]["subYear"]+"년</td>";
+						currArr+="<td>"+re[i]["targetGrade"]+"학년</td>";
+						currArr+="<td>"+re[i]["subSemester"]+"학기</td>";
+						currArr+="<td>"+re[i]["deptCode"]+"</td>";
+						currArr+="<td>"+re[i]["subName"]+"</td>";
+						currArr+="<td>"+re[i]["subDate"]+"요일</td>";
+						currArr+="<td>"+re[i]["subRoom"]+"</td>";
+						currArr+="<td>"+subT[0]+"~"+subT[subT.length-1]+"</td></tr>";
+					}
+					$("#curTb").html(currArr);
+				}
+			});
+		});
 	
 		 $("#submitBtn").click(function(){
 			var rt=$("#roomTime").val();
@@ -282,34 +402,14 @@
 			var date = new Date();
 			var year = date.getFullYear();
 			var selectValue = document.getElementById("year");
+			var selectValue1 = document.getElementById("year1");
 			var optionIndex = 0;
 	
 			for(var i=year;i<=year+10;i++){
 					selectValue.add(new Option(i,i),optionIndex++);
+					selectValue1.add(new Option(i,i),optionIndex++);
 			}
 		}
-		
-		 $(function() {
-     		$(document).ready(function(){
-     			$.ajax({
-     				type : "post",
-     				url : "${pageContext.request.contextPath}/selectColList.do",
-     				success: function(data) {
-     					let colListHtml = "";
-     					colListHtml = "<option value='select' id='selColleage'>학부 선택</option>";
-     					for(let i = 0; i < data.list.length; i++) {
-     						let cols = data.list[i];
-     						colListHtml += "<option value='"+cols['COL_CODE']+"' class='colList'>"+cols['COL_NAME']+"</option>";
-     					}
-     					
-     					$('.selectColleage').html(colListHtml);
-     						$('.selectColleage').change(function(){
-     							$("#selColleage").attr('disabled',true);
-     						})
-     				}
-     			})
-     		})
-     	});
 		 
 		 $("#roomTitle").change(function(){
 			$("#roomTitlec").attr('disabled',true);
@@ -339,6 +439,27 @@
 				}
 		 }
 		 
+		 $(function() {
+	     		$(document).ready(function(){
+	     			$.ajax({
+	     				type : "post",
+	     				url : "${pageContext.request.contextPath}/selectColList.do",
+	     				success: function(data) {
+	     					let colListHtml = "";
+	     					colListHtml = "<option value='select' id='selColleage'>학부 선택</option>";
+	     					for(let i = 0; i < data.list.length; i++) {
+	     						let cols = data.list[i];
+	     						colListHtml += "<option value='"+cols['COL_CODE']+"' class='colList'>"+cols['COL_NAME']+"</option>";
+	     					}
+	     					
+	     					$('.selectColleage').html(colListHtml);
+	     						$('.selectColleage').change(function(){
+	     							$("#selColleage").attr('disabled',true);
+	     					});
+	     				}
+	     			})
+	     		})
+	     	});
        
         $(function(){
      	 	$('.selectColleage').change(function(){
@@ -350,7 +471,6 @@
      					let deptListHtml = "<option value='select' id='selectDepartment'>학과 선택</option>";
      					for(let i = 0; i < data.list.length; i++) {
      						let depts = data.list[i];
-
      						deptListHtml += "<option value='"+depts['DEPT_CODE']+"'  class='deptList'>"+depts['DEPT_NAME']+"</option>";
      					}
      					
@@ -362,7 +482,52 @@
      	 	}
      	 });
      		 });
-     	 }); 
+     	 });
+        
+        $(function() {
+     		$(document).ready(function(){
+     			$.ajax({
+     				type : "post",
+     				url : "${pageContext.request.contextPath}/selectColList.do",
+     				success: function(data) {
+     					let colListHtml = "";
+     					colListHtml = "<option value='select' id='selColleage1'>학부 선택</option>";
+     					for(let i = 0; i < data.list.length; i++) {
+     						let cols = data.list[i];
+     						colListHtml += "<option value='"+cols['COL_CODE']+"' class='colList'>"+cols['COL_NAME']+"</option>";
+     					}
+     					
+     					$('.selectColleage1').html(colListHtml);
+     						$('.selectColleage1').change(function(){
+     							$("#selColleage1").attr('disabled',true);
+     					});
+     				}
+     			})
+     		})
+     	});
+   
+    $(function(){
+ 	 	$('.selectColleage1').change(function(){
+ 			$.ajax({
+ 				type : "post",
+ 				url: "${pageContext.request.contextPath}/selectDeptList.do",
+ 				data: {"result" : $('.selectColleage1').val()},
+ 				success: function(data) {
+ 					let deptListHtml = "<option value='select' id='selectDepartment1'>학과 선택</option>";
+ 					for(let i = 0; i < data.list.length; i++) {
+ 						let depts = data.list[i];
+ 						deptListHtml += "<option value='"+depts['DEPT_CODE']+"'  class='deptList'>"+depts['DEPT_NAME']+"</option>";
+ 					}
+ 					
+ 					$('.selectDepartment1').html(deptListHtml);
+ 						$('.selectDepartment1').change(function(){
+ 						$("#selectDepartment1").attr('disabled',true);
+ 					
+ 			});
+ 	 	}
+ 	 });
+ 		 });
+ 	 }); 
         
         $(function(){
         	$(".selectDepartment").change(function(){
@@ -374,10 +539,8 @@
         			var subNameArr="<option id='selectSubName'>과목명 선택</option>";
         			var targetSubjectArr="<option id='selecttargetSubject'>강의목표 선택</option>";
         			var subCodeArr="";
-        					console.log(data);
         					let re=JSON.parse(data);
         				for(let i = 0; i < re.length; i++) {
-        					console.log(re.length);
         					var dataDept=re[i];
 	        				subNameArr+="<option value='"+dataDept['SUB_NAME']+"'  class='subName'>"+dataDept['SUB_NAME']+"</option>";
 	        				targetSubjectArr+="<option value='"+dataDept['TARGET_SUBJECT']+"'  class='targetSubject'>"+dataDept['TARGET_SUBJECT']+"</option>";
@@ -445,13 +608,11 @@
 	        				 for(var i=0; i<re.length;i++){
 	     			       		 var res = [];
 	        					 var res=re[i]["subTime"].split(",");
-	        					 console.log(res);
 	       						// roomTime 하위의 옵션 중 res에 있는것들을 disable
 	        					for(var k=0; k < res.length; k++){
 	          						// disable
 	          						$("#roomTime option").each(function(){
 	          							 if ( res[k] == $(this).val() ) {
-	          								 console.log($(this).val(), res[k]==$(this).val());
 	          								 $(this).attr("disabled", true);
 	          								 var et=$("#endTime").val();
 	          								 

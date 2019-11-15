@@ -40,6 +40,21 @@ public class SubjectServiceImpl implements SubjectService {
 		int result=dao.subInsert(session, s);
 		return result;
 	}
+
+	@Override
+	public List<Subject> subAllSelect() {
+		List<Subject> list=dao.subAllSelect(session);
+		return list;
+	}
+
+	@Override
+	public List<Subject> curriSearch(Subject s) {
+		return dao.curriSearch(session,s);
+	}
+	
+	
+	
+	
 	
 	
 	

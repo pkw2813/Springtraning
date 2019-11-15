@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,9 @@ public class SubjectController {
 	private SubjectService service;
 	
 	@RequestMapping("/curriculum.hd")
-	public String subject() {
+	public String subject(HttpServletRequest req) {
+		List<Subject> list1=service.subAllSelect();
+		req.setAttribute("list1", list1);
 		return "employee/subjectInsert";
 	}
 	
@@ -100,6 +104,20 @@ public class SubjectController {
 				e.printStackTrace();
 			}
 		 
+		 return jsonStr;
+	 }
+	 
+	 @RequestMapping("/curriSearch.hd")
+	 @ResponseBody
+	 public String curriSearch(Subject s) {
+		 ObjectMapper mapper=new ObjectMapper();
+		 List<Subject> list=service.curriSearch(s);
+		 String jsonStr="";
+		 try {
+			 jsonStr=mapper.writeValueAsString(list);
+		 }catch(JsonProcessingException e) {
+			 e.printStackTrace();
+		 }
 		 return jsonStr;
 	 }
 	 

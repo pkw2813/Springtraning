@@ -30,6 +30,18 @@ public class SubjectDaoImpl implements SubjectDao{
 	public int subInsert(SqlSessionTemplate session, Subject s) {
 		return session.insert("subject.subInsert", s);
 	}
+
+	@Override
+	public List<Subject> subAllSelect(SqlSessionTemplate session) {
+		return session.selectList("subject.subselectAll");
+	}
+
+	@Override
+	public List<Subject> curriSearch(SqlSessionTemplate session, Subject s) {
+		return session.selectList("subject.curriSearch",s);
+	}
+	
+	
 	
 	
 	
