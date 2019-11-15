@@ -25,5 +25,6 @@ public class Grade {
 	private String retake;
 	private int rcvCredits;
 	private String subType;
+	private String profName;
 	
 }

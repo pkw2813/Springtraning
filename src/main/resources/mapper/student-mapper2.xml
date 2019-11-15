@@ -4,7 +4,13 @@
 	
 	<!-- 서브퀴리를 통해 이수구분을 받아오는 HD_SUBJECT_TB에서 과목종류 SUB_TYPE, 이수학점 COMPLETE_PT 을 조회해와야한다. -->
 	<select id="selectGradeList" parameterType="string" resultMap="GradeResult">
-		SELECT A.*, B.SUB_TYPE FROM HD_GRADE_TB A JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B ON (A.SUB_CODE = B.SUB_CODE) WHERE STU_NO=#{stuNo} ORDER BY ACA_YEAR_SEM DESC, SUB_NAME ASC
+		SELECT A.*, B.SUB_TYPE, C.PROF_NAME FROM HD_GRADE_TB A 
+		JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B 
+		ON (A.SUB_CODE = B.SUB_CODE)
+		JOIN (SELECT PROF_ID, PROF_NAME FROM HD_PROFESSOR_TB) C
+		ON (A.PROF_ID = C.PROF_ID)
+		WHERE STU_NO=#{stuNo}
+		ORDER BY ACA_YEAR_SEM DESC, SUB_NAME ASC
 	</select>
 	<select id="selectGradeListSubType" parameterType="string" resultType="map">
 		SELECT SUBSTR(aca_year_sem,1,4) as year,
@@ -37,6 +43,22 @@
 	ORDER BY 1,2
 	</select>
 	
+	<insert id="insertRequest" parameterType="request">
+		INSERT INTO HD_REQUEST_TB VALUES(#{stuNo},#{reqDate},#{reqTitle},#{reqContent},#{acaYearSem},#{profId},#{subCode},DEFAULT,NULL,#{profName})
+	</insert> 
+	
+<!-- 	<resultMap type="reauest" id="RequestResult">
+		<result column="STU_NO" property="stuNo"/>
+		<result column="REQ_DATE" property="reqDate"/>
+		<result column="REQ_TITLE" property="reqTitle"/>
+		<result column="REQ_CONTENT" property="reqContent"/>
+		<result column="ACA_YEAR_SEM" property="acaYearSem"/>
+		<result column="PROF_ID" property="profId"/>
+		<result column="SUB_CODE" property="subCode"/>
+		<result column="REQ_YN" property="reqYn"/>
+		<result column="REQ_ANSWER" property="reqAnswer"/>
+		<result column="PROF_NAME" property="profName"/>
+	</resultMap> -->
 	
 	
 	<!-- resultMap에 개념은 vo객체와 DB에 있는 컬럼명이 맞지 않을경우 매칭이 안되므로 그 매칭을 해주기 위해 설정 해주는 것. -->
@@ -57,6 +79,7 @@
 		<result column="RETAKE" property="retake"/>
 		<result column="RCV_CREDITS" property="rcvCredits"/>
 		<result column="SUB_TYPE" property="subType"/>
+		<result column="PROF_NAME" property="profName"/>
 	</resultMap>
 	
 

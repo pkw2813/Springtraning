@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.student.model.dao.StudentDao2;
 import com.kh.finalProject.student.model.vo.Grade;
+import com.kh.finalProject.student.model.vo.Request;
 
 @Service
 public class StudentServiceImpl2 implements StudentService2 {
@@ -26,6 +27,11 @@ public class StudentServiceImpl2 implements StudentService2 {
 	@Override
 	public List<Map> gradeSearchSubType(String stuNo){
 		return dao.gradeSearchSubType(session, stuNo);
+	}
+	
+	@Override
+	public int insertAppeal(Request request) {
+		return dao.insertAppeal(session,request);
 	}
 	
 

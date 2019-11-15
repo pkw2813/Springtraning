@@ -23,5 +23,6 @@
 		<typeAlias type="com.kh.finalProject.professor.model.vo.AttendStudent" alias="attendStudent"/>
 		<typeAlias type="com.kh.finalProject.student.model.vo.MySchedule" alias="mySchedule"/>
 		<typeAlias type="com.kh.finalProject.student.model.vo.MyScheduleForInfo" alias="myScheduleForInfo"/>
+		<typeAlias type="com.kh.finalProject.student.model.vo.Request" alias="request"/>
 	</typeAliases>
 </configuration>

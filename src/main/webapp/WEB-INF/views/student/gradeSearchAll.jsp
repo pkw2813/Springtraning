@@ -111,7 +111,7 @@ pre {
 									</thead>
 								
 									<tbody>
-										<c:forEach items="${list}" var="l" varStatus="s">
+										<c:forEach items="${gradeAll}" var="l" varStatus="s">
 											<c:set var="seme" value="${l.acaYearSem }" />
 												<tr id="select">
 													<td scope="row"><c:out value="${s.count}" /></td>
@@ -168,7 +168,7 @@ pre {
 									<c:set var="electriveselectTotal" value="${0}" />
 									<c:set var="electriveneedTotal" value="${0}" />
 									<c:set var="otherTotal" value="${0}" />
-									<c:forEach items="${list1}" var="l" varStatus="s">
+									<c:forEach items="${gradeSubType}" var="l" varStatus="s">
 									<c:set var="majorselectTotal"
 												value="${majorselectTotal + l.MAJORSELECT}" />
 									<c:set var="majorneedTotal"

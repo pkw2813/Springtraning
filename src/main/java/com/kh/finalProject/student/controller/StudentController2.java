@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalProject.student.model.service.StudentService2;
 import com.kh.finalProject.student.model.vo.Grade;
+import com.kh.finalProject.student.model.vo.Request;
 import com.kh.finalProject.student.model.vo.Student;
 
 
@@ -33,9 +33,9 @@ public class StudentController2 {
 		String stuNo=student.getStuNo();
 		String deptCode=student.getStuNo().substring(5,8);
 				
-		List<Grade> list = service.selectGradeAll(stuNo);
-		for(int i=0; i<list.size(); i++) {
-			String grade=list.get(i).getGrade();
+		List<Grade> gradeAll = service.selectGradeAll(stuNo);
+		for(int i=0; i<gradeAll.size(); i++) {
+			String grade=gradeAll.get(i).getGrade();
 			if(grade.equals("4.5")) {
 				grade="A+";
 			} else if(grade.equals("4.0")) {
@@ -59,19 +59,19 @@ public class StudentController2 {
 			}
 			
 						
-			list.get(i).setGrade(grade);
+			gradeAll.get(i).setGrade(grade);
 		}
 			
-		for(Grade e : list) {
+		for(Grade e : gradeAll) {
 			if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
 				e.setSubType("타전공");
 				System.out.println("전체학기 성적 타전공 분류"+e);
 			}
 		}
-		model.addAttribute("list", list);
-		System.out.println("전체학기 성적"+list);
-		List<Map> list1 = service.gradeSearchSubType(stuNo);
-		model.addAttribute("list1",list1);
+		model.addAttribute("gradeAll", gradeAll);
+		System.out.println("전체학기 성적"+gradeAll);
+		List<Map> gradeSubType = service.gradeSearchSubType(stuNo);
+		model.addAttribute("gradeSubType",gradeSubType);
 		return "student/gradeSearchAll";	
 	}
 	
@@ -83,8 +83,8 @@ public class StudentController2 {
 		Student student = (Student)session.getAttribute("loginMember");
 		String stuNo=student.getStuNo();
 		String deptCode=student.getStuNo().substring(5,8);
-		List<Grade> list = service.selectGradeAll(stuNo); // 현재: 2019학년도 2학기
-		List<Grade> list2 = new ArrayList();
+		List<Grade> gradeAll = service.selectGradeAll(stuNo); // 현재: 2019학년도 2학기
+		List<Grade> gradeNow = new ArrayList();
 		Date date=new Date();
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 		System.out.println("오늘날짜:"+df.format(date));
@@ -104,8 +104,8 @@ public class StudentController2 {
 		System.out.println("acaYearSem:"+acaYearSem);
 		System.out.println("deptCode"+deptCode);
 		
-		for(int i=0; i<list.size(); i++) {
-			String grade=list.get(i).getGrade();
+		for(int i=0; i<gradeAll.size(); i++) {
+			String grade=gradeAll.get(i).getGrade();
 			if(grade.equals("4.5")) {
 				grade="A+";
 			} else if(grade.equals("4.0")) {
@@ -127,27 +127,44 @@ public class StudentController2 {
 			} else if(grade.equals("P")){
 				grade="P";
 			}		
-			list.get(i).setGrade(grade);
+			gradeAll.get(i).setGrade(grade);
 		}
-			for(Grade e : list) {
+			for(Grade e : gradeAll) {
 					if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
 						e.setSubType("타전공");
 						System.out.println("현재학기 타전공 분류"+e);
 					}
 			}
-			for(int j=0; j<list.size(); j++) {
-				if(acaYearSem.equals(list.get(j).getAcaYearSem())) {
-					list2.add(list.get(j));
-					System.out.println("출력!"+list.get(j).getAcaYearSem());
-					System.out.println("list!!"+list.get(j));
-					System.out.println("현재학기꺼만"+list2);
+			for(int j=0; j<gradeAll.size(); j++) {
+				if(acaYearSem.equals(gradeAll.get(j).getAcaYearSem())) {
+					gradeNow.add(gradeAll.get(j));
+					System.out.println("출력!"+gradeAll.get(j).getAcaYearSem());
+					System.out.println("list!!"+gradeAll.get(j));
+					System.out.println("현재학기꺼만"+gradeNow);
 					
 				}				
 			}
-			model.addAttribute("list2", list2);
+			model.addAttribute("gradeNow", gradeNow);
 		return "student/gradeSearchNow";
 	}
 	
-	
+	@RequestMapping("/myAppeal.hd")
+	public String insertAppeal(Request request, HttpSession session, Model model) {
+		
+		System.out.println("나옴?"+request);		
+		int result = service.insertAppeal(request);
+		String msg="";
+		String loc="/student/gradeSearchNow.hd";
+		if(result>0) {
+			msg="이의신청완료";
+		} else {
+			msg="이의신청실패";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		return "common/msg";
+//		return "redirect:/gradeSearchNow.jsp";
+		
+	}
 	
 }

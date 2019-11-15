@@ -19,6 +19,9 @@ pre {
 	padding: 0px;
 	background-color: white;
 }
+.row{
+	margin:-1px 0;
+}
 </style>
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -52,8 +55,8 @@ pre {
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${list2}" var="l" varStatus="s">
-											<c:set var="seme" value="${l.acaYearSem }" />
+									<c:forEach items="${gradeNow}" var="l" varStatus="s">
+											<c:set var="seme" value="${l.acaYearSem}" />
 												<tr id="select">
 													<td scope="row"><c:out value="${s.count}" /></td>
 													<td><c:out value="${fn:substring(seme,0,4)}" /></td>
@@ -84,23 +87,71 @@ pre {
 				<div id="topCloseBotton" style="text-align: right">
 					<span class="close" id="closeAppeal" Style="width: 50px;">&times;</span>
 				</div>
-				<form action="${path}/req.hd">
-					<p style="font-family: jua; font-size: 30px; font-style:">성적이의신청</p><p style="font-family: jua; font-size: 15px; color:red; font-style:">이의신청기간은 학기 종료 후 3일</p>
+				<form name="myAppealFrm" action="${path}/myAppeal.hd" method="post">
+					<p style="font-family: jua; font-size: 30px; font-style:">성적이의신청</p>
+					<p style="font-family: jua; font-size: 15px; color:red; font-style:">이의신청기간은 학기 종료 후 3일</p>
 					<div class="form-group">
-						<%-- <c:forEach items="${list2}" var="l" varStatus="s">
-						<span><c:out value="${l.subName}"/></span>
-						</c:forEach> --%>
-						<hr>
+						<div class="row">
+							<div class="col-md-12">
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">교과목명 : </label>
+								<div class="col-sm-10" style="width:10px;">
+									<input type="text" class="form-control" name="subName" id="subName" readonly="readonly" />
+								</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">담당교수 : </label>
+								<div class="col-sm-5">
+								<input type="text" class="form-control" name="profName" id="profName" readonly="readonly"/>
+								</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">취득등급 : </label>
+								<div class="col-sm-5">
+								<input type="text" class="form-control" name="grade" id="grade" readonly="readonly"/>
+								</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">신청일자 : </label>
+								<div class="col-sm-5">
+								<input type="text" class="form-control" name="reqDate" id="reqDate" readonly="readonly"/>
+								</div>
+								</div>
+							</div>
+						</div>
+						
 						<p style="font-family: jua; font-size: 15px; font-style:">건의제목</p>
-						<input type="text" id="appealTitle" name="appealTitle" class="form-control" required />
+						<input type="text" name="reqTitle" id="reqTitle" class="form-control" required="required" />
 						<hr>
 						<p style="font-family: jua; font-size: 15px; font-style:">이의신청내용</p>
-						<textarea rows="10" cols="90" placeholder="이의신청 내용을 작성하세요."></textarea>
+						<textarea rows="10" cols="90" name="reqContent" id="reqContent" placeholder="이의신청 내용을 작성하세요." required="required"></textarea>
 						<hr>
+						<input type="hidden" name="stuNo" id="stuNo" value="${loginMember.stuNo}"/>
+						
+						
+						
+						<input type="hidden" name="acaYearSem" id="acaYearSem" value="acaYearSem"/>
+						<input type="hidden" name="subCode" id="subCode" value="subCode"/>
+						<input type="hidden" name="profId" id="profId" value="profId"/>
+						
+						
+						
 					</div>
 					<div style="text-align: center">
-						<input type="button" class="btn btn-inverse-info btn-fw" id="closeAppeal3" value="취소" style="float: right; margin: 7px;">
-						<input type="button" class="btn btn-inverse-info btn-fw" id="closeAppeal2" value="확인" style="float: right; margin: 7px;">
+						<input type="reset" class="btn btn-inverse-info btn-fw" id="closeAppeal3" value="취소" style="float: right; margin: 7px;">
+						<input type="submit" class="btn btn-inverse-info btn-fw" id="closeAppeal2" value="제출" style="float: right; margin: 7px;">
 					</div>
 				</form>
 			</div>
@@ -169,15 +220,20 @@ pre {
  	//답변보기 모달 script
 	var headerModal1 = document.getElementById('appealModal');
 	 
+ 	//현재시간
+ 	var today = new Date();
+ 	var year = today.getFullYear();
+ 	var month = today.getMonth() + 1;
+ 	var date = today.getDate();
     
     <%
     	List<Grade> gradeList = null;
-    	if(request.getAttribute("list2")!=null) {
-	    	gradeList = (ArrayList)request.getAttribute("list2");
+    	if(request.getAttribute("gradeNow")!=null) {
+	    	gradeList = (ArrayList)request.getAttribute("gradeNow");
     	}
     %>
     <%if(gradeList!=null) { 
-    	for(int i=0; i<gradeList.size(); i++) {%>
+    	for(int i=0; i<gradeList.size(); i++) { %>
     	// Get the button that opens the modal
         var headerBtn<%=(i+1)%> = document.getElementById("appeal<%=(i+1)%>");
      	// Get the button that opens the modal
@@ -187,32 +243,29 @@ pre {
         <%-- AppealheaderBtn<%=(i+1)%>.onclick = function() {
         	AppealheaderModal.style.display = "block";
         } --%>
-        AppealheaderBtn<%=(i+1)%>.addEventListener('click', function(){
+        AppealheaderBtn<%=(i+1)%>.addEventListener('click', function(e){
+        	/* alert(this.id); */
             AppealheaderModal.style.display = "block";
+            $("#subName").val(""); // 초기화
+            $("#subName").val("<%=gradeList.get(i).getSubName()%>");
+            $("#profName").val("");
+            $("#profName").val("<%=gradeList.get(i).getProfName()%>"+"교수");
+            $("#grade").val("");
+            $("#grade").val("<%=gradeList.get(i).getGrade()%>");
+            $("#reqDate").val("");
+            $("#reqDate").val(year+"/"+month+"/"+date);
+            
+            $("#acaYearSem").val("");
+            $("#acaYearSem").val("<%=gradeList.get(i).getAcaYearSem()%>");
+            $("#subCode").val("");
+            $("#subCode").val("<%=gradeList.get(i).getSubCode()%>");
+            $("#profId").val("");
+            $("#profId").val("<%=gradeList.get(i).getProfId()%>");
         });
 
     <%
     	}
     }	%>
-    	
-    
-    
-    /* <c:forEach items="${list2}" var="l" varStatus="s">
-	<c:set var="seme" value="${l.acaYearSem }" />
-		<tr id="select">
-			<td scope="row"><c:out value="${s.count}" /></td>
-			<td><c:out value="${fn:substring(seme,0,4)}" /></td>
-			<td><c:out value="${fn:substring(seme,5,6)}" /></td>
-			<td><c:out value="${l.subCode}" /></td>
-			<td><c:out value="${l.subName}" /></td>
-			<td><c:out value="${l.subType}" /></td>
-			<td><c:out value="${l.rcvCredits}" /></td>
-			<td><c:out value="${l.grade}" /></td>
-			<td><c:out value="${l.retake}" /></td>
-			<td><button type="button" id="appeal${s.count }" class="btn btn-danger btn-xs" style="font-size:13px">이의신청</button></td>
-			<td><button type="button" id="answer${s.count }" class="btn btn-primary btn-xs" style="font-size:13px">답변보기</button></td>
-		</tr>									
-</c:forEach> */
 
     // Get the <span> element that closes the modal
     var closePw = document.getElementById("closePw");                                          
