@@ -14,6 +14,9 @@
 	.modal-content{
 		width:30%;
 	}
+	th, td{
+		text-align:center;
+	}
 </style>
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -49,50 +52,26 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Basic Table</h4>
-                  <p class="card-description">
-                    Add class <code>.table</code>
-                  </p>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Profile</th>
-                          <th>VatNo.</th>
-                          <th>Created</th>
-                          <th>Status</th>
+                       	  <th style="width:20%">번호</th>
+                          <th style="width:40%">학부 명</th>
+                          <th style="width:20%">수정</th>
+                          <th style="width:20%">학부 폐설</th>
                         </tr>
                       </thead>
                       <tbody>
+                      <c:forEach var="c" items="${colList }" varStatus="v">
                         <tr>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td><label class="badge badge-danger">Pending</label></td>
+                          <td>${v.count }</td>
+                          <td>${c.colName }</td>
+                          <td><button class="btn btn-inverse-info btn-fw">수정</button></td>
+                          <td><button class="btn btn-inverse-info btn-fw">폐설</button></td>
                         </tr>
-                        <tr>
-                          <td>Messsy</td>
-                          <td>53275532</td>
-                          <td>15 May 2017</td>
-                          <td><label class="badge badge-warning">In progress</label></td>
-                        </tr>
-                        <tr>
-                          <td>John</td>
-                          <td>53275533</td>
-                          <td>14 May 2017</td>
-                          <td><label class="badge badge-info">Fixed</label></td>
-                        </tr>
-                        <tr>
-                          <td>Peter</td>
-                          <td>53275534</td>
-                          <td>16 May 2017</td>
-                          <td><label class="badge badge-success">Completed</label></td>
-                        </tr>
-                        <tr>
-                          <td>Dave</td>
-                          <td>53275535</td>
-                          <td>20 May 2017</td>
-                          <td><label class="badge badge-warning">In progress</label></td>
-                        </tr>
+                       </c:forEach>
+                      </tbody>
                       </tbody>
                     </table>
                   </div>
@@ -110,43 +89,21 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Profile</th>
+                          <th>학부명</th>
                           <th>VatNo.</th>
                           <th>Created</th>
                           <th>Status</th>
                         </tr>
                       </thead>
                       <tbody>
+                      <c:forEach var="c" items="${colList }">
                         <tr>
-                          <td>Jacob</td>
+                          <td>${c.colName }</td>
                           <td>53275531</td>
                           <td>12 May 2017</td>
                           <td><label class="badge badge-danger">Pending</label></td>
                         </tr>
-                        <tr>
-                          <td>Messsy</td>
-                          <td>53275532</td>
-                          <td>15 May 2017</td>
-                          <td><label class="badge badge-warning">In progress</label></td>
-                        </tr>
-                        <tr>
-                          <td>John</td>
-                          <td>53275533</td>
-                          <td>14 May 2017</td>
-                          <td><label class="badge badge-info">Fixed</label></td>
-                        </tr>
-                        <tr>
-                          <td>Peter</td>
-                          <td>53275534</td>
-                          <td>16 May 2017</td>
-                          <td><label class="badge badge-success">Completed</label></td>
-                        </tr>
-                        <tr>
-                          <td>Dave</td>
-                          <td>53275535</td>
-                          <td>20 May 2017</td>
-                          <td><label class="badge badge-warning">In progress</label></td>
-                        </tr>
+                       </c:forEach>
                       </tbody>
                     </table>
                   </div>

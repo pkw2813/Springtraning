@@ -28,7 +28,8 @@ public class SchoolController {
 		
 		model.addAttribute("colCount",colCount);
 		model.addAttribute("deptCount",deptCount);
-		
+		model.addAttribute("colList",colList);
+		model.addAttribute("deptList",deptList);
 		return"employee/school";
 	}
 	

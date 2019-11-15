@@ -9,26 +9,25 @@
 		select count(*) from hd_department_tb
 	</select>
 	
-	<select id="colList">
-	
+	<select id="colList" resultMap="collegeMap">
+		SELECT * FROM HD_COLLEGE_TB
 	</select>
 	
-	<select id="deptList">
-	
+	<select id="deptList" resultMap="departmentMap">
+		SELECT * FROM HD_DEPARTMENT_TB
 	</select>
 	
-	<resultMap type="com.kh.finalProject.professor.model.vo.Department" id="departmentMap">
+	<resultMap type="department" id="departmentMap">
 		<result column="DEPT_CODE" property="deptCode"/>
 		<result column="DEPT_NAME" property="deptName"/>
 		<result column="COL_CODE" property="colCode"/>
 		<result column="DEPT_OPEN" property="deptOpen"/>
 	</resultMap>
 	
-	<resultMap type="com.kh.finalProject.professor.model.vo.Department" id="departmentMap">
-		<result column="DEPT_CODE" property="deptCode"/>
-		<result column="DEPT_NAME" property="deptName"/>
+	<resultMap type="college" id="collegeMap">
 		<result column="COL_CODE" property="colCode"/>
-		<result column="DEPT_OPEN" property="deptOpen"/>
+		<result column="COL_NAME" property="colName"/>
+		<result column="COL_OPEN" property="colOpen"/>
 	</resultMap>
 	
 </mapper>
