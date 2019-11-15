@@ -47,6 +47,22 @@
 		INSERT INTO HD_REQUEST_TB VALUES(#{stuNo},#{reqDate},#{reqTitle},#{reqContent},#{acaYearSem},#{profId},#{subCode},DEFAULT,NULL,#{profName})
 	</insert> 
 	
+	<select id="selectRequestList" parameterType="string" resultType="map">
+		SELECT * FROM HD_REQUEST_TB
+	</select>
+	
+	<select id="selectGradeNow" parameterType="infoForSearchGrade" resultMap="GradeResult">
+		SELECT A.*, B.SUB_TYPE, C.PROF_NAME, R.REQ_DATE
+		FROM (SELECT * FROM HD_GRADE_TB WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM=#{acaYearSem}) A 
+		JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B 
+		ON (A.SUB_CODE = B.SUB_CODE)
+		JOIN (SELECT PROF_ID, PROF_NAME FROM HD_PROFESSOR_TB) C
+		ON (A.PROF_ID = C.PROF_ID)
+		LEFT JOIN HD_REQUEST_TB R
+		ON (A.STU_NO=R.STU_NO AND A.ACA_YEAR_SEM=R.ACA_YEAR_SEM AND A.PROF_ID=R.PROF_ID)
+		ORDER BY A.ACA_YEAR_SEM DESC, A.SUB_NAME ASC
+	</select>
+	
 <!-- 	<resultMap type="reauest" id="RequestResult">
 		<result column="STU_NO" property="stuNo"/>
 		<result column="REQ_DATE" property="reqDate"/>
@@ -80,6 +96,7 @@
 		<result column="RCV_CREDITS" property="rcvCredits"/>
 		<result column="SUB_TYPE" property="subType"/>
 		<result column="PROF_NAME" property="profName"/>
+		<result column="REQ_DATE" property="reqDate"/>
 	</resultMap>
 	
 

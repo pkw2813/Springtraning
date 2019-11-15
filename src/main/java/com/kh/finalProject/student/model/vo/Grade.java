@@ -26,5 +26,5 @@ public class Grade {
 	private int rcvCredits;
 	private String subType;
 	private String profName;
-	
+	private String reqDate;
 }

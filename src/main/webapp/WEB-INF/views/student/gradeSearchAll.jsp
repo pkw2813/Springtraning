@@ -18,6 +18,7 @@
 
 th, td, .my-header {
 	text-align: center;
+	cursor: auto;
 }
 
 pre {

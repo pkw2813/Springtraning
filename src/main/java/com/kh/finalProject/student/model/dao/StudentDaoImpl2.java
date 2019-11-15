@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalProject.student.model.vo.Grade;
+import com.kh.finalProject.student.model.vo.InfoForSearchGrade;
 import com.kh.finalProject.student.model.vo.Request;
 
 @Repository
@@ -26,6 +27,18 @@ public class StudentDaoImpl2 implements StudentDao2 {
 	public int insertAppeal(SqlSessionTemplate session, Request request) {
 		return session.insert("student2.insertRequest",request);
 	}
+
+	@Override
+	public List<Request> selectRequestList(SqlSessionTemplate session) {
+		return session.selectList("student2.selectRequestList");
+	}
+
+	@Override
+	public List<Grade> selectGradeNow(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
+		return session.selectList("student2.selectGradeNow", ifsg);
+	}
+	
+	
 	
 	
 	

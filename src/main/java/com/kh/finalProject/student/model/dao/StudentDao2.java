@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.finalProject.student.model.vo.Grade;
+import com.kh.finalProject.student.model.vo.InfoForSearchGrade;
 import com.kh.finalProject.student.model.vo.Request;
 
 public interface StudentDao2 {
@@ -14,5 +15,9 @@ public interface StudentDao2 {
 	List<Map> gradeSearchSubType(SqlSessionTemplate session, String stuNo);
 	
 	int insertAppeal(SqlSessionTemplate session, Request request);
+	
+	List<Request> selectRequestList(SqlSessionTemplate session);
+	
+	List<Grade> selectGradeNow(SqlSessionTemplate session, InfoForSearchGrade ifsg);
 
 }

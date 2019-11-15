@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.student.model.dao.StudentDao2;
 import com.kh.finalProject.student.model.vo.Grade;
+import com.kh.finalProject.student.model.vo.InfoForSearchGrade;
 import com.kh.finalProject.student.model.vo.Request;
 
 @Service
@@ -32,6 +33,16 @@ public class StudentServiceImpl2 implements StudentService2 {
 	@Override
 	public int insertAppeal(Request request) {
 		return dao.insertAppeal(session,request);
+	}
+	
+	@Override
+	public List<Request> selectRequest(){
+		return dao.selectRequestList(session);
+	}
+
+	@Override
+	public List<Grade> selectGradeNow(InfoForSearchGrade ifsg) {
+		return dao.selectGradeNow(session, ifsg);
 	}
 	
 
