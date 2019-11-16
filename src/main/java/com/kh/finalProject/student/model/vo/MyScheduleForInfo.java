@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class MyScheduleForInfo {
 
 	private String stuNo;
-	private String acaYearSem;
+	private String acaYear;
+	private String acaSemester;
 }

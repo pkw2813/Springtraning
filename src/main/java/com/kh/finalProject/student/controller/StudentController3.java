@@ -248,10 +248,30 @@ public class StudentController3 {
 		Student stu=(Student)session.getAttribute("loginMember");
 		String studentNo=stu.getStuNo();
 		
-		String acaYearSem="2019-1"; // 2019학년도 1학기
+		//////////////////////
+		Date date=new Date();
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("오늘날짜:"+df.format(date));
+		String today=df.format(date);
+		
+		System.out.println("금년도:"+today.substring(0, 4));
+		int todayMonth=Integer.parseInt(today.substring(5, 7));
+		System.out.println("금월:"+todayMonth);
+		String acaYear=today.substring(0, 4);
+		String acaSemester="";
+		if(todayMonth>=1&&todayMonth<=6) {
+			acaSemester="1";
+		}else if(todayMonth>=7&&todayMonth<=12) {
+			acaSemester="2";
+		}
+		
+		System.out.println("acaYear:"+acaYear);
+		System.out.println("acaSemester:"+acaSemester);
+		/////////////////////
 		MyScheduleForInfo msfi=new MyScheduleForInfo();
 		msfi.setStuNo(studentNo);
-		msfi.setAcaYearSem(acaYearSem);
+		msfi.setAcaYear(acaYear);
+		msfi.setAcaSemester(acaSemester);
 		
 		System.out.println("msfi:"+msfi);
 		List<MySchedule> myScheduleList=service.selectMySchedule(msfi);
