@@ -1,12 +1,15 @@
 package com.kh.finalProject.school.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.vo.Department;
 import com.kh.finalProject.school.model.service.SchoolService;
 import com.kh.finalProject.school.model.vo.College;
@@ -20,14 +23,18 @@ public class SchoolController {
 	 
 	
 	@RequestMapping("/school.hd")
-	public String school(Model model) {
+	public String school(Model model, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
+		int numPerPage=4;
+
 		int colCount=service.colCount();
-		int deptCount=service.deptCount();
 		List<College> colList=service.colList();
-		List<Department> deptList=service.deptList();
+		List<Map> deptList=service.deptList(cPage,numPerPage);
+		int totalData=service.deptCount();
+		
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData,cPage,numPerPage,"/finalProject/school.hd"));
 		
 		model.addAttribute("colCount",colCount);
-		model.addAttribute("deptCount",deptCount);
+		model.addAttribute("deptCount",totalData);
 		model.addAttribute("colList",colList);
 		model.addAttribute("deptList",deptList);
 		return"employee/school";

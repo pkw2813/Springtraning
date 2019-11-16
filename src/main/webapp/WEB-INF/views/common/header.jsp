@@ -336,8 +336,7 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="${path }/student/applyClass.hd"> 강의조회/수강신청 </a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/student/myClassInfo.hd"> 수강신청 내역 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="${path }/student/allClassInfo.hd"> 전체 시간표조회 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="${path }/student/mySchedule.hd"> 개인 시간표조회 </a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/student/mySchedule.hd"> 시간표 조회 </a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/student/classBoard.hd"> 강의게시판 </a></li>
               </ul>
             </div>

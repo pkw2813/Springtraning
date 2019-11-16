@@ -13,8 +13,8 @@
 		SELECT * FROM HD_COLLEGE_TB
 	</select>
 	
-	<select id="deptList" resultMap="departmentMap">
-		SELECT * FROM HD_DEPARTMENT_TB
+	<select id="deptList" resultType="map">
+		SELECT * FROM HD_DEPARTMENT_TB JOIN HD_COLLEGE_TB USING(COL_CODE)
 	</select>
 	
 	<resultMap type="department" id="departmentMap">

@@ -1,6 +1,7 @@
 package com.kh.finalProject.school.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,12 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public List<Department> deptList() {
-		return dao.deptList(session);
+	public List<Map> deptList(int cPage, int numPerPage) {
+		return dao.deptList(session,cPage,numPerPage);
 	}
+
+	
+	
 	
 	
 	
