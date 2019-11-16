@@ -248,7 +248,7 @@
                 <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewInMajor.hd">학과생 조회</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewInClass.hd">수강생 조회</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewClassAttend.hd">수강생 출결관리</a></li>
-                <li class="nav-item"> <a class="nav-link" href="${path }/prof/editClassResult.hd">수강생 성적관리</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/editClassPoint.hd">수강생 성적관리</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/prof/view_evaluation.hd">강의 평가 조회</a></li>
               </ul>
             </div>
