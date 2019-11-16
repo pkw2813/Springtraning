@@ -33,7 +33,7 @@ public class StudentController1 {
 		String studentNo = s.getStuNo();	
 		Student result = service.selectStudent(studentNo);	
 		String addr=result.getStuAddr();	
-		String[] addrArr=addr.split("PSTC");	
+		String[] addrArr=addr.split("PSTC");
 		if(addrArr.length==2) {
 			result.setStuAddr(addrArr[1]);	
 		}else {
@@ -55,12 +55,8 @@ public class StudentController1 {
 		Student s=(Student)session.getAttribute("loginMember");	
 		String studentNo = s.getStuNo();	
 		Student result = service.selectStudent(studentNo);	
+		
 		m.addAttribute("student", result);	
-		String addr=result.getStuAddr();	
-		String[] addrArr=addr.split("PSTC");	
-		result.setStuAddr(addrArr[1]);	
-
-
 		return "student/studentInfoUpdate";	
 	}	
 
@@ -72,9 +68,13 @@ public class StudentController1 {
 		String stuNo = req.getParameter("stuNo");	
 		String stuEmail = req.getParameter("stuEmail");	
 		String stuTel = req.getParameter("stuTel");	
-		String stuAddr = req.getParameter("totalAddress");	
-		String stuAccount = req.getParameter("stuAccount");	
-		String stuFile=req.getParameter("LoadImgStat");	
+		String stuAddr = req.getParameter("totalAddress");
+		String bankName =req.getParameter("bankName");
+		String AccountNumber =req.getParameter("AccountNumber");
+		String AccountName =req.getParameter("AccountName");
+
+		String stuAccount = bankName+"ACCDELIMETER"+AccountNumber+"ACCDELIMETER"+AccountName;
+		String stuFile=req.getParameter("LoadImgStat");
 
 		int result=0;	
 
@@ -94,7 +94,7 @@ public class StudentController1 {
 		if (stuFile.equals("false")) {	
 			result = service.studentInfoUpdate(s);	
 
-		} else {	
+		} else {
 			// 파일명 설정(renamed)	
 
 			Student s1=service.selectStudent(stuNo);	

@@ -54,6 +54,14 @@
 			font-weight:bold;
 			
 		} */
+		
+		.form-control{
+		font-size: 12px;
+		width:120px;
+		height:30px;
+		padding:5px;
+		display:inline-block;
+		}
 	</style>
 	
 	
@@ -81,7 +89,7 @@
     	
 				<tr>
 				<td>이수구분
-				<select id="chk_isu" name="chk_isu">
+				<select class="form-control" id="chk_isu" name="chk_isu" style="width:100px">
 					<option value="">전체</option>
 					<option value="전공필수">전공필수</option>
 					<option value="교양필수">교양필수</option>
@@ -91,7 +99,7 @@
 				</td>
 				
 				<td>학부검색
-				<select id="chk_school" name="chk_school">
+				<select class="form-control" id="chk_school" name="chk_school" style="width:100px">
 					<option value="">선택</option>
 					<option value="A">인문대학</option>
 					<option value="B">공과대학</option>
@@ -99,15 +107,15 @@
 				</select>
 				
 				<td>학과검색
-				<select id="chk_dept" name="chk_dept">
-					<option id="school0" value="">대학을선택하세요</option>
+				<select class="form-control" id="chk_dept" name="chk_dept" style="width:160px;">
+					<option id="school0" value="">학과를선택하세요</option>
 					<option id="school1" value=""></option>
 					<option id="school2" value=""></option>
 					<option id="school3" value=""></option>
 				</select>
 			
 				<td>개설년도
-				<select id="chk_year" name="chk_year">
+				<select class="form-control" id="chk_year" name="chk_year">
 					<option value="">전체</option>
 					<option id="thisYear" value=""></option>
 					<option id="year2" value=""></option>
@@ -118,7 +126,7 @@
 				</td>
 				
 				<td>개설학기
-				<select id="chk_sem" name="chk_sem">
+				<select class="form-control" id="chk_sem" name="chk_sem" style="width:70px">
 					<option value="">전체</option>
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -127,7 +135,8 @@
 				
 				</td>
 				<td >교과목명검색
-				<input type="text" name="chk_subName"></input>&nbsp&nbsp<button style="font-size:12px;font-weight:bold;height:25px;" class="btn btn-primary btn-xs"type="submit">검색</button>
+				<input class="form-control" type="text" name="chk_subName" style="display:inline-block;width:150px"/>
+				&nbsp<button style="font-size:12px;font-weight:bold;height:25px;display:inline-block" class="btn btn-primary btn-xs"type="submit">검색</button>
 				</td>
 				</tr>
 				</table>

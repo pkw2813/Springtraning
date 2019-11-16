@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 
 	<jsp:include page = "/WEB-INF/views/common/header.jsp">
@@ -44,6 +46,14 @@
 		.modal-header,.modal-body,.modal-footer{
 			z-index:1001;
 		}
+		.form-control{
+		font-size: 12px;
+		width:120px;
+		height:30px;
+		padding:5px;
+		}
+		
+	
 		
 	</style>
 	
@@ -60,14 +70,14 @@
 					<div class="card-body">
 					<div class="table-responsive">
 	<form method="post" action="${path }/student/studentInfoUpdateEnd.hd" enctype="multipart/form-data">
-	<table class="table table-default table-hover table-striped">
+	<table class="table table-default table-striped">
 	<thead class="thead-dark">
 	<tr>
 	<td colspan="8">
 	</td>
 	</tr>
       <tr>
-        <th colspan="9" style="font-size:25px;font-family:arial">${student.stuName}님의 기본정보 변경</th><br/>
+        <th colspan="9" style="font-size:25px;font-family:arial">${student.stuName}님의 기본정보 변경</th>
       </tr>
     </thead>
 				<tr> 
@@ -81,40 +91,40 @@
 								</c:if>
 						<br><br>
 							<input type="file" id="imgAttach"  name="imgAttach"/>
-								<label for="imgAttach" class="btn btn-primary btn-xs" style="font-size:13px">사진 변경</label>
+								<label for="imgAttach" class="btn btn-primary btn-xs" style="font-size:11px;width:100px;" >사진 변경</label>
 								<input type="hidden" name="LoadImgStat" id="LoadImgStat" value="false" />
 								<br>
-								<button type="button" id="pwChange"class="btn btn-primary btn-xs" style="font-size:13px">비밀번호변경</button>
+								<button type="button" id="pwChange"class="btn btn-primary btn-xs" style="font-size:11px;width:100px;">비밀번호변경</button>
 								<br/>
 								</tr>
 			<th>학생번호</th>
-			<td><input type="text" value="${student.stuNo}" style="width:130px" required disabled/>
+			<td><input class="form-control" type="text" value="${student.stuNo}" style="width:130px" required disabled/>
 				<input type="hidden" name="stuNo" value="${student.stuNo}"/>
 			</td>
 			<th>성명</th>
-			<td><input type="text" value="${student.stuName}" required disabled/></td>
+			<td><input class="form-control" type="text" value="${student.stuName}" required disabled/></td>
 			<th>&nbsp;&nbsp;&nbsp;주민등록번호<br>(외국인등록번호)</th>
-			<td><input type="text" value="${student.stuSsn}" style="width:130px" required disabled/></td>
+			<td><input class="form-control" type="text" value="${student.stuSsn}" style="width:130px" required disabled/></td>
 		</tr>
 		<tr>
 			<th>휴대폰번호</th>
-			<td><input type="text" name="stuTel" value="${student.stuTel}" style="width:120px" required/></td>
+			<td><input class="form-control" type="text" name="stuTel" value="${student.stuTel}" style="width:130px" required/></td>
 			<th>성별</th>
 			<td>
-			<select id="gender" name="gender" width="100px" disabled>
+			<select class="form-control" id="gender" name="gender" style="color:black" disabled>
 			  	<option value=>선택없음</option>
 			    <option value="남">남</option>
 			    <option value="여">여</option>
 			</select></td>
 			<th>메일주소</th>
-			<td><input type="text" name="stuEmail"value="${student.stuEmail}" style="width:200px" style="width:200px" required/></td>
+			<td><input class="form-control" type="text" name="stuEmail"value="${student.stuEmail}" style="width:200px" style="width:200px" required/></td>
 		</tr>
 		<tr>
 			<th>입학년월</th>
-			<td><input type="text" value="<fmt:formatDate value="${student.enterDate}" pattern="yyyy-MM-dd"/>" required disabled/></td>
+			<td><input class="form-control" type="text" value="<fmt:formatDate value="${student.enterDate}" pattern="yyyy-MM-dd"/>" required disabled/></td>
 			<th>학적상태</th>
 			<td>
-				<select id="regStatus" name="regStatus" width="100px" disabled>
+				<select class="form-control" id="regStatus" name="regStatus" style="color:black" disabled>
 					<option value=>선택없음</option>
 					<option value="재학">재학</option>
 					<option value="휴학">휴학</option>
@@ -127,39 +137,78 @@
 			</th>
 			
 			<td>
-			주소 &nbsp;<input type="text" id="stuAddr" name="stuAddr" value="${student.stuAddr}" style="width:200px" readonly/>
-			<button  class="btn btn-outline-primary btn-sm" id="stuAddrButton" type="button" onclick="sample6_execDaumPostcode()" style="height:28px;margin-top:-6px"">주소변경</button><br>
-			(우)&nbsp;&nbsp;&nbsp;<input type="text" id="stuPostCode" name="stuPostCode" value="222222" style="width:70px" readonly />
-			<input type="text" id="stuAddrDt" name="stuAddr" style="width:130px" value=" " placeholder="상세주소입력" required/>
+			
+			 <input class="form-control" type="text" id="stuAddr" name="stuAddr" value="${fn:split(student.stuAddr,'PSTC')[1]}" style="width:200px" readonly/>
+																									
+			<input class="form-control" type="text" id="stuPostCode" name="stuPostCode" value="${fn:split(student.stuAddr,'PSTC')[0]}" style="width:100px;display:inline-block" readonly/>
+		<button  class="btn btn-outline-primary btn-xs" id="stuAddrButton" type="button" onclick="sample6_execDaumPostcode()" style="height:25px;display:inline;">주소변경</button>		
+		
+			<input class="form-control" type="text" id="stuAddrDt" name="stuAddr" style="width:130px" value=" " placeholder="상세주소입력" required/>
 			<input type="hidden" class="totalAddress" name="totalAddress" id="totalAddress"/>
-	
+		
 			</td>
 			
 		</tr>
 			<tr>
 			
 				<th>지도교수</th>
-				<td><input type="text" value="${student.profId}" required disabled/></td>
+				<td><input class="form-control"  type="text" value="${student.profId}" required disabled/></td>
 				<th>학과코드</th>
-				<td><input type="text" value="${student.deptCode}" required disabled/></td>
+				<td><input class="form-control" type="text" value="${student.deptCode}" required disabled/></td>
 				<th>계좌번호</th>
-				<td><input type="text" name="stuAccount" value="${student.stuAccount}"  style="width:200px" required/></td>
+				
+				
+				<td>
+				<select class="form-control" id="bankName" name="bankName" style="display:inline-block;color:black" >
+				<c:if test="${fn:split(student.stuAccount,'ACCDELIMETER')[0] ne null}">
+				<option value="${fn:split(student.stuAccount,'ACCDELIMETER')[0]}">${fn:split(student.stuAccount,'ACCDELIMETER')[0]}</option>
+				</c:if>
+				<c:if test="${fn:split(student.stuAccount,'ACCDELIMETER')[0] eq null}">
+				<option value="">은행을 선택하세요</option>
+				</c:if>
+			    <option value="카카오">카카오뱅크</option>
+			    <option value="국민">국민은행</option>
+			    <option value="기업">기업은행</option>
+			    <option value="농협">농협은행</option>
+			    <option value="신한">신한은행</option>
+			    <option value="신업">신업은행</option>
+			    <option value="우리">우리은행</option>
+			    <option value="한국씨티">한국씨티은행</option>
+			    <option value="하나">KEB하나은행</option>
+			    <option value="제일">SC제일은행</option>
+			    <option value="제일">경남은행</option>
+			    <option value="광주">광주은행</option>
+			    <option value="대구">대구은행</option>
+			    <option value="도이치">도이치은행</option>
+			    <option value="뱅크오브아메리카">뱅크오브아메리카</option>
+			    <option value="부산">부산은행</option>
+			    <option value="산림조합">산림조합중앙회</option>
+			    <option value="저축">저축은행</option>
+				</select>
+				
+	
+				<input class="form-control" type="text" id="AccountName" name="AccountName" value="${fn:split(student.stuAccount,'ACCDELIMETER')[2]}"  style="width:100px;height:33px;display:inline-block" placeholder="예금주명" required/>
+				<input class="form-control" type="text" id="AccountNumber" name="AccountNumber" value="${fn:split(student.stuAccount,'ACCDELIMETER')[1]}"  style="width:150px" placeholder="계좌번호" required/>
+				
+				</td>
 			</tr>
 			<tr>
 				
 				<th>학년학기</th>
-				<td><input type="text" value="${student.stuYearSem}" required disabled/></td>
+				<td><input class="form-control" type="text" value="${student.stuYearSem}" required disabled/></td>
 				<th>최대학점</th>
-				<td><input type="text" value="${student.maxPsbCr}" required disabled/></td>
+				<td><input class="form-control" type="text" value="${student.maxPsbCr}" required disabled/></td>
 				<th>인정학기</th>
-				<td><input type="text" value="${student.conSemester}" required disabled/></td>
+				<td><input class="form-control" type="text" value="${student.conSemester}" required disabled/></td>
 			</tr>
 	</table>
-	 </form>
 	
-	
+	  
 	<div class="card-footer" style="text-align : center;">
-	 <input type="submit" id="submit" value="수정완료" class="btn btn-primary"/>
+	<input type="submit" id="submit" value="수정완료" class="btn btn-primary btn-sm"/>
+	 </form>
+	</div>
+	
 	 
 	<!-- 비번교체 모달 -->
 	 <div id="pwChangeModal" class="modal">
@@ -206,11 +255,19 @@
 	</div>
 	</div>
 	</div>
-	</div>
+	
 	
 	
 	
 	<script>
+	
+	$("#bankName").change(function(){
+		
+		$("#AccountNumber").val("");
+		$("#AccountName").val("");
+	});
+	
+	
 	
 	var pwNow;
 	var reg_pwd = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
@@ -318,6 +375,7 @@
 
 		
 		
+		
 		if(chkPwd($("#pw-Change").val())==true){
 			 $("#pwChangeTrue").show();
 			 $("#pwChangeFalse").hide()
@@ -365,7 +423,7 @@
 		 var eng = pw.search(/[a-z]/ig);
 		 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-		 	if(pw.length < 8 || pw.length > 20){	 
+		 if(pw.length < 8 || pw.length > 20){	 
 			status="8글자이상 20자이내로 가능합니다"
 		
 			return status;
@@ -433,6 +491,7 @@
 	$("#submit").click(function(){
 		 if (confirm("변경하시겠습니까?") == true){    //확인
 		     document.removefrm.submit();
+		 
 		 }else{   //취소
 
 		     return false;
