@@ -15,6 +15,11 @@
 <%} else if(session.getAttribute("loginMember") instanceof Employee){%> 
 <c:set var="userId" value="${loginMember.empId }"/>
 <%} %>
+<style>
+	.content-wrapper, .footer{
+		background-color:#e9ecef !important;
+	}
+</style>
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
