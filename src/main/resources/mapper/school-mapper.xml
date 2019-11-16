@@ -2,20 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="school">
 	<select id="colCount" resultType="_int">
-		select count(*) from hd_college_tb
+		select count(*) from hd_college_tb WHERE COL_CODE != 'Z' AND COL_OPEN='Y'
 	</select>
 
 	<select id="deptCount" resultType="_int">
-		select count(*) from hd_department_tb
+		select count(*) from hd_department_tb WHERE COL_CODE != 'Z' AND DEPT_OPEN='Y'
 	</select>
 	
 	<select id="colList" resultMap="collegeMap">
-		SELECT * FROM HD_COLLEGE_TB
+		SELECT * FROM HD_COLLEGE_TB WHERE COL_CODE != 'Z'AND COL_OPEN='Y' ORDER BY COL_CODE
+	</select>
+	
+	<select id="colList1" resultMap="collegeMap">
+		SELECT * FROM HD_COLLEGE_TB WHERE COL_CODE != 'Z' ORDER BY COL_CODE
 	</select>
 	
 	<select id="deptList" resultType="map">
-		SELECT * FROM HD_DEPARTMENT_TB JOIN HD_COLLEGE_TB USING(COL_CODE)
+		SELECT * FROM HD_DEPARTMENT_TB JOIN HD_COLLEGE_TB USING(COL_CODE) WHERE COL_CODE != 'Z' AND DEPT_OPEN='Y' ORDER BY DEPT_CODE
 	</select>
+	
+	<insert id="colInsert" parameterType="college">
+		INSERT INTO HD_COLLEGE_TB VALUES(#{colCode},#{colName},DEFAULT)
+	</insert>
+	
+	<select id="deptList1" resultMap="departmentMap" parameterType="String">
+		SELECT * FROM HD_DEPARTMENT_TB WHERE COL_CODE != 'Z' AND COL_CODE=#{colCode} AND DEPT_OPEN='Y' ORDER BY DEPT_CODE
+	</select>
+	
+	<select id="deptList2" resultType="map" parameterType="String">
+		SELECT * FROM HD_DEPARTMENT_TB JOIN HD_COLLEGE_TB USING(COL_CODE) WHERE COL_CODE != 'Z' AND COL_CODE=#{colCode} AND DEPT_OPEN='Y' ORDER BY DEPT_CODE
+	</select>
+	
+	<insert id="deptInsert" parameterType="department">
+		INSERT INTO HD_DEPARTMENT_TB VALUES(#{deptCode},#{deptName},#{colCode},DEFAULT)
+	</insert>
+	
+	<update id="deleteCol" parameterType="String">
+		UPDATE HD_COLLEGE_TB SET COL_OPEN='N' WHERE COL_CODE=#{colCode}
+	</update>
+	
+	<update id="deleteDept" parameterType="String">
+		UPDATE HD_DEPARTMENT_TB SET DEPT_OPEN='N' WHERE DEPT_CODE=#{deptCode}
+	</update>
+	
+	<update id="updateCol" parameterType="college">
+		UPDATE HD_COLLEGE_TB SET COL_NAME=#{colName} WHERE COL_CODE=#{colCode}
+	</update>
+	
+	<update id="updateDept" parameterType="department">
+		UPDATE HD_DEPARTMENT_TB SET DEPT_NAME=#{deptName} WHERE DEPT_CODE=#{deptCode}
+	</update>
+	
+	
+	
 	
 	<resultMap type="department" id="departmentMap">
 		<result column="DEPT_CODE" property="deptCode"/>

@@ -13,5 +13,14 @@ public interface SchoolDao {
 	int colCount(SqlSessionTemplate session);
 	int deptCount(SqlSessionTemplate session);
 	List<College> colList(SqlSessionTemplate session);
+	List<College> colList1(SqlSessionTemplate session);
 	List<Map> deptList(SqlSessionTemplate session,int cPage, int numPerPage);
+	int colInsert(SqlSessionTemplate session, College c);
+	List<Department> deptList(SqlSessionTemplate session, String colCode);
+	int deptInsert(SqlSessionTemplate session, Department d);
+	List<Map> deptList1(SqlSessionTemplate session, String colCode);
+	int deleteCol(SqlSessionTemplate session, String colCode);
+	int deleteDept(SqlSessionTemplate session, String deptCode);
+	int updateCol(SqlSessionTemplate session, College c);
+	int updateDept(SqlSessionTemplate session, Department d);
 }
