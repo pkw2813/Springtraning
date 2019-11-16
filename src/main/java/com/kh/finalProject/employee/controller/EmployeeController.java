@@ -217,13 +217,19 @@ public class EmployeeController {
 	
 	
 	@RequestMapping("/deptStu")
-	public ModelAndView deptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession session) {
+	public ModelAndView deptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, 
+								@RequestParam(value="search", required = false, defaultValue = "") String search,
+									HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 5;
 		Employee e = (Employee)session.getAttribute("loginMember");
+		Map map = new HashMap();
 		String deptCode = e.getDeptCode().equals("000")?null:e.getDeptCode();
-		List<Student> list = service.deptStu(cPage, numPerPage, deptCode);
-		int totalData = service.deptStuCount(deptCode);
+		String s = search.equals("")?null:search;
+		map.put("deptCode", deptCode);
+		map.put("search", s);
+		List<Student> list = service.deptStu(cPage, numPerPage, map);
+		int totalData = service.deptStuCount(map);
 		mv.addObject("list", list);
 		mv.addObject("totalData", totalData);
 		mv.addObject("pageBar",
@@ -234,7 +240,26 @@ public class EmployeeController {
 	}
 	
 	
-	
+	@RequestMapping("/ajax/deptStu")
+	@ResponseBody
+	public Map ajaxDeptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+									@RequestParam(value="search", required = false, defaultValue = "") String search,
+										HttpSession session) {
+	ModelAndView mv = new ModelAndView();
+	int numPerPage = 5;
+	Employee e = (Employee)session.getAttribute("loginMember");
+	Map map = new HashMap();
+	String deptCode = e.getDeptCode().equals("000")?null:e.getDeptCode();
+	String s = search.equals("")?null:search;
+	map.put("deptCode", deptCode);
+	map.put("search", s);
+	List<Student> list = service.deptStu(cPage, numPerPage, map);
+	int totalData = service.deptStuCount(map);
+	map.put("list", list);
+	map.put("pageBar",
+			PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/ajax/deptStu"));
+	return map;
+	}
 	
 	
 	

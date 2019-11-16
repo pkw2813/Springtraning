@@ -1,6 +1,7 @@
 package com.kh.finalProject.employee.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -51,7 +52,7 @@ public interface EmployeeDao {
 	
 	int stuCount(SqlSessionTemplate saession, String colCode);
 
-	List<Student> deptStu(SqlSessionTemplate session, int cPage, int numParPage, String colCode);
+	List<Student> deptStu(SqlSessionTemplate session, int cPage, int numParPage, Map map);
 	
-	int deptStuCount(SqlSessionTemplate saession, String colCode);
+	int deptStuCount(SqlSessionTemplate saession, Map map);
 }

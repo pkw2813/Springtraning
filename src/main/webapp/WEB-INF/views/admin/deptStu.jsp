@@ -66,19 +66,32 @@
 
 <script>
 
+$('#searchStu').on('keyup', function(){
+	let search = $(this).val().toUpperCase();
+	console.log(search);
+	$.ajax({
+		type:'post',
+		url:"${path}/ajax/deptStu",
+		data:{'search':search},
+		success: function(data){
+			console.log(data);
+			let stuList = "";
+			console.log(data['list']);
+			for(let i = 0; i < data['list'].length; i++) {
 
-$("#searchStu").on("keyup", function() {
-    var g = $(this).val();
-    $(".listFor .mName").each( function() {
-        var s = $(this).text();
-        if (s.indexOf(g)!=-1) {
-            $(this).parent().show();
-        }
-        else {
-            $(this).parent().hide();
-        }
-    });
-});​
+			stuList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
+			stuList += "<td>"+data['list'][i].PHONE+"</td><td>"+data['list'][i].EMAIL+"</td><td>"+data['list'][i].ADDRESS+"</td>";
+			stuList += "<td><input type='button' class='btn btn-outline-success btn-fw' onclick='detailProf("+data['list'][i].PROF_ID+");' value='상세 정보'/></td>";				
+			stuList += '</tr>';
+
+			}
+			$('.table').html(stuList);
+			console.log(data['pageBar']);
+			$('.card-footer').html(data['pageBar']);
+			// $('.card-footer').removeProp();
+		}
+	})
+});
 
 function insertNewProf() {
    $(".modal").css("display","block");
