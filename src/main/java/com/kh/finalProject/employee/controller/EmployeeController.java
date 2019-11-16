@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,8 +78,8 @@ public class EmployeeController {
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage) {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 10;
-		List<Professor> list = service.selectProfList(cPage, numPerPage);
-		int totalData = service.profCount();
+		List<Professor> list = service.selectProfList(cPage, numPerPage, null);
+		int totalData = service.profCount(null);
 		mv.setViewName("admin/enrollProfessor");
 		mv.addObject("list", list);
 		mv.addObject("totalData", totalData);
@@ -107,8 +108,8 @@ public class EmployeeController {
 	public ModelAndView enrollemployee(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage) {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 10;
-		List<Employee> list = service.selectEmpList(cPage, numPerPage);
-		int totalData = service.empListCount();
+		List<Employee> list = service.selectEmpList(cPage, numPerPage, "0");
+		int totalData = service.empListCount("0");
 		mv.addObject("list", list);
 		mv.addObject("totalData", totalData);
 		mv.addObject("pageBar",
@@ -165,32 +166,75 @@ public class EmployeeController {
 
 	@RequestMapping("/col/changeColList.hd")
 	@ResponseBody
-	public Map changeColList(@RequestParam(value="index", required=false, defaultValue="0" ) 
-	int index, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
-		int numPerPage=5;
-		if(index == 0) {
-			List<Student> list = service.selectStuList(cPage, numPerPage);
-			int totalData = service.stuCount();
-			Map map=new HashMap();
+	public Map changeColList(@RequestParam(value = "index", required = false, defaultValue = "0") int index,
+			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession s) {
+		Employee e = (Employee) s.getAttribute("loginMember");
+		int numPerPage = 5;
+		String result = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode().substring(0, 1);
+		if (index == 0) {
+			List<Student> list = service.selectStuList(cPage, numPerPage, result);
+			int totalData = service.stuCount(result);
+			Map map = new HashMap();
 			map.put("list", list);
-			map.put("pageBar",PageFactory.getAjaxPageBar(index,totalData,cPage,numPerPage,"/finalProject/col/changeColList.hd"));
+			map.put("pageBar", PageFactory.getAjaxPageBar(index, totalData, cPage, numPerPage,
+					"/finalProject/col/changeColList.hd"));
 			return map;
-		}else if(index == 1) {
-			List<Professor> list = service.selectProfList(cPage, numPerPage);
-			int totalData = service.profCount();
-			Map map=new HashMap();
+		} else if (index == 1) {
+			List<Professor> list = service.selectProfList(cPage, numPerPage, result);
+			int totalData = service.profCount(result);
+			Map map = new HashMap();
 			map.put("list", list);
-			map.put("pageBar",PageFactory.getAjaxPageBar(index,totalData,cPage,numPerPage,"/finalProject/col/changeColList.hd"));
+			map.put("pageBar", PageFactory.getAjaxPageBar(index, totalData, cPage, numPerPage,
+					"/finalProject/col/changeColList.hd"));
 			return map;
-		}else {
-			List<Employee> list = service.selectEmpList(cPage, numPerPage);
-			int totalData = service.empListCount();
-			Map map=new HashMap();
+		} else {
+			List<Employee> list = service.selectEmpList(cPage, numPerPage, result);
+			int totalData = service.empListCount(result);
+			Map map = new HashMap();
 			map.put("list", list);
-			map.put("pageBar",PageFactory.getAjaxPageBar(index,totalData,cPage,numPerPage,"/finalProject/col/changeColList.hd"));
+			map.put("pageBar", PageFactory.getAjaxPageBar(index, totalData, cPage, numPerPage,
+					"/finalProject/col/changeColList.hd"));
 			return map;
 		}
 	}
+
+	@RequestMapping("/deptPro.hd")
+	public ModelAndView deptPro(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		int numPerPage = 5;
+		Employee e = (Employee)session.getAttribute("loginMember");
+		String deptCode = e.getDeptCode().equals("000")?null:e.getDeptCode();
+		List<Professor> list = service.changeProfessor(cPage, numPerPage, deptCode);
+		int totalData = service.changeProfessorCount(deptCode);
+		mv.addObject("list", list);
+		mv.addObject("totalData", totalData);
+		mv.addObject("pageBar",
+				PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/deptPro.hd"));
+		mv.setViewName("admin/deptPro");
+		return mv;
+	
+	}
+	
+	
+	@RequestMapping("/deptStu")
+	public ModelAndView deptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		int numPerPage = 5;
+		Employee e = (Employee)session.getAttribute("loginMember");
+		String deptCode = e.getDeptCode().equals("000")?null:e.getDeptCode();
+		List<Student> list = service.deptStu(cPage, numPerPage, deptCode);
+		int totalData = service.deptStuCount(deptCode);
+		mv.addObject("list", list);
+		mv.addObject("totalData", totalData);
+		mv.addObject("pageBar",
+				PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/deptStu.hd"));
+		mv.setViewName("admin/deptStu");
+		return mv;
+	
+	}
+	
+	
+	
 	
 	
 	

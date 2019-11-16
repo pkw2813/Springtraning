@@ -53,14 +53,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public List<Professor> selectProfList(SqlSessionTemplate session, int cPage, int numPerPage) {
+	public List<Professor> selectProfList(SqlSessionTemplate session, int cPage, int numPerPage, String colCode) {
 		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return session.selectList("professor.selectProfList",null, row);
+		return session.selectList("professor.selectProfList",colCode, row);
 	}
 
 	@Override
-	public int profCount(SqlSessionTemplate session) {
-		return session.selectOne("professor.profCount");
+	public int profCount(SqlSessionTemplate session, String colCode) {
+		return session.selectOne("professor.profCount", colCode);
 	}
 
 	@Override
@@ -75,14 +75,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public List<Employee> selectEmpList(SqlSessionTemplate session, int cPage, int numPerPage) {
+	public List<Employee> selectEmpList(SqlSessionTemplate session, int cPage, int numPerPage, String colCode) {
 		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return session.selectList("employee.selectEmpList", null, row);
+		return session.selectList("employee.selectEmpList", colCode, row);
 	}
 
 	@Override
-	public int empListCount(SqlSessionTemplate session) {
-		return session.selectOne("employee.empListCount");
+	public int empListCount(SqlSessionTemplate session, String colCode) {
+		return session.selectOne("employee.empListCount", colCode);
 	}
 
 	@Override
@@ -111,14 +111,25 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public List<Student> selectStuList(SqlSessionTemplate session, int cPage, int numPerPage) {
+	public List<Student> selectStuList(SqlSessionTemplate session, int cPage, int numPerPage, String colCode) {
 		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return session.selectList("student.selectStuList", null, row);
+		return session.selectList("student.selectStuList", colCode, row);
 	}
 
 	@Override
-	public int stuCount(SqlSessionTemplate session) {
-		return session.selectOne("student.stuCount");
+	public int stuCount(SqlSessionTemplate session, String colCode) {
+		return session.selectOne("student.stuCount", colCode);
+	}
+
+	@Override
+	public List<Student> deptStu(SqlSessionTemplate session, int cPage, int numPerPage, String colCode) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("student.deptStu", colCode, row);
+	}
+
+	@Override
+	public int deptStuCount(SqlSessionTemplate session, String colCode) {
+		return session.selectOne("student.deptStuCount", colCode);
 	}
 	
 	

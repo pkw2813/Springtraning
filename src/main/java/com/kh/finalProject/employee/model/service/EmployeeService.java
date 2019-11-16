@@ -21,17 +21,17 @@ public interface EmployeeService {
 
 	int selectDeptCount(String deptCode);
 	
-	List<Professor> selectProfList(int cPage, int numPerPage);
+	List<Professor> selectProfList(int cPage, int numPerPage, String colCode);
 	
-	int profCount();
+	int profCount( String colCode);
 	
 	List<Professor> changeProfessor(int cPage, int numPerPage, String deptCode);
 	
 	int changeProfessorCount(String deptCode);
 	
-	List<Employee> selectEmpList(int cPage, int numPerPage);
+	List<Employee> selectEmpList(int cPage, int numPerPage, String colCode);
 	
-	int empListCount();
+	int empListCount( String colCode);
 	
 	int selectEmpLastNum(String deptCode);
 	
@@ -43,7 +43,11 @@ public interface EmployeeService {
 	
 	int insertNewProf(Professor p);
 	
-	List<Student> selectStuList(int cPage, int numPerPage);
+	List<Student> selectStuList(int cPage, int numPerPage, String colCode);
 	
-	int stuCount();
+	int stuCount(String colCode);
+	
+	List<Student> deptStu(int cPage, int numPerPage, String colCode);
+	
+	int deptStuCount(String colCode);
 	}

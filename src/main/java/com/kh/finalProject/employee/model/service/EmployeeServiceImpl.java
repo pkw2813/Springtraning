@@ -60,13 +60,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Professor> selectProfList(int cPage, int numPerPage) {
-		return dao.selectProfList(session, cPage, numPerPage);
+	public List<Professor> selectProfList(int cPage, int numPerPage, String colCode) {
+		return dao.selectProfList(session, cPage, numPerPage, colCode);
 	}
 
 	@Override
-	public int profCount() {
-		return dao.profCount(session);
+	public int profCount( String colCode) {
+		return dao.profCount(session, colCode);
 	}
 
 	@Override
@@ -80,13 +80,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Employee> selectEmpList(int cPage, int numPerPage) {
-		return dao.selectEmpList(session, cPage, numPerPage);
+	public List<Employee> selectEmpList(int cPage, int numPerPage, String colCode) {
+		return dao.selectEmpList(session, cPage, numPerPage, colCode);
 	}
 
 	@Override
-	public int empListCount() {
-		return dao.empListCount(session);
+	public int empListCount( String colCode) {
+		return dao.empListCount(session, colCode);
 	}
 
 	@Override
@@ -115,13 +115,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Student> selectStuList(int cPage, int numPerPage) {
-		return dao.selectStuList(session, cPage, numPerPage);
+	public List<Student> selectStuList(int cPage, int numPerPage, String colCode) {
+		return dao.selectStuList(session, cPage, numPerPage, colCode );
 	}
 
 	@Override
-	public int stuCount() {
-		return dao.stuCount(session);
+	public int stuCount(String colCode) {
+		return dao.stuCount(session, colCode);
+	}
+
+	@Override
+	public List<Student> deptStu(int cPage, int numPerPage, String colCode) {
+		return dao.deptStu(session, cPage, numPerPage, colCode );
+	}
+
+	@Override
+	public int deptStuCount(String colCode) {
+		return dao.deptStuCount(session, colCode);
 	}
 	
 	

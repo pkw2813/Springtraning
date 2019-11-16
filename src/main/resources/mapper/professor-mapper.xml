@@ -5,20 +5,34 @@
 		SELECT * FROM HD_PROFESSOR_TB WHERE prof_Id=#{profId} AND prof_Pw=#{profPw} AND SUBSTR(prof_Id,1,1)='P'
 	</select>
 
-	<select id="selectProfList" resultType="map">
-		SELECT *FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'P' ORDER BY DEPT_CODE
+	<select id="selectProfList" resultType="map" parameterType="string">
+		SELECT *FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'P'
+		<if test="value != null">
+		AND SUBSTR(DEPT_CODE,1,1) = #{value}
+		</if>
+		 ORDER BY DEPT_CODE
 	</select>	
 
-	<select id="profCount" resultType="_int">
+	<select id="profCount" resultType="_int" parameterType="string">
 		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
+		<if test="value != null">
+		AND SUBSTR(DEPT_CODE,1,1) = #{value}
+		</if>
 	</select>
 	
 	<select id="changeProfessor" parameterType="string" resultType="map">
-			SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'P' AND DEPT_CODE = #{deptCode} ORDER BY PROF_NAME
+			SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'P'
+			<if test="value != null">
+			 AND DEPT_CODE = #{value}
+			</if>
+			  ORDER BY PROF_NAME
 	</select>
 	
 	<select id="changeProfessorCount" resultType="_int" parameterType="string">
-		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P' AND DEPT_CODE = #{deptCode}
+		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
+		<if test="value != null">
+			 AND DEPT_CODE = #{value}
+			</if>
 	</select>
 	
 	<select id="selectProfLastNum" parameterType="string" resultType="_int">

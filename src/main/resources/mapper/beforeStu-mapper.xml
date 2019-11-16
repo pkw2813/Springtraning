@@ -5,7 +5,7 @@
 
 
 	<select id="selectColList" resultType="map">
-	SELECT COL_NAME, COL_CODE FROM HD_COLLEGE_TB
+	SELECT COL_NAME, COL_CODE FROM HD_COLLEGE_TB WHERE COL_CODE != 'Z' AND COL_OPEN='Y'
 	</select>
 
 	<select id="selectDeptList" parameterType="string" resultType="map">

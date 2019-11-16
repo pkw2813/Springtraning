@@ -25,17 +25,17 @@ public interface EmployeeDao {
 	
 	int selectDeptCount(SqlSessionTemplate session, String deptCode);
 	
-	List<Professor> selectProfList(SqlSessionTemplate session, int cPage, int numPerPage);
+	List<Professor> selectProfList(SqlSessionTemplate session, int cPage, int numPerPage, String colCode);
 	
-	int profCount(SqlSessionTemplate session);
+	int profCount(SqlSessionTemplate session, String colCode);
 	
 	List<Professor> changeProfessor(SqlSessionTemplate session, int cPage, int numPerPage, String deptCode);
 	
 	int changeProfessorCount(SqlSessionTemplate session, String deptCode);
 	
-	List<Employee> selectEmpList(SqlSessionTemplate session, int cPage, int numPerPage);
+	List<Employee> selectEmpList(SqlSessionTemplate session, int cPage, int numPerPage, String colCode);
 	
-	int empListCount(SqlSessionTemplate session);
+	int empListCount(SqlSessionTemplate session, String colCode);
 	
 	int selectEmpLastNum(SqlSessionTemplate session, String deptCode);
 	
@@ -47,7 +47,11 @@ public interface EmployeeDao {
 	
 	int insertNewProf(SqlSessionTemplate session, Professor p);
 	
-	List<Student> selectStuList(SqlSessionTemplate session, int cPage, int numParPage);
+	List<Student> selectStuList(SqlSessionTemplate session, int cPage, int numParPage, String colCode);
 	
-	int stuCount(SqlSessionTemplate saession);
+	int stuCount(SqlSessionTemplate saession, String colCode);
+
+	List<Student> deptStu(SqlSessionTemplate session, int cPage, int numParPage, String colCode);
+	
+	int deptStuCount(SqlSessionTemplate saession, String colCode);
 }
