@@ -170,6 +170,9 @@
 				<c:if test='${!empty list}'>
 				<c:forEach items="${list}" var="e" varStatus="v">
 				
+				
+				
+				
 				<tr id="classInfo">
 				<td><c:out value='${e["ROWNUM"] }'/></td>
 				<td><c:out value='${e["SUB_YEAR"]}'/>-<c:out value='${e["SUB_SEMESTER"]}'/></td>
@@ -186,12 +189,20 @@
 				
 				
 				<td style="text-align:center">
-				
+				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null or applyDay["PLAN_NO_SEQ"] ne ""}'>
 				<button id="button-cancelClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="cancelClass(this.id,this.value)" class="btn btn-danger btn-xs"
 				value='${loginMember.stuNo},${e["SUB_SEQ"]}'>취소</button>
+				</c:if>
 				</td>		
 				
 				<td style="text-align:center">
+				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null or applyDay["PLAN_NO_SEQ"] ne ""}'>
+				수업신청대기중
+				</c:if>
+				
+				<c:if test='${applyDay["PLAN_NO_SEQ"] eq null or applyDay["PLAN_NO_SEQ"] eq ""}'>
+				수업신청확정
+				</c:if>
 				
 				</td>
 				</tr>

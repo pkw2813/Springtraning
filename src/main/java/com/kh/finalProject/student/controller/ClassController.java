@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.student.model.service.StudentService1;
@@ -128,30 +129,41 @@ public class ClassController {
 	
 	@RequestMapping(value = "/student/applyClass.hd", method = RequestMethod.POST)
 	
-	public String applyClass(HttpServletRequest req,Model m)
+	public ModelAndView applyClass(HttpServletRequest req,Model m)
 	{
+		ModelAndView mv=new ModelAndView();
 		Map<String,String> param=new HashMap();
 		String value=req.getParameter("value");
 		String[] value1=value.split(",");
 		String stuId=value1[0];
 		String subSeq=value1[1];
-		String capaCity=value1[2];
-		
-		Map capacityNow=service.capacityNow(subSeq);
-		
-		int capacityNow1=(int)capacityNow.get("PRE_CAPA");
-		
-		System.out.println(capacityNow1);
-		param.put("stuId",stuId);
-		param.put("subSeq",subSeq);
-		
+
+
+		Map<String,String> capacity=service.capacityNow(subSeq);
 	
-		int result=service.applyClass(param);
-		int result1=service.updatePreCapa(param);
+		String capacityNow=String.valueOf(capacity.get("PRE_CAPA"));
+		String capacityFull=String.valueOf(capacity.get("CAPACITY"));
+		int capacityNowi=Integer.parseInt(capacityNow);
+		int capacityFulli=Integer.parseInt(capacityFull);
 		
 		
+		if((capacityNowi-capacityFulli)!=0) {
+			param.put("stuId",stuId);
+			param.put("subSeq",subSeq);
+			int result=service.applyClass(param);
+			int result1=service.updatePreCapa(param);
+			mv.addObject("capacityOk","정상처리됐습니다");
+			mv.setViewName("jsonView");
+			
+		}else {
+			
+			mv.addObject("capacityFull","수업 최대인원 초과입니다");
+			mv.setViewName("jsonView");
 		
-		return "student/applyClass";
+		}
+
+		
+		return mv;
 		
 	}
 	@RequestMapping(value = "/student/cancelClass.hd", method = RequestMethod.POST)
@@ -179,12 +191,18 @@ public class ClassController {
 	public String selectMyApplyClass(HttpSession session,Model m,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
 		Student loginMember=(Student)session.getAttribute("loginMember");
 		String stuId=loginMember.getStuNo();
+		
+		
+		
+		
 		int numPerPage=10;
 		int count=0;
 		List<Map> list=service.myApplyClass(stuId,cPage,numPerPage);
+		Map planList=service.selectPlan();
 		int totalData = service.countMyApplyClass(stuId);
 	
 		
+		m.addAttribute("applyDay",planList);
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
 		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/applyClass.hd"));
@@ -226,8 +244,10 @@ public class ClassController {
 		param.put("chk_sem",req.getParameter("chk_sem"));
 		param.put("chk_subName",req.getParameter("chk_subName"));
 		List<Map> list=service.selectMyClass(param,cPage,numPerPage);
+		Map planList=service.selectPlan();
 		int totalData = service.countSelectMyClass(param);
-
+		
+		m.addAttribute("applyDay",planList);
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
 		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/selectClass.hd"));

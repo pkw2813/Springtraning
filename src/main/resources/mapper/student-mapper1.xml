@@ -243,13 +243,13 @@
 		         join hd_subject_tb B on a.sub_seq = b.sub_seq
 		         join hd_professor_tb p on a.prof_id = p.prof_id
 		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
-                 right JOIN (select R.STU_NO,r.sub_seq
+                 RIGHT JOIN (select R.STU_NO,r.sub_seq
 		         from  hd_class_tb A
                  join hd_sub_req_tb r on a.sub_seq=r.sub_seq
                  WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
 		         order by sub_year desc
 		         )ta
-		where 1=1
+		          where 1=1
 		<if test="chk_isu !=null and chk_isu != ''">
 			AND sub_type = #{chk_isu}
 		</if>
@@ -280,7 +280,7 @@
 
 	<select id="countSelectMyClass" parameterType="map"
 		resultType="_int">
-		select rownum,ta.* 
+		select count(*) from(select rownum,ta.* 
              from(select A.*,B.SUB_NAME,B.TARGET_SUBJECT,B.TARGET_GRADE,B.COMPLETE_PT,B.SUB_TYPE,B.DEPT_CODE,
              B.SUB_DATE,B.SUB_TIME,B.SUB_ROOM,B.SUB_YEAR,B.SUB_SEMESTER,P.PROF_NAME,P.EMAIL,P.GENDER,P.PROF_ENROLL,P.PROF_IMG,
              D.DEPT_NAME,D.DEPT_OPEN,SUB_REQ.STU_NO
@@ -288,13 +288,13 @@
 		         join hd_subject_tb B on a.sub_seq = b.sub_seq
 		         join hd_professor_tb p on a.prof_id = p.prof_id
 		         join HD_DEPARTMENT_TB d  on p.dept_code = d.dept_code
-                 LEFT JOIN (select R.STU_NO,r.sub_seq
+                 RIGHT JOIN (select R.STU_NO,r.sub_seq
 		         from  hd_class_tb A
                  join hd_sub_req_tb r on a.sub_seq=r.sub_seq
                  WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
 		         order by sub_year desc
 		         )ta)
-		where 1=1
+			where 1=1
 		<if test="chk_isu !=null and chk_isu != ''">
 			AND sub_type = #{chk_isu}
 		</if>

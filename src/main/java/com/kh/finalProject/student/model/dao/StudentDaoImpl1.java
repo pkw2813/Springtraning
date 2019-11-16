@@ -160,9 +160,10 @@ public class StudentDaoImpl1 implements StudentDao1 {
 	}
 
 	@Override
-	public Map capacityNow(SqlSessionTemplate session, String subSeq) {
+	public Map<String,String> capacityNow(SqlSessionTemplate session, String subSeq) {
 	
 		return session.selectOne("student1.capacityNow",subSeq);
+		
 	}
 
 	

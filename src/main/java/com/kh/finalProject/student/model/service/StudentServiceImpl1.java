@@ -160,7 +160,7 @@ public class StudentServiceImpl1 implements StudentService1 {
 	}
 
 	@Override
-	public Map capacityNow(String subSeq) {
+	public Map<String,String> capacityNow(String subSeq) {
 		
 		return dao.capacityNow(session,subSeq);
 	

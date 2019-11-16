@@ -32,6 +32,6 @@ public interface StudentService1 {
 	String selectNowPw(String stuId);
 	int updatePreCapa(Map<String,String> param);
 	int updatePreCapaCancel(Map<String,String> param);
-	Map capacityNow(String subSeq);
+	Map<String,String> capacityNow(String subSeq);
 	
 }

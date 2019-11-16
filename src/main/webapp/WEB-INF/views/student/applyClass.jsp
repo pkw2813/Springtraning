@@ -199,14 +199,14 @@
 				
 				</c:if>
 				
-				<c:if test='${planDay["NO_SEQ"] eq null or planDay["NO_SEQ"] eq ""}'>
+				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null or applyDay["PLAN_NO_SEQ"] ne ""}'>
 				<c:if test='${ e["PRE_CAPA"]-e["CAPACITY"] eq 0}'>
-				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="capaFull()" class="btn btn-primary btn-xs"
+				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
 				value='${loginMember.stuNo },${e["SUB_SEQ"]},${e["CAPACITY"]}' disabled>정원초과</button>
 				</c:if>
 				<c:if test='${e["STU_NO"] ne loginMember.stuNo and e["PRE_CAPA"]-e["CAPACITY"] ne 0}'>
 				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
-				value='${loginMember.stuNo },${e["SUB_SEQ"]},${e["CAPACITY"]}'>신청</button>
+				value='${loginMember.stuNo },${e["SUB_SEQ"]}'>신청</button>
 				</c:if>
 				
 				
@@ -253,17 +253,12 @@
 	
 	<script>
 	
-	/* 뷰에서 현재인원/최대인원 1차 필터 */
-	
-		console.log("풀");
-	
-	
 	
 	
 		/* 년도 띄워주기 */
 		var today = new Date();
 		var yyyy = today.getFullYear();
-		console.log(yyyy);
+		
 		$("#thisYear").attr("value",yyyy);
 		$("#thisYear").text(yyyy);
 		$("#year2").attr("value",(yyyy-1));
@@ -321,9 +316,9 @@
 			});
 		
 		function profEval(clickedId,value){
-			console.log(clickedId,value)
+			
 			$("#profEvalForm").attr("value",value);
-			console.log($("#profEvalForm").val());
+		
 			 var myForm = document.popForm;
 			 var url= "${path}/student/profEval.hd";    //팝업창 페이지 URL
 			 var winWidth = 1000;
@@ -341,25 +336,27 @@
 		
 		function applyClass(id,value){
 			if (confirm("신청하시겠습니까??") == true){    //확인
-				var data={value};
+				
 				 $.post({
-					 
-					 
 					 
 			            url: "${path}/student/applyClass.hd",
 			            type: "post",
-			            data: data,
+			            data: {"value":value},
+			            dataType:"json",
 			            success: function(data){
-			                	alert("신청처리 됐습니다")
-			                	$("#applyButton").html("")
-			                	location.href="${path}/student/applyClass.hd"; 
-			                		
-			                	
-			                	
+			            	
+			            		if(data.capacityFull){
+			            			alert("최대인원 초과입니다. 다른 수업을 신청하세요")
+			            		}else{
+			            			alert("신청완료 됐습니다")
+				                	$("#applyButton").html("")
+				                	location.href="${path}/student/applyClass.hd";
+			            		}
+			                
 			                	
 			            },
 			            error: function(){
-			                alert("에러처리");
+			                alert("에러발생 관리자에게 문의하세요");
 			            }
 			        });
 				
@@ -385,11 +382,11 @@
 			
  		if (confirm("취소하시겠습니까?") == true){    //확인
  			
- 			var data={value};
+ 			
 			 $.post({
 		            url: "${path}/student/cancelClass.hd",
 		            type: "post",
-		            data: data,
+		            data: {"value":value},
 		            success: function(data){
 		                	alert("정상취소 됐습니다");
 		                	location.href="${path}/student/applyClass.hd"; 
