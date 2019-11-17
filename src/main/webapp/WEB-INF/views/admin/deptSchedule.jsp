@@ -71,13 +71,16 @@
               if(data != null) {
                   $.each(data, function(key, items) {
                     $.each(items,function(index, item) {
+                      let depCode = "${sessionScope.loginMember.deptCode }";
+                      let flag = depCode == item['deptCode']?"#FF6666":null;
                           let setData = {
                               "title" : item['planName'],
-                              backgroundColor : "#008000",
-                              color: "#FF6666",
+                              "color" : flag,
+                              "groupId":item['deptCode'],
                               "start" : moment(new Date(item['stDate'])).format('YYYY-MM-DD'),
                               "end" : moment(new Date(item['enDate'])).format('YYYY-MM-DD'),
                           };
+                              console.log(setData);
                           calendar.addEvent(setData);
                     })
                   }) 

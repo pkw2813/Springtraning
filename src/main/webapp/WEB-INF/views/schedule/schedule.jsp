@@ -85,15 +85,18 @@
            eventClick:function(event) {
                 if(confirm("일정을 삭제 하시겠습니까?")) {
                   // 삭제하는 로직 작성
+                  console.log("1111111111");
+                    console.log(event.event._def);
                   $.ajax({
                     type:"post",
                     url:'${path}/deleteCalendar.hd',
                     data:{"title" : event.event._def.title,
                           "start" : moment(event.event._instance.range.start).format('YYYY-MM-DD'),
-                          "end" : moment(event.event._instance.range.end).format('YYYY-MM-DD')
+                          "end" : moment(event.event._instance.range.end).format('YYYY-MM-DD'),
+                          "deptCode": event.event._def.groupId
                           },
                           success(data) {
-                            location.href='${path}/schedule.hd';
+                            // location.href='${path}/schedule.hd';
                             //data 가 0보다 크면 이벤트 remove하기
                             // calendar('removeEvents', event.event._instance.instanceId); //replace 123 with reference to a real ID
                             // doc = $('.fc-title');
@@ -153,10 +156,15 @@
               if(data != null) {
                   $.each(data, function(key, items) {
                     $.each(items,function(index, item) {
+                      let depCode = "${sessionScope.loginMember.deptCode }";
+                      let flag = depCode == item['deptCode']?null:"#FF6666";
+                      let title = depCode == item['deptCode']?item['planName']: item['deptCode'] +" " + item['planName'];
                           let setData = {
-                              "title" : item['planName'],
+                              "title" : title,
                               "start" : moment(new Date(item['stDate'])).format('YYYY-MM-DD'),
-                              "end" : moment(new Date(item['enDate'])).format('YYYY-MM-DD')
+                              "end" : moment(new Date(item['enDate'])).format('YYYY-MM-DD'),
+                              "groupId":item['deptCode'],
+                              "color" : flag
                           };
                           calendar.addEvent(setData);
                     })
