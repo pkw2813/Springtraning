@@ -179,14 +179,9 @@ $(function() {
 
 function setJumin(obj) {
 	let ju = obj.value;
-	console.log("ju : "+ju);
-	console.log("ck" + ju.indexOf("*") != -1);
 	if(ju.indexOf("*") == -1) {
-		console.log("if문 내부")
 	 $("#empSsn").val(ju);
 	}
-	console.log("ckjumin :" + document.getElementById('empSsn').value);
-	console.log(ju);
 	ju = ju.replace("-","");
 		if(ju.length > 6) {
 			ju1 = ju.substring(0,6);
@@ -241,8 +236,6 @@ $(function() {
 				colListHtml = "<option value='select' id='selCol'>대학 선택</option>";
 				for(let i = 0; i < data.list.length; i++) {
 					let cols = data.list[i];
-					console.log(cols['COL_CODE']);
-
 					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
 				}
 				

@@ -80,7 +80,6 @@
                               "start" : moment(new Date(item['stDate'])).format('YYYY-MM-DD'),
                               "end" : moment(new Date(item['enDate'])).format('YYYY-MM-DD'),
                           };
-                              console.log(setData);
                           calendar.addEvent(setData);
                     })
                   }) 

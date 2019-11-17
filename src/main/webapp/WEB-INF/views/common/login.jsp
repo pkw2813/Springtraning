@@ -273,7 +273,6 @@ $(function(){
 	// //이메일 인증을 완료했는지 확인
 
 			let checkEmail = $('.flagEmail').val();
-			console.log(checkEmail);
 			if(checkEmail == 'false') {
 				alert("이메일 인증을 완료해주세요.");
 				   return false;
@@ -331,14 +330,9 @@ $(function(){
 
 function setJumin(obj) {
 	let ju = obj.value;
-	console.log("ju : "+ju);
-	console.log("ck" + ju.indexOf("*") != -1);
 	if(ju.indexOf("*") == -1) {
-		console.log("if문 내부")
- 	document.getElementById('beforeNo').value = ju;
+	document.getElementById('beforeNo').value = ju;
 	}
-	console.log("ckjumin :" + document.getElementById('beforeNo').value);
-	console.log(ju);
 	ju = ju.replace("-","");
 		if(ju.length > 6) {
 			ju1 = ju.substring(0,6);
@@ -393,7 +387,6 @@ $(function() {
 				colListHtml = "<option value='select' id='selCol'>대학 선택</option>";
 				for(let i = 0; i < data.list.length; i++) {
 					let cols = data.list[i];
-					console.log(cols['COL_CODE']);
 
 					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
 				}
@@ -464,8 +457,6 @@ if (emailVal.match(regExp) != null) {
 				중 '&'는 하나의 파라미터가 끝나고 다음 파라미터가 온다는 의미이다.
 				그런데 다음과 같이 job의 값에 &가 포함된다면 시스템은 job의 값을 제대로 인식할수 없게 된다. */
 				success : function(data){
-					
-					console.log(data);
 					alert("사용가능한 이메일입니다. 인증번호를 입력해주세요.");
 
 					let emailHtml = "<input type='text' id='authCode' name='authCode' placeholder='인증번호를 입력하세요' class='form-control' />"+"<button type='button' class='btn btn-info' id='emailAuthBtn'>이메일 인증</button>";
@@ -512,7 +503,6 @@ if (emailVal.match(regExp) != null) {
 					},
 				complete: function(){
 					/* loadingBarEnd(); */
-					console.log("완료");
 					},
 				error:function(data){
 					alert("에러가 발생했습니다.");

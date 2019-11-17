@@ -65,7 +65,7 @@ public class EmployeeController {
 			handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!", "아이디 : " + s.getStuNo()
 					+ "   \r\n    비밀번호 : " + enc.decrypt(s.getStuPw()) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
 		} catch (Exception e) {
-			System.out.println("에러");
+			e.printStackTrace();
 			return 0;
 		}
 
@@ -312,7 +312,6 @@ public class EmployeeController {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String sysdate = sdf.format(date);
-		System.out.println();
 		Map sMap = settingStudentNumber(bs.getBeforeDeptCode());
 		int stuNum = (int) sMap.get(bs.getBeforeDeptCode());
 		String stuNo = "S" + sysdate.substring(0, 4) + bs.getBeforeDeptCode() + String.format("%03d", stuNum);
@@ -370,10 +369,8 @@ public class EmployeeController {
 		try {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
 			emp.setEmpPw(e.getEmpSsn().substring(0, 6));
-			System.out.println(emp.getEmpPw());
 			// 패스워드 초기 패스워드 암호화함
 			emp.setEmpPw(enc.encrypt(emp.getEmpPw()));
-			System.out.println(emp.getEmpPw());
 			// 성별땜에
 			// 성별 설정
 			emp.setGender(e.getEmpSsn().substring(6, 7).equals("1") || e.getEmpSsn().substring(6, 7).equals("3") ? "남"
@@ -415,10 +412,8 @@ public class EmployeeController {
 		try {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
 			prof.setProfPw(p.getProfSsn().substring(0, 6));
-			System.out.println(prof.getProfPw());
 			// 패스워드 초기 패스워드 암호화함
 			prof.setProfPw(enc.encrypt(prof.getProfPw()));
-			System.out.println(prof.getProfPw());
 			// 성별땜에
 			// 성별 설정
 			prof.setGender(

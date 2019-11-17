@@ -301,8 +301,6 @@ $(function() {
 				colListHtml = "<option value='select' id='selCol'>대학 선택</option>";
 				for(let i = 0; i < data.list.length; i++) {
 					let cols = data.list[i];
-					console.log(cols['COL_CODE']);
-
 					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
 					colListHtmlModal += "<option value='"+cols['COL_CODE']+"'  class='colListModal'>"+cols['COL_NAME']+"</option>";
 				}

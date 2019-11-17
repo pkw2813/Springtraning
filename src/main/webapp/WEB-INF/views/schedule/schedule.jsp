@@ -85,8 +85,6 @@
            eventClick:function(event) {
                 if(confirm("일정을 삭제 하시겠습니까?")) {
                   // 삭제하는 로직 작성
-                  console.log("1111111111");
-                    console.log(event.event._def);
                   $.ajax({
                     type:"post",
                     url:'${path}/deleteCalendar.hd',
