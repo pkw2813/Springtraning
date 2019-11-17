@@ -15,6 +15,7 @@
 <link href='http://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'/>
 <link href="${path}/resources/css/login.css" rel="stylesheet" type='text/css'/>
 <script src="${path }/resources/js/jquery-3.4.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
 $(function(){
 	var emparr="";

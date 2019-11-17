@@ -2,13 +2,26 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <style>
-	tr{
-		height : 20px;
-	}
+	tr, td, th {
+			text-align: left;
+			font-size: 13px;
+			border:1px solid lightgray;
+		
+		}
+	
+	.form-control{
+		font-size: 12px;
+		width:150px;
+		height:30px;
+		padding:5px;
+		color:black;
+		display:inline-block;
+		}
 </style>
 
 <div class="main-panel">
@@ -30,97 +43,123 @@
 					<div class="card-header">
 						<div class="col-md-8 row"
 							style="display: block; text-align: center;">
-							<table class="table table-condensed table-bordered table-hover"
-								style="text-align: center;">
-								<thead class="thead-dark">
-									<tr>
-										<th>
-											<div class="input-group input-group-sm">
-												<span class="input-group-addon" id="sizing-addon3">강의명
-													&nbsp;&nbsp;&nbsp;</span> <select class="form-control">
-													<option>영어학개론</option>
-													<option>건축학개론</option>
-													<option>자바기초</option>
-													<option>철학입문</option>
-												</select>
-											</div>
-										</th>
-										<th>
-											<div class="input-group input-group-sm">
-												<span class="input-group-addon" id="sizing-addon3">학기구분&nbsp;&nbsp;&nbsp;</span>
-												<select class="form-control">
-													<option>1학기</option>
-													<option>2학기</option>
-												</select>
-											</div>
-										</th>
-										<th>
-											<div class="input-group input-group-sm">
-												<span class="input-group-addon" id="sizing-addon3">종류구분&nbsp;&nbsp;&nbsp;</span>
-												<select class="form-control">
-													<option>중간고사</option>
-													<option>기말고사</option>
-													<option>과제1</option>
-													<option>과제2</option>
-													<option>과제3</option>
-													<option>과제4</option>
-												</select>
-											</div>
-										</th>
-										<th>
-											<button class="btn btn-primary" type="submit" value="">검색</button>
-										</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
+			<table class="table table-condensed table-bordered table-hover"
+				style="text-align: center;">
+				<thead class="thead-dark">
+					<tr>
+						<th>
+							<form method="get" action="${path }/prof/choiceClass.hd">
+								<span>내강의리스트<span>
+									<select id="selectSubList" class="form-control" style="color:black">
+									<option value="">강의를 선택하세요</option>
+									<c:forEach items="${studyList}" var="e" varStatus="v">
+									<option value="${e.SUB_SEQ}">${e.SUB_NAME }</option>
+									</c:forEach>
+								</select>
+								<input id="selectSubListhd" name="selectSubListhd" type="hidden" value=""/>
+							
+						</th>
+						<th>
+								<span>년도-학기선택</span>
+								<select id="semChoice" class="form-control" style="color:black">
+									<option value="">선택하세요</option>
+									<c:forEach items="${list}" var="e" varStatus="v">
+									<option value="${e.ACA_YEAR_SEM}">$${e.ACA_YEAR_SEM}</option>
+									</c:forEach>
+									
+								</select>
+								<input id="semChoicehd" name="semChoicehd" type="hidden" value=""/>
+								
+							</div>
+						</th>
+						
+						<th>
+							<button class="btn btn-primary btn-sm" type="submit" value="">검색</button>
+						</form>
+						</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 
-					</div>
-					<div class="card-body">
-						<div class="col-md-12">
-							<table class="table table-condensed table-bordered table-hover"
-								style="text-align: center;">
-								<thead class="thead-dark">
-									<tr>
-										<th>학번</th>
-										<th>이름</th>
-										<th>학년</th>
-										<th>학과</th>
-										<th>중간고사 성적</th>
-										<th>성적 입력</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>A1023</td>
-										<td>박성술</td>
-										<td>3학년</td>
-										<td>컴퓨터공학과</td>
-										<td>미입력</td>
-										<td>
-											<input type="number" class="form-control form-control-sm" name="grade"
-											step="0.01" maxlength="10" max="100.00" min="0"
-											placeholder="성적입력">
-										</td>
-									</tr>
-								</tbody>
-							</table>
+	</div>
+	<div class="card-body">
+		<div class="col-md-12">
+			<table class="table table-condensed table-bordered table-hover"
+				style="text-align: center;">
+				<thead class="thead-dark">
+					<tr>
+						<th>학번</th>
+						<th>이름</th>
+						<th>학년</th>
+						<th>학과</th>
+						<th>평가</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					
+					<c:forEach items="${list}" var="e" varStatus="v">
+					<tr>		
+						<td>${e.STU_NO }</td>
+						<td>${e.STU_NAME }</td>
+						<td>${fn:substring(e.STU_YEAR_SEM,0,1)}</td>
+						<td>${e.DEPT_NAME }</td>
+						<td>
+							<button class="btn btn-primary btn-sm" 
+							value="${e.STU_NO},${e.SUB_SEQ},${e.PROF_ID},${e.SUB_YEAR}-${e.SUB_SEMESTER},${e.SUB_CODE},${e.SUB_NAME},${e.COMPLETE_PT}"
+							id="insertPoint" onclick="stuInsertScore(value)">평가하기</button>
+							
+						</td>
+					</tr>
+						</c:forEach>
+					
+					
+				</tbody>
+			</table>
 						</div>
 					</div>
 					<div class="card-footer">
 						<div style="display: block; text-align: right;">
-							<button class="btn btn-info">등록</button>
-							<button class="btn btn-primary">수정</button>
-							<button class="btn btn-primary">수정완료</button>
-							<button class="btn btn-danger">취소</button>
+							asdf
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-
 		<!-- Main-content End -->
-
 		<!-- Body section End -->
+		
+<script>
+
+
+
+
+
+	$("#selectSubList").change(function(){
+		$("selectSubListhd").val($("selectSubList").val())
+	});
+	
+	$("#semChoice").change(function(){
+		$("selectSubListhd").val($("selectSubList").val())
+	});
+
+	
+	function stuInsertScore(value){
+		
+		
+
+		 var url= "${path}/prof/stuInsertScore.hd?value="+value    //팝업창 페이지 URL
+		 var winWidth = 1000;
+	     var winHeight = 1000;
+	     var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
+		
+	    window.open(url ,"",
+			       "toolbar=no, width=1000, height=700, directories=no, status=no,scrollorbars=no, resizable=no");
+	    
+	}
+
+</script>
+	
+		
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -7,19 +7,86 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.finalProject.professor.model.dao.ProfessorDao2;
-import com.kh.finalProject.professor.model.vo.AttendStudent;
-import com.kh.finalProject.professor.model.vo.InClassStudent;
-import com.kh.finalProject.professor.model.vo.Professor;
-import com.kh.finalProject.professor.model.vo.SelectAttendList;
-import com.kh.finalProject.professor.model.vo.SelectInClass;
-import com.kh.finalProject.professor.model.vo.SelectInMajor;
-import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
-import com.kh.finalProject.professor.model.vo.Select_SubjectNameCode;
-import com.kh.finalProject.student.model.vo.Student;
+import com.kh.finalProject.professor.model.dao.ProfessorDao3;
 
 @Service
 public class ProfessorServiceImpl3 implements ProfessorService3{
+
+	
+	@Autowired
+	private ProfessorDao3 dao;
+	@Autowired
+	private SqlSessionTemplate session;
+
+	
+	
+	
+	@Override
+	public List<Map> gradeEdit(String profId) {
+		
+		return dao.gradeEdit(session,profId);
+	}
+
+
+
+
+	@Override
+	public List<Map> choiceClass(Map<String, Object> param) {
+	
+		return dao.choiceClass(session,param);
+		
+	}
+
+
+	
+	
+
+
+	@Override
+	public Map<String,Object> gradeFlag(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.gradeFlag(session,param);
+	}
+
+
+
+
+	@Override
+	public int firstGrade(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.firstGrade(session,param);
+	}
+
+
+
+
+	@Override
+	public Map<String,Object> stuInsertScore(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.stuInsertScore(session,param);
+	}
+
+
+
+
+	@Override
+	public int updatePoint(Map<String,Object> param) {
+		
+		return dao.updatePoint(session,param);
+	}
+
+
+
+
+	@Override
+	public List<Map> studyList(String profId) {
+		
+		return dao.studyList(session,profId);
+	}
+
+
+
+
 	
 	
 	

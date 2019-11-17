@@ -80,7 +80,7 @@
         <th colspan="11" style="font-size:25px;font-family:arial">강의조회/신청</th>
       </tr>
     </thead>
-    	<form method="post" action="${path }/student/selectClass.hd">
+    	<form method="get" action="${path }/student/selectClass.hd">
     	
 				<tr>
 				<td>이수구분
@@ -180,7 +180,6 @@
 				</h6>
 				<c:if test="${!empty list}">
 				<c:forEach items="${list}" var="e" varStatus="v">
-				
 				<tr id="classInfo">
 				<td><c:out value='${e["ROWNUM"] }'/></td>
 				<td><c:out value='${e["SUB_YEAR"]}'/>-<c:out value='${e["SUB_SEMESTER"]}'/></td>
@@ -236,8 +235,6 @@
 				</td>
 				</tr>
 				
-				
-				
 				</c:forEach>
 				
 				</table>
@@ -248,7 +245,6 @@
 			    <input type="hidden" id="profEvalForm" name="profEvalForm" value=""/>
 				</form>
 				
-		
 
 	</div>
 	</div>
@@ -261,8 +257,6 @@
 	
 	
 	<script>
-	
-	
 	
 		/* 년도 띄워주기 */
 		var today = new Date();

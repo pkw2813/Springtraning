@@ -2,5 +2,103 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="prof3">
 
+
+		<select id="gradeEdit" parameterType="string" resultType="map">
+			
+        SELECT ROWNUM,T.* from(SELECT * FROM HD_CLASS_TB A
+        LEFT JOIN HD_SUB_REQ_TB B ON A.SUB_SEQ=B.SUB_SEQ
+        JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
+        JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
+        JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
+        where A.PROF_ID=#{profId}) T
+        
+		</select>
+	
+	<select id="choiceClass" parameterType="map" resultType="map">
+			
+        SELECT ROWNUM,T.* from(SELECT * FROM HD_CLASS_TB A
+        LEFT JOIN HD_SUB_REQ_TB B ON A.SUB_SEQ=B.SUB_SEQ
+        JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
+        JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
+        JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
+        where A.PROF_ID='P2012A0101') T
+        WHERE 1=1
+        
+     	<if test="subSeq !=null and subSeq !=''">
+     	AND SUB_SEQ=${subSeq}
+     	</if>
+     	
+     	<if test="semester !=null and semester !=''">
+     	AND SUB_SEQ=#{semester}
+     	</if>
+     
+	</select>
+	
+	<select id="stuInsertScore" parameterType="map" resultType="map">
+			
+        SELECT A.SUB_SEQ,C.STU_NO,C.STU_NAME,C.GENDER,C.REG_STATUS,C.STU_EMAIL,C.STU_TEL,D.DEPT_NAME,E.PROF_PW,C.STU_YEAR_SEM,A.SUB_NAME,A.PROF_ID,A.MTERM,A.FTERM,A.ASSIGN_1,A.ASSIGN_2,A.ASSIGN_3,A.ASSIGN_4,A.STATUS_GRADE,A.GRADE
+        ,B.MTERM AS MTERM_1,B.FTERM AS FTERM_1,B.ASSIGN_1 AS ASSIGN_1_1,B.ASSIGN_2 AS ASSIGN_2_1,B.ASSIGN_3 AS ASSIGN_3_1,B.ASSIGN_4 AS ASSIGN_4_1,B.STATUS_GRADE as STATUS_GRADE_1
+        FROM HD_GRADE_TB A
+        JOIN HD_CLASS_TB B ON A.SUB_SEQ=B.SUB_SEQ
+        LEFT JOIN HD_STUDENT_TB C ON A.STU_NO=C.STU_NO
+        JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
+        JOIN HD_PROFESSOR_TB E ON A.PROF_ID=E.PROF_ID
+        where  A.SUB_SEQ=#{subSeq} AND C.STU_NO=#{stuId}
+        
+        
+
+        
+		</select>
+	
+	<select id="gradeFlag" parameterType="map" resultType="map">
+	
+		SELECT * FROM HD_GRADE_TB
+		WHERE SUB_SEQ=${subSeq} AND STU_NO=#{stuId}
+	
+	</select>
+	
+	<insert id="firstGrade" parameterType="map">
+		INSERT INTO HD_GRADE_TB VALUES(
+         #{yearSem},
+         #{subCode},
+         #{subName},
+         #{profId},
+         null,
+         null,
+         null,
+         null,
+         null,
+         null,
+         0,
+         #{stuId},
+         DEFAULT,
+         ${compPt},
+         #{subSeq},
+         null
+         )
+	</insert>
+
+	<update id="updatePoint" parameterType="map">
+	
+	 UPDATE HD_GRADE_TB
+          SET ${updateCol} = #{updatePoint}
+          where SUB_SEQ=${subSeq} AND STU_NO=#{stuId}
+	
+	</update>
+	
+	<select id="studyList" parameterType="string" resultType="map">
+			SELECT ROWNUM,T.* from(SELECT DISTINCT d.DEPT_NAME FROM HD_CLASS_TB A
+        LEFT JOIN HD_SUB_REQ_TB B ON A.SUB_SEQ=B.SUB_SEQ
+        JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
+        JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
+        JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
+        where A.PROF_ID='P2012A0101') T
+			
+			
+			
+	</select>
+	
+	
+	
 	
 </mapper>
