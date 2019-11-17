@@ -65,20 +65,21 @@
             type: 'post',
             //인포 찾기
 
-            data: {"start": moment(new Date(calendar.state.dateProfile.activeRange.start)).format('YYYY-MM-DD'),
-                    "end": moment(new Date(calendar.state.dateProfile.activeRange.end)).format('YYYY-MM-DD')},
+            data: {"start": moment(new Date(calendar.state.dateProfile.activeRange.start)).format('YYYY-01-01'),
+                    "end": moment(new Date(calendar.state.dateProfile.activeRange.end)).add(1,'year').format('YYYY-03-01')},
             success: function(data) {
               if(data != null) {
                   $.each(data, function(key, items) {
                     $.each(items,function(index, item) {
                       let depCode = "${sessionScope.loginMember.deptCode }";
                       let flag = moment(new Date()).format('YYYY-MM-DD') > moment(new Date(item['enDate'])).format('YYYY-MM-DD')?'#808080':depCode == item['deptCode']?"#FF6666":null;
+                      let end = moment(new Date(item['stDate'])).format('YYYY-MM-DD') == moment(new Date(item['enDate'])).format('YYYY-MM-DD')?moment(new Date(item['enDate'])).format('YYYY-MM-DD'):moment(new Date(item['enDate'])).add(1,'day').format('YYYY-MM-DD');
                           let setData = {
                               "title" : item['planName'],
                               "color" : flag,
                               "groupId":item['deptCode'],
                               "start" : moment(new Date(item['stDate'])).format('YYYY-MM-DD'),
-                              "end" : moment(new Date(item['enDate'])).format('YYYY-MM-DD'),
+                              "end" : end,
                           };
                           calendar.addEvent(setData);
                     })

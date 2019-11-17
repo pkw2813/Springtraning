@@ -90,7 +90,7 @@
                     url:'${path}/deleteCalendar.hd',
                     data:{"title" : event.event._def.title,
                           "start" : moment(event.event._instance.range.start).format('YYYY-MM-DD'),
-                          "end" : moment(event.event._instance.range.end).format('YYYY-MM-DD'),
+                          "end" : moment(event.event._instance.range.end).add(-1,'day').format('YYYY-MM-DD'),
                           "deptCode": event.event._def.groupId
                           },
                           success(data) {
@@ -147,9 +147,8 @@
             url: '${pageContext.request.contextPath}/getCalendar.hd',
             type: 'post',
             //인포 찾기
-
-            data: {"start": moment(new Date(calendar.state.dateProfile.activeRange.start)).format('YYYY-MM-DD'),
-                    "end": moment(new Date(calendar.state.dateProfile.activeRange.end)).format('YYYY-MM-DD')},
+            data: {"start": moment(new Date(calendar.state.dateProfile.activeRange.start)).format('YYYY-01-01'),
+                   "end": moment(new Date(calendar.state.dateProfile.activeRange.end)).add(1,'year').format('YYYY-03-01')},
             success: function(data) {
               if(data != null) {
                   $.each(data, function(key, items) {
@@ -157,10 +156,11 @@
                       let depCode = "${sessionScope.loginMember.deptCode }";
                       let flag = moment(new Date()).format('YYYY-MM-DD') > moment(new Date(item['enDate'])).format('YYYY-MM-DD')?'#808080':depCode == item['deptCode']?"#FF6666":null;
                       let title = depCode == item['deptCode']?item['planName']: item['deptCode'] +" " + item['planName'];
+                      let end = moment(new Date(item['stDate'])).format('YYYY-MM-DD') == moment(new Date(item['enDate'])).format('YYYY-MM-DD')?moment(new Date(item['enDate'])).format('YYYY-MM-DD'):moment(new Date(item['enDate'])).add(1,'day').format('YYYY-MM-DD');
                           let setData = {
                               "title" : title,
                               "start" : moment(new Date(item['stDate'])).format('YYYY-MM-DD'),
-                              "end" : moment(new Date(item['enDate'])).format('YYYY-MM-DD'),
+                              "end" : end,
                               "groupId":item['deptCode'],
                               "color" : flag
                           };
