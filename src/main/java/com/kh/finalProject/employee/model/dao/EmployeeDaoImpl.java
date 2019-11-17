@@ -1,6 +1,7 @@
 package com.kh.finalProject.employee.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -122,14 +123,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public List<Student> deptStu(SqlSessionTemplate session, int cPage, int numPerPage, String colCode) {
+	public List<Student> deptStu(SqlSessionTemplate session, int cPage, int numPerPage, Map map) {
 		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return session.selectList("student.deptStu", colCode, row);
+		return session.selectList("student.deptStu", map, row);
 	}
 
 	@Override
-	public int deptStuCount(SqlSessionTemplate session, String colCode) {
-		return session.selectOne("student.deptStuCount", colCode);
+	public int deptStuCount(SqlSessionTemplate session, Map map) {
+		return session.selectOne("student.deptStuCount", map);
 	}
 	
 	

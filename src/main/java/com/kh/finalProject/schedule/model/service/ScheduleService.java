@@ -7,7 +7,9 @@ import com.kh.finalProject.schedule.model.vo.Schedule;
 
 public interface ScheduleService {
 
-	public List<Schedule> getCalendar(Map resultMap);
+	List<Schedule> getCalendar(Map resultMap);
 	
-	public int insertPlan(Map map) throws Exception;
+	int insertPlan(Map map) throws Exception;
+	
+	int deleteCalendar(Map map) throws Exception;
 }

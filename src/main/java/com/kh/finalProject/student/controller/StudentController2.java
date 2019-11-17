@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.finalProject.student.model.service.StudentService2;
 import com.kh.finalProject.student.model.vo.Grade;
@@ -28,7 +30,6 @@ public class StudentController2 {
 	//페이지 전환용
 	@RequestMapping("/student/gradeSearchAll.hd")
 	public String gradeSearchAll(HttpSession session, Model model) {
-		
 		Student student = (Student)session.getAttribute("loginMember");
 		String stuNo=student.getStuNo();
 		String deptCode=student.getStuNo().substring(5,8);
@@ -75,6 +76,60 @@ public class StudentController2 {
 		return "student/gradeSearchAll";	
 	}
 	
+	
+	
+	  @RequestMapping("/student/gradeSearchAll1.hd")
+	  @ResponseBody 
+	  public Object selectListMene(@RequestParam Object GradeMenu, HttpSession session) {
+	  System.out.println("받냐고!"+GradeMenu);
+	  Student student = (Student)session.getAttribute("loginMember");
+	  String stuNo=student.getStuNo();
+	  String deptCode=student.getStuNo().substring(5,8);
+	  
+	  
+	  if(GradeMenu.equals("sub_type")) {
+		  List<Grade> subType = service.selectsubType(stuNo);
+		  System.out.println("이건??"+subType);
+		  for(int i=0; i<subType.size(); i++) {
+				String grade=subType.get(i).getGrade();
+				if(grade.equals("4.5")) {
+					grade="A+";
+				} else if(grade.equals("4.0")) {
+					grade="A";
+				} else if(grade.equals("3.5")) {
+					grade="B+";
+				} else if(grade.equals("3.0")) {
+					grade="B";
+				} else if(grade.equals("2.5")) {
+					grade="C+";
+				} else if(grade.equals("2.0")) {
+					grade="C";
+				} else if(grade.equals("1.5")) {
+					grade="D+";
+				} else if(grade.equals("1.0")) {
+					grade="D";
+				} else if(grade.equals("0") || grade.equals("F")) {
+					grade="F";
+				} else if(grade.equals("P")){
+					grade="P";
+				}
+				subType.get(i).setGrade(grade);
+			}
+				
+			for(Grade e : subType) {
+				if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
+					e.setSubType("타전공");
+					System.out.println("전체학기 성적 타전공 분류"+e);
+				}
+			}
+			System.out.println("최종"+subType);
+			System.out.println("최종"+GradeMenu);
+			
+	  }
+	  return GradeMenu;
+	  }
+	 
+	 
 	
 	
 	//페이지 전환용

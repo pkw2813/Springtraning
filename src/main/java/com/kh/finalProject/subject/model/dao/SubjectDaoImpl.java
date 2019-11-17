@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalProject.employee.model.vo.Curriculum;
 import com.kh.finalProject.professor.model.vo.Subject;
 
 @Repository
@@ -39,6 +40,12 @@ public class SubjectDaoImpl implements SubjectDao{
 	@Override
 	public List<Subject> curriSearch(SqlSessionTemplate session, Subject s) {
 		return session.selectList("subject.curriSearch",s);
+	}
+
+	@Override
+	public Curriculum subTarget(SqlSessionTemplate session, String subName) {
+		System.out.println(subName);
+		return session.selectOne("subject.subTarget",subName);
 	}
 	
 	

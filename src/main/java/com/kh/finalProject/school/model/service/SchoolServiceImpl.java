@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.professor.model.vo.Department;
+import com.kh.finalProject.professor.model.vo.Subject;
 import com.kh.finalProject.school.model.dao.SchoolDao;
 import com.kh.finalProject.school.model.vo.College;
 
@@ -33,11 +34,69 @@ public class SchoolServiceImpl implements SchoolService {
 	public List<College> colList() {
 		return dao.colList(session);
 	}
+	
+	@Override
+	public List<College> colList1() {
+		return dao.colList1(session);
+	}
 
 	@Override
 	public List<Map> deptList(int cPage, int numPerPage) {
 		return dao.deptList(session,cPage,numPerPage);
 	}
+
+	@Override
+	public int colInsert(College c) {
+		return dao.colInsert(session, c);
+	}
+
+	@Override
+	public List<Department> deptList(String colCode) {
+		return dao.deptList(session, colCode);
+	}
+
+	@Override
+	public int deptInsert(Department d) {
+		return dao.deptInsert(session,d);
+	}
+	
+	@Override
+	public List<Map> deptList1(String colCode) {
+		return dao.deptList1(session, colCode);
+	}
+
+	@Override
+	public int deleteCol(String colCode) {
+		return dao.deleteCol(session, colCode);
+	}
+
+	@Override
+	public int deleteDept(String deptCode) {
+		return dao.deleteDept(session, deptCode);
+	}
+
+	@Override
+	public int updateCol(College c) {
+		return dao.updateCol(session, c);
+	}
+
+	@Override
+	public int updateDept(Department d) {
+		return dao.updateDept(session, d);
+	}
+
+	@Override
+	public List<Map> subRoomUseList(Subject s) {
+		return dao.subRoomUseList(session, s);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	

@@ -114,7 +114,7 @@
               </div>
               
               
-              <div class="card" style="margin-top:50px">
+              <div class="card" style="margin-top:30px">
                 <div class="card-body">
                   <div class="table-responsive" style="overflow-x:hidden">
                   <h4 class="card-title">등록금 조회</h4>
@@ -276,7 +276,7 @@
 		        		for(var i=year;i<=year+10;i++){
 		        				selectValue.add(new Option(i,i),optionIndex++);
 		        		}
-		        		for(var i=year-5;i<=year+1;i++){
+		        		for(var i=year-2;i<=year+2;i++){
 	        					selectValue1.add(new Option(i,i),optionIndex++);
 	        			}
 		        }
@@ -306,20 +306,6 @@
 		    			  var tuitionArr="";
 		    			  var tuiUpdateBtn=new Array();
 		    			  for(var i=0; i<re.length; i++){
-		    				  
-		    			 	 /* tuitionArr+="<tr><td>"+re[i]["TUI_YEAR"].substring(0,4)+"</td>";
-		    				 tuitionArr+="<td>"+re[i]["TUI_YEAR"].substr(6,2)+"학기</td>";
-		    				 tuitionArr+="<td>"+re[i]["COL_NAME"]+"</td>";
-		    				 tuitionArr+="<td>"+re[i]["DEPT_NAME"]+"</td>";
-		    				 tuitionArr+="<td><input type='text' class='form-control payUpdate' value='"+re[i]["TUI_PAY"]+"' id='tuiPay1'/></td>";
-		    				 tuitionArr+="<td><button class='btn btn-inverse-info btn-fw' onclick='tuiUpdate()'></td>";
-		    				 tuitionArr+="</tr>";
-		    				 tuitionArr+="<script>";
-		    				 tuitionArr+="function tuiUpdate(){";
-		    				 tuitionArr+="location.href='${path}/tuitionUpdate.hd?tuiYear="+re[i]["TUI_YEAR"]+"&deptCode="+re[i]["DEPT_CODE"]+"&tuiPay="+$('#tuiPay1').val()+"'";
-		    				 tuitionArr+="}";
-		    				 tuitionArr+="<";
-		    				 tuitionArr+="/script>"; */
 		    				 tuitionArr+="<tr><td>"+re[i]["TUI_YEAR"].substring(0,4)+"</td>";
 		    			     tuitionArr+="<td>"+re[i]["TUI_YEAR"].substr(6,2)+"학기</td>";
 		    			     tuitionArr+="<td>"+re[i]["COL_NAME"]+"</td>";

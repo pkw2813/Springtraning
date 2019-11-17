@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.finalProject.employee.model.vo.Curriculum;
 import com.kh.finalProject.professor.model.vo.Subject;
 import com.kh.finalProject.subject.model.service.SubjectService;
 
@@ -121,10 +122,20 @@ public class SubjectController {
 		 return jsonStr;
 	 }
 	 
-	 @RequestMapping("/subRoom.hd")
-	 public String selectRoom() {
+	 @RequestMapping("/subTarget.hd")
+	 @ResponseBody
+	 public String subTarget(@RequestParam String subName) {
+		 Curriculum c=service.subTarget(subName);
+		 System.out.println(c);
+		 ObjectMapper mapper=new ObjectMapper();
+		 String jsonStr="";
+		 try {
+			 jsonStr=mapper.writeValueAsString(c);
+		 }catch(JsonProcessingException e) {
+			 e.printStackTrace();
+		 }
+		 return jsonStr;
 		 
-		 return "";
 	 }
 	 
 	 

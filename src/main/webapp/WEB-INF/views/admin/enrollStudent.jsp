@@ -50,13 +50,11 @@
 <script>
 
 function insertNewStu(result) {
-	console.log(result);
 	$.ajax({
 		type : 'post',
 		url: "${pageContext.request.contextPath}/insertNewStu.do",
 		data : {"beforeStu" : result},
 		success : function(data) {
-			console.log(data);
 		}
 
 	});

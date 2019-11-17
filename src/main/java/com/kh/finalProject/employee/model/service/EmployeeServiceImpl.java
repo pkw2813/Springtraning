@@ -1,6 +1,7 @@
 package com.kh.finalProject.employee.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,13 +126,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Student> deptStu(int cPage, int numPerPage, String colCode) {
-		return dao.deptStu(session, cPage, numPerPage, colCode );
+	public List<Student> deptStu(int cPage, int numPerPage, Map map) {
+		return dao.deptStu(session, cPage, numPerPage, map );
 	}
 
 	@Override
-	public int deptStuCount(String colCode) {
-		return dao.deptStuCount(session, colCode);
+	public int deptStuCount(Map map) {
+		return dao.deptStuCount(session, map);
 	}
 	
 	

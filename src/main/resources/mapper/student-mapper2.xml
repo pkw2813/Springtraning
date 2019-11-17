@@ -12,6 +12,16 @@
 		WHERE STU_NO=#{stuNo}
 		ORDER BY ACA_YEAR_SEM DESC, SUB_NAME ASC
 	</select>
+	
+	<select id="selectsubType" parameterType="string" resultMap="GradeResult">
+		SELECT A.*, B.SUB_TYPE, C.PROF_NAME FROM HD_GRADE_TB A 
+		JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B 
+		ON (A.SUB_CODE = B.SUB_CODE)
+		JOIN (SELECT PROF_ID, PROF_NAME FROM HD_PROFESSOR_TB) C
+		ON (A.PROF_ID = C.PROF_ID)
+		WHERE STU_NO=#{stuNo}
+		ORDER BY SUB_TYPE ASC, SUB_NAME ASC
+	</select>
 	<select id="selectGradeListSubType" parameterType="string" resultType="map">
 		SELECT SUBSTR(aca_year_sem,1,4) as year,
         SUBSTR(aca_year_sem,6) as semester,
@@ -47,13 +57,14 @@
 		INSERT INTO HD_REQUEST_TB VALUES(#{stuNo},#{reqDate},#{reqTitle},#{reqContent},#{acaYearSem},#{profId},#{subCode},DEFAULT,NULL,#{profName})
 	</insert> 
 	
-	<select id="selectRequestList" parameterType="string" resultType="map">
+	<!-- <select id="selectRequestList" parameterType="string" resultType="map">
 		SELECT * FROM HD_REQUEST_TB
-	</select>
+	</select> -->
 	
 	<select id="selectGradeNow" parameterType="infoForSearchGrade" resultMap="GradeResult">
-		SELECT A.*, B.SUB_TYPE, C.PROF_NAME, R.REQ_DATE
-		FROM (SELECT * FROM HD_GRADE_TB WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM=#{acaYearSem}) A 
+		SELECT A.ACA_YEAR_SEM, A.SUB_CODE, A.SUB_NAME, A.PROF_ID, A.GRADE, A.STU_NO, A.RETAKE, A.RCV_CREDITS, B.SUB_TYPE, C.PROF_NAME, R.REQ_DATE, R.REQ_TITLE, R.REQ_CONTENT, 
+		R.REQ_ANSWER, REQ_YN
+		FROM (SELECT * FROM HD_GRADE_TB WHERE STU_NO='S2018A01001' AND ACA_YEAR_SEM='2019-2') A 
 		JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B 
 		ON (A.SUB_CODE = B.SUB_CODE)
 		JOIN (SELECT PROF_ID, PROF_NAME FROM HD_PROFESSOR_TB) C
@@ -84,12 +95,12 @@
 		<result column="SUB_CODE" property="subCode"/>
 		<result column="SUB_NAME" property="subName"/>
 		<result column="PROF_ID" property="profId"/>
-		<result column="MTERM" property="mterm"/>
+		<!-- <result column="MTERM" property="mterm"/>
 		<result column="FTERM" property="fterm"/>
 		<result column="ASSIGN_1" property="assign1"/>
 		<result column="ASSIGN_2" property="assign2"/>
 		<result column="ASSIGN_3" property="assign3"/>
-		<result column="ASSIGN_4" property="assign4"/>
+		<result column="ASSIGN_4" property="assign4"/> -->
 		<result column="GRADE" property="grade"/>
 		<result column="STU_NO" property="stuNo"/>
 		<result column="RETAKE" property="retake"/>
@@ -97,6 +108,11 @@
 		<result column="SUB_TYPE" property="subType"/>
 		<result column="PROF_NAME" property="profName"/>
 		<result column="REQ_DATE" property="reqDate"/>
+		<result column="REQ_TITLE" property="reqTitle"/>
+		<result column="REQ_CONTENT" property="reqContent"/>
+		<result column="REQ_ANSWER" property="reqAwswer"/>
+		<result column="REQ_YN" property="reqYn"/>
+			
 	</resultMap>
 	
 

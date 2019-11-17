@@ -1,6 +1,7 @@
 package com.kh.finalProject.employee.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.employee.model.vo.Employee;
@@ -47,7 +48,7 @@ public interface EmployeeService {
 	
 	int stuCount(String colCode);
 	
-	List<Student> deptStu(int cPage, int numPerPage, String colCode);
+	List<Student> deptStu(int cPage, int numPerPage, Map map);
 	
-	int deptStuCount(String colCode);
+	int deptStuCount(Map map);
 	}

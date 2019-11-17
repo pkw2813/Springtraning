@@ -107,8 +107,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">강의 목표</label>
                           <div class="col-sm-9">
-                          	<select class="form-control" name="targetSubject" id="targetSubject">
-                            </select>
+                          	<input type="text" class="form-control" name="targetSubject" id="targetSubject" readonly>
                           </div>
                         </div>
                       </div>
@@ -383,10 +382,10 @@
 			var cp=$("#comPt").val();
 			var intrt=parseInt(rt);
 			
-			if(cp==3){
+			if(cp==2){
 				$("#subTime").val(rt+","+(intrt+1)+":00,"+(intrt+2)+":00");
 			}
-			else if(cp==2){
+			else if(cp==1){
 				$("#subTime").val(rt+","+(intrt+1)+":00");
 			}
 			
@@ -405,7 +404,7 @@
 			var selectValue1 = document.getElementById("year1");
 			var optionIndex = 0;
 	
-			for(var i=year;i<=year+10;i++){
+			for(var i=year;i<=year+5;i++){
 					selectValue.add(new Option(i,i),optionIndex++);
 					selectValue1.add(new Option(i,i),optionIndex++);
 			}
@@ -537,22 +536,16 @@
         			data:{"deptCode":dep},
         			success:function(data){
         			var subNameArr="<option id='selectSubName'>과목명 선택</option>";
-        			var targetSubjectArr="<option id='selecttargetSubject'>강의목표 선택</option>";
         			var subCodeArr="";
         					let re=JSON.parse(data);
         				for(let i = 0; i < re.length; i++) {
         					var dataDept=re[i];
 	        				subNameArr+="<option value='"+dataDept['SUB_NAME']+"'  class='subName'>"+dataDept['SUB_NAME']+"</option>";
-	        				targetSubjectArr+="<option value='"+dataDept['TARGET_SUBJECT']+"'  class='targetSubject'>"+dataDept['TARGET_SUBJECT']+"</option>";
 	        				subCodeArr="<input type='hidden' name='subCode' value='"+dataDept["SUB_CODE"]+"'>";
         				}
         				$('#subName').html(subNameArr);
-            			$("#targetSubject").html(targetSubjectArr);
     						$('#subName').change(function(){
     							$("#selectSubName").attr('disabled',true);
-            				});
-    						$('#targetSubject').change(function(){
-    							$("#selecttargetSubject").attr('disabled',true);
             				});
     					$("#lastForm").html(subCodeArr);
         			}
@@ -582,8 +575,16 @@
         });
         
 
-	        $(function(){
+	        
 	        	$("#classRoom").change(function(){
+	        		roomTimeSet();
+	        	});
+	        	
+	        	$("#subDay").change(function(){
+	        		roomTimeSet();
+	        	});
+	        	
+	        	function roomTimeSet(){
 	        		 var day=$("#subDay").val();
 	        		 var room=$("#classRoom").val();
 	        		 var semester=$('input[name="subSemester"]:checked').val();
@@ -622,6 +623,18 @@
 	        				 }
 	        			 }
 	        		 });
+	        	}
+	      
+	        
+	        $("#subName").change(function(){
+	        	var subName=$("#subName").val();
+	        	$.ajax({
+	        		url:"${path}/subTarget.hd",
+	        		data:{"subName":subName},
+	        		success:function(data){
+	        			var re=JSON.parse(data);
+	        			$("#targetSubject").val(re["targetSubject"]);
+	        		}
 	        	});
 	        });
        

@@ -16,8 +16,9 @@ public interface StudentDao2 {
 	
 	int insertAppeal(SqlSessionTemplate session, Request request);
 	
-	List<Request> selectRequestList(SqlSessionTemplate session);
+	/* List<Request> selectRequestList(SqlSessionTemplate session); */
 	
 	List<Grade> selectGradeNow(SqlSessionTemplate session, InfoForSearchGrade ifsg);
 
+	List<Grade> selectsubType(SqlSessionTemplate session, String stuNo);
 }

@@ -39,6 +39,17 @@
 					AND DEPT_CODE=#{deptCode}
 				</if>
 	</select>
+	
+	<select id="subTarget" parameterType="string" resultMap="curriculumMap">
+		SELECT TARGET_SUBJECT FROM HD_CURRICULUM_TB WHERE SUB_NAME=#{subName}
+	</select>
+	
+<resultMap id="curriculumMap" type="curriculum">
+  	<result column="SUB_CODE" property="subCode"/>
+	<result column="SUB_NAME" property="subName"/>
+	<result column="TARGET_SUBJECT" property="targetSubject"/>
+	<result column="DEPT_CODE" property="deptCode"/>
+</resultMap>
 
   <resultMap id="subjectMap" type="subject">
   	<result column="SUB_SEQ" property="subSeq"/>

@@ -32,18 +32,26 @@
 		</if>
   	</select>
   	
-  	<select id="deptStu" resultType="map" parameterType="string">
+  	<select id="deptStu" resultType="map" parameterType="map">
   		SELECT STU_NO AS PROF_ID, STU_NAME AS PROF_NAME, DEPT_NAME, STU_TEL AS PHONE, STU_EMAIL AS EMAIL, STU_ADDR AS ADDRESS FROM HD_STUDENT_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE)
- 		<if test="value != null">
-		WHERE DEPT_CODE = #{value}
+ 		WHERE 1=1
+ 		<if test="deptCode != null">
+		AND DEPT_CODE = #{deptCode}
+		</if>
+		<if test="search != null">
+		AND STU_NO LIKE '%${search}%' OR STU_NAME LIKE '%${search}%'
 		</if>
 		 ORDER BY ENTER_DATE DESC, DEPT_CODE
   	</select>
   	
-  	<select id="deptStuCount" resultType="_int" parameterType="string">
+  	<select id="deptStuCount" resultType="_int" parameterType="map">
   		SELECT COUNT(*) FROM HD_STUDENT_TB
-  		<if test="value != null">
-		WHERE DEPT_CODE = #{value}
+  		WHERE 1=1
+  		<if test="deptCode != null">
+		AND DEPT_CODE = #{deptCode}
+		</if>
+		<if test="search != null">
+		AND STU_NO LIKE '%${search}%' OR STU_NAME LIKE '%${search}%'   <!-- '%'||#searchKeyword#||'%' --> 
 		</if>
   	</select>
   	

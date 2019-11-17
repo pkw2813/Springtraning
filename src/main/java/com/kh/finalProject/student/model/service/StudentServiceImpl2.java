@@ -35,14 +35,19 @@ public class StudentServiceImpl2 implements StudentService2 {
 		return dao.insertAppeal(session,request);
 	}
 	
-	@Override
-	public List<Request> selectRequest(){
-		return dao.selectRequestList(session);
-	}
+	/*
+	 * @Override public List<Request> selectRequest(){ return
+	 * dao.selectRequestList(session); }
+	 */
 
 	@Override
 	public List<Grade> selectGradeNow(InfoForSearchGrade ifsg) {
 		return dao.selectGradeNow(session, ifsg);
+	}
+
+	@Override
+	public List<Grade> selectsubType(String stuNo) {
+		return dao.selectsubType(session, stuNo);
 	}
 	
 

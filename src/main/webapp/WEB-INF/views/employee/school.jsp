@@ -17,6 +17,9 @@
 	th, td{
 		text-align:center;
 	}
+	/* .sul>div{
+		float:left;
+	} */
 </style>
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -49,62 +52,71 @@
             
           
           <div class="row">
-            <div class="col-lg-6 grid-margin stretch-card">
+            <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">학부 조회</h4>
-                  <div class="table-responsive">
-                    <table class="table">
+                  <div class="table-responsive" style="height:500px; overflow:auto">
+                    <table class="table" style="border:0; cellspacing=0; cellpadding:0">
                       <thead>
                         <tr>
-                       	  <th style="width:10%">번호</th>
-                          <th style="width:50%">학부 명</th>
+                       	  <th style="width:20%">번호</th>
+                          <th style="width:40%">학부 명</th>
                           <th style="width:20%">학부명 수정</th>
                           <th style="width:20%">학부 폐설</th>
                         </tr>
                       </thead>
                       <tbody>
                       <c:forEach var="c" items="${colList }" varStatus="v">
-                        <tr>
+                        <tr class="colTr">
                           <td>${v.count }</td>
-                          <td>${c.colName }</td>
-                          <td><button class="btn btn-inverse-info btn-fw">수정</button></td>
-                          <td><button class="btn btn-inverse-info btn-fw">폐설</button></td>
+                          <form action="${path }/updateCol.hd">
+                          <input type="hidden" value="${c.colCode }" class="hiCol" name="colCode"/>
+                          <td><input type="text" value="${c.colName }" name="colName" class="form-control teCol" style="text-align: center;"/></td>
+                          <td><input type="submit" class="btn btn-inverse-info btn-fw" value="수정"/></td>
+                          </form>
+                          <td><button class="btn btn-inverse-info btn-fw deleteCol">폐설</button></td>
                         </tr>
                        </c:forEach>
-                      </tbody>
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 grid-margin stretch-card">
+            <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">학과 조회</h4>
+                  			<select class="form-control selectColleage" id="tbCollege" name='colCode'>
+                            </select><br>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
 	                       <tr>
-	                         <th style="width:30%">학부명</th>
-	                         <th style="width:30%">학과명</th>
+	                         <th style="width:20%">학부명</th>
+	                         <th style="width:40%">학과명</th>
 	                         <th style="width:20%">학과명 수정</th>
 	                         <th style="width:20%">학과 폐설</th>
 	                       </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="tbody">
                        <c:forEach var="d" items="${deptList }" varStatus="v">
                         <tr>
                           <td>${d.COL_NAME }</td>
-                          <td>${d.DEPT_NAME }</td>
+                          <form action="${path }/updateDept.hd">
+                          <input type="hidden" value="${d.DEPT_CODE }" name="deptCode" class="hiDept" />
+                          <td><input type="text" value="${d.DEPT_NAME }" name="deptName" class="form-control" style="text-align: center;"/></td>
                           <td><button class="btn btn-inverse-info btn-fw">수정</button></td>
-                          <td><button class="btn btn-inverse-info btn-fw">폐설</button></td>
+                          </form>
+                          <td><button class="btn btn-inverse-info btn-fw deleteDept">폐설</button></td>
                         </tr>
                        </c:forEach>
                       </tbody>
                     </table>
-                    ${pageBar }
+                    <div id="pageBar">
+                     ${pageBar }
+                    </div>
                   </div>
                 </div>
               </div>
@@ -114,7 +126,7 @@
            <div id="colModal" class="modal">
  
 		      <div class="modal-content">
-		      	<form>
+		      	<form action="${path }/colInsert.hd">
 				         <span class="close" id="colModalclose">&times;</span>
 				         <p>학부개설</p>
 				         <div class="form-group">
@@ -127,18 +139,18 @@
 		      	</form>	
 		      </div>
 		    </div>
-		    
+   
 		    
 		    <div id="deptModal" class="modal">
  
 		      <div class="modal-content">
-		      	<form>
+		      	<form action="${path }/deptInsert.hd">
 				         <span class="close" id="deptModalclose">&times;</span>
 				         <p>학부개설</p>
 				         <div class="form-group">
-                            <select class="form-control selectColleage">
+                            <select class="form-control selectColleage" name='colCode'>
                             </select><br>
-				         <input type="text" id="reqTitle" name="colName" placeholder="개설할 학과명을 입력해주세요" class="form-control" autocomplete="off"/>
+				         <input type="text" id="reqTitle" name="deptName" placeholder="개설할 학과명을 입력해주세요" class="form-control" autocomplete="off"/>
 				         </div>
 				         <input type="button" class="btn btn-inverse-info btn-fw" id="deptModalclose1" value="취소" style="float: right; margin: 7px;">
 				         <input type="submit" class="btn btn-inverse-info btn-fw" value="저장" style="float: right; margin: 7px;">
@@ -149,6 +161,67 @@
 		    </div>
 		    
 		    <script>
+		    
+		   
+		    $(".deleteCol").click(function(){
+		    		var con=confirm("폐설후 복구 불가합니다. 다시한번 확인해주세요.");
+		    		var hiCol=$($(this).parent().siblings(".hiCol")).val();
+		    		if(con==true){
+		    			location.href='${path}/deleteCol.hd?colCode='+hiCol;	    			
+		    		} 
+		    });
+		    
+		    
+		    $(function(){
+	             $("#tbCollege").change(function(){
+	                var tbCol=$("#tbCollege").val();
+	                $.ajax({
+	                   url:"${path}/selectColSerch.hd",
+	                   data:{"colCode":tbCol},
+	                   success: function(data){
+	                      var colArr="";
+	                      let re=JSON.parse(data);
+	                      for(var i=0; i<re.length;i++){
+	                         colArr+="<tr><td>"+re[i]["COL_NAME"]+"</td>";
+	                         colArr+="<form action='${path }/updateDept.hd'>";
+	                         colArr+="<input type='hidden' value='"+re[i]["DEPT_CODE"]+"' name='deptCode' class='hiDept' />";
+	                         colArr+="<td><input type='text' value='"+re[i]["DEPT_NAME"]+"' name='deptName' class='form-control hiDeptName' style='text-align: center;'/></td>";
+	                         colArr+="<td><button class='btn btn-inverse-info btn-fw updateDept'>수정</button></td>";
+	                         colArr+="</form>";
+	                         colArr+="<td><button class='btn btn-inverse-info btn-fw deleteDept'>폐설</button></td></tr>";
+	                      }
+	                      $("#tbody").html(colArr);
+	                      $("#pageBar").html("");
+
+	                      $(".updateDept").click(function(){
+	                          var con=confirm("수정하시겠습니까?");
+	                          var hiDept=$($(this).parent().siblings(".hiDept")).val();
+	                          var hiDeptName=$($(this).parent().prev().children(".hiDeptName")).val();
+	                          if(con==true){
+	                             location.href='${path}/updateDept.hd?deptCode='+hiDept+'&deptName='+hiDeptName;    
+	                          } 
+	                       });
+
+	                      $(".deleteDept").click(function(){
+	                          var con=confirm("폐설후 복구 불가합니다. 다시한번 확인해주세요.");
+	                          var hiDept=$($(this).parent().siblings(".hiDept")).val();
+	                          if(con==true){
+	                             location.href='${path}/deleteDept.hd?deptCode='+hiDept;                
+	                          } 
+	                       });
+	                   }
+	                });
+	             });
+	          });
+		    
+		    $(".deleteDept").click(function(){
+	    		var con=confirm("폐설후 복구 불가합니다. 다시한번 확인해주세요.");
+	    		var hiDept=$($(this).parent().siblings(".hiDept")).val();
+	    		if(con==true){
+	    			location.href='${path}/deleteDept.hd?deptCode='+hiDept;	    			
+	    		} 
+	    	});
+		    
 		    $(function() {
         		$(document).ready(function(){
         			$.ajax({
@@ -159,7 +232,6 @@
         					colListHtml = "<option value='select' id='selColleage'>학부 선택</option>";
         					for(let i = 0; i < data.list.length; i++) {
         						let cols = data.list[i];
-        						console.log(cols['COL_CODE']);
         						colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
         					}
         					

@@ -28,14 +28,19 @@ public class StudentDaoImpl2 implements StudentDao2 {
 		return session.insert("student2.insertRequest",request);
 	}
 
-	@Override
-	public List<Request> selectRequestList(SqlSessionTemplate session) {
-		return session.selectList("student2.selectRequestList");
-	}
+	/*
+	 * @Override public List<Request> selectRequestList(SqlSessionTemplate session)
+	 * { return session.selectList("student2.selectRequestList"); }
+	 */
 
 	@Override
 	public List<Grade> selectGradeNow(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
 		return session.selectList("student2.selectGradeNow", ifsg);
+	}
+
+	@Override
+	public List<Grade> selectsubType(SqlSessionTemplate session, String stuNo) {
+		return session.selectList("student2.selectsubType",stuNo);
 	}
 	
 	

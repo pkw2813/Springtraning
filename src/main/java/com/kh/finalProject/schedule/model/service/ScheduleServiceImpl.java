@@ -31,6 +31,13 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return result;
 	}
 
+	@Override
+	public int deleteCalendar(Map map) throws Exception {
+		int result = dao.deleteCalendar(session, map);
+		if(result == 0) new Exception();
+		return result;
+	}
+
 	
 	
 	
