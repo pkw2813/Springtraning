@@ -164,6 +164,11 @@ public class SchoolController {
 		return "common/msg";
 	}
 	
+	@RequestMapping("/subRoom.hd")
+	public String subRoomPage() {
+		return "employee/subRoomList";
+	}
+	
 }
 
 

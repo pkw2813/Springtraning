@@ -173,38 +173,48 @@
 		    
 		    
 		    $(function(){
-		    	$("#tbCollege").change(function(){
-		    		var tbCol=$("#tbCollege").val();
-		    		$.ajax({
-		    			url:"${path}/selectColSerch.hd",
-		    			data:{"colCode":tbCol},
-		    			success: function(data){
-		    				var colArr="";
-		    				let re=JSON.parse(data);
-		    				console.log(re.length);
-		    				console.log(re[0]["COL_NAME"]);
-		    				for(var i=0; i<re.length;i++){
-		    					colArr+="<tr><td>"+re[i]["COL_NAME"]+"</td>";
-		    					colArr+="<form action='${path }/updateDept.hd'>";
-		    					colArr+="<input type='hidden' value='"+re[i]["DEPT_CODE"]+"' name='deptCode' class='hiDept' />";
-		    					colArr+="<td><input type='text' value='"+re[i]["DEPT_NAME"]+"' name='deptName' class='form-control' style='text-align: center;'/></td>";
-		    					colArr+="<td><input type='submit' class='btn btn-inverse-info btn-fw' value='수정'></td>";
-		    					colArr+="</form>";
-		    					colArr+="<td><button class='btn btn-inverse-info btn-fw deleteDept'>폐설</button></td></tr>";
-		    				}
-		    				$("#tbody").html(colArr);
-		    				$("#pageBar").html("");
-		    				$(".deleteDept").click(function(){
-		    		    		var con=confirm("폐설후 복구 불가합니다. 다시한번 확인해주세요.");
-		    		    		var hiDept=$($(this).parent().siblings(".hiDept")).val();
-		    		    		if(con==true){
-		    		    			location.href='${path}/deleteDept.hd?deptCode='+hiDept;	    			
-		    		    		} 
-		    		    	});
-		    			}
-		    		});
-		    	});
-		    });
+	             $("#tbCollege").change(function(){
+	                var tbCol=$("#tbCollege").val();
+	                $.ajax({
+	                   url:"${path}/selectColSerch.hd",
+	                   data:{"colCode":tbCol},
+	                   success: function(data){
+	                      var colArr="";
+	                      let re=JSON.parse(data);
+	                      console.log(re.length);
+	                      console.log(re[0]["COL_NAME"]);
+	                      for(var i=0; i<re.length;i++){
+	                         colArr+="<tr><td>"+re[i]["COL_NAME"]+"</td>";
+	                         colArr+="<form action='${path }/updateDept.hd'>";
+	                         colArr+="<input type='hidden' value='"+re[i]["DEPT_CODE"]+"' name='deptCode' class='hiDept' />";
+	                         colArr+="<td><input type='text' value='"+re[i]["DEPT_NAME"]+"' name='deptName' class='form-control hiDeptName' style='text-align: center;'/></td>";
+	                         colArr+="<td><button class='btn btn-inverse-info btn-fw updateDept'>수정</button></td>";
+	                         colArr+="</form>";
+	                         colArr+="<td><button class='btn btn-inverse-info btn-fw deleteDept'>폐설</button></td></tr>";
+	                      }
+	                      $("#tbody").html(colArr);
+	                      $("#pageBar").html("");
+
+	                      $(".updateDept").click(function(){
+	                          var con=confirm("수정하시겠습니까?");
+	                          var hiDept=$($(this).parent().siblings(".hiDept")).val();
+	                          var hiDeptName=$($(this).parent().prev().children(".hiDeptName")).val();
+	                          if(con==true){
+	                             location.href='${path}/updateDept.hd?deptCode='+hiDept+'&deptName='+hiDeptName;    
+	                          } 
+	                       });
+
+	                      $(".deleteDept").click(function(){
+	                          var con=confirm("폐설후 복구 불가합니다. 다시한번 확인해주세요.");
+	                          var hiDept=$($(this).parent().siblings(".hiDept")).val();
+	                          if(con==true){
+	                             location.href='${path}/deleteDept.hd?deptCode='+hiDept;                
+	                          } 
+	                       });
+	                   }
+	                });
+	             });
+	          });
 		    
 		    $(".deleteDept").click(function(){
 	    		var con=confirm("폐설후 복구 불가합니다. 다시한번 확인해주세요.");

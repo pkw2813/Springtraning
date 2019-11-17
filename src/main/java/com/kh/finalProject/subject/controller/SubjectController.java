@@ -121,11 +121,6 @@ public class SubjectController {
 		 return jsonStr;
 	 }
 	 
-	 @RequestMapping("/subRoom.hd")
-	 public String selectRoom() {
-		 
-		 return "";
-	 }
 	 
 	 
 }

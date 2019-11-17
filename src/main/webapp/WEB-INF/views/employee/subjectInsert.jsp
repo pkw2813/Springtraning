@@ -405,7 +405,7 @@
 			var selectValue1 = document.getElementById("year1");
 			var optionIndex = 0;
 	
-			for(var i=year;i<=year+10;i++){
+			for(var i=year;i<=year+5;i++){
 					selectValue.add(new Option(i,i),optionIndex++);
 					selectValue1.add(new Option(i,i),optionIndex++);
 			}

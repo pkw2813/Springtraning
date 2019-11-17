@@ -21,20 +21,20 @@ p {
 }
 .login_stu{
 	background-color:#46b8ff;
-	width:250px;
+	width:100%;
 	height:50px;
 	cursor:pointer;
 }
 .login_pro{
 	background-color:#abdbff;
-	width:250px;
+	width:100%;
 	height:50px;
 	margin-top:5px;
 	cursor:pointer;
 }
 .login_emp{
 	background-color:#abdbff;
-	width:250px;
+	width:100%;
 	height:50px;
 	margin-top:5px;
 	cursor:pointer;
