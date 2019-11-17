@@ -70,11 +70,17 @@ pre {
 													<td><c:out value="${l.retake}" /></td>
 													<c:if test="${l.reqDate eq null }">
 														<td><button type="button" id="appeal${s.count}" class="btn btn-danger btn-xs" style="font-size:13px">이의신청</button></td>
+														<td></td>
 													</c:if>
 													<c:if test="${l.reqDate ne null }">
 														<td><button type="button" id="appeal${s.count}" class="btn btn-danger btn-xs" style="font-size:13px">이의신청중</button></td>
 													</c:if>
-													<td><button type="button" id="answer${s.count}" class="btn btn-primary btn-xs" style="font-size:13px">답변보기</button></td>
+													<c:if test="${l.reqDate ne null and l.reqAwswer eq null }">
+														<td><button type="button" id="answer${s.count}" class="btn btn-primary btn-xs" style="font-size:13px">답변 대기중</button></td>
+													</c:if>
+													<c:if test="${l.reqDate ne null and l.reqAwswer ne null }">
+														<td><button type="button" id="answer${s.count}" class="btn btn-primary btn-xs" style="font-size:13px">답변 확인</button></td>
+													</c:if>
 												</tr>									
 									</c:forEach>
 								</tbody>
@@ -102,7 +108,7 @@ pre {
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">교과목명 : </label>
 								<div class="col-sm-10" style="width:10px;">
-									<input type="text" class="form-control" name="subName" id="subName" readonly="readonly" />
+									<input type="text" class="form-control" name="subName" id="subName_s" readonly="readonly" />
 								</div>
 								</div>
 							</div>
@@ -112,7 +118,7 @@ pre {
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">담당교수 : </label>
 								<div class="col-sm-5">
-								<input type="text" class="form-control" name="profName" id="profName" readonly="readonly"/>
+								<input type="text" class="form-control" name="profName" id="profName_s" readonly="readonly"/>
 								</div>
 								</div>
 							</div>
@@ -122,7 +128,7 @@ pre {
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">취득등급 : </label>
 								<div class="col-sm-5">
-								<input type="text" class="form-control" name="grade" id="grade" readonly="readonly"/>
+								<input type="text" class="form-control" name="grade" id="grade_s" readonly="readonly"/>
 								</div>
 								</div>
 							</div>
@@ -132,23 +138,23 @@ pre {
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">신청일자 : </label>
 								<div class="col-sm-5">
-								<input type="text" class="form-control" name="reqDate" id="reqDate" readonly="readonly"/>
+								<input type="text" class="form-control" name="reqDate" id="reqDate_s" readonly="readonly"/>
 								</div>
 								</div>
 							</div>
 						</div>
 						
-						<p style="font-family: jua; font-size: 15px; font-style:">건의제목</p>
-						<input type="text" name="reqTitle" id="reqTitle" class="form-control" required="required" />
+						<p style="font-family: jua; font-size: 15px; font-style:">이의신청제목</p>
+						<input type="text" name="reqTitle" id="reqTitle_s" class="form-control" required="required" placeholder="이의신청 제목을 작성하세요."/>
 						<hr>
 						<p style="font-family: jua; font-size: 15px; font-style:">이의신청내용</p>
-						<textarea rows="10" cols="90" name="reqContent" id="reqContent" placeholder="이의신청 내용을 작성하세요." required="required"></textarea>
+						<textarea class="form-control" rows="5" cols="90" name="reqContent" id="reqContent_s" placeholder="이의신청 내용을 작성하세요." required="required"></textarea>
 						<hr>
 						
-						<input type="hidden" name="stuNo" id="stuNo" value="${loginMember.stuNo}" readonly="readonly"/>
-						<input type="hidden" name="acaYearSem" id="acaYearSem" value="acaYearSem" readonly="readonly"/>
-						<input type="hidden" name="subCode" id="subCode" value="subCode" readonly="readonly"/>
-						<input type="hidden" name="profId" id="profId" value="profId" readonly="readonly"/>
+						<input type="hidden" name="stuNo" id="stuNo_s" value="${loginMember.stuNo}" readonly="readonly"/>
+						<input type="hidden" name="acaYearSem" id="acaYearSem_s" value="acaYearSem" readonly="readonly"/>
+						<input type="hidden" name="subCode" id="subCode_s" value="subCode" readonly="readonly"/>
+						<input type="hidden" name="profId" id="profId_s" value="profId" readonly="readonly"/>
 						
 						
 					</div>
@@ -167,7 +173,6 @@ pre {
 				<div id="topCloseAnswerBotton" style="text-align: right">
 					<span class="close" id="closeAnswer" Style="width: 50px;">&times;</span>
 				</div>
-				<form name="myAnswerFrm" action="${path}/myAppeal.hd" method="post">
 					<p style="font-family: jua; font-size: 30px; font-style:">성적이의신청결과</p>
 					<div class="form-group">
 						<div class="row">
@@ -175,7 +180,7 @@ pre {
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">교과목명 : </label>
 								<div class="col-sm-10" style="width:10px;">
-									<input type="text" class="form-control" name="subName" id="subName" readonly="readonly" />
+									<input type="text" class="form-control" name="subName" id="subName_p" readonly="readonly" />
 								</div>
 								</div>
 							</div>
@@ -185,7 +190,7 @@ pre {
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">담당교수 : </label>
 								<div class="col-sm-5">
-								<input type="text" class="form-control" name="profName" id="profName" readonly="readonly"/>
+								<input type="text" class="form-control" name="profName" id="profName_p" readonly="readonly"/>
 								</div>
 								</div>
 							</div>
@@ -195,7 +200,7 @@ pre {
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">취득등급 : </label>
 								<div class="col-sm-5">
-								<input type="text" class="form-control" name="grade" id="grade" readonly="readonly"/>
+								<input type="text" class="form-control" name="grade" id="grade_p" readonly="readonly"/>
 								</div>
 								</div>
 							</div>
@@ -205,30 +210,20 @@ pre {
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">신청일자 : </label>
 								<div class="col-sm-5">
-								<input type="text" class="form-control" name="reqDate" id="reqDate" readonly="readonly"/>
+								<input type="text" class="form-control" name="reqDate" id="reqDate_p" readonly="readonly"/>
 								</div>
 								</div>
 							</div>
 						</div>
 						
-						<p style="font-family: jua; font-size: 15px; font-style:">건의제목</p>
-						<input type="text" name="reqTitle" id="reqTitle" class="form-control" required="required" />
+						<p style="font-family: jua; font-size: 15px;">이의신청제목</p>
+						<input type="text" name="reqTitle" id="reqTitle_p" class="form-control" readonly="readonly"/>
 						<hr>
-						<p style="font-family: jua; font-size: 15px; font-style:">이의신청내용</p>
-						<textarea rows="10" cols="90" name="reqContent" id="reqContent" placeholder="이의신청 내용을 작성하세요." required="required"></textarea>
-						<hr>
-						<input type="hidden" name="stuNo" id="stuNo" value="${loginMember.stuNo}"/>
-						
-						
-						
-						<input type="hidden" name="acaYearSem" id="acaYearSem" value="acaYearSem"/>
-						<input type="hidden" name="subCode" id="subCode" value="subCode"/>
-						<input type="hidden" name="profId" id="profId" value="profId"/>
-						
-						
-						
+						<p style="font-family: jua; font-size: 15px;">이의신청내용</p>
+						<textarea class="form-control" rows="5" cols="90" name="reqContent" id="reqContent_p" readonly="readonly"></textarea>			
+						<p style="font-family: jua; font-size: 15px;">이의신청결과</p>
+						<textarea class="form-control" rows="5" cols="90" name="reqAnswer" id="reqAnswer_p" readonly="readonly"></textarea>
 					</div>
-				</form>
 			</div>
 		</div>
 <style>
@@ -242,13 +237,13 @@ pre {
 /* function taeyoug1(event) {
 	console.log("taeyoung1");
 	alert('Hello world, '+this.value);
-    AppealheaderModal.style.display = "block";
+	AppealModal.style.display = "block";
 } */
 
 	//이의신청 모달 script
-	var AppealheaderModal = document.getElementById('appealModal');
+	var AppealModal = document.getElementById('appealModal');
 	//답변보기 모달
-	var AnswerheaderModal = document.getElementById('answerModal');
+	var AnswerModal = document.getElementById('answerModal');
 
     // Get the <span> element that closes the modal
     var closeAppeal = document.getElementById("closeAppeal");                                          
@@ -259,17 +254,17 @@ pre {
     
     // When the user clicks on <span> (x), close the modal
     closeAppeal.onclick = function() {
-    	AppealheaderModal.style.display = "none";
+    	AppealModal.style.display = "none";
     }
     closeAnswer.onclick = function() {
-    	AnswerheaderModal.style.display = "none";
+    	AnswerModal.style.display = "none";
     }
     
     closeAppeal2.onclick = function() {
-    	AppealheaderModal.style.display = "none";
+    	AppealModal.style.display = "none";
     }
     closeAppeal3.onclick = function() {
-    	AppealheaderModal.style.display = "none";
+    	AppealModal.style.display = "none";
     }
     
     
@@ -285,7 +280,7 @@ pre {
 	    	gradeList = (ArrayList)request.getAttribute("gradeNow");
     	}
     %>
-    <%if(gradeList!=null) { 
+     <%if(gradeList!=null) { 
     	for(int i=0; i<gradeList.size(); i++) { %>
      	// Get the button that opens the modal
         var AppealheaderBtn<%=(i+1)%> = document.getElementById("appeal<%=(i+1)%>");
@@ -294,56 +289,67 @@ pre {
         
      	// When the user clicks on the button, open the modal 
         <%-- AppealheaderBtn<%=(i+1)%>.onclick = function() {
-        	AppealheaderModal.style.display = "block";
+        	AppealModal.style.display = "block";
         } --%>
         AppealheaderBtn<%=(i+1)%>.addEventListener('click', function(e){
         	/* alert(this.id); */
         	<% if(gradeList.get(i).getReqDate()==null) { %>
-            AppealheaderModal.style.display = "block";
-            $("#subName").val(""); // 초기화
-            $("#subName").val("<%=gradeList.get(i).getSubName()%>");
-            $("#profName").val("");
-            $("#profName").val("<%=gradeList.get(i).getProfName()%>"+"교수");
-            $("#grade").val("");
-            $("#grade").val("<%=gradeList.get(i).getGrade()%>");
-            $("#reqDate").val("");
-            $("#reqDate").val(year+"/"+month+"/"+date);
+        	alert("유의사항 : 시스템을 통한 성적이의신청 및 회신은 한 과목당 1회에 한합니다.");
+            AppealModal.style.display = "block";
+            $("#subName_s").val(""); // 초기화
+            $("#subName_s").val("<%=gradeList.get(i).getSubName()%>");
+            $("#profName_s").val("");
+            $("#profName_s").val("<%=gradeList.get(i).getProfName()%>"+"교수");
+            $("#grade_s").val("");
+            $("#grade_s").val("<%=gradeList.get(i).getGrade()%>");
+            $("#reqDate_s").val("");
+            $("#reqDate_s").val(year+"/"+month+"/"+date);
             
-            $("#acaYearSem").val("");
-            $("#acaYearSem").val("<%=gradeList.get(i).getAcaYearSem()%>");
-            $("#subCode").val("");
-            $("#subCode").val("<%=gradeList.get(i).getSubCode()%>");
-            $("#profId").val("");
-            $("#profId").val("<%=gradeList.get(i).getProfId()%>");
+            $("#acaYearSem_s").val("");
+            $("#acaYearSem_s").val("<%=gradeList.get(i).getAcaYearSem()%>");
+            $("#subCode_s").val("");
+            $("#subCode_s").val("<%=gradeList.get(i).getSubCode()%>");
+            $("#profId_s").val("");
+            $("#profId_s").val("<%=gradeList.get(i).getProfId()%>");
             <% }else { %>
-            alert("이미 이의신청 되었습니다.");
+            	alert("이미 이의신청 되었습니다.");
             <% } %>
         });
         
+        <% if(gradeList.get(i).getReqDate()==null) { %>
+		$("AnswerheaderBtn<%=(i+1)%>").html("");
+ 		<%} else { %>
         AnswerheaderBtn<%=(i+1)%>.addEventListener('click', function(e){
         	/* alert(this.id); */
         	
-            AnswerheaderModal.style.display = "block";
-            $("#subName").val(""); // 초기화
-            $("#subName").val("<%=gradeList.get(i).getSubName()%>");
-            $("#profName").val("");
-            $("#profName").val("<%=gradeList.get(i).getProfName()%>"+"교수");
-            $("#grade").val("");
-            $("#grade").val("<%=gradeList.get(i).getGrade()%>");
-            $("#reqDate").val("");
-            $("#reqDate").val(year+"/"+month+"/"+date);
-            
-            $("#acaYearSem").val("");
-            $("#acaYearSem").val("<%=gradeList.get(i).getAcaYearSem()%>");
-            $("#subCode").val("");
-            $("#subCode").val("<%=gradeList.get(i).getSubCode()%>");
-            $("#profId").val("");
-            $("#profId").val("<%=gradeList.get(i).getProfId()%>");
+        	<% if(gradeList.get(i).getReqAwswer()!=null) { %>
+            AnswerModal.style.display = "block";
+            $("#subName_p").val(""); // 초기화
+            $("#subName_p").val("<%=gradeList.get(i).getSubName()%>");
+            $("#profName_p").val("");
+            $("#profName_p").val("<%=gradeList.get(i).getProfName()%>"+"교수");
+            $("#grade_p").val("");
+            $("#grade_p").val("<%=gradeList.get(i).getGrade()%>");
+            $("#reqDate_p").val("");
+            $("#reqDate_p").val(year+"/"+month+"/"+date);
+			
+            $("#reqTitle_p").val("");
+	        $("#reqTitle_p").val("re: "+"<%=gradeList.get(i).getReqTitle()%>");
+	        $("#reqContent_p").val("");
+	        $("#reqContent_p").val("<%=gradeList.get(i).getReqContent()%>");
+	        $("#reqAnswer_p").val("");
+	        $("#reqAnswer_p").val("<%=gradeList.get(i).getReqAwswer()%>");
+	        
+			<% } else if(gradeList.get(i).getReqAwswer() == null){ %>
+				alert("답변 대기중 입니다.");
+			<% } %>
+		   
         });
-
-    <%
-    	}
-    }	%>
+        <%}%>
+   		<%
+    	}%>
+    <%}%>
+    
     
 </script>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

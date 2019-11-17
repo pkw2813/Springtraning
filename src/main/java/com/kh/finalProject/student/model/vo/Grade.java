@@ -14,12 +14,10 @@ public class Grade {
 	private String subCode;
 	private String subName;
 	private String profId;
-	private int mterm;
-	private int fterm;
-	private int assign1;
-	private int assign2;
-	private int assign3;
-	private int assign4;
+	/*
+	 * private int mterm; private int fterm; private int assign1; private int
+	 * assign2; private int assign3; private int assign4;
+	 */
 	private String grade;
 	private String stuNo;
 	private String retake;
@@ -27,4 +25,8 @@ public class Grade {
 	private String subType;
 	private String profName;
 	private String reqDate;
+	private String reqTitle;
+	private String reqContent;
+	private String reqAwswer;
+	private String reqYn;
 }

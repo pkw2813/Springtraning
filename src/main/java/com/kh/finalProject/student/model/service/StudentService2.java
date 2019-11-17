@@ -15,9 +15,11 @@ public interface StudentService2 {
 	
 	int insertAppeal(Request request);
 	
-	List<Request> selectRequest();
+	/* List<Request> selectRequest(); */
 	
 	
 	List<Grade> selectGradeNow(InfoForSearchGrade ifsg);
+	
+	List<Grade> selectsubType(String stuNo);
 
 }

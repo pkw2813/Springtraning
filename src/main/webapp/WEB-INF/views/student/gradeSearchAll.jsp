@@ -11,7 +11,6 @@
 
 <style>
 .form-control {
-	margin-left: -150px !important;
 	width: 150px;
 	height: 52.4px;
 }
@@ -25,6 +24,10 @@ pre {
 	padding: 0px;
 	background-color: white;
 }
+
+.col-form-label {
+	text-align: center;
+}
 </style>
 
 <div class="main-panel">
@@ -37,11 +40,11 @@ pre {
 						<h4>과목별 성적</h4>
 						<div class="form-group row">
 							<label for="exampleInputUsername2"
-								class="col-sm-3 col-form-label"> <i
+								class="col-sm-2 col-form-label"> <i
 								class="ti-control-record"></i>&nbsp;정렬 순서
 							</label>
 							<div class="col-sm-9">
-								<select class="form-control" id="exampleInputUsername2">
+								<select class="form-control" id="selectGradeMenu">
 									<option value="aca_year_sem">년도학기</option>
 									<option value="sub_type">이수구분</option>
 									<option value="sub_name">교과목명</option>
@@ -51,45 +54,20 @@ pre {
 					</div>
 
 					<script>
-						$('#exampleInputUsername2').change(function() {
-							if ($(this).val() == "aca_year_sem") {
-								alert("년도별");
-								var value = $(this).val()
+					$(function(){
+						$('#selectGradeMenu').change(function() {
+								alert("뭐든");
+								var value = $(this).val();
+								console.log(value);
 								$.ajax({
-									url : "${path}/student/gradeSearchAll.hd",
-									data : {
-										"aca_year_sem" : value
-									},
+									url : "${path}/student/gradeSearchAll1.hd",
+									data : {"GradeMenu" : value},
 									success : function(data) {
 										console.log(data);
 									}
 								});
-							} else if ($(this).val() == "sub_type") {
-								alert("이수구분별");
-								var value = $(this).val()
-								$.ajax({
-									url : "${path}/student/gradeSearchAll.hd",
-									data : {
-										"sub_type" : value
-									},
-									success : function(data) {
-										console.log(data);
-									}
-								});
-							} else if ($(this).val() == "sub_name") {
-								alert("과목별");
-								var value = $(this).val()
-								$.ajax({
-									url : "${path}/student/gradeSearchAll.hd",
-									data : {
-										"sub_name" : value
-									},
-									success : function(data) {
-										console.log(data);
-									}
-								});
-							}
 						});
+					});
 					</script>
 					<div class="card-body">
 						<!-- 부트스트랩에서는 화면 폭이 좁을 때(768px 이하) 하단에 스크롤바가 나타나며 수평으로 스크롤해서 테이블을 볼 수 있게 했습니다. 
