@@ -117,7 +117,7 @@
           let start = $('#starts-at').val();
           let end = $('#ends-at').val();
           let title = $('#title').val();
-          location.href='${pageContext.request.contextPath}/insertPlan.hd?start='+start+'&end='+end+'&title='+title+'';
+          location.href='${pageContext.request.contextPath}/insertPlan.hd?start='+start+'&end='+end+'&title='+title+'&url=/deptSchedule.hd';
         }
 
      

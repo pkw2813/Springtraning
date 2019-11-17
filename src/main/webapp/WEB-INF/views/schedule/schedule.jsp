@@ -94,7 +94,7 @@
                           "deptCode": event.event._def.groupId
                           },
                           success(data) {
-                            // location.href='${path}/schedule.hd';
+                            location.href='${path}/schedule.hd';
                             //data 가 0보다 크면 이벤트 remove하기
                             // calendar('removeEvents', event.event._instance.instanceId); //replace 123 with reference to a real ID
                             // doc = $('.fc-title');
@@ -201,7 +201,7 @@
           let start = $('#starts-at').val();
           let end = $('#ends-at').val();
           let title = $('#title').val();
-          location.href='${pageContext.request.contextPath}/insertPlan.hd?start='+start+'&end='+end+'&title='+title+'';
+          location.href='${pageContext.request.contextPath}/insertPlan.hd?start='+start+'&end='+end+'&title='+title+'&url=/schedule.hd';
         }
 
      

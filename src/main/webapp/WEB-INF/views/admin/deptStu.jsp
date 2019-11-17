@@ -68,15 +68,12 @@
 // ajax 로 바로 처리하는게 안되면 검색창 밑에 뜨게해서 검색버튼으로 검색하게 로직 구현하기
 $('#searchStu').on('keyup', function(){
 	let search = $(this).val().toUpperCase();
-	console.log(search);
 	$.ajax({
 		type:'post',
 		url:"${path}/ajax/deptStu",
 		data:{'search':search},
 		success: function(data){
-			console.log(data);
 			let stuList = "";
-			console.log(data['list']);
 			for(let i = 0; i < data['list'].length; i++) {
 
 			stuList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
@@ -86,7 +83,6 @@ $('#searchStu').on('keyup', function(){
 
 			}
 			$('.table').html(stuList);
-			console.log(data['pageBar']);
 			$('.card-footer').html(data['pageBar']);
 			// $('.card-footer').removeProp();
 		}

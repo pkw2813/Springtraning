@@ -260,23 +260,6 @@ public class EmployeeController {
 			PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/ajax/deptStu"));
 	return map;
 	}
-	
-	
-	@RequestMapping("/deptSchedule.hd")
-	public ModelAndView deptSchedule() {
-		ModelAndView mv = new ModelAndView();
-		
-		
-		
-		
-		mv.setViewName("admin/deptSchedule");
-		return mv;
-	}
-	
-	
-	
-	
-	
 
 	// 학과 코드랑
 	public Map settingStudentNumber(String deptCode) {

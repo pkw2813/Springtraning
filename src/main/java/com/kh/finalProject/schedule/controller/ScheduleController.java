@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.employee.model.vo.Employee;
 import com.kh.finalProject.schedule.model.service.ScheduleService;
@@ -43,16 +44,16 @@ public class ScheduleController {
 	
 	
 	@RequestMapping("/insertPlan.hd")
-		public String insertPlan(String start, String end, String title, String deptCode, HttpSession s, Model model) {
+		public String insertPlan(String start, String end, String title, String url, HttpSession s, Model model) {
 		String msg ="";
-		String loc = "/schedule.hd";
+		String loc = url;
 		Employee e = (Employee)s.getAttribute("loginMember");
 		try {
 			HashMap map = new HashMap();
 			map.put("start", start);
 			map.put("end", end);
 			map.put("title", title);
-			map.put("deptCode", deptCode);
+			map.put("deptCode", e.getDeptCode());
 			service.insertPlan(map);
 			msg = "일정 등록 완료";
 		}catch(Exception x){
@@ -63,6 +64,17 @@ public class ScheduleController {
 		return "common/msg";
 		
 	}
+	
+
+	
+	@RequestMapping("/deptSchedule.hd")
+	public ModelAndView deptSchedule() {
+		ModelAndView mv = new ModelAndView();
+	
+		mv.setViewName("admin/deptSchedule");
+		return mv;
+	}
+	
 	
 	@RequestMapping("/deleteCalendar.hd")
 	@ResponseBody
