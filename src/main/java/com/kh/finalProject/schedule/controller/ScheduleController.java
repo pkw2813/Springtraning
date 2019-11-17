@@ -2,6 +2,7 @@ package com.kh.finalProject.schedule.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,6 +57,22 @@ public class ScheduleController {
 		
 	}
 	
+	@RequestMapping("/deleteCalendar.hd")
+	@ResponseBody
+//	public int deleteCalendar(String title, String start, String end) {
+	public int deleteCalendar(String title, String start, String end) {
+		Map map = new HashMap();
+		int result = 0;
+		map.put("title", title);
+		map.put("start", start);
+		map.put("end", end);
+		try{
+			result = service.deleteCalendar(map);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	
 }

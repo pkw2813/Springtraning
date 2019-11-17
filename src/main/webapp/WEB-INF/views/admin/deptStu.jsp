@@ -65,7 +65,7 @@
 
 
 <script>
-
+// ajax 로 바로 처리하는게 안되면 검색창 밑에 뜨게해서 검색버튼으로 검색하게 로직 구현하기
 $('#searchStu').on('keyup', function(){
 	let search = $(this).val().toUpperCase();
 	console.log(search);

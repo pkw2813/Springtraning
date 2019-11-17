@@ -20,23 +20,10 @@
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
     	  var Calendar = FullCalendar.Calendar;
-    	  // var Draggable = FullCalendarInteraction.Draggable;
     	 
     	  var containerEl = document.getElementById('external-events');
     	  var calendarEl = document.getElementById('calendar');
     	  var checkbox = document.getElementById('drop-remove');
-
-          //  drop이벤트        	
-        	// new Draggable(containerEl, {
-          //   itemSelector: '.fc-event',
-          //   eventData: function(eventEl) {
-          //     return {
-          //       title: eventEl.innerText
-          //     };
-          //   }
-          // });
-
-        
         
         var calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: ['interaction', 'dayGrid', 'timeGrid'],
@@ -45,21 +32,9 @@
         header: {
             left: 'prev,next today',
             center: 'title',
-            // right: 'dayGridMonth,timeGridWeek,timeGridDay'
             right: ''
         },
          editable: true,
-        
-        // drop 이벤트
-        //  droppable: true, // this allows things to be dropped onto the calendar
-        //  drop: function(info) {
-        //    // is the "remove after drop" checkbox checked?
-        //   if (checkbox.checked) {
-        //     // if so, remove the element from the "Draggable Events" list
-        //     info.draggedEl.parentNode.removeChild(info.draggedEl);
-        //   }
-        // },
-
 
           locale: 'ko',
           selectable: true,  //사용자가 클릭 및 드래그하여 선택을 할 수 있도록
@@ -82,64 +57,7 @@
             $("#save-event").show();
             $("input").prop("readonly", false);
           },
-           eventClick:function(event) {
-                if(confirm("일정을 삭제 하시겠습니까?")) {
-                  // 삭제하는 로직 작성
-                  $.ajax({
-                    type:"post",
-                    url:'${path}/deleteCalendar.hd',
-                    data:{"title" : event.event._def.title,
-                          "start" : moment(event.event._instance.range.start).format('YYYY-MM-DD'),
-                          "end" : moment(event.event._instance.range.end).format('YYYY-MM-DD')
-                          },
-                          success(data) {
-                            location.href='${path}/schedule.hd';
-                            //data 가 0보다 크면 이벤트 remove하기
-                            // calendar('removeEvents', event.event._instance.instanceId); //replace 123 with reference to a real ID
-                            // doc = $('.fc-title');
-                            // for(let i = 0; i < doc.length; i++) {
-                              // if(doc[i].html == title) {
-                                // remove(doc[i]);
-                                // calendar.render();
-                              // }
-                            // }
-                            // $('#calendar').fullcalendar('unselect');
-                          }
-
-                  });
-                }
-            }
-          //나중에 생성과 동시에 이벤트 넣는게 가능한지 실험해볼 코드 샘플
-        // eventSources: [{
-        //     events : function(info, successCallback, failureCallback) {
-        //         $.ajax({
-    		//  /*  contentType:'application/json',
-    	  //       dataType:'json', */
-    	  //       url:'${pageContext.request.contextPath}/getCalendar.hd',
-    	  //       type:'post',
-        //         data: {"start": moment(info.startStr).format('YYYY-MM-DD'),
-        //         		"end": moment(info.endStr).format('YYYY-MM-DD')},
-    	  //       async: false,
-    	  //       /* data:JSON.stringify(viewData), */
-    	  //       success:function(data){
-        //               if(data != null) {
-        //             let setData = {
-        //                 "title" : data.list[0]['planName'],
-        //                 "start" : data.list[0]['stDate'],
-        //                 "end" : data.list[0]['enDate']
-        //             };
-        //             setData = JSON.stringify(setData);
-        //             console.log(setData);
-        //             successCallback(setData);                     
-    	  //       },
-    	  //       error:function(){
-    	  //           alert('저장 중 에러가 발생했습니다. 다시 시도해 주세요.');
-    	  //       }
-        //       	    });
-                      // }
-        // }]
-     	
-    });//calendar종료
+        });//calendar종료
  $(function(){
     calendar.render();
     $.ajax({
@@ -155,8 +73,10 @@
                     $.each(items,function(index, item) {
                           let setData = {
                               "title" : item['planName'],
+                              backgroundColor : "#008000",
+                              color: "#FF6666",
                               "start" : moment(new Date(item['stDate'])).format('YYYY-MM-DD'),
-                              "end" : moment(new Date(item['enDate'])).format('YYYY-MM-DD')
+                              "end" : moment(new Date(item['enDate'])).format('YYYY-MM-DD'),
                           };
                           calendar.addEvent(setData);
                     })
@@ -351,40 +271,10 @@ input[type="text"][readonly] {
         
         <div class='card card-body'>
           
-         
-    <!-- 이건 행사 신청을 위한 drop event 
-      <div id="external-events">
-        <p>
-          <strong>Draggable Events</strong>
-        </p>
-        신청한 이벤트들 for문으로 집어 넣기 
-    <div class="fc-event">My Event 1</div>
-    <input type='hidden' value = ''>
-    <div class="fc-event">My Event 2</div>
-    <div class="fc-event">My Event 3</div>
-    <div class="fc-event">My Event 4</div>
-    <p>
-      <input type="checkbox" id="drop-remove">
-      <label for="drop-remove">remove after drop</label>
-    </p>
-  </div> -->
 <div id='calendar'></div>
 
 
 <div id='calendar'></div>
-
-<!-- 도움말 설정하는 div 
-<div class="dropdown">
-  <div class="dropdown-content">
-    <p>Click a calendar date to invoke a Bootstrap Modal Box.</p>
-    <p>Add event title/description, start date, and end date.</p>
-    <p>Click "Save" to save event.</p>
-    <p>Click event again to re-open in Bootstrap Modal Box (Event is non-editable).
-      <p>
-        <p>Click "x" to delete event.</p>
-  </div>
-  <button class="fa dropbtn" style="font-size:24px; margin-left: 75%; color: black"><span>&#xf128;</span></button>
-</div> -->
 
 <div id='datepicker'></div>
 

@@ -21,6 +21,11 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		return session.insert("cal.insertPlan", map);
 	}
 
+	@Override
+	public int deleteCalendar(SqlSessionTemplate session, Map map) {
+		return session.delete("cal.deleteCalendar", map);
+	}
+
 	
 	
 	

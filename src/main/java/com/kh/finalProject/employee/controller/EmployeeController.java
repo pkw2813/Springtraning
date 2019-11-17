@@ -262,6 +262,17 @@ public class EmployeeController {
 	}
 	
 	
+	@RequestMapping("/deptSchedule.hd")
+	public ModelAndView deptSchedule() {
+		ModelAndView mv = new ModelAndView();
+		
+		
+		
+		
+		mv.setViewName("admin/deptSchedule");
+		return mv;
+	}
+	
 	
 	
 	

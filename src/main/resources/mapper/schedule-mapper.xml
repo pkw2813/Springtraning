@@ -6,10 +6,13 @@
 	SELECT * FROM HD_PLAN_TB WHERE PLAN_START_DATE BETWEEN #{start} AND #{end}
 	</select>
 
-	<insert id="insertPlan">
+	<insert id="insertPlan" parameterType="map">
 	INSERT INTO HD_PLAN_TB VALUES(PLAN_NO_SEQ.NEXTVAL, #{title}, #{start} ,#{end})
 	</insert>
 
+	<delete id="deleteCalendar" parameterType="map">
+	DELETE FROM HD_PLAN_TB WHERE PLAN_NAME = #{title} AND PLAN_START_DATE = #{start} AND PLAN_END_DATE = #{end}
+	</delete>
 
   	<resultMap id="scheduleResult" type="schedule">
 		<result column="PLAN_NO_SEQ" property="planNo" />

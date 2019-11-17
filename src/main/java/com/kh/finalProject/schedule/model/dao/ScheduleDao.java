@@ -9,7 +9,9 @@ import com.kh.finalProject.schedule.model.vo.Schedule;
 
 public interface ScheduleDao {
 
-	public List<Schedule> getCalendar(SqlSessionTemplate session, Map resultMap);
+	List<Schedule> getCalendar(SqlSessionTemplate session, Map resultMap);
 	
-	public int insertPlan(SqlSessionTemplate session, Map map);
+	int insertPlan(SqlSessionTemplate session, Map map);
+	
+	int deleteCalendar(SqlSessionTemplate session, Map map);
 }
