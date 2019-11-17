@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.finalProject.employee.model.vo.Curriculum;
 import com.kh.finalProject.professor.model.vo.Subject;
 import com.kh.finalProject.subject.model.dao.SubjectDao;
 
@@ -51,6 +52,13 @@ public class SubjectServiceImpl implements SubjectService {
 	public List<Subject> curriSearch(Subject s) {
 		return dao.curriSearch(session,s);
 	}
+
+	@Override
+	public Curriculum subTarget(String subName) {
+		return dao.subTarget(session,subName);
+	}
+	
+	
 	
 	
 	

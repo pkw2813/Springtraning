@@ -181,8 +181,6 @@
 	                   success: function(data){
 	                      var colArr="";
 	                      let re=JSON.parse(data);
-	                      console.log(re.length);
-	                      console.log(re[0]["COL_NAME"]);
 	                      for(var i=0; i<re.length;i++){
 	                         colArr+="<tr><td>"+re[i]["COL_NAME"]+"</td>";
 	                         colArr+="<form action='${path }/updateDept.hd'>";
@@ -234,7 +232,6 @@
         					colListHtml = "<option value='select' id='selColleage'>학부 선택</option>";
         					for(let i = 0; i < data.list.length; i++) {
         						let cols = data.list[i];
-        						console.log(cols['COL_CODE']);
         						colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
         					}
         					
