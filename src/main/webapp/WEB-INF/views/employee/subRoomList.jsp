@@ -203,48 +203,35 @@
 							 var subRoom=item["DEPT_NAME"];
 							 var completePt=item["COMPLETE_PT"];
 							 
-								console.log(subTime.substr(0,2));
-							if(subDate=='월') {
-								if(subTime.substr(0,2)=="09") {
-									$("#mon1").html(subName+"<br>("+subRoom+", "+profName+")");
-									if(completePt=='2'){
-										$("#mon1").attr(rowspan='2');
-									}else{
-										$("#mon1").attr(rowspan='3');
+							 if(subDate=='월') {
+									if(subTime.includes("09:00")) {
+										$("#mon1").html(subName+"<br>("+subRoom+", "+profName+")");
+									}
+									if(subTime.includes("10:00")) {
+										$("#mon2").html(subName+"<br>("+subRoom+", "+profName+")");
+									}
+									if(subTime.includes("11:00")) {
+										$("#mon3").html(subName+"<br>("+subRoom+", "+profName+")");
+									}
+									if(subTime.includes("12:00")) {
+										$("#mon4").html(subName+"<br>("+subRoom+", "+profName+")");
+									}
+									if(subTime.includes("13:00")) {
+										$("#mon5").html(subName+"<br>("+subRoom+", "+profName+")");
+									}
+									if(subTime.includes("14:00")) {
+										$("#mon6").html(subName+"<br>("+subRoom+", "+profName+")");
+									}
+									if(subTime.includes("15:00")) {
+										$("#mon7").html(subName+"<br>("+subRoom+", "+profName+")");
+									}
+									if(subTime.includes("16:00")) {
+										$("#mon8").html(subName+"<br>("+subRoom+", "+profName+")");
+									}
+									if(subTime.includes("17:00")) {
+										$("#mon9").html(subName+"<br>("+subRoom+", "+profName+")");
 									}
 								}
-								if(subTime.substr(0,2)=="10") {
-									$("#mon2").html(subName+"<br>("+subRoom+", "+profName+")");
-									if(completePt=='2'){
-										$("#mon2").attr("rowspan",'2');
-										$("#mon3").remove();
-									}else{
-										$("#mon2").attr("rowspan",'2');
-										$("#fri3").not(":eq(0)").remove();
-									}
-								}
-								if(subTime.substr(0,2)=="11") {
-									$("#mon3").html(subName+"<br>("+subRoom+", "+profName+")");
-								}
-								if(subTime.substr(0,2)=="12") {
-									$("#mon4").html(subName+"<br>("+subRoom+", "+profName+")");
-								}
-								if(subTime.substr(0,2)=="13") {
-									$("#mon5").html(subName+"<br>("+subRoom+", "+profName+")");
-								}
-								if(subTime.substr(0,2)=="14") {
-									$("#mon6").html(subName+"<br>("+subRoom+", "+profName+")");
-								}
-								if(subTime.substr(0,2)=="15") {
-									$("#mon7").html(subName+"<br>("+subRoom+", "+profName+")");
-								}
-								if(subTime.substr(0,2)=="16") {
-									$("#mon8").html(subName+"<br>("+subRoom+", "+profName+")");
-								}
-								if(subTime.substr(0,2)=="17") {
-									$("#mon9").html(subName+"<br>("+subRoom+", "+profName+")");
-								}
-							}
 							if(subDate=='화') {
 								if(subTime.includes("09:00")) {
 									$("#tue1").html(subName+"<br>("+subRoom+", "+profName+")");
