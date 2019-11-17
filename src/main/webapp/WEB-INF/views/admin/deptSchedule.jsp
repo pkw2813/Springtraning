@@ -72,7 +72,7 @@
                   $.each(data, function(key, items) {
                     $.each(items,function(index, item) {
                       let depCode = "${sessionScope.loginMember.deptCode }";
-                      let flag = depCode == item['deptCode']?"#FF6666":null;
+                      let flag = moment(new Date()).format('YYYY-MM-DD') > moment(new Date(item['enDate'])).format('YYYY-MM-DD')?'#808080':depCode == item['deptCode']?"#FF6666":null;
                           let setData = {
                               "title" : item['planName'],
                               "color" : flag,
