@@ -1,0 +1,15 @@
+package com.kh.finalProject.professor.model.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ProfSubject {
+	
+	private String subSeq; // 과목 일련번호
+	private String subCode; // 과목 코드
+	private String subName; // 과목 이름
+}

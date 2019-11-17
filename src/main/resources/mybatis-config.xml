@@ -28,5 +28,7 @@
 		<typeAlias type="com.kh.finalProject.school.model.vo.College" alias="college"/>
 		<typeAlias type="com.kh.finalProject.student.model.vo.InfoForSearchGrade" alias="infoForSearchGrade"/>
 		<typeAlias type="com.kh.finalProject.employee.model.vo.Curriculum" alias="curriculum"/>
+		<typeAlias type="com.kh.finalProject.professor.model.vo.InfoForProfSubject" alias="infoForProfSubject"/>
+		<typeAlias type="com.kh.finalProject.professor.model.vo.ProfSubject" alias="profSubject"/>
 	</typeAliases>
 </configuration>

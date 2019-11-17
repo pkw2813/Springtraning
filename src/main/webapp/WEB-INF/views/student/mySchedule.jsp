@@ -77,7 +77,7 @@
 					<tr>
 					</tr>
 				      <tr>
-				        <th colspan="11" style="font-size:25px;" class="nanumFont">나의 수강신청 내역</th>
+				        <th colspan="11" style="font-size:25px;" class="nanumFont">나의 시간표 조회</th>
 				      </tr>
 				    </thead>
 				<tr>
