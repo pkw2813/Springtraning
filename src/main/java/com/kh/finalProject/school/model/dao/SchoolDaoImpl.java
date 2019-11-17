@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalProject.professor.model.vo.Department;
+import com.kh.finalProject.professor.model.vo.Subject;
 import com.kh.finalProject.school.model.vo.College;
 
 @Repository
@@ -78,6 +79,12 @@ public class SchoolDaoImpl implements SchoolDao {
 	public int updateDept(SqlSessionTemplate session, Department d) {
 		return session.update("school.updateDept", d);
 	}
+
+	@Override
+	public List<Map> subRoomUseList(SqlSessionTemplate session, Subject s) {
+		return session.selectList("school.subRoomUseList",s);
+	}
+	
 	
 	
 	

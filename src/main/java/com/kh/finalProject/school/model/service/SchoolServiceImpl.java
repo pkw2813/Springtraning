@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.professor.model.vo.Department;
+import com.kh.finalProject.professor.model.vo.Subject;
 import com.kh.finalProject.school.model.dao.SchoolDao;
 import com.kh.finalProject.school.model.vo.College;
 
@@ -82,6 +83,11 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public int updateDept(Department d) {
 		return dao.updateDept(session, d);
+	}
+
+	@Override
+	public List<Map> subRoomUseList(Subject s) {
+		return dao.subRoomUseList(session, s);
 	}
 	
 	

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.finalProject.professor.model.vo.Department;
+import com.kh.finalProject.professor.model.vo.Subject;
 import com.kh.finalProject.school.model.vo.College;
 
 public interface SchoolDao {
@@ -23,4 +24,5 @@ public interface SchoolDao {
 	int deleteDept(SqlSessionTemplate session, String deptCode);
 	int updateCol(SqlSessionTemplate session, College c);
 	int updateDept(SqlSessionTemplate session, Department d);
+	List<Map> subRoomUseList(SqlSessionTemplate session, Subject s);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.finalProject.professor.model.vo.Department;
+import com.kh.finalProject.professor.model.vo.Subject;
 import com.kh.finalProject.school.model.vo.College;
 
 public interface SchoolService {
@@ -21,4 +22,5 @@ public interface SchoolService {
 	int deleteDept(String deptCode);
 	int updateCol(College c);
 	int updateDept(Department d);
+	List<Map> subRoomUseList(Subject s);
 }

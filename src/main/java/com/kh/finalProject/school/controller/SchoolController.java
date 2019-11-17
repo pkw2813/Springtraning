@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.vo.Department;
+import com.kh.finalProject.professor.model.vo.Subject;
 import com.kh.finalProject.school.model.service.SchoolService;
 import com.kh.finalProject.school.model.vo.College;
 
@@ -167,6 +168,23 @@ public class SchoolController {
 	@RequestMapping("/subRoom.hd")
 	public String subRoomPage() {
 		return "employee/subRoomList";
+	}
+	
+	@RequestMapping("subRoomUse.hd")
+	@ResponseBody
+	public String subRoomUseList(Subject s) {
+		System.out.println(s);
+		List<Map> list=service.subRoomUseList(s);
+		ObjectMapper mapper=new ObjectMapper();
+		String jsonStr="";
+		
+		try {
+			jsonStr=mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return jsonStr;
 	}
 	
 }
