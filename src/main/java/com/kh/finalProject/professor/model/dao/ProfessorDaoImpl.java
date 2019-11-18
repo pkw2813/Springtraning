@@ -1,5 +1,7 @@
 package com.kh.finalProject.professor.model.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +17,12 @@ public class ProfessorDaoImpl implements ProfessorDao {
 		pro.setProfPw(loginPwd);
 		return session.selectOne("professor.selectOne", pro);
 	}
+
+	@Override
+	public Map empIdSearchModal(SqlSessionTemplate session, Map map) {
+		return session.selectOne("school.empIdSearchModal",map);
+	}
+	
 	
 	
 

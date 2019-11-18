@@ -5,5 +5,5 @@ import com.kh.finalProject.student.model.vo.Student;
 public interface StudentService {
 	
 	Student selectOne(String loginId,String loginPwd);
-
+	Student stuIdSearch(Student s);
 }

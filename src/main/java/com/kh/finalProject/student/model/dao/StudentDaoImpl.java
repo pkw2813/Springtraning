@@ -15,6 +15,13 @@ public class StudentDaoImpl implements StudentDao {
 		s.setStuPw(loginPwd);
 		return session.selectOne("student.selectOne", s);
 	}
+
+	@Override
+	public Student stuIdSearch(SqlSessionTemplate session, Student s) {
+		return session.selectOne("student.stuIdSearch",s);
+	}
+	
+	
 	
 	
 
