@@ -45,7 +45,7 @@
 	
 	<select id="deptProf" resultType="map" parameterType="map">
   		SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE)
- 		WHERE 1=1
+		WHERE SUBSTR(PROF_ID,1,1) = 'P'
  		<if test="deptCode != null">
 		AND DEPT_CODE = #{deptCode}
 		</if>
@@ -57,7 +57,7 @@
 	
 	<select id="deptProfCount" resultType="_int" parameterType="map">
   		SELECT COUNT(*) FROM HD_PROFESSOR_TB
-  		WHERE 1=1
+		WHERE SUBSTR(PROF_ID,1,1) = 'P'
   		<if test="deptCode != null">
 		AND DEPT_CODE = #{deptCode}
 		</if>

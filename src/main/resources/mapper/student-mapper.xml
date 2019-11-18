@@ -55,7 +55,15 @@
 		</if>
   	</select>
   	
-  	
+  	<select id="stuIdSearch" parameterType="student" resultMap="studentResult">
+        SELECT STU_NO, STU_NAME, STU_EMAIL FROM HD_STUDENT_TB WHERE STU_EMAIL=#{stuEmail}
+        <if test="stuName !=null">
+        AND STU_NAME=#{stuName} 
+        </if>
+        <if test="stuNo !=null">
+        AND STU_NO=#{stuNo}
+        </if>
+        </select>
   	
   	
   	<resultMap id="studentResult" type="student">

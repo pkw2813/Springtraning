@@ -285,6 +285,54 @@ public class EmployeeController {
 	
 	
 	
+	@RequestMapping("/deptEmp.hd")
+	public ModelAndView deptEmp(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, 
+								@RequestParam(value="search", required = false, defaultValue = "") String search,
+									HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		int numPerPage = 5;
+		Employee e = (Employee)session.getAttribute("loginMember");
+		Map map = new HashMap();
+		String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode().substring(0, 1);
+		String s = search.equals("")?null:search;
+		map.put("deptCode", deptCode);
+		map.put("search", s);
+		List<Employee> list = service.deptEmp(cPage, numPerPage, map);
+		int totalData = service.deptEmpCount(map);
+		mv.addObject("list", list);
+		mv.addObject("totalData", totalData);
+		mv.addObject("pageBar",
+				PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/deptStu.hd"));
+		mv.setViewName("admin/deptEmp");
+		return mv;
+	
+	}
+	
+	
+	@RequestMapping("/ajax/deptEmp")
+	@ResponseBody
+	public Map ajaxDeptEmp(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+									@RequestParam(value="search", required = false, defaultValue = "") String search,
+										HttpSession session) {
+	int numPerPage = 5;
+	Employee e = (Employee)session.getAttribute("loginMember");
+	Map map = new HashMap();
+	String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode();
+	String s = search.equals("")?null:search;
+	map.put("deptCode", deptCode);
+	map.put("search", s);
+	List<Employee> list = service.deptEmp(cPage, numPerPage, map);
+	int totalData = service.deptEmpCount(map);
+	map.put("list", list);
+	map.put("cPage", cPage);
+	map.put("pageBar",
+			PageFactory.getSearchPageBar(totalData, cPage, numPerPage, "/finalProject/ajax/deptStu"));
+	return map;
+	}
+	
+	
+	
+	
 	
 	// 학과 코드랑
 	public Map settingStudentNumber(String deptCode) {

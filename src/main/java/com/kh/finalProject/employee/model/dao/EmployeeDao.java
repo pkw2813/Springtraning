@@ -60,4 +60,9 @@ public interface EmployeeDao {
 	
 	int deptProfCount(SqlSessionTemplate saession, Map map);
 	
+	List<Employee> deptEmp(SqlSessionTemplate session, int cPage, int numParPage, Map map);
+	
+	int deptEmpCount(SqlSessionTemplate saession, Map map);
+	
+	
 }

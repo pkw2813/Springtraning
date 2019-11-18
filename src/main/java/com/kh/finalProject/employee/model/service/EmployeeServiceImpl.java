@@ -144,6 +144,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int deptProfCount(Map map) {
 		return dao.deptProfCount(session, map);
 	}
+
+	@Override
+	public List<Employee> deptEmp(int cPage, int numPerPage, Map map) {
+		return dao.deptEmp(session, cPage, numPerPage, map);
+	}
+
+	@Override
+	public int deptEmpCount(Map map) {
+		return dao.deptEmpCount(session, map);
+	}
 	
 	
 	
