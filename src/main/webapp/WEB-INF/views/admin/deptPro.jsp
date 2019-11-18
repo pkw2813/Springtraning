@@ -15,7 +15,17 @@
 	<div class="row">
 	</div>
 			<div class="row">	
-					<div class="table-responsive">		
+	<div class="table-responsive">	
+			<div class="nav-item nav-search d-none d-lg-block">
+					<div class="input-group as">
+						<div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+							<span class="input-group-text" id="search">
+							<i class="ti-search"></i>
+						  </span>
+						</div>
+						<input type="text" class="form-control" id="searchStu" placeholder="Search now" aria-label="search" aria-describedby="search">
+				  </div>
+			  </div>	
 				<table class="table">
 					<tr>
 						<!-- <th>번 호</th> -->
@@ -64,6 +74,57 @@
 
 
 <script>
+
+
+$('#searchStu').on('keyup', function(){
+	let search = $(this).val().toUpperCase();
+	$.ajax({
+		type:'post',
+		url:"${path}/ajax/deptProf",
+		data:{'search':search},
+		success: function(data){
+			let profList = "";
+			for(let i = 0; i < data['list'].length; i++) {
+
+			profList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
+			profList += "<td>"+data['list'][i].PHONE+"</td><td>"+data['list'][i].EMAIL+"</td><td>"+data['list'][i].ADDRESS+"</td>";
+			profList += "<td><input type='button' class='btn btn-outline-success btn-fw' onclick='detailProf("+data['list'][i].PROF_ID+");' value='상세 정보'/></td>";				
+			profList += "</tr>";
+
+			}
+			$('.table').html(profList);
+			$('.card-footer').html(data['pageBar']);
+		}
+	})
+});
+
+	function getSearchList(pageNo) {
+	let search = $('#searchStu').val().toUpperCase();
+	$.ajax({
+			type:'post',
+			url:"${path}/ajax/deptProf",
+			data:{'search':search,
+				  'cPage':pageNo},
+			success: function(data){
+				let profList = "";
+				for(let i = 0; i < data['list'].length; i++) {
+
+				profList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
+				profList += "<td>"+data['list'][i].PHONE+"</td><td>"+data['list'][i].EMAIL+"</td><td>"+data['list'][i].ADDRESS+"</td>";
+				profList += "<td><input type='button' class='btn btn-outline-success btn-fw' onclick='detailProf("+data['list'][i].PROF_ID+");' value='상세 정보'/></td>";				
+				profList += '</tr>';
+
+				}
+				$('.table').html(profList);
+				$('.card-footer').html(data['pageBar']);
+				// $('.card-footer').removeProp();
+			}
+		})
+}
+
+
+
+
 
 
 

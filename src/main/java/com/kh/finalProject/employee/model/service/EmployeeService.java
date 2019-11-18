@@ -51,4 +51,9 @@ public interface EmployeeService {
 	List<Student> deptStu(int cPage, int numPerPage, Map map);
 	
 	int deptStuCount(Map map);
+	
+	List<Employee> deptProf(int cPage, int numPerPage, Map map);
+	
+	int deptProfCount(Map map);
+	
 	}

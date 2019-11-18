@@ -132,6 +132,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int deptStuCount(SqlSessionTemplate session, Map map) {
 		return session.selectOne("student.deptStuCount", map);
 	}
+
+	@Override
+	public List<Employee> deptProf(SqlSessionTemplate session, int cPage, int numPerPage, Map map) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("professor.deptProf", map, row);
+	}
+
+	@Override
+	public int deptProfCount(SqlSessionTemplate session, Map map) {
+		return session.selectOne("professor.deptProfCount", map);
+	}
 	
 	
 	

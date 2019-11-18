@@ -43,6 +43,29 @@
 	    INSERT INTO HD_PROFESSOR_TB VALUES(#{profId},#{profPw},#{profName},#{profSsn},#{deptCode},#{email},#{phone},#{address},#{gender},DEFAULT,'profImg.PNG')
 	</insert>
 	
+	<select id="deptProf" resultType="map" parameterType="map">
+  		SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE)
+ 		WHERE 1=1
+ 		<if test="deptCode != null">
+		AND DEPT_CODE = #{deptCode}
+		</if>
+		<if test="search != null">
+		AND PROF_ID LIKE '%${search}%' OR PROF_NAME LIKE '%${search}%'
+		</if>
+		 ORDER BY PROF_ENROLL DESC, DEPT_CODE
+	</select>
+	
+	<select id="deptProfCount" resultType="_int" parameterType="map">
+  		SELECT COUNT(*) FROM HD_PROFESSOR_TB
+  		WHERE 1=1
+  		<if test="deptCode != null">
+		AND DEPT_CODE = #{deptCode}
+		</if>
+		<if test="search != null">
+		AND PROF_ID LIKE '%${search}%' OR PROF_NAME LIKE '%${search}%'  
+		</if>
+	</select>
+	
   <resultMap id="professorResult" type="professor">
 		<result column="PROF_ID" property="profId" />
 		<result column="PROF_PW" property="profPw" />

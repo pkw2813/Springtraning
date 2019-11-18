@@ -421,6 +421,7 @@
                 <li class="nav-item"> <a class="nav-link" href="${path }/deptSchedule.hd">학과 일정</a></li>
 				<!-- <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html">기자재 신청</a></li> -->
                 <li class="nav-item"> <a class="nav-link" href="${path }/deptPro.hd">교수 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/deptEmp.hd">교직원 조회</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/deptStu.hd">학생 조회</a></li>
                </ul>
             </div>
