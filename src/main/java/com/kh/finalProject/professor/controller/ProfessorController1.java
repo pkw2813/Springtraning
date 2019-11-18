@@ -138,6 +138,7 @@ public class ProfessorController1 {
 			logger.info("생성불가");
 		}
 		
+		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonStr = "";
 		try {
@@ -672,14 +673,77 @@ public class ProfessorController1 {
 	}
 	//교수별 강의시간표
 	@RequestMapping("/professor/deptProfSchedule")
-	public String deptProfSchedule(Model model) {
+	public String deptProfSchedule(Model model,String deptCode) {
 		
-		List<Map<String,String>> schedule = service.deptProfScheduleView();
-		
+		logger.info("deptCode : "+deptCode);
+		List<Map<String,String>> schedule = service.deptProfScheduleView(deptCode);
+		logger.info("교수별 강의시간표 : " + schedule);
 		model.addAttribute("schedule",schedule);
 		
 		return "professor/deptProfSchedule";
 	}
+	//강의자료 게시판
+	@RequestMapping("/professor/searchData")
+	@ResponseBody
+	public String searchData(String search, HttpServletResponse res,@RequestParam(value="cPage", required=false, defaultValue="1")int cPage) {
+		
+		int numPerPage = 10;
+		
+		logger.info("입력값 : "+search);
+		
+		List<Map<String,String>> searchData = service.searchData(search);
+//		List<Map<String,String>> searchData = service.searchData(search,cPage,numPerPage); 페이징
+		
+		int totalData = service.selectBoardCount();
+		
+//		Map searchData=new HashMap();
+//		logger.info("검색한 리스트 값 : "+searchData);
+//		searchData.put("searchData",searchData);
+//		searchData.put("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/searchData"));
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		
+		try {
+			jsonStr = mapper.writeValueAsString(searchData);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		res.setContentType("application/json;charset=UTF-8");
+		
+		
+		return jsonStr;
+	}
+	//강의계획서 검색
+	@ResponseBody
+	@RequestMapping("/professor/searchPlan")
+	public String searchPlan(@RequestParam(value="cPage",required=false,defaultValue="1")int cPage,String typing, HttpServletResponse res) {
+		
+		int numPerPage = 10;
+		
+		Map<String,String> typing_ = new HashMap<String,String>();
+		typing_.put("typing",typing);
+		
+		logger.info("typing : "+typing);
+		List<Map<String,String>> typingPlan = service.searchPlan(typing_);
+		
+		logger.info("계획서 검색 : "+typingPlan);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		
+		try {
+			jsonStr = mapper.writeValueAsString(typingPlan);
+		}catch(JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		res.setContentType("application/json;charset=UTF-8");
+		
+		return jsonStr;
+	}
+	
 }
 
 

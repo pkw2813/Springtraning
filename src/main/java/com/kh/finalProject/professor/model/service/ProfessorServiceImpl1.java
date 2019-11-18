@@ -276,10 +276,22 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	}
 	//교수별 시간표
 	@Override
-	public List<Map<String,String>> deptProfScheduleView(){
+	public List<Map<String,String>> deptProfScheduleView(String deptCode){
 		
-		List<Map<String,String>> schedule = dao.deptProfScheduleView(session);
+		List<Map<String,String>> schedule = dao.deptProfScheduleView(session,deptCode);
 		
 		return schedule;
+	}
+	//강의 자료 게시판
+	@Override
+	public List<Map<String,String>> searchData(String search){
+		List<Map<String,String>> searchData = dao.searchData(session,search);
+		return searchData;
+	}
+	//강의계획서 검색
+	@Override
+	public List<Map<String,String>> searchPlan(Map<String,String> typing_){
+		List<Map<String,String>> searchPlan = dao.searchPlan(session,typing_);
+		return searchPlan;
 	}
 }

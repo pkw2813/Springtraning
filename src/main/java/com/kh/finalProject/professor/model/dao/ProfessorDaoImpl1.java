@@ -174,7 +174,18 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	}
 	//교수별 시간표
 	@Override
-	public List<Map<String,String>> deptProfScheduleView(SqlSessionTemplate session){
-		return session.selectList("professor1.deptProfSchedule");
+	public List<Map<String,String>> deptProfScheduleView(SqlSessionTemplate session, String deptCode){
+		return session.selectList("professor1.deptProfSchedule",deptCode);
+	}
+	//강의 자료 게시판 검색
+	@Override
+	public List<Map<String,String>> searchData(SqlSessionTemplate session, String search){
+//		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("professor1.searchData",search);
+	}
+	//강의 계획서 검색
+	@Override
+	public List<Map<String,String>> searchPlan(SqlSessionTemplate session, Map<String,String> typing_){
+		return session.selectList("professor1.searchPlan",typing_);
 	}
 }

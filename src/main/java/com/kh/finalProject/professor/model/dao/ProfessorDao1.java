@@ -71,6 +71,10 @@ public interface ProfessorDao1 {
 	//교수 시간표
 	List<Map<String,String>> profSchedule(SqlSessionTemplate session, String profId);
 	//교수별 시간표
-	List<Map<String,String>> deptProfScheduleView(SqlSessionTemplate session);
+	List<Map<String,String>> deptProfScheduleView(SqlSessionTemplate session,String deptCode);
+	//강의 자료 게시판
+	List<Map<String,String>> searchData(SqlSessionTemplate session, String search);
+	//강의 계획서 검색
+	List<Map<String,String>> searchPlan(SqlSessionTemplate session, Map<String,String> typing_);
 
 }

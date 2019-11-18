@@ -28,6 +28,7 @@
 				<div class="row">
 					<div class="col-12">
 						<table class="table">
+						<thead>
 							<tr>
 								<th>번호</th>
 								<th>분류</th>
@@ -37,9 +38,11 @@
 								<th>작성일</th>
 								<th>조회수</th>
 							</tr>
+						</thead>
+						<tbody id="tbody">
 							<c:forEach items="${board }" var="board">
 							<c:if test="${board!=null }">
-							<tr>
+							<tr id="searchTb">
 								<td style="width:80px;">${board.PROF_BOARD_NO}</td>
 								<td style="width:100px;">[${board.PROF_BOARD_TYPE }]</td>
 								<td><a href="${pageContext.request.contextPath }/professor/selectBoardView?profBoardNo=${board.PROF_BOARD_NO}">${board.PROF_BOARD_TITLE }</a></td>
@@ -55,15 +58,18 @@
 							</tr>
 							</c:if>
 							</c:forEach>
+						</tbody>
 						</table>
 					<div style="height:25px;"></div>
-					<div>${pageBar }</div>
+					<div id="pageContainer">${pageBar }</div>
 					</div>
 					<div class="col-6">
-					<form action="" method="post">
-					<input type='text' class='btn' style="border:0.5px solid black;"/>
-					<input type='submit' class='btn btn-dark' value='검색'/>
-					</form>
+					
+					
+					<input type='text' id="typing" class='btn' style="border:0.5px solid black;"/>
+					<input type='button' id="searchData" class='btn btn-dark' value='검색'/>
+					
+					
 					</div>
 					<div class="col-6">
 					<button onclick="fn_insertBoard();" class="btn btn-dark" style="float:right;">글쓰기</button>
@@ -77,9 +83,41 @@
 </div>
 
 <script>
-	function fn_insertBoard(){
-		location.href="${pageContext.request.contextPath}/professor/insertBoard";
-	}
+$(function(){
+
+	$("#typing").keyup(function(){
+		var items = $(this).val();
+		if(items.trim()){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/professor/searchData",
+				data:{search:items},
+				success:function(data){
+					var board = JSON.parse(data);
+					var content = "";
+					console.log(board);
+					for(var i =0; i<board.length; i++){
+						
+						console.log(board[i].PROF_NAME);
+						content += "<tr>";
+						content += "<td>"+board[i].PROF_BOARD_NO+"</td>";
+						content += "<td>"+board[i].PROF_BOARD_TYPE+"</td>";
+						content += "<td><a href='${pageContext.request.contextPath}/professor/selectBoardView?profBoardNo="+board[i].PROF_BOARD_NO+"'>"+board[i].PROF_BOARD_TITLE+"</a></td>";
+						content += "<td>"+board[i].PROF_BOARD_ATTACH+"</td>";
+						content += "<td>"+board[i].PROF_NAME+"</td>";
+						content += "<td>"+board[i].PROF_BOARD_DATE+"</td>";
+						content += "<td>"+board[i].PROF_BOARD_DATE+"</td>";
+						content += "</tr>";
+					}
+					
+					$("#tbody").html(content);
+				}
+			});
+		}
+	});
+
+});
+
+
 </script>
 
 <style>

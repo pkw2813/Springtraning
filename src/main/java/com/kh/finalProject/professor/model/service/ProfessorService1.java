@@ -60,5 +60,10 @@ public interface ProfessorService1 {
 	//교수 스케줄
 	List<Map<String,String>> profSchedule(String profId);
 	//교수별 스케줄
-	List<Map<String,String>> deptProfScheduleView();
+	List<Map<String,String>> deptProfScheduleView(String deptCode);
+	//강의 자료 게시판
+	List<Map<String,String>> searchData(String search);
+//	List<Map<String,String>> searchData(String search,int cPage, int numPerPage);
+	//강의계획서 검색
+	List<Map<String,String>> searchPlan(Map<String,String> typing_);
 }

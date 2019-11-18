@@ -28,6 +28,7 @@
 				<div class="row">
 					<div class="col-12">
 						<table class="table">
+						<thead>
 							<tr>
 								<th>번호</th>
 								<th>분류</th>
@@ -35,6 +36,8 @@
 								<th>글쓴이</th>
 								<th>작성일</th>
 							</tr>
+						</thead>
+						<tbody id="tbody">
 							<c:forEach items="${plan }" var="plan">
 							<c:if test="${plan!=null }">
 							<tr>
@@ -46,14 +49,15 @@
 							</tr>
 							</c:if>
 							</c:forEach>
+						</tbody>
 						</table>
 					<div style="height:25px;"></div>
 					<div>${pageBar }</div>
 					</div>
 					<div class="col-6">
 					<form action="" method="post">
-					<input type='text' class='btn' style="border:0.5px solid black;"/>
-					<input type='submit' class='btn btn-dark' value='검색'/>
+					<input id="typing" type='text' class='btn' style="border:0.5px solid black;"/>
+					<input id="searchBtn" type='button' class='btn btn-dark' value='검색'/>
 					</form>
 					</div>
 					<div class="col-6">
@@ -68,6 +72,38 @@
 </div>
 
 <script>
+
+$(function(){
+	$("#typing").keyup(function(){
+		console.log($(this).val());
+		var items = $(this).val();
+		
+			$.ajax({
+				url:"${pageContext.request.contextPath}/professor/searchPlan",
+				data:{typing:items},
+				success:function(data){
+					var content = "";
+					var plan = JSON.parse(data);
+					console.log(plan);
+					
+					for(var i =0; i<plan.length; i++){
+						
+						console.log(plan[i].PLAN_SEMESTER);
+						content += "<tr>";
+						content += "<td>"+plan[i].PLAN_NO+"</td>";
+						content += "<td>"+"강의 계획서"+"</td>";
+						content += "<td><a href='${pageContext.request.contextPath}/professor/selectPlanView?planNo="+plan[i].PLAN_NO+"'>"+plan[i].PLAN_SUB_NAME+"수업 -"+plan[i].PROF_NAME+" 교수 계획서"+"</a></td>";
+						content += "<td>"+plan[i].PROF_NAME+"</td>";
+						content += "<td>"+plan[i].PLANENCO+"</td>";
+						content += "</tr>";
+					}
+					$("#tbody").html(content);
+					
+				}
+			});
+	});
+});
+
 	function fn_insertPlan(){
 		location.href="${pageContext.request.contextPath}/professor/insertPlan";
 	}

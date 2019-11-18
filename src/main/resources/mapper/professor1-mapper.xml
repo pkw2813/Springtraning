@@ -131,10 +131,22 @@
 		SELECT S.SUB_YEAR,S.SUB_ROOM,S.SUB_NAME,S.SUB_TIME,S.SUB_DATE,C.SUB_CODE,C.PROF_ID FROM HD_CLASS_TB C JOIN HD_SUBJECT_TB S ON (C.SUB_CODE=S.SUB_CODE) WHERE C.PROF_ID=#{profId} AND C.OPEN_YN='Y'
 	</select>
 	<!-- 교수별 시간표 -->
-	<select id="deptProfSchedule" resultType="map">
-		SELECT S.SUB_YEAR,S.SUB_NAME,S.SUB_ROOM,S.SUB_TIME,S.SUB_DATE,C.SUB_CODE,C.PROF_ID,P.PROF_NAME FROM HD_CLASS_TB C JOIN HD_SUBJECT_TB S ON (C.SUB_SEQ=S.SUB_SEQ) JOIN HD_PROFESSOR_TB P ON (C.PROF_ID=P.PROF_ID) WHERE C.OPEN_YN='Y'
+	<select id="deptProfSchedule" parameterType="string" resultType="map">
+		SELECT S.SUB_YEAR,S.SUB_NAME,S.SUB_ROOM,S.SUB_TIME,S.SUB_DATE,C.SUB_CODE,C.PROF_ID,P.PROF_NAME,D.DEPT_CODE,D.DEPT_NAME FROM HD_CLASS_TB C JOIN HD_SUBJECT_TB S ON (C.SUB_SEQ=S.SUB_SEQ) JOIN HD_PROFESSOR_TB P ON (C.PROF_ID=P.PROF_ID) JOIN HD_DEPARTMENT_TB D ON (S.DEPT_CODE=D.DEPT_CODE) WHERE P.DEPT_CODE=#{deptCode} AND C.OPEN_YN='Y'
 	</select>
-
+	<!-- 강의 자료 게시판 검색 -->
+	<select id="searchData" parameterType="string" resultType="map">
+		SELECT T.*,(SELECT COUNT(*) FROM HD_PROF_ATTACHMENT_TB WHERE T.PROF_BOARD_NO=PROF_BOARD_NO) AS ATTACH FROM HD_PROF_BOARD_TB T WHERE PROF_BOARD_TITLE LIKE '%'||#{search}||'%' ORDER BY PROF_BOARD_NO DESC
+	</select>
+	<!-- 강의계획서 검색 -->
+	<select id="searchPlan" parameterType="map" resultType='map'>
+		SELECT a.*, to_char(PLAN_DATE,'YYYY-MM-DD') as planenco FROM HD_PROF_PLAN_TB a WHERE 1=1 
+		<if test="typing != '' and typing != null">
+			AND PLAN_SUB_NAME LIKE '%'||#{typing}||'%'
+		</if> 
+		 ORDER BY PLAN_NO DESC
+	</select>
+ 
 <resultMap id="planBoardMap" type="com.kh.finalProject.professor.model.vo.PlanBoard">
 	<result column="PLAN_NO" property="planNo"/>
 	<result column="PLAN_YEAR" property="planYear"/>
