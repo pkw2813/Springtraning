@@ -66,6 +66,11 @@ pre {
 													<td><c:out value="${l.subName}" /></td>
 													<td><c:out value="${l.subType}" /></td>
 													<td><c:out value="${l.rcvCredits}" /></td>
+												
+												<c:if test="${Assess.evalPoint eq null}">
+													<td colspan="4"><button type="button" id="profassess${s.count}" class="btn btn-warning btn-xs" style="font-size:13px">수강평가</button></td>
+												</c:if>	
+												<c:if test="${Assess.evalPoint ne null}">
 													<td><c:out value="${l.grade}" /></td>
 													<td><c:out value="${l.retake}" /></td>
 													<c:if test="${l.reqDate eq null }">
@@ -81,6 +86,7 @@ pre {
 													<c:if test="${l.reqDate ne null and l.reqAwswer ne null }">
 														<td><button type="button" id="answer${s.count}" class="btn btn-primary btn-xs" style="font-size:13px">답변 확인</button></td>
 													</c:if>
+												</c:if>
 												</tr>									
 									</c:forEach>
 								</tbody>
@@ -102,6 +108,7 @@ pre {
 				<form name="myAppealFrm" action="${path}/myAppeal.hd" method="post">
 					<p style="font-family: jua; font-size: 30px; font-style:">성적이의신청</p>
 					<p style="font-family: jua; font-size: 15px; color:red; font-style:">이의신청기간은 학기 종료 후 3일</p>
+					<hr>
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-12">
@@ -173,7 +180,10 @@ pre {
 				<div id="topCloseAnswerBotton" style="text-align: right">
 					<span class="close" id="closeAnswer" Style="width: 50px;">&times;</span>
 				</div>
+				<div>
 					<p style="font-family: jua; font-size: 30px; font-style:">성적이의신청결과</p>
+					<hr>
+				</div>
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-12">

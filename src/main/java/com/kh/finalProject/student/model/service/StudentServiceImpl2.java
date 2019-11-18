@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.finalProject.student.model.dao.StudentDao2;
 import com.kh.finalProject.student.model.vo.Grade;
 import com.kh.finalProject.student.model.vo.InfoForSearchGrade;
+import com.kh.finalProject.student.model.vo.ProfAssess;
 import com.kh.finalProject.student.model.vo.Request;
 
 @Service
@@ -21,13 +22,25 @@ public class StudentServiceImpl2 implements StudentService2 {
 	private SqlSessionTemplate session;
 	
 	@Override
-	public List<Grade> selectGradeAll(String stuNo) {
-		return dao.selectGradeList(session, stuNo);
+	public List<Grade> selectGradeAll(InfoForSearchGrade ifsg) {
+		return dao.selectGradeList(session, ifsg);
 	}
 	
 	@Override
-	public List<Map> gradeSearchSubType(String stuNo){
-		return dao.gradeSearchSubType(session, stuNo);
+	public List<Map> gradeSearchSubType(InfoForSearchGrade ifsg){
+		return dao.gradeSearchSubType(session, ifsg);
+	}
+	
+	/*
+	 * @Override public List<Map> gradeAYS(InfoForSearchGrade ifsg) { return
+	 * dao.gradeAYS(session, ifsg); }
+	 * 
+	 * @Override public List<Map> gradeAvg(InfoForSearchGrade ifsg) { return
+	 * dao.gradeAvg(session, ifsg); }
+	 */
+	@Override
+	public List<Map> SemesterGrades(InfoForSearchGrade ifsg) {
+		return dao.SemesterGrades(session,ifsg);
 	}
 	
 	@Override
@@ -46,9 +59,30 @@ public class StudentServiceImpl2 implements StudentService2 {
 	}
 
 	@Override
-	public List<Grade> selectsubType(String stuNo) {
-		return dao.selectsubType(session, stuNo);
+	public List<Grade> selectsubType(InfoForSearchGrade ifsg) {
+		return dao.selectsubType(session, ifsg);
 	}
+
+	@Override
+	public List<Grade> selectsubName(InfoForSearchGrade ifsg) {
+		return dao.selectsubName(session, ifsg);
+	}
+
+	@Override
+	public List<Grade> selectacaYearSem(InfoForSearchGrade ifsg) {
+		return dao.selectacaYearSem(session, ifsg);
+	}
+
+	@Override
+	public List<ProfAssess> insertProfAssess(InfoForSearchGrade ifsg) {
+		return dao.insertProfAssess(session, ifsg);
+	}
+	
+	
+
+
+
+
 	
 
 	

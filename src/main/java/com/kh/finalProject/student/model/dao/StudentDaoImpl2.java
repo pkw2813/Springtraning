@@ -14,15 +14,29 @@ import com.kh.finalProject.student.model.vo.Request;
 public class StudentDaoImpl2 implements StudentDao2 {
 
 	@Override
-	public List<Grade> selectGradeList(SqlSessionTemplate session, String stuNo) {
-		return session.selectList("student2.selectGradeList",stuNo);
+	public List<Grade> selectGradeList(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
+		return session.selectList("student2.selectGradeList",ifsg);
 	}
 
 	@Override
-	public List<Map> gradeSearchSubType(SqlSessionTemplate session, String stuNo) {
-		return session.selectList("student2.selectGradeListSubType",stuNo);
+	public List<Map> gradeSearchSubType(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
+		return session.selectList("student2.selectGradeListSubType",ifsg);
 	}
-
+	
+	/*
+	 * @Override public List<Map> gradeAYS(SqlSessionTemplate session,
+	 * InfoForSearchGrade ifsg) { return
+	 * session.selectList("student2.gradeAYS",ifsg); }
+	 * 
+	 * @Override public List<Map> gradeAvg(SqlSessionTemplate session,
+	 * InfoForSearchGrade ifsg) { return
+	 * session.selectList("student2.gradeAvg",ifsg); }
+	 */
+	@Override
+	public List<Map> SemesterGrades(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
+		return session.selectList("student2.SemesterGrades",ifsg);
+	}
+	
 	@Override
 	public int insertAppeal(SqlSessionTemplate session, Request request) {
 		return session.insert("student2.insertRequest",request);
@@ -39,9 +53,29 @@ public class StudentDaoImpl2 implements StudentDao2 {
 	}
 
 	@Override
-	public List<Grade> selectsubType(SqlSessionTemplate session, String stuNo) {
-		return session.selectList("student2.selectsubType",stuNo);
+	public List<Grade> selectsubType(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
+		return session.selectList("student2.selectsubType",ifsg);
 	}
+
+	@Override
+	public List<Grade> selectsubName(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
+		return session.selectList("student2.selectsubName",ifsg);
+	}
+
+	@Override
+	public List<Grade> selectacaYearSem(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
+		return session.selectList("student2.selectacaYearSem",ifsg);
+	}
+
+	@Override
+	public List<Grade> insertProfAssess(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
+		return session.insert("student2.insertProfAssess",ifsg);
+	}
+	
+
+
+
+
 	
 	
 	

@@ -11,8 +11,14 @@ import com.kh.finalProject.student.model.vo.Request;
 
 public interface StudentDao2 {
 	
-	List<Grade> selectGradeList(SqlSessionTemplate session, String stuNo);
-	List<Map> gradeSearchSubType(SqlSessionTemplate session, String stuNo);
+	List<Grade> selectGradeList(SqlSessionTemplate session, InfoForSearchGrade ifsg);
+	List<Map> gradeSearchSubType(SqlSessionTemplate session, InfoForSearchGrade ifsg);
+	
+	/*
+	 * List<Map> gradeAYS(SqlSessionTemplate session, InfoForSearchGrade ifsg);
+	 * List<Map> gradeAvg(SqlSessionTemplate session, InfoForSearchGrade ifsg);
+	 */
+	List<Map> SemesterGrades(SqlSessionTemplate session, InfoForSearchGrade ifsg);
 	
 	int insertAppeal(SqlSessionTemplate session, Request request);
 	
@@ -20,5 +26,10 @@ public interface StudentDao2 {
 	
 	List<Grade> selectGradeNow(SqlSessionTemplate session, InfoForSearchGrade ifsg);
 
-	List<Grade> selectsubType(SqlSessionTemplate session, String stuNo);
+	List<Grade> selectsubType(SqlSessionTemplate session, InfoForSearchGrade ifsg);
+	List<Grade> selectsubName(SqlSessionTemplate session, InfoForSearchGrade ifsg);
+	List<Grade> selectacaYearSem(SqlSessionTemplate session, InfoForSearchGrade ifsg);
+	
+	List<Grade> insertProfAssess(SqlSessionTemplate session, InfoForSearchGrade ifsg);
+	
 }

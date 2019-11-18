@@ -9,8 +9,8 @@
 		ON (A.SUB_CODE = B.SUB_CODE)
 		JOIN (SELECT PROF_ID, PROF_NAME FROM HD_PROFESSOR_TB) C
 		ON (A.PROF_ID = C.PROF_ID)
-		WHERE STU_NO=#{stuNo}
-		ORDER BY ACA_YEAR_SEM DESC, SUB_NAME ASC
+		WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
+		ORDER BY ACA_YEAR_SEM ASC, SUB_NAME ASC
 	</select>
 	
 	<select id="selectsubType" parameterType="string" resultMap="GradeResult">
@@ -19,36 +19,97 @@
 		ON (A.SUB_CODE = B.SUB_CODE)
 		JOIN (SELECT PROF_ID, PROF_NAME FROM HD_PROFESSOR_TB) C
 		ON (A.PROF_ID = C.PROF_ID)
-		WHERE STU_NO=#{stuNo}
+		WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
 		ORDER BY SUB_TYPE ASC, SUB_NAME ASC
 	</select>
+	
+	<select id="selectsubName" parameterType="string" resultMap="GradeResult">
+		SELECT A.*, B.SUB_TYPE, C.PROF_NAME FROM HD_GRADE_TB A 
+		JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B 
+		ON (A.SUB_CODE = B.SUB_CODE)
+		JOIN (SELECT PROF_ID, PROF_NAME FROM HD_PROFESSOR_TB) C
+		ON (A.PROF_ID = C.PROF_ID)
+		WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
+		ORDER BY SUB_NAME ASC, ACA_YEAR_SEM ASC
+	</select>
+	
+	<select id="selectacaYearSem" parameterType="string" resultMap="GradeResult">
+		SELECT A.*, B.SUB_TYPE, C.PROF_NAME FROM HD_GRADE_TB A 
+		JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B 
+		ON (A.SUB_CODE = B.SUB_CODE)
+		JOIN (SELECT PROF_ID, PROF_NAME FROM HD_PROFESSOR_TB) C
+		ON (A.PROF_ID = C.PROF_ID)
+		WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
+		ORDER BY ACA_YEAR_SEM ASC, SUB_NAME ASC
+	</select>
+	
+	<!-- <select id="gradeAYS" parameterType="string" resultType="map">
+		SELECT ACA_YEAR_SEM , SUM(RCV_CREDITS) "ApplicationCredit" , SUM(RCV_CREDITS) "CreditAcquired", TRUNC(AVG(GRADE),2) "AverageRatingF"
+		FROM HD_GRADE_TB 
+		WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
+		GROUP BY ACA_YEAR_SEM
+	</select>
+	
+	<select id="gradeAvg" parameterType="string" resultType="map">
+		SELECT TRUNC(AVG(GRADE),2) "AverageRating"
+        FROM HD_GRADE_TB
+        WHERE GRADE > 0 AND STU_NO=#{stuNo} AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
+        GROUP BY ACA_YEAR_SEM
+	</select> -->
+	
+	<select id="SemesterGrades" parameterType="string" resultType="map">
+		SELECT ACA_YEAR_SEM ,
+        SUM(RCV_CREDITS) "ApplicationCredit", 
+        ROUND(
+                (SELECT SUM(RCV_CREDITS)
+                FROM HD_GRADE_TB A1
+                WHERE A1.ACA_YEAR_SEM = p2.ACA_YEAR_SEM AND A1.GRADE > 0 AND STU_NO=#{stuNo} AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
+                )) "CreditAcquired",
+        ROUND(
+                 (SELECT  AVG( GRADE )
+                  FROM    HD_GRADE_TB p1
+                  WHERE   p1.ACA_YEAR_SEM = p2.ACA_YEAR_SEM AND p1.GRADE > 0 AND STU_NO=#{stuNo} AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
+                 ), 2 ) "AverageRating",
+        TRUNC(AVG(GRADE),2) "AverageRatingF",
+        RANK() OVER(ORDER BY AVG(GRADE) DESC) AS "ranking",
+        COUNT(
+                (SELECT COUNT(DISTINCT STU_NO)
+                FROM HD_GRADE_TB P3
+                WHERE p3.ACA_YEAR_SEM = p2.ACA_YEAR_SEM AND STU_NO LIKE '%A01%' AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
+                )) "Totalperson"
+		FROM HD_GRADE_TB p2
+		WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM NOT LIKE #{acaYearSem}
+		GROUP BY ACA_YEAR_SEM
+	</select>
+	
 	<select id="selectGradeListSubType" parameterType="string" resultType="map">
 		SELECT SUBSTR(aca_year_sem,1,4) as year,
         SUBSTR(aca_year_sem,6) as semester,
         (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) from hd_subject_tb
         join hd_grade_tb using(sub_code) 
-        where sub_type='전공선택' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+        where sub_type='전공선택' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo} AND GRADE NOT LIKE '0'
         and 'A01'=SUBSTR(sub_code,1,3)) AS MAJORSELECT,
         (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) 
             from hd_subject_tb
             join hd_grade_tb using(sub_code) 
-            where sub_type='전공필수' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+            where sub_type='전공필수' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo} AND GRADE NOT LIKE '0'
              and 'A01'=SUBSTR(sub_code,1,3)
             ) AS MAJORNEED,
         (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) from hd_subject_tb
         join hd_grade_tb using(sub_code) 
-        where sub_type='교양선택' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+        where sub_type='교양선택' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo} AND GRADE NOT LIKE '0'
          ) AS ELECTRIVESELECT,
         (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) from hd_subject_tb
         join hd_grade_tb using(sub_code) 
-        where sub_type='교양필수' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+        where sub_type='교양필수' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo} AND GRADE NOT LIKE '0'
          ) AS ELECTRIVENEED,
         (select DECODE(sum(rcv_credits),0,0,NULL, 0,sum(rcv_credits)) 
             from hd_subject_tb
             join hd_grade_tb using(sub_code) 
-            where sub_type like '전공%' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo}
+            where sub_type like '전공%' AND hd_grade_tb.aca_year_sem=MAIN.aca_year_sem and STU_NO=#{stuNo} AND GRADE NOT LIKE '0'
             and 'A01'!=SUBSTR(sub_code,0,3)) AS OTHER
 	FROM (SELECT * from hd_grade_tb join hd_subject_tb using(sub_code)) MAIN
+	WHERE ACA_YEAR_SEM NOT LIKE #{acaYearSem}
 	GROUP BY (ACA_YEAR_SEM)
 	ORDER BY 1,2
 	</select>
@@ -64,7 +125,7 @@
 	<select id="selectGradeNow" parameterType="infoForSearchGrade" resultMap="GradeResult">
 		SELECT A.ACA_YEAR_SEM, A.SUB_CODE, A.SUB_NAME, A.PROF_ID, A.GRADE, A.STU_NO, A.RETAKE, A.RCV_CREDITS, B.SUB_TYPE, C.PROF_NAME, R.REQ_DATE, R.REQ_TITLE, R.REQ_CONTENT, 
 		R.REQ_ANSWER, REQ_YN
-		FROM (SELECT * FROM HD_GRADE_TB WHERE STU_NO='S2018A01001' AND ACA_YEAR_SEM='2019-2') A 
+		FROM (SELECT * FROM HD_GRADE_TB WHERE STU_NO=#{stuNo} AND ACA_YEAR_SEM=#{acaYearSem}) A 
 		JOIN (SELECT SUB_CODE, SUB_TYPE FROM HD_SUBJECT_TB) B 
 		ON (A.SUB_CODE = B.SUB_CODE)
 		JOIN (SELECT PROF_ID, PROF_NAME FROM HD_PROFESSOR_TB) C

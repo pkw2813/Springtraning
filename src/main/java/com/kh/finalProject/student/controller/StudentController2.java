@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.student.model.service.StudentService2;
 import com.kh.finalProject.student.model.vo.Grade;
 import com.kh.finalProject.student.model.vo.InfoForSearchGrade;
+import com.kh.finalProject.student.model.vo.ProfAssess;
 import com.kh.finalProject.student.model.vo.Request;
 import com.kh.finalProject.student.model.vo.Student;
 
@@ -33,8 +36,30 @@ public class StudentController2 {
 		Student student = (Student)session.getAttribute("loginMember");
 		String stuNo=student.getStuNo();
 		String deptCode=student.getStuNo().substring(5,8);
-				
-		List<Grade> gradeAll = service.selectGradeAll(stuNo);
+		
+		Date date=new Date();
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("오늘날짜:"+df.format(date));
+		String today=df.format(date);
+		
+		System.out.println("금년도:"+today.substring(0, 4));
+		int todayMonth=Integer.parseInt(today.substring(5, 7));
+		System.out.println("금월:"+todayMonth);
+		String semester="";
+		if(todayMonth>=1&&todayMonth<=6) {
+			semester="1";
+		}else if(todayMonth>=7&&todayMonth<=12) {
+			semester="2";
+		}
+		
+		String acaYearSem=today.substring(0, 4)+"-"+semester;
+		System.out.println("acaYearSem:"+acaYearSem);
+		System.out.println("deptCode"+deptCode);
+		InfoForSearchGrade ifsg=new InfoForSearchGrade();
+		ifsg.setStuNo(stuNo);
+		ifsg.setAcaYearSem(acaYearSem);		
+		
+		List<Grade> gradeAll = service.selectGradeAll(ifsg);
 		for(int i=0; i<gradeAll.size(); i++) {
 			String grade=gradeAll.get(i).getGrade();
 			if(grade.equals("4.5")) {
@@ -71,8 +96,22 @@ public class StudentController2 {
 		}
 		model.addAttribute("gradeAll", gradeAll);
 		System.out.println("전체학기 성적"+gradeAll);
-		List<Map> gradeSubType = service.gradeSearchSubType(stuNo);
+		
+		List<Map> gradeSubType = service.gradeSearchSubType(ifsg);
 		model.addAttribute("gradeSubType",gradeSubType);
+		System.out.println("f가 안나와"+gradeSubType);
+		
+//	학생 학기, 취득학점, 이수학점, 총평점f미포함, 총평점f포함, 등수, 총원
+//		List<Map> gradeAYS = service.gradeAYS(ifsg);
+//		model.addAttribute("gradeAYS",gradeAYS);
+//		System.out.println("학생의 취득학점, 총평점f포함"+gradeAYS);
+//		
+//		List<Map> gradeAvg = service.gradeAvg(ifsg);
+//		model.addAttribute("gradeAvg",gradeAvg);
+		
+		List<Map> SemesterGrades = service.SemesterGrades(ifsg);
+		model.addAttribute("SemesterGrades",SemesterGrades);
+		
 		return "student/gradeSearchAll";	
 	}
 	
@@ -80,18 +119,42 @@ public class StudentController2 {
 	
 	  @RequestMapping("/student/gradeSearchAll1.hd")
 	  @ResponseBody 
-	  public Object selectListMene(@RequestParam Object GradeMenu, HttpSession session) {
+	  public String selectListMene(@RequestParam String GradeMenu, HttpSession session) {
 	  System.out.println("받냐고!"+GradeMenu);
 	  Student student = (Student)session.getAttribute("loginMember");
 	  String stuNo=student.getStuNo();
 	  String deptCode=student.getStuNo().substring(5,8);
 	  
+	  Date date=new Date();
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("오늘날짜:"+df.format(date));
+		String today=df.format(date);
+		
+		System.out.println("금년도:"+today.substring(0, 4));
+		int todayMonth=Integer.parseInt(today.substring(5, 7));
+		System.out.println("금월:"+todayMonth);
+		String semester="";
+		if(todayMonth>=1&&todayMonth<=6) {
+			semester="1";
+		}else if(todayMonth>=7&&todayMonth<=12) {
+			semester="2";
+		}
+		
+		String acaYearSem=today.substring(0, 4)+"-"+semester;
+	  
+	  InfoForSearchGrade ifsg=new InfoForSearchGrade();
+		ifsg.setStuNo(stuNo);
+		ifsg.setAcaYearSem(acaYearSem);	
+	  
+	  List<Grade> subTypeList=null;
+	  List<Grade> subNameList=null;
+	  List<Grade> acaYearSemList=null;
 	  
 	  if(GradeMenu.equals("sub_type")) {
-		  List<Grade> subType = service.selectsubType(stuNo);
-		  System.out.println("이건??"+subType);
-		  for(int i=0; i<subType.size(); i++) {
-				String grade=subType.get(i).getGrade();
+		  subTypeList = service.selectsubType(ifsg);
+		  System.out.println("이건??"+subTypeList);
+		  for(int i=0; i<subTypeList.size(); i++) {
+				String grade=subTypeList.get(i).getGrade();
 				if(grade.equals("4.5")) {
 					grade="A+";
 				} else if(grade.equals("4.0")) {
@@ -113,20 +176,109 @@ public class StudentController2 {
 				} else if(grade.equals("P")){
 					grade="P";
 				}
-				subType.get(i).setGrade(grade);
+				subTypeList.get(i).setGrade(grade);
 			}
 				
-			for(Grade e : subType) {
+			for(Grade e : subTypeList) {
 				if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
 					e.setSubType("타전공");
 					System.out.println("전체학기 성적 타전공 분류"+e);
 				}
 			}
-			System.out.println("최종"+subType);
-			System.out.println("최종"+GradeMenu);
-			
+	  	} else if(GradeMenu.equals("sub_name")) {
+	  		subNameList = service.selectsubName(ifsg);
+			  System.out.println("이건??"+subNameList);
+			  for(int i=0; i<subNameList.size(); i++) {
+					String grade=subNameList.get(i).getGrade();
+					if(grade.equals("4.5")) {
+						grade="A+";
+					} else if(grade.equals("4.0")) {
+						grade="A";
+					} else if(grade.equals("3.5")) {
+						grade="B+";
+					} else if(grade.equals("3.0")) {
+						grade="B";
+					} else if(grade.equals("2.5")) {
+						grade="C+";
+					} else if(grade.equals("2.0")) {
+						grade="C";
+					} else if(grade.equals("1.5")) {
+						grade="D+";
+					} else if(grade.equals("1.0")) {
+						grade="D";
+					} else if(grade.equals("0") || grade.equals("F")) {
+						grade="F";
+					} else if(grade.equals("P")){
+						grade="P";
+					}
+					subNameList.get(i).setGrade(grade);
+				}
+					
+				for(Grade e : subNameList) {
+					if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
+						e.setSubType("타전공");
+						System.out.println("전체학기 성적 타전공 분류"+e);
+					}
+				}
+	  	} else if(GradeMenu.equals("aca_year_sem")) {
+	  		acaYearSemList = service.selectacaYearSem(ifsg);
+			  System.out.println("이건??"+acaYearSemList);
+			  for(int i=0; i<acaYearSemList.size(); i++) {
+					String grade=acaYearSemList.get(i).getGrade();
+					if(grade.equals("4.5")) {
+						grade="A+";
+					} else if(grade.equals("4.0")) {
+						grade="A";
+					} else if(grade.equals("3.5")) {
+						grade="B+";
+					} else if(grade.equals("3.0")) {
+						grade="B";
+					} else if(grade.equals("2.5")) {
+						grade="C+";
+					} else if(grade.equals("2.0")) {
+						grade="C";
+					} else if(grade.equals("1.5")) {
+						grade="D+";
+					} else if(grade.equals("1.0")) {
+						grade="D";
+					} else if(grade.equals("0") || grade.equals("F")) {
+						grade="F";
+					} else if(grade.equals("P")){
+						grade="P";
+					}
+					acaYearSemList.get(i).setGrade(grade);
+				}
+					
+				for(Grade e : acaYearSemList) {
+					if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
+						e.setSubType("타전공");
+						System.out.println("전체학기 성적 타전공 분류"+e);
+					}
+				}
+	  	}
+	  ObjectMapper mapper=new ObjectMapper();
+	  String jsonStr="";	  
+	  if(subTypeList!=null) {
+		  try {
+			  jsonStr=mapper.writeValueAsString(subTypeList);
+		  }catch(JsonProcessingException e) {
+			  e.printStackTrace();
+		  }
+	  } else if(subNameList!=null) {
+		  try {
+			  jsonStr=mapper.writeValueAsString(subNameList);
+		  }catch(JsonProcessingException e) {
+			  e.printStackTrace();
+		  }
+	  } else if(acaYearSemList!=null) {
+		  try {
+			  jsonStr=mapper.writeValueAsString(acaYearSemList);
+		  }catch(JsonProcessingException e) {
+			  e.printStackTrace();
+		  }
 	  }
-	  return GradeMenu;
+	  System.out.println("뭐가 나오누"+jsonStr);
+	  return jsonStr;
 	  }
 	 
 	 
@@ -209,6 +361,14 @@ public class StudentController2 {
 		 * System.out.println("이의신청이야"+requestList);
 		 * model.addAttribute("requestList",requestList);
 		 */
+			
+		ProfAssess pa=new ProfAssess();
+		pa.setAcaYearSem(acaYearSem);
+		
+		List<ProfAssess> Assess = service.insertProfAssess(pa);
+		model.addAttribute("Assess",Assess);
+			
+			
 		return "student/gradeSearchNow";
 	}
 	

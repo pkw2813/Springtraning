@@ -63,8 +63,21 @@ pre {
 									url : "${path}/student/gradeSearchAll1.hd",
 									data : {"GradeMenu" : value},
 									success : function(data) {
-										console.log(data);
-									}
+										var gradeArr="";
+										var re=JSON.parse(data);
+										console.log(re);
+										for(var i=0; i<re.length; i++){
+											gradeArr+="<tr id='select'><td scope='row'>"+[i+1]+"</td>";
+											gradeArr+="<td>"+re[i]["acaYearSem"].substring(0,4)+"</td>";
+											gradeArr+="<td>"+re[i]["acaYearSem"].substring(5,6)+"</td>";
+											gradeArr+="<td>"+re[i]["subCode"]+"</td>";
+											gradeArr+="<td>"+re[i]["subName"]+"</td>";
+											gradeArr+="<td>"+re[i]["subType"]+"</td>";
+											gradeArr+="<td>"+re[i]["rcvCredits"]+"</td>";
+											gradeArr+="<td>"+re[i]["grade"]+"</td></tr>";
+										}
+										$("#tbody").html(gradeArr);
+									}	
 								});
 						});
 					});
@@ -89,7 +102,7 @@ pre {
 										</tr>
 									</thead>
 								
-									<tbody>
+									<tbody id="tbody">
 										<c:forEach items="${gradeAll}" var="l" varStatus="s">
 											<c:set var="seme" value="${l.acaYearSem }" />
 												<tr id="select">
@@ -108,9 +121,9 @@ pre {
 							</pre>
 						</div>
 					</div>
-					<div class="card-footer">
-						<!-- <button type="submit" class="btn btn-primary">검색</button> -->
-					</div>
+					<!-- <div class="card-footer">
+						<button type="submit" class="btn btn-primary">검색</button>
+					</div> -->
 
 				</div>
 			</div>
@@ -198,7 +211,7 @@ pre {
 						<table> 태그 외곽에 <div> 태그로 감싸서 .table-responsive 클래스를 추가하면 반응형 테이블로 사용할 수 있습니다. -->
 						<div class="table-responsive">
 							<pre class="pre-scrollable" style="max-height: 300px;">
-							<table class="table table-bordered table-hover table-condensed">
+							<table class="table table-striped table-bordered table-hover table-condensed">
 								<thead class="thead-dark">
 									<tr class="my-header">
 										<th scope="col">순번</th>
@@ -212,51 +225,41 @@ pre {
 										<th scope="col">인원</th>
 									</tr>
 								</thead>
+								<%-- <tbody>
+									<c:forEach var="AYS" items="${gradeAYS}" varStatus="s">
+										<c:set var="seme" value="${AYS.ACA_YEAR_SEM }" />	
+											<tr>
+												<td scope="row"><c:out value="${s.count }"/></td>
+												<td><c:out value="${fn:substring(seme,0,4)}" /></td>
+												<td><c:out value="${fn:substring(seme,5,6)}" /></td>
+												<td><c:out value="${AYS.ApplicationCredit }"/></td>
+												<td><c:out value="${AYS.CreditAcquired }"/></td>
+												<c:forEach var="Avg" items="${gradeAvg}" varStatus="innerVar">
+													<c:if test='${ s.index eq innerVar.index}'>
+														<td><c:out value="${Avg.AverageRating}"/></td>
+													</c:if>										
+												</c:forEach>
+												<td><c:out value="${AYS.AverageRatingF }"/></td>
+												<td>-</td>
+												<td>-</td>
+											</tr>
+									</c:forEach>
+								</tbody> --%>
 								<tbody>
-									<tr>
-										<td scope="row">1</td>
-										<td>2018</td>
-										<td>2</td>
-										<td>9</td>
-										<td>9</td>
-										<td>4.5</td>
-										<td>4.5</td>
-										<td>1</td>
-										<td>9</td>
-									</tr>
-									<tr>
-										<td>데이터1</td>
-										<td>데이터2</td>
-										<td>데이터3</td>
-										<td>데이터4</td>
-										<td>데이터5</td>
-										<td>데이터6</td>
-										<td>데이터1</td>
-										<td>데이터1</td>
-										<td>데이터1</td>
-									</tr>
-									<tr>
-										<td>데이터1</td>
-										<td>데이터2</td>
-										<td>데이터3</td>
-										<td>데이터4</td>
-										<td>데이터5</td>
-										<td>데이터6</td>
-										<td>데이터1</td>
-										<td>데이터1</td>
-										<td>데이터1</td>
-									</tr>
-									<tr>
-										<td>데이터1</td>
-										<td>데이터2</td>
-										<td>데이터3</td>
-										<td>데이터4</td>
-										<td>데이터5</td>
-										<td>데이터6</td>
-										<td>데이터1</td>
-										<td>데이터1</td>
-										<td>데이터1</td>
-									</tr>
+									<c:forEach var="SG" items="${SemesterGrades}" varStatus="s">
+										<c:set var="seme" value="${SG.ACA_YEAR_SEM }" />	
+											<tr>
+												<td scope="row"><c:out value="${s.count }"/></td>
+												<td><c:out value="${fn:substring(seme,0,4)}" /></td>
+												<td><c:out value="${fn:substring(seme,5,6)}" /></td>
+												<td><c:out value="${SG.ApplicationCredit }"/></td>
+												<td><c:out value="${SG.CreditAcquired }"/></td>
+												<td><c:out value="${SG.AverageRating}"/></td>
+												<td><c:out value="${SG.AverageRatingF }"/></td>
+												<td><c:out value="${SG.ranking }"/></td>
+												<td><c:out value="${SG.Totalperson }"/></td>
+											</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 							</pre>
