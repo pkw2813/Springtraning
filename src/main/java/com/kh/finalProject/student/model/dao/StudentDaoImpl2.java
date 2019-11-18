@@ -67,11 +67,11 @@ public class StudentDaoImpl2 implements StudentDao2 {
 		return session.selectList("student2.selectacaYearSem",ifsg);
 	}
 
-	@Override
-	public List<Grade> insertProfAssess(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
-		return session.insert("student2.insertProfAssess",ifsg);
-	}
-	
+//	@Override
+//	public List<Grade> insertProfAssess(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
+//		return session.insert("student2.insertProfAssess",ifsg);
+//	}
+//	
 
 
 

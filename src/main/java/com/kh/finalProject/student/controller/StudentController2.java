@@ -365,8 +365,8 @@ public class StudentController2 {
 		ProfAssess pa=new ProfAssess();
 		pa.setAcaYearSem(acaYearSem);
 		
-		List<ProfAssess> Assess = service.insertProfAssess(pa);
-		model.addAttribute("Assess",Assess);
+//		List<ProfAssess> Assess = service.insertProfAssess(pa);
+//		model.addAttribute("Assess",Assess);
 			
 			
 		return "student/gradeSearchNow";

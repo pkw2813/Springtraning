@@ -30,6 +30,6 @@ public interface StudentDao2 {
 	List<Grade> selectsubName(SqlSessionTemplate session, InfoForSearchGrade ifsg);
 	List<Grade> selectacaYearSem(SqlSessionTemplate session, InfoForSearchGrade ifsg);
 	
-	List<Grade> insertProfAssess(SqlSessionTemplate session, InfoForSearchGrade ifsg);
+//	List<Grade> insertProfAssess(SqlSessionTemplate session, InfoForSearchGrade ifsg);
 	
 }

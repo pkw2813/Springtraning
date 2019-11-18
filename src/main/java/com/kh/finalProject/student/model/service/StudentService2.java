@@ -31,5 +31,5 @@ public interface StudentService2 {
 	List<Grade> selectsubName(InfoForSearchGrade ifsg);
 	List<Grade> selectacaYearSem(InfoForSearchGrade ifsg);
 
-	List<ProfAssess> insertProfAssess(InfoForSearchGrade ifsg);	
+//	List<ProfAssess> insertProfAssess(InfoForSearchGrade ifsg);	
 }

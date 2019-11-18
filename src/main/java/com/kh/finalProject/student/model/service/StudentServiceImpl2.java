@@ -73,11 +73,11 @@ public class StudentServiceImpl2 implements StudentService2 {
 		return dao.selectacaYearSem(session, ifsg);
 	}
 
-	@Override
-	public List<ProfAssess> insertProfAssess(InfoForSearchGrade ifsg) {
-		return dao.insertProfAssess(session, ifsg);
-	}
-	
+//	@Override
+//	public List<ProfAssess> insertProfAssess(InfoForSearchGrade ifsg) {
+//		return dao.insertProfAssess(session, ifsg);
+//	}
+//	
 	
 
 
