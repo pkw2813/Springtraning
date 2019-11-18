@@ -87,6 +87,15 @@ public class ProfessorServiceImpl3 implements ProfessorService3{
 
 
 
+	@Override
+	public Map<String, Object> checkInPw(String profId) {
+		// TODO Auto-generated method stub
+		return dao.checkInPw(session,profId);
+	}
+
+
+
+
 	
 	
 	

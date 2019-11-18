@@ -16,5 +16,8 @@ public interface ProfessorService3 {
 	Map<String,Object> stuInsertScore(Map<String,Object> param);
 	int updatePoint(Map<String,Object> param);
 	List<Map> studyList(String profId);
+	Map<String,Object> checkInPw(String profId);
+	
+	
 	
 }

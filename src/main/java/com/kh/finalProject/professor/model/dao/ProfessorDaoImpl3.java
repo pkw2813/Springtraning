@@ -64,6 +64,12 @@ public class ProfessorDaoImpl3 implements ProfessorDao3 {
 		return session.selectList("prof3.studyList",profId);
 	}
 
+	@Override
+	public Map<String, Object> checkInPw(SqlSessionTemplate session, String profId) {
+	
+		return session.selectOne("prof3.checkInPw",profId);
+	}
+
 	
 	
 	

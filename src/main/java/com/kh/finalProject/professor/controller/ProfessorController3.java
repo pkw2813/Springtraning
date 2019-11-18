@@ -61,6 +61,11 @@ public class ProfessorController3 {
 		param.put("profId",profId);
 		List<Map> list = service.choiceClass(param);
 		
+		
+		List<Map> studyList=service.studyList(profId);
+		
+		
+		m.addAttribute("studyList",studyList);
 		m.addAttribute("list",list);
 	
 		return"professor/stu_edit_classResult";
@@ -134,12 +139,37 @@ public class ProfessorController3 {
 		
 		
 	}
+	@RequestMapping(value = "/prof/checkInPw.hd", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkInPw(HttpSession session, Model m,HttpServletRequest req) {
 	
+			Professor p=(Professor)session.getAttribute("loginMember");
+			String pwNow=req.getParameter("pwNow");
+			String profId=p.getProfId();
+			
+			System.out.println("pwNow:"+pwNow);
+			
+			Map<String, Object> profPw=service.checkInPw(profId);
+			
+			String profPw1=(String)profPw.get("PROF_PW");
+			String flag ="";
+			
+			System.out.println("pwNow:"+profPw1);
+			
+			if(pwNow.equals(profPw1)) {
+				flag="true";
+			}
+			else {
+				
+				flag= "false";
+			}
+			
+			
+			return flag;
+			
 	
-	
-	
-	
-	
+			
+	}
 	
 }
 	

@@ -63,8 +63,8 @@
 								<span>년도-학기선택</span>
 								<select id="semChoice" class="form-control" style="color:black">
 									<option value="">선택하세요</option>
-									<c:forEach items="${list}" var="e" varStatus="v">
-									<option value="${e.ACA_YEAR_SEM}">$${e.ACA_YEAR_SEM}</option>
+									<c:forEach items="${studyList}" var="e" varStatus="v">
+									<option value="${e.ACA_YEAR_SEM}">${e.ACA_YEAR_SEM}</option>
 									</c:forEach>
 									
 								</select>
@@ -81,8 +81,8 @@
 				</thead>
 			</table>
 		</div>
-
 	</div>
+	
 	<div class="card-body">
 		<div class="col-md-12">
 			<table class="table table-condensed table-bordered table-hover"
@@ -155,7 +155,7 @@
 	     var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
 		
 	    window.open(url ,"",
-			       "toolbar=no, width=1000, height=700, directories=no, status=no,scrollorbars=no, resizable=no");
+			       "toolbar=no, width=1024, height=700, directories=no, status=no,scrollorbars=no, resizable=no");
 	    
 	}
 

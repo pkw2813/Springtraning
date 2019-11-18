@@ -27,5 +27,5 @@ public interface ProfessorDao3 {
 	Map<String,Object> stuInsertScore(SqlSessionTemplate session,Map<String,Object> param);
 	int updatePoint(SqlSessionTemplate session,Map<String,Object> param);
 	List<Map> studyList(SqlSessionTemplate session,String profId);
-	
+	Map<String,Object> checkInPw(SqlSessionTemplate session,String profId);
 }
