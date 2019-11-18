@@ -34,12 +34,18 @@ public class ProfessorController3 {
 		
 		/*Map<String,Object> param=new HashMap();*/
 		String profId=p.getProfId();
+		
+		
+		
+		
 		/*String profPw=p.getProfPw();*/
 		/* param.put("profId",profId); */
 		/*param.put("profPw",profPw);*/
 		List<Map> list = service.gradeEdit(profId);
 		List<Map> studyList=service.studyList(profId);
+		List<Map> acasemList=service.acasemList(profId);
 		
+		m.addAttribute("acasemList",acasemList);
 		m.addAttribute("studyList",studyList);
 		m.addAttribute("list",list);
 	
@@ -63,8 +69,9 @@ public class ProfessorController3 {
 		
 		
 		List<Map> studyList=service.studyList(profId);
+		List<Map> acasemList=service.acasemList(profId);
 		
-		
+		m.addAttribute("acasemList",acasemList);
 		m.addAttribute("studyList",studyList);
 		m.addAttribute("list",list);
 	
@@ -93,6 +100,7 @@ public class ProfessorController3 {
 		param.put("compPt",compPt);
 		
 		Map<String,Object> flag = service.gradeFlag(param);
+		/* List<String,Object> stugrade=service. */
 		
 		if(flag==null) {
 			
@@ -100,7 +108,16 @@ public class ProfessorController3 {
 			
 		}
 	
-		 Map<String,Object> result=service.stuInsertScore(param); 
+		 Map<String,Object> result=service.stuInsertScore(param);
+		 Map<String,Object> gradeNow=service.stuGrade(param);
+		 Map<String,Object> howManyStudent=service.stuMany(param);
+		 int totalGradeNull=service.totalGradeNull(param);
+		 
+		 m.addAttribute("totalGradeNull",totalGradeNull);
+		 m.addAttribute("gradeNow",gradeNow);
+		 m.addAttribute("howManyStudent",howManyStudent);
+		 System.out.println("asdasd"+gradeNow);
+		 System.out.println("asdasds"+howManyStudent);
 		 m.addAttribute("result",result);
 		 System.out.println(result);
 		
@@ -163,6 +180,8 @@ public class ProfessorController3 {
 				
 				flag= "false";
 			}
+			
+			
 			
 			
 			return flag;

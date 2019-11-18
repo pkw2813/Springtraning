@@ -63,7 +63,7 @@
 								<span>년도-학기선택</span>
 								<select id="semChoice" class="form-control" style="color:black">
 									<option value="">선택하세요</option>
-									<c:forEach items="${studyList}" var="e" varStatus="v">
+									<c:forEach items="${acasemList}" var="e" varStatus="v">
 									<option value="${e.ACA_YEAR_SEM}">${e.ACA_YEAR_SEM}</option>
 									</c:forEach>
 									
@@ -93,6 +93,7 @@
 						<th>이름</th>
 						<th>학년</th>
 						<th>학과</th>
+						<th>과목</th>
 						<th>평가</th>
 						
 					</tr>
@@ -105,6 +106,7 @@
 						<td>${e.STU_NAME }</td>
 						<td>${fn:substring(e.STU_YEAR_SEM,0,1)}</td>
 						<td>${e.DEPT_NAME }</td>
+						<td>${e.SUB_NAME }</td>
 						<td>
 							<button class="btn btn-primary btn-sm" 
 							value="${e.STU_NO},${e.SUB_SEQ},${e.PROF_ID},${e.SUB_YEAR}-${e.SUB_SEMESTER},${e.SUB_CODE},${e.SUB_NAME},${e.COMPLETE_PT}"
@@ -137,11 +139,13 @@
 
 
 	$("#selectSubList").change(function(){
-		$("selectSubListhd").val($("selectSubList").val())
+		$("#selectSubListhd").val($("#selectSubList").val())
+		console.log($("#selectSubListhd").val());
 	});
 	
 	$("#semChoice").change(function(){
-		$("selectSubListhd").val($("selectSubList").val())
+		$("#semChoicehd").val($("#semChoice").val())
+		console.log($("#semChoicehd").val());
 	});
 
 	

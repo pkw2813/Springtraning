@@ -8,7 +8,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 public interface ProfessorService3 {
 	//서버의 현재 날짜 조회
 	
-	
 	List<Map> gradeEdit(String profId);
 	List<Map> choiceClass(Map<String,Object> param);
 	Map<String,Object> gradeFlag(Map<String,Object> param);
@@ -17,7 +16,10 @@ public interface ProfessorService3 {
 	int updatePoint(Map<String,Object> param);
 	List<Map> studyList(String profId);
 	Map<String,Object> checkInPw(String profId);
-	
-	
+	Map<String,Object>stuGrade(Map<String,Object> param);
+	Map<String,Object>stuMany(Map<String,Object> param);
+	int totalGradeNull(Map<String,Object> param);
+	List<Map> acasemList(String profId);
+
 	
 }

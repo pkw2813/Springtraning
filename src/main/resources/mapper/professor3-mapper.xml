@@ -10,7 +10,9 @@
         JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
         JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
         JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
-        where A.PROF_ID=#{profId}) T
+        where A.PROF_ID=#{profId}
+        ORDER BY SUB_NAME
+           ) T
         
 		</select>
 	
@@ -21,7 +23,7 @@
         JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
         JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
         JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
-        where A.PROF_ID='P2012A0101') T
+        where A.PROF_ID=#{profId}) T
         WHERE 1=1
         
      	<if test="subSeq !=null and subSeq !=''">
@@ -29,14 +31,14 @@
      	</if>
      	
      	<if test="semester !=null and semester !=''">
-     	AND SUB_SEQ=#{semester}
+     	AND ACA_YEAR_SEM=#{semester}
      	</if>
      
 	</select>
 	
 	<select id="stuInsertScore" parameterType="map" resultType="map">
 			
-        SELECT A.SUB_SEQ,C.STU_NO,C.STU_NAME,C.GENDER,C.REG_STATUS,C.STU_EMAIL,C.STU_TEL,D.DEPT_NAME,E.PROF_PW,C.STU_YEAR_SEM,A.SUB_NAME,A.PROF_ID,A.MTERM,A.FTERM,A.ASSIGN_1,A.ASSIGN_2,A.ASSIGN_3,A.ASSIGN_4,A.STATUS_GRADE,A.GRADE
+        SELECT A.SUB_SEQ,C.STU_NO,C.STU_NAME,C.GENDER,C.REG_STATUS,C.STU_EMAIL,C.STU_TEL,D.DEPT_NAME,E.PROF_PW,C.STU_YEAR_SEM,A.SUB_NAME,A.PROF_ID,A.MTERM,A.FTERM,A.ASSIGN_1,A.ASSIGN_2,A.ASSIGN_3,A.ASSIGN_4,A.STATUS_GRADE,A.GRADE,A.TOTAL_GRADE
         ,B.MTERM AS MTERM_1,B.FTERM AS FTERM_1,B.ASSIGN_1 AS ASSIGN_1_1,B.ASSIGN_2 AS ASSIGN_2_1,B.ASSIGN_3 AS ASSIGN_3_1,B.ASSIGN_4 AS ASSIGN_4_1,B.STATUS_GRADE as STATUS_GRADE_1,C.STU_IMG_RENAME
         FROM HD_GRADE_TB A
         JOIN HD_CLASS_TB B ON A.SUB_SEQ=B.SUB_SEQ
@@ -74,6 +76,7 @@
          DEFAULT,
          ${compPt},
          #{subSeq},
+         null,
          null
          )
 	</insert>
@@ -96,12 +99,46 @@
         where A.PROF_ID=#{profId}) T
 	</select>
 	
+	<select id="acasemList" parameterType="string" resultType="map">
+		SELECT ROWNUM,T.* from(SELECT DISTINCT F.ACA_YEAR_SEM FROM HD_CLASS_TB A
+        LEFT JOIN HD_SUB_REQ_TB B ON A.SUB_SEQ=B.SUB_SEQ
+        JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
+        JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
+        JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
+        JOIN HD_GRADE_TB F ON A.SUB_SEQ=F.SUB_SEQ 
+        where A.PROF_ID=#{profId}) T
+	</select>
+	
+	
+	
+	
+	
 	
 	<select id="checkInPw" parameterType="string" resultType="map">
 	
 		SELECT * FROM HD_PROFESSOR_TB WHERE PROF_ID=#{profId}
 	
 	</select>
+	
+	<select id="stuGrade" parameterType="map" resultType="map">
+	
+		select * from (SELECT rownum,a.* FROM HD_GRADE_TB a  where sub_seq=${subSeq} ORDER BY TOTAL_GRADE)
+        where stu_no=#{stuId}
+	
+	</select>
+	
+	<select id="stuMany" parameterType="map" resultType="map">
+	
+		select count(*) AS COUNT from HD_GRADE_TB a  where sub_seq=${subSeq}
+        
+	
+	</select>
+	
+	
+	<select id="totalGradeNull" parameterType="map" resultType="_int">
+	SELECT COUNT(*) FROM HD_GRADE_TB a  where sub_seq=${subSeq} AND TOTAL_GRADE=NULL order by TOTAL_GRADE
+	</select>
+	
 	
 	
 </mapper>

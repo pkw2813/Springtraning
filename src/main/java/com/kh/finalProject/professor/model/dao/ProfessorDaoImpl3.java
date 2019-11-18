@@ -70,6 +70,29 @@ public class ProfessorDaoImpl3 implements ProfessorDao3 {
 		return session.selectOne("prof3.checkInPw",profId);
 	}
 
+	@Override
+	public Map<String, Object> stuGrade(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.selectOne("prof3.stuGrade",param);
+	}
+
+	@Override
+	public Map<String, Object> stuMany(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("prof3.stuMany",param);
+	}
+
+	@Override
+	public int totalGradeNull(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.selectOne("prof3.totalGradeNull",param);
+	}
+
+	@Override
+	public List<Map> acasemList(SqlSessionTemplate session, String profId) {
+		// TODO Auto-generated method stub
+		return session.selectList("prof3.acasemList",profId);
+	}
+
 	
 	
 	

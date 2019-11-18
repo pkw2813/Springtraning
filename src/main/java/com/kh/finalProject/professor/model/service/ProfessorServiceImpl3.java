@@ -85,6 +85,16 @@ public class ProfessorServiceImpl3 implements ProfessorService3{
 	}
 
 
+	
+
+
+	@Override
+	public List<Map> acasemList(String profId) {
+		// TODO Auto-generated method stub
+		return dao.acasemList(session,profId);
+	}
+
+
 
 
 	@Override
@@ -96,6 +106,34 @@ public class ProfessorServiceImpl3 implements ProfessorService3{
 
 
 
+	@Override
+	public Map<String, Object> stuGrade(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.stuGrade(session,param);
+	}
+
+
+
+
+	@Override
+	public Map<String, Object> stuMany(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.stuMany(session,param);
+	}
+
+
+
+
+	@Override
+	public int totalGradeNull(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.totalGradeNull(session,param);
+	}
+
+
+
+
+	
 	
 	
 	

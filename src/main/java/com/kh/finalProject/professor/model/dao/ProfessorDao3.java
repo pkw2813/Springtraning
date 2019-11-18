@@ -28,4 +28,11 @@ public interface ProfessorDao3 {
 	int updatePoint(SqlSessionTemplate session,Map<String,Object> param);
 	List<Map> studyList(SqlSessionTemplate session,String profId);
 	Map<String,Object> checkInPw(SqlSessionTemplate session,String profId);
+	Map<String,Object>stuGrade(SqlSessionTemplate session,Map<String,Object> param);
+	Map<String,Object>stuMany(SqlSessionTemplate session,Map<String,Object> param);
+	int totalGradeNull(SqlSessionTemplate session,Map<String,Object> param);
+	
+	List<Map> acasemList(SqlSessionTemplate session,String profId);
+	
+	
 }

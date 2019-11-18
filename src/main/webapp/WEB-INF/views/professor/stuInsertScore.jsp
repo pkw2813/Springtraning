@@ -174,7 +174,7 @@ table {
 						
 						<c:if test="${result.ASSIGN_1 eq null}">
 						<input id="ASSIGN_1" value="${result.ASSIGN_1}"> /배점 : ${result.ASSIGN_1_1}%
-						<button class="btn btn-primary btn-sm buttonFont" style="font-size:29px;" value="ASSIGN_1,${result.SUB_SEQ},${result.STU_NO}," onclick="updatePoint(value,id)">입력</button>
+						<button class="btn btn-primary btn-sm buttonFont" value="ASSIGN_1,${result.SUB_SEQ},${result.STU_NO}," onclick="updatePoint(value)">입력</button>
 						</c:if>
 						</c:if>
 					</td>
@@ -237,7 +237,7 @@ table {
 						<th>중간</th>
 						<th>기말</th>
 						<th>출석</th>
-						<th>최종학점</th>
+						<th>평가학점</th>
 						</tr>
 					<tr>
 						<td>
@@ -294,23 +294,53 @@ table {
 					
 					<td>
 					
-						<c:if test="${result.GRADE eq '0' or result.GRADE eq null}">
-						<input id=GRADE value="${result.GRADE}">
-						<button class="btn btn-Success btn-sm buttonFont" onclick="autoCacul()">학점자동계산</button>
-						<button class="btn btn-primary btn-sm buttonFont" value="GRADE,${result.SUB_SEQ},${result.STU_NO}," onclick="updatePoint(value)">입력</button>
+						<c:if test="${result.TOTAL_GRADE eq '0' or result.TOTAL_GRADE eq null}">
+						<input id=TOTAL_GRADE value="${result.TOTAL_GRADE}">
+						<button class="btn btn-Success btn-sm buttonFont" id="autoCacul">학점자동계산</button>
+						<button class="btn btn-primary btn-sm buttonFont" value="TOTAL_GRADE,${result.SUB_SEQ},${result.STU_NO}," onclick="updatePoint(value)">입력</button>
 						</c:if>
 						
-						
-						<c:if test="${result.GRADE ne '0'}">
-						<input id=GRADE value="${result.GRADE}" disabled> 평가완료 
+				
+						<c:if test="${result.TOTAL_GRADE ne null}">
+						<input id=TOTAL_GRADE value="${result.TOTAL_GRADE}" disabled> 평가완료 
 						</c:if>
 					</td>				
 						</tr>
+						<tr>
+						<th colspan="4" style="text-align:center;font-size:30px">
+						최종학점
+						</th>
+						</tr>
+						<tr>
+						<td colspan="4" style="text-align:center;">
+					
+					
+					<c:if test="${totalGradeNull > 0}">
+					아직 평가가 끝나지않은 학생이있습니다 학생의 모든 점수가 결정된 이후 사용 가능합니다.
+					</c:if>
+					
+					
+					<c:if test="${totalGradeNull eq 0}">
+						 ${gradeNow.ROWNUM}/${howManyStudent.COUNT} (석차/현재수강인원) 상위 백분율(${(gradeNow.ROWNUM/howManyStudent.COUNT)*100} %)<p style="color:red;font-size:10">상위백분율이란 현재석차/현재수강인원*100(예:50명중 1등 0% / 50명중 50등 100%)</p>
+					
+						<c:if test="${result.GRADE eq '0'}">
+						<input id=GRADE value="${result.GRADE}">
+						<button class="btn btn-primary btn-sm buttonFont" value="GRADE,${result.SUB_SEQ},${result.STU_NO}," onclick="updatePoint(value)">입력</button>
+						</c:if>
+				
+						<c:if test="${result.GRADE ne '0'}">
+						<input id=GRADE value="${result.GRADE}" disabled> 평가완료 
+						</c:if>
+					</c:if>
+					
+					
+					</td>
+					</tr>
 					</table>
 					
 					
 	 <div id="pwChangeModal" class="modal">
-      Modal content
+
       <div class="modal-content" style="width:900px;height:600px;">
          <p style="font-family:jua;text-align:center;font-size:30px">비밀번호가 필요한페이지 입니다</p>
          <div class="form-group">
@@ -349,25 +379,9 @@ table {
 
 <script>
 
-function autoCacul(){
-	
-	var assign1=(${result.ASSIGN_1}*${result.ASSIGN_1_1})/100;
-	var assign2=(${result.ASSIGN_2}*${result.ASSIGN_2_1})/100;
-	var assign3=(${result.ASSIGN_3}*${result.ASSIGN_3_1})/100;
-	var assign4=(${result.ASSIGN_4}*${result.ASSIGN_4_1})/100;
-	var mterm=(${result.MTERM}*${result.MTERM_1})/100;
-	var fterm=(${result.FTERM}*${result.FTERM_1})/100;
 
 	
 	
-	var statusgrade=(${result.STATUS_GRADE}*${result.STATUS_GRADE_1})/100;
-	var totalPoint=assign1+assign2+assign3+assign4+mterm+fterm+statusgrade;
-	var grade=totalPoint*0.045
-	console.log(grade)
-	$("#GRADE").val(grade.toFixed(2));
-
-	
-}
 
 
 var viewflag="";
@@ -399,7 +413,6 @@ $(document).ready(function(){
 	headerModal1.style.display = "block";
 
 });
-
 
 
 
@@ -490,6 +503,61 @@ function updatePoint(value){
 			
 		});
 		
+		
+		
+		$("#autoCacul").click(function autoCacul(){
+			
+			
+		if(${result.ASSIGN_1}==null){
+			var assign1=0;	
+		}else{
+			var assign1=(${result.ASSIGN_1}*${result.ASSIGN_1_1})/100;
+		}
+		
+		if(${result.ASSIGN_2}==null){
+			var assign2=0;	
+		}else{
+			var assign2=(${result.ASSIGN_2}*${result.ASSIGN_2_1})/100;
+		}
+		
+		if(${result.ASSIGN_3}==null){
+			var assign3=0;	
+		}else{
+			var assign3=(${result.ASSIGN_3}*${result.ASSIGN_3_1})/100;
+		}
+		
+		if(${result.ASSIGN_4}==null){
+			var assign4=0;	
+		}else{
+			var assign4=(${result.ASSIGN_4}*${result.ASSIGN_4_1})/100;
+		}
+		
+		if(${result.MTERM}==null){
+			var mterm=0;	
+		}else{
+			var mterm=(${result.MTERM}*${result.MTERM_1})/100;
+		}
+		
+		if(${result.FTERM}==null){
+			var fterm=0;	
+		}else{
+			var fterm=(${result.FTERM}*${result.FTERM_1})/100;
+		}
+		
+		if(${result.STATUS_GRADE}==null){
+			var statusgrade=0;	
+		}else{
+			var statusgrade=(${result.STATUS_GRADE}*${result.STATUS_GRADE_1})/100;
+		}
+		
+			var totalPoint=assign1+assign2+assign3+assign4+mterm+fterm+statusgrade;
+			var totalgrade=totalPoint*0.045
+			console.log(totalgrade);
+			$("#TOTAL_GRADE").val(totalgrade.toFixed(1));
+			
+			
+
+		});
 		
 		
 		
