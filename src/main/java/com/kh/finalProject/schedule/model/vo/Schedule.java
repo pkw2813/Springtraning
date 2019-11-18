@@ -22,4 +22,5 @@ public class Schedule {
 //	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private String enDate;
 	private String deptCode;
+	private String deptName;
 }

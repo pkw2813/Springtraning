@@ -72,10 +72,12 @@
                   $.each(data, function(key, items) {
                     $.each(items,function(index, item) {
                       let depCode = "${sessionScope.loginMember.deptCode }";
-                      let flag = moment(new Date()).format('YYYY-MM-DD') > moment(new Date(item['enDate'])).format('YYYY-MM-DD')?'#808080':depCode == item['deptCode']?"#FF6666":null;
+              console.log();
+                      let flag = moment(new Date()).format('YYYY-MM-DD') > moment(new Date(item['enDate'])).format('YYYY-MM-DD')?'rgba(0, 0, 0, 0.2)':depCode == item['deptCode']?"rgba(104, 175, 255, 0.2)":"rgba(235, 160, 160, 0.3)";
+                      let title = depCode.substr(0,1) != 0?depCode == item['deptCode']?item['planName']: "[대학 일정] " + item['planName']:depCode == item['deptCode']?"[대학 일정] " + item['planName']:item['planName'];
                       let end = moment(new Date(item['stDate'])).format('YYYY-MM-DD') == moment(new Date(item['enDate'])).format('YYYY-MM-DD')?moment(new Date(item['enDate'])).format('YYYY-MM-DD'):moment(new Date(item['enDate'])).add(1,'day').format('YYYY-MM-DD');
                           let setData = {
-                              "title" : item['planName'],
+                              "title" : title,
                               "color" : flag,
                               "groupId":item['deptCode'],
                               "start" : moment(new Date(item['stDate'])).format('YYYY-MM-DD'),

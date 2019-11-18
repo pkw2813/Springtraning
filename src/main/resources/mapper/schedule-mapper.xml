@@ -3,7 +3,7 @@
 <mapper namespace="cal">
 
 	<select id="getCalendar" parameterType="map" resultMap="scheduleResult">
-	SELECT * FROM HD_PLAN_TB WHERE PLAN_START_DATE BETWEEN #{start} AND #{end} 
+	SELECT * FROM HD_PLAN_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE PLAN_START_DATE BETWEEN #{start} AND #{end} 
 	<if test="deptCode != null">
 	AND DEPT_CODE = #{deptCode} OR SUBSTR(DEPT_CODE,1,1) = '0'
 	</if>
@@ -22,8 +22,9 @@
 		<result column="PLAN_NAME" property="planName" />
 		<result column="PLAN_START_DATE" property="stDate" />
 		<result column="PLAN_END_DATE" property="enDate" />
-		<result column="DEPT_CODE" property="deptCode" />		
-	</resultMap>
+		<result column="DEPT_CODE" property="deptCode" />
+		<result column="DEPT_NAME" property="deptName" />
+		</resultMap>
 
   
 </mapper>

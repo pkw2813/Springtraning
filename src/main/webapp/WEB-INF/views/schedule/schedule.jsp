@@ -154,8 +154,8 @@
                   $.each(data, function(key, items) {
                     $.each(items,function(index, item) {
                       let depCode = "${sessionScope.loginMember.deptCode }";
-                      let flag = moment(new Date()).format('YYYY-MM-DD') > moment(new Date(item['enDate'])).format('YYYY-MM-DD')?'#808080':depCode == item['deptCode']?"#FF6666":null;
-                      let title = depCode == item['deptCode']?item['planName']: item['deptCode'] +" " + item['planName'];
+                      let flag = moment(new Date()).format('YYYY-MM-DD') > moment(new Date(item['enDate'])).format('YYYY-MM-DD')?'rgba(0, 0, 0, 0.2)':depCode == item['deptCode']?"rgba(235, 160, 160, 0.3)":"rgba(104, 175, 255, 0.2)";
+                      let title = depCode == item['deptCode']?item['planName']: "[" +item['deptName'] +"] " + item['planName'];
                       let end = moment(new Date(item['stDate'])).format('YYYY-MM-DD') == moment(new Date(item['enDate'])).format('YYYY-MM-DD')?moment(new Date(item['enDate'])).format('YYYY-MM-DD'):moment(new Date(item['enDate'])).add(1,'day').format('YYYY-MM-DD');
                           let setData = {
                               "title" : title,
