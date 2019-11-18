@@ -41,6 +41,28 @@
 		SELECT COUNT(*) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
 	</select>
 	
+	<select id="deptEmp" resultType="map" parameterType="map">
+  		SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE)
+		WHERE SUBSTR(PROF_ID,1,1) = 'E'
+ 		<if test="deptCode != null">
+		AND DEPT_CODE = #{deptCode}
+		</if>
+		<if test="search != null">
+		AND PROF_ID LIKE '%${search}%' OR PROF_NAME LIKE '%${search}%'
+		</if>
+		 ORDER BY PROF_ENROLL DESC, DEPT_CODE
+	</select>
+	
+	<select id="deptEmpCount" resultType="_int" parameterType="map">
+  		SELECT COUNT(*) FROM HD_PROFESSOR_TB
+  		WHERE SUBSTR(PROF_ID,1,1) = 'E'
+  		<if test="deptCode != null">
+		AND DEPT_CODE = #{deptCode}
+		</if>
+		<if test="search != null">
+		AND PROF_ID LIKE '%${search}%' OR PROF_NAME LIKE '%${search}%'  
+		</if>
+	</select>
 	
 	
 	

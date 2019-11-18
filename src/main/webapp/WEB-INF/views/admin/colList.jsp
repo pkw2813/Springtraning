@@ -27,16 +27,27 @@
                 <div class="tab-content tab-pane fade show">
                   <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">	
+                      <div class="nav-item nav-search d-none d-lg-block">
+                          <div class="input-group as">
+                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                              <span class="input-group-text" id="search">
+                              <i class="ti-search"></i>
+                              </span>
+                            </div>
+                            <input type="text" class="form-control" id="searchStu" placeholder="Search now" aria-label="search" aria-describedby="search">
+                          </div>
+                        </div>	
+                      <div class="table-responsive">
+                          <!-- <input type="button" onclick="fn_search($('eveIndex').val());" value="검색"/> -->
                         <table class="table table-hover">
                           <thead>
-                                  <tr>
-                                      <th>학과</th>
-                                      <th>개인 번호</th>
-                                      <th> 이름</th>
-                                      <th>전화 번호</th>
-                                      <th>이메일</th>
-                                      <th> 주소</th>
+                            <tr>
+                              <th>학과</th>
+                              <th>개인 번호</th>
+                              <th> 이름</th>
+                              <th>전화 번호</th>
+                              <th>이메일</th>
+                              <th> 주소</th>
                                   </tr>
                           </thead>
                           <tbody id="tbody">
@@ -83,70 +94,13 @@
 	          				 arr+="<td>" + data['list'][i].EMAIL +"</td>";
 	          				 arr+="<td>" + data['list'][i].ADDRESS +"</td></tr>";
 	          			 }
+                     arr+="<input type='hidden' id='eveIndex' value='"+index+"'/>";
                          $("#tbody").html(arr);
 	          			 $("#pageConainer").html(data['pageBar']);
 
 	          		 }
 	          	 	});
                }
-
-
-$(function() {
-	$(document).ready(function(){
-
-		$.ajax({
-			type : "post",
-			url: "${pageContext.request.contextPath}/selectColList.do",
-			success: function(data) {
-	
-				let colListHtml = "";
-				
-				colListHtml = "<option value='select' id='selCol'>대학 선택</option>";
-				for(let i = 0; i < data.list.length; i++) {
-					let cols = data.list[i];
-					colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
-				}
-				
-				$('.selectCol').html(colListHtml);
-					$('.selectCol').change(function(){
-					$("#selCol").attr('disabled',true);
-			
-		
-	})
-			
-			}
-
-		})
-	})
-});
-
-
-
-//대학이 선택 되었을때 해당 대학에 포함되어 있는 학과를 리스트로 가져옴
- $(function(){
- 	$('.selectCol').change(function(){
- 		let val = $('.selectCol').val();
-		$.ajax({
-			type : "post",
-			url: "${pageContext.request.contextPath}/selectDeptList.do",
-			data: {"result" : $('.selectCol').val()},
-			success: function(data) {
-				let deptListHtml = "<option value='select' id='selDept'>학과 선택</option>";
-				for(let i = 0; i < data.list.length; i++) {
-					let depts = data.list[i];
-
-					deptListHtml += "<option value='"+depts['DEPT_CODE']+"'  class='deptList'>"+depts['DEPT_NAME']+"</option>";
-				}
-				
-				$('.selectdep').html(deptListHtml);
-					$('.selectdep').change(function(){
-					$("#selDept").attr('disabled',true);
-		});
- 	}
- });
-	 });
- });
-
 
 
 </script>
