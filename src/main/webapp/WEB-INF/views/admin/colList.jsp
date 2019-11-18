@@ -27,7 +27,7 @@
                 <div class="tab-content tab-pane fade show">
                   <div class="card">
                     <div class="card-body">
-                      <div class="table-responsive">
+                        <div class="table-responsive">	
                         <table class="table table-hover">
                           <thead>
                                   <tr>
@@ -60,7 +60,6 @@
 
 <script>
 
-
      $(function(){
             	   $(".nav-tabs>li").first().trigger("click");
                })
@@ -78,7 +77,7 @@
 	          			 for(var i=0;i<data['list'].length;i++){
 	          				 arr+="<tr class='memList'>";
 	          				 arr+="<td>" + data['list'][i].DEPT_NAME +"</td>";
-	          				 arr+="<td>" + data['list'][i].PROF_ENROLL +"<input type='hidden' value='"+ data['list'][i].PROF_ENROLL +"' class='num'/></td>";
+	          				 arr+="<td>" + data['list'][i].PROF_ID +"<input type='hidden' value='"+ data['list'][i].PROF_ID +"' class='num'/></td>";
 	          				 arr+="<td>" + data['list'][i].PROF_NAME +"</td>";
 	          				 arr+="<td>" + data['list'][i].PHONE +"</td>";
 	          				 arr+="<td>" + data['list'][i].EMAIL +"</td>";
@@ -86,9 +85,7 @@
 	          			 }
                          $("#tbody").html(arr);
 	          			 $("#pageConainer").html(data['pageBar']);
-	          			//  $(".reqOne").click(function(){
-                            //    location.href="${path}/reqOne.hd?reqNo="+$($($(this).children())[0]).children().val();
-	                        //  });
+
 	          		 }
 	          	 	});
                }

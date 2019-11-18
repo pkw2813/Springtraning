@@ -5,7 +5,11 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page = "/WEB-INF/views/common/header.jsp"/>
-
+<style>
+	.as{
+		border-radius: 20px !important;
+	}
+</style>
 
 
 		<div class="main-panel">
@@ -16,7 +20,17 @@
 	</div>
 			<div class="row">	
 					<div class="table-responsive">	
-						<input type='text' class="form-control" id='searchStu'>	
+						<div class="nav-item nav-search d-none d-lg-block">
+							<div class="input-group as">
+									<div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+									  <span class="input-group-text" id="search">
+										<i class="ti-search"></i>
+									  </span>
+									</div>
+									<input type="text" class="form-control" id="searchStu" placeholder="Search now" aria-label="search" aria-describedby="search">
+								  </div>
+								  </div>
+						<!-- <input type='text' class="form-control" id='searchStu'>	navbar-search-input -->
 				<table class="table">
 					<tr>
 						<!-- <th>번 호</th> -->
@@ -79,37 +93,61 @@ $('#searchStu').on('keyup', function(){
 			stuList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
 			stuList += "<td>"+data['list'][i].PHONE+"</td><td>"+data['list'][i].EMAIL+"</td><td>"+data['list'][i].ADDRESS+"</td>";
 			stuList += "<td><input type='button' class='btn btn-outline-success btn-fw' onclick='detailProf("+data['list'][i].PROF_ID+");' value='상세 정보'/></td>";				
-			stuList += '</tr>';
+			stuList += "</tr>";
 
 			}
 			$('.table').html(stuList);
 			$('.card-footer').html(data['pageBar']);
-			// $('.card-footer').removeProp();
 		}
 	})
 });
 
-function insertNewProf() {
-   $(".modal").css("display","block");
+	function getSearchList(pageNo) {
+	let search = $('#searchStu').val().toUpperCase();
+	$.ajax({
+			type:'post',
+			url:"${path}/ajax/deptStu",
+			data:{'search':search,
+				  'cPage':pageNo},
+			success: function(data){
+				let stuList = "";
+				for(let i = 0; i < data['list'].length; i++) {
 
+				stuList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
+				stuList += "<td>"+data['list'][i].PHONE+"</td><td>"+data['list'][i].EMAIL+"</td><td>"+data['list'][i].ADDRESS+"</td>";
+				stuList += "<td><input type='button' class='btn btn-outline-success btn-fw' onclick='detailProf("+data['list'][i].PROF_ID+");' value='상세 정보'/></td>";				
+				stuList += '</tr>';
+
+				}
+				$('.table').html(stuList);
+				$('.card-footer').html(data['pageBar']);
+				// $('.card-footer').removeProp();
+			}
+		})
 }
 
-$(function(){
-	$(".btn_close").click(function(){
-		$(".modal").css("display","none");
-	});
-});
+	function insertNewProf() {
+	$(".modal").css("display","block");
 
-$(function(){
-	$(".close").click(function(){
-		$(".modal").css("display","none");
+	}
+
+	$(function(){
+		$(".btn_close").click(function(){
+			$(".modal").css("display","none");
+		});
 	});
-});
+
+	$(function(){
+		$(".close").click(function(){
+			$(".modal").css("display","none");
+		});
+	});
 
 </script>
 	
 
 <style>
+
 
 	.listFor > td {
 		font-size: 13px;
