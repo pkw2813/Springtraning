@@ -13,9 +13,12 @@
 <!-- 달력 import end -->
 
 <style>
-	/* div {
+	div {
 		border: 1px solid black;
-	} */
+	}
+	input textarea {
+		font-weight:bold;
+	}
 </style>
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -25,12 +28,9 @@
 				<div class="d-flex justify-content-between align-items-center">
 					<div id="assignmentTitle">
 						<h3 class="font-weight-bold mb-0">
-						<c:forEach var="list" items="${profSubjectList}" varStatus="s">
-							<c:if test="${s.count eq 1}">
-								<c:out value="${acaYear}"/>학년도 <c:out value="${acaSemester}"/>학기
-								<c:out value="${list.subName }"/>&nbsp;과제 등록하기
+							<c:if test="${ar ne null}">
+								<c:out value="${ar.subName }"/>&nbsp;과제 <c:out value="${ar.asgmtNo }"/>
 							</c:if>
-						</c:forEach>
 						</h3>
 					</div>
 				</div>
@@ -41,24 +41,14 @@
 			<div class="col-12 grid-margin stretch-card">
 				<div class="card">
 					<!-- <form class="forms"> -->
-						<div class="card-header">
-							<div class="row">
-								<div class="col-4" id="choiceClass">
-								<label for="choiceClass" class="text-warning fontBlack" style="font-weight:bold;">강의 선택</label>
-									<select class="form-control" style="color:black;" id="subjectName">
-										<c:forEach var="list" items="${profSubjectList}" >
-											<option value="<c:out value="${list.subName }"/>"><c:out value="${list.subName }"/></option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-						</div>
-
 						<div class="card-body">
 							<div class="row">
 								<div class="form-group col-5">
-									<label for="exampleInputName1">과제 제목</label>
-									<input type="text" class="form-control" id="exampleInputName1" placeholder="과제 제목을 입력해주세요.">
+									첨부파일
+									<c:if test="${ar ne null}">
+									<label><c:out value="${ar.asgmtRegdDate }"/></label>
+								</c:if>
+									<input type="text" class="form-control" id="exampleInputName1" style="color:black; background-color:#cef1da;" readonly>
 								</div>
 								<div class="form-group col-7">
 			                      <label>첨부파일</label>
@@ -73,14 +63,13 @@
 							</div>
 
 							<div class="form-group">
-								<label for="exampleTextarea1">과제 설명</label>
-								<textarea class="form-control" id="exampleTextarea1" rows="25"></textarea>
+								<textarea class="form-control" id="exampleTextarea1" rows="25" style="font-weight:bold; color:black; background-color:#cef1da;" readonly></textarea>
 							</div>
 						</div>
 
 						<div class="card-footer" style="text-align:center;">
-							<button class="btn btn-primary mr-2" onclick="test();">등록</button>
-							<button class="btn btn-inverse-dark btn-fw" onclick="test();">취소</button>
+							<button class="btn btn-primary mr-2" onclick="test();">수정</button>
+							<button class="btn btn-inverse-dark btn-fw" onclick="test();">목록으로</button>
 
 						</div>
 					<!-- </form> -->
@@ -90,14 +79,13 @@
 	</div>
 
 <script>
-	$("#subjectName").change(function() {
-		//alert($(this).val()+" 과목을 선택하셨습니다."); 
-		$("#assignmentTitle").html("<h3 class='font-weight-bold mb-0'><c:out value='${acaYear}'/>학년도 <c:out value='${acaSemester}'/>학기 "+$(this).val()+" 과제 등록하기"+"</h3>");
-				
-	});
+		<c:if test="${ar ne null}">
+			$("#exampleInputName1").val('<c:out value="${ar.asgmtRegdTitle }"/>');
+			$("#exampleTextarea1").val('<c:out value="${ar.asgmtRegdContent }"/>');
+		</c:if>
 	
 	
-	function test() {
+		function test() {
 		alert("버튼이 눌림!");
 	}
 

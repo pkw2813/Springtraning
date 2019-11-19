@@ -13,12 +13,68 @@
 		AND S.SUB_YEAR=#{acaYear}
 		AND S.SUB_SEMESTER=#{acaSemester}
 	</select>
+	
+	<select id="selectAsgmtBoardList" parameterType="infoForProfSubject" resultMap="assignmentRegisterResult">
+		SELECT P.PROF_NAME, AR.* 
+		FROM (SELECT * 
+		FROM HD_ASGMT_REGD_TB 
+		WHERE PROF_ID=#{profId}) AR
+		JOIN HD_SUBJECT_TB S
+		ON AR.SUB_SEQ=S.SUB_SEQ
+		AND S.SUB_YEAR=#{acaYear}
+		AND S.SUB_SEMESTER=#{acaSemester}
+		JOIN HD_PROFESSOR_TB P
+		ON AR.PROF_ID=P.PROF_ID
+		ORDER BY ASGMT_REGD_DATE DESC
+	</select>
+	
+	<select id="selectAsgmtBoardCount" parameterType="infoForProfSubject" resultType="_int">
+		SELECT COUNT(*)
+		FROM (SELECT * 
+		FROM HD_ASGMT_REGD_TB 
+		WHERE PROF_ID=#{profId}) AR
+		JOIN HD_SUBJECT_TB S
+		ON AR.SUB_SEQ=S.SUB_SEQ
+		AND S.SUB_YEAR=#{acaYear}
+		AND S.SUB_SEMESTER=#{acaSemester}
+		ORDER BY ASGMT_REGD_DATE DESC
+	</select>
+	
+	<select id="selectAssignment" parameterType="infoForProfAssignment" resultMap="assignmentRegisterResult">
+		SELECT P.PROF_NAME, S.SUB_NAME, AR.* 
+		FROM (SELECT * 
+		FROM HD_ASGMT_REGD_TB 
+		WHERE PROF_ID=#{profId}
+		AND SUB_SEQ=#{subSeq}
+		AND ASGMT_NO=#{asgmtNo}) AR
+		JOIN HD_SUBJECT_TB S
+		ON AR.SUB_SEQ=S.SUB_SEQ
+		AND S.SUB_YEAR=#{acaYear}
+		AND S.SUB_SEMESTER=#{acaSemester}
+		JOIN HD_PROFESSOR_TB P
+		ON AR.PROF_ID=P.PROF_ID
+	</select>
 
 
   	<resultMap id="profSubjectResult" type="profSubject">
 		<result column="SUB_SEQ" property="subSeq" />
 		<result column="SUB_CODE" property="subCode" />
 		<result column="SUB_NAME" property="subName" />
+	</resultMap>
+	
+	<resultMap id="assignmentRegisterResult" type="assignmentRegister">
+		<result column="PROF_NAME" property="profName" />
+		<result column="SUB_NAME" property="subName" />
+		<result column="ASGMT_SEQ" property="asgmtSeq" />
+		<result column="SUB_SEQ" property="subSeq" />
+		<result column="PROF_ID" property="profId" />
+		<result column="ASGMT_NO" property="asgmtNo" />
+		<result column="ASGMT_REGD_TITLE" property="asgmtRegdTitle" />
+		<result column="ASGMT_REGD_CONTENT" property="asgmtRegdContent" />
+		<result column="ASGMT_REGD_DATE" property="asgmtRegdDate" />
+		<result column="READ_COUNT" property="readCount" />
+		<result column="ASGMT_REGD_ORIFILE_NAME" property="asgmtRegdOrifileName" />
+		<result column="ASGMT_REGD_REFILE_NAME" property="asgmtRegdRefileName" />
 	</resultMap>
 	
 </mapper>

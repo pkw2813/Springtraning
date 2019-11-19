@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.finalProject.professor.model.dao.ProfessorDao2;
 import com.kh.finalProject.professor.model.dao.ProfessorDao4;
+import com.kh.finalProject.professor.model.vo.AssignmentRegister;
+import com.kh.finalProject.professor.model.vo.InfoForProfAssignment;
 import com.kh.finalProject.professor.model.vo.InfoForProfSubject;
 import com.kh.finalProject.professor.model.vo.ProfSubject;
 
@@ -23,6 +25,21 @@ public class ProfessorServiceImpl4 implements ProfessorService4{
 	@Override
 	public List<ProfSubject> selectProfSubject(InfoForProfSubject ifps) {
 		return dao.selectProfSubject(session, ifps);
+	}
+
+	@Override
+	public List<AssignmentRegister> selectAsgmtBoardList(int cPage, int numPerPage, InfoForProfSubject ifps) {
+		return dao.selectAsgmtBoardList(session, cPage, numPerPage, ifps);
+	}
+
+	@Override
+	public int selectAsgmtBoardCount(InfoForProfSubject ifps) {
+		return dao.selectAsgmtBoardCount(session, ifps);
+	}
+
+	@Override
+	public AssignmentRegister selectAssignment(InfoForProfAssignment ifpa) {
+		return dao.selectAssignment(session, ifpa);
 	}
 	
 	

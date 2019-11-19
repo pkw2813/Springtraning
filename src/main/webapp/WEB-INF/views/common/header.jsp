@@ -297,7 +297,7 @@
             </a>
             <div class="collapse" id="assign">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewAssignmentReg.hd">과제 등록하기</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${path }/prof/assignmentBoard.hd">과제 등록 게시판</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${path }/prof/viewAssignment.hd">과제 제출현황 조회</a></li>
               </ul>
             </div>

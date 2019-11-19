@@ -31,5 +31,7 @@
 		<typeAlias type="com.kh.finalProject.employee.model.vo.Curriculum" alias="curriculum"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.InfoForProfSubject" alias="infoForProfSubject"/>
 		<typeAlias type="com.kh.finalProject.professor.model.vo.ProfSubject" alias="profSubject"/>
+		<typeAlias type="com.kh.finalProject.professor.model.vo.AssignmentRegister" alias="assignmentRegister"/>
+		<typeAlias type="com.kh.finalProject.professor.model.vo.InfoForProfAssignment" alias="infoForProfAssignment"/>
 	</typeAliases>
 </configuration>
