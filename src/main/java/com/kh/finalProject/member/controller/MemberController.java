@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,8 @@ public class MemberController {
 	private ProfessorService proService;
 	@Autowired
 	private MailController mc;
+	@Autowired
+	private BCryptPasswordEncoder bEnc;
 	
 	
 	@RequestMapping("/main.hd")
@@ -64,13 +67,19 @@ public class MemberController {
 		//System.out.println("매치 :" + s.getStuPw().matches(su));
 		if(loginNo.equals("s")) {
 			Student stu=stuService.selectOne(loginId);
-			session.setAttribute("loginMember", stu);
+//			if(bEnc.matches(loginPwd, stu.getStuPw())){
+				session.setAttribute("loginMember", stu);
+//			}
 		}else if(loginNo.equals("p")){
 			Professor pro=proService.selectOne(loginId);
+//			if(bEnc.matches(loginPwd, pro.getProfId())){
 			session.setAttribute("loginMember", pro);
+//			}
 		}else{
 			Employee emp=empService.selectOne(loginId);
+//			if(bEnc.matches(loginPwd, emp.getEmpId()) || loginId.equals("E00000000")){
 			session.setAttribute("loginMember", emp);
+//			}
 		}
 		if(session.getAttribute("loginMember")!=null) {
 			msg="로그인 되었습니다.";

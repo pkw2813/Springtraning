@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +42,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 	@Autowired
-	private Sha256Encrypto encSha;
+	BCryptPasswordEncoder bEnc;
 	@Autowired
 	BeforeStuService bService;
 
@@ -79,7 +80,7 @@ public class EmployeeController {
 		try {
 			int result = service.insertNewStu(s, beforeStu);
 			handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!", "아이디 : " + s.getStuNo()
-					+ "   \r\n    비밀번호 : " + s.getStuNo().subSequence(0, 3) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
+					+ "   \r\n    비밀번호 : " + bs.getBeforeStu()+"".substring(0, 5) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -393,7 +394,10 @@ public class EmployeeController {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
 			s.setStuPw(enc.decrypt(bs.getBeforeNo()).substring(0, 6));
 			// 패스워드 초기 패스워드 단방향 암호화함
-			s.setStuPw(encSha.encrypt(s.getStuPw()));
+			System.out.println("암호화전 pw : " + s.getStuPw());
+			System.out.println("암호화전pw : " + bEnc.encode(s.getStuPw()));
+			
+			s.setStuPw(bEnc.encode(s.getStuPw()));
 
 			// 성별땜에
 			bs.setBeforeNo(enc.decrypt(bs.getBeforeNo()));
