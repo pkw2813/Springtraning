@@ -11,5 +11,6 @@ public class ProfSubject {
 	
 	private String subSeq; // 과목 일련번호
 	private String subCode; // 과목 코드
+	private String profId; // 교수 아이디
 	private String subName; // 과목 이름
 }

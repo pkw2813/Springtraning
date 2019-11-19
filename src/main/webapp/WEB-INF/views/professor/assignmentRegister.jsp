@@ -5,12 +5,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-<!-- 달력 import start -->
-<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
-	rel="stylesheet" type="text/css" />
-<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"
-	type="text/javascript"></script>
-<!-- 달력 import end -->
 
 <style>
 	/* div {

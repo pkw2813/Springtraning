@@ -5,7 +5,7 @@
 
 	<select id="selectProfSubject" parameterType="infoForProfSubject" resultMap="profSubjectResult">
 		SELECT C.*, S.SUB_NAME
-		FROM (SELECT SUB_SEQ, SUB_CODE
+		FROM (SELECT SUB_SEQ, SUB_CODE, PROF_ID
 		FROM HD_CLASS_TB
 		WHERE PROF_ID=#{profId}) C
 		JOIN HD_SUBJECT_TB S
@@ -15,10 +15,10 @@
 	</select>
 	
 	<select id="selectAsgmtBoardList" parameterType="infoForProfSubject" resultMap="assignmentRegisterResult">
-		SELECT P.PROF_NAME, AR.* 
+		SELECT P.PROF_NAME, S.SUB_NAME, AR.* 
 		FROM (SELECT * 
 		FROM HD_ASGMT_REGD_TB 
-		WHERE PROF_ID=#{profId}) AR
+		WHERE PROF_ID=#{profId} AND SUB_SEQ=${subSeq}) AR
 		JOIN HD_SUBJECT_TB S
 		ON AR.SUB_SEQ=S.SUB_SEQ
 		AND S.SUB_YEAR=#{acaYear}
@@ -32,7 +32,7 @@
 		SELECT COUNT(*)
 		FROM (SELECT * 
 		FROM HD_ASGMT_REGD_TB 
-		WHERE PROF_ID=#{profId}) AR
+		WHERE PROF_ID=#{profId} AND SUB_SEQ=${subSeq}) AR
 		JOIN HD_SUBJECT_TB S
 		ON AR.SUB_SEQ=S.SUB_SEQ
 		AND S.SUB_YEAR=#{acaYear}
@@ -59,6 +59,7 @@
   	<resultMap id="profSubjectResult" type="profSubject">
 		<result column="SUB_SEQ" property="subSeq" />
 		<result column="SUB_CODE" property="subCode" />
+		<result column="PROF_ID" property="profId" />
 		<result column="SUB_NAME" property="subName" />
 	</resultMap>
 	

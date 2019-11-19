@@ -14,4 +14,5 @@ public class InfoForProfSubject {
 	private String profId;
 	private String acaYear;
 	private String acaSemester;
+	private String subSeq; // 과목 일련번호
 }

@@ -1,10 +1,26 @@
+<%@page import="com.kh.finalProject.professor.model.vo.AssignmentRegister"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.kh.finalProject.professor.model.vo.ProfSubject"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-
+<%
+List<AssignmentRegister> arList=null;
+List<ProfSubject> profSubjectList=null;
+	if(request.getAttribute("arList")!=null) {
+		arList=(ArrayList)request.getAttribute("arList");
+	}
+	if(request.getAttribute("profSubjectList")!=null) { 
+		profSubjectList=(ArrayList)request.getAttribute("profSubjectList");
+	}
+	
+	String curSubSeq=(String)request.getAttribute("curSubSeq");
+	
+%>
 <style>
 	div {
 		border: 1px solid black;
@@ -24,12 +40,17 @@
 				<div class="d-flex justify-content-between align-items-center">
 					<div id="assignmentTitle">
 						<h3 class="font-weight-bold mb-0">
-						<c:forEach var="list" items="${profSubjectList}" varStatus="s">
-							<c:if test="${s.count eq 1}">
-								<c:out value="${acaYear}"/>학년도 <c:out value="${acaSemester}"/>학기
-								<c:out value="${list.subName }"/>&nbsp;과제 게시판
-							</c:if>
-						</c:forEach>
+						<c:out value="${acaYear}"/>학년도 <c:out value="${acaSemester}"/>학기
+						<% for(int i=0; i<profSubjectList.size(); i++) { 
+							if(curSubSeq!=null) {
+								if(profSubjectList.get(i).getSubSeq().equals(curSubSeq)) { %>
+								<%=profSubjectList.get(i).getSubName() %>&nbsp;과제 게시판
+						<% 		}
+							}else { %>
+								<%=profSubjectList.get(0).getSubName() %>&nbsp;과제 게시판
+						<% 		break;
+							}
+						} %>
 						</h3>
 					</div>
 				</div>
@@ -45,9 +66,20 @@
 							<div class="col-4" id="choiceClass">
 							<label for="choiceClass" class="text-warning fontBlack" style="font-weight:bold;">강의 선택</label>
 								<select class="form-control" style="color:black;" id="subjectName">
-									<c:forEach var="list" items="${profSubjectList}" >
-										<option value="<c:out value="${list.subName }"/>"><c:out value="${list.subName }"/></option>
-									</c:forEach>
+								<% 
+								for(int i=0; i<profSubjectList.size(); i++) {
+									if(curSubSeq!=null) { 
+										if(profSubjectList.get(i).getSubSeq().equals(curSubSeq)) { // curSubSeq과 같으면 %>
+										<option value="<%=profSubjectList.get(i).getSubSeq()%>" selected="selected"><%=profSubjectList.get(i).getSubName() %></option>
+									<% 	}else { // curSubSeq과 같지 않으면 %>
+										<option value="<%=profSubjectList.get(i).getSubSeq()%>"><%=profSubjectList.get(i).getSubName() %></option>
+									<%	}
+									}else { // curSubSeq가 null이면 %>
+										<option value="<%=profSubjectList.get(i).getSubSeq()%>"><%=profSubjectList.get(i).getSubName() %></option>
+								<% 	}
+									%>
+								<%	
+								} %>
 								</select>
 							</div>
 						</div>
@@ -78,7 +110,7 @@
 										<td style="width:80px;">${arL.asgmtNo}</td>
 										<td style="width:100px;"><a href="${path }/prof/selectAssignment?subSeq=${arL.subSeq}&asgmtNo=${arL.asgmtNo}">${arL.asgmtRegdTitle}</a></td>
 										<td style="width:100px;">${arL.profName}</td>
-										<td style="width:70px;"><fmt:formatDate value="${arL.asgmtRegdDate }" pattern="yyyy-MM-dd"/></td>
+										<td style="width:70px;"><fmt:formatDate value="${arL.asgmtRegdDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
 										<td style="width:100px;"><c:out value="${ arL.asgmtRegdOrifileName}"/></td>
 										<td style="width:50px;"><c:out value="${ arL.readCount}"/></td>
 									</tr>
@@ -86,7 +118,7 @@
 									</c:forEach>
 									<c:if test="${empty arList}">
 									<tr>
-										<td colspan="6">조회된 과제가 아직 없습니다.</td>
+										<td colspan="6">등록한 과제가 아직 없습니다.</td>
 									</tr>
 									</c:if>
 								</table>
@@ -114,9 +146,9 @@
 
 <script>
 	$("#subjectName").change(function() {
-		alert($(this).val()+" 과목 게시판을 조회합니다."); 
-		$("#assignmentTitle").html("<h3 class='font-weight-bold mb-0'><c:out value='${acaYear}'/>학년도 <c:out value='${acaSemester}'/>학기 "+$(this).val()+" 과제 게시판"+"</h3>");
-				
+		//alert($("#subjectName option:selected").text()+" 과목 게시판을 조회합니다."); 
+		$("#assignmentTitle").html("<h3 class='font-weight-bold mb-0'><c:out value='${acaYear}'/>학년도 <c:out value='${acaSemester}'/>학기 "+$("#subjectName option:selected").text()+" 과제 게시판"+"</h3>");
+		location.href="${path}/prof/assignmentBoard.hd?subSeq="+$(this).val();
 	});
 	
 	

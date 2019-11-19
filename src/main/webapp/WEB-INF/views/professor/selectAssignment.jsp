@@ -13,11 +13,28 @@
 <!-- 달력 import end -->
 
 <style>
-	div {
+	/* div {
 		border: 1px solid black;
-	}
+	} */
 	input textarea {
 		font-weight:bold;
+	}
+	.table td {
+    	font-size: 1rem;
+    	font-weight: bold;
+	}
+	.table th, .table td {
+	    padding: 5px;
+	}
+	th {
+		text-align:center;
+	}
+	.divGreen {
+		 color:black; 
+		 background-color:#e2dddd;
+	}
+	table {
+		border: 2px solid #e2dddd;
 	}
 </style>
 <div class="main-panel">
@@ -43,12 +60,49 @@
 					<!-- <form class="forms"> -->
 						<div class="card-body">
 							<div class="row">
+								<div class="col-12">
+									<div class="table-responsive">
+								<table class="table">
+									<tr>
+										<th class="divGreen">제목</th>
+										<td class="divGreen"><div id="asgmtTitle"></div></td>
+									</tr>
+									<tr>
+										<th>작성자</th>
+										<td>
+											<div id="asgmtWriter">
+												<c:if test="${ar ne null}">
+													<c:out value="${ar.profName }"></c:out>
+												</c:if>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th class="divGreen">작성일시</th>
+										<td class="divGreen">
+										<div id="writeDate">
+											<c:if test="${ar ne null}">
+												<fmt:formatDate value="${ar.asgmtRegdDate }" pattern="yyyy/MM/dd HH:mm:ss"/>
+											</c:if>
+										</div>
+										</td>
+									</tr>
+									<tr>
+										<th>첨부파일</th>
+										<td>
+										<div id="attachFile">
+											<c:if test="${ar ne null}">
+												<c:out value="${ar.asgmtRegdOrifileName }"></c:out>
+											</c:if>
+										</div>
+										</td>
+									</tr>
+								</table>
+								</div>
+								</div>
+							</div>
+							<div class="row">
 								<div class="form-group col-5">
-									첨부파일
-									<c:if test="${ar ne null}">
-									<label><c:out value="${ar.asgmtRegdDate }"/></label>
-								</c:if>
-									<input type="text" class="form-control" id="exampleInputName1" style="color:black; background-color:#cef1da;" readonly>
 								</div>
 								<div class="form-group col-7">
 			                      <label>첨부파일</label>
@@ -80,7 +134,7 @@
 
 <script>
 		<c:if test="${ar ne null}">
-			$("#exampleInputName1").val('<c:out value="${ar.asgmtRegdTitle }"/>');
+			$("#asgmtTitle").html('<c:out value="${ar.asgmtRegdTitle }"/>');
 			$("#exampleTextarea1").val('<c:out value="${ar.asgmtRegdContent }"/>');
 		</c:if>
 	
