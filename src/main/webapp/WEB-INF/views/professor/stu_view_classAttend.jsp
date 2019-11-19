@@ -160,7 +160,6 @@
 								</c:forEach>
 									<button type='submit' id="runInsertBtn" style="display : none;"></button>
 									<input type="hidden" value="${sal.subCode }" name="insertSubCode"/>
-									<input type="hidden" value="${sal.subCode }" name="insertSubCode"/>
 								</form>
 								</tbody>
 							</table>

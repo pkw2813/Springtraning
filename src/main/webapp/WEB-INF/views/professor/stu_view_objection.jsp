@@ -93,10 +93,10 @@
 										<td>${l.stuName }</td>
 										<td>
 										
+										<button class="btn btn-success btn-toggle btn-block" onclick="popupBoard('${l.reqTitle }','${l.reqContent}','${l.stuName }','${l.profId }','${l.reqAnswer }','${l.reqDate }','${l.subCode }','${l.acaYearSem }','${l.stuNo }');">${l.reqTitle }</button>
 												</td>
 										<td>${l.reqDate }</td>
 									</tr>
-										<button class="btn btn-success btn-toggle btn-block" onclick="popupBoard('${l.reqTitle }','${l.reqContent}','${l.stuName }','${l.profId }','${l.reqAnswer }','${l.reqDate }','${l.subCode }','${l.acaYearSem }','${l.stuNo }');">${l.reqTitle }</button>
 								</c:forEach>
 								</tbody>
 							</table>

@@ -147,6 +147,18 @@ public class ProfessorController2 {
 			model.addAttribute("subNameCodeList", subNameCodeList);		
 		}
 		
+		if(sal.getSubCode() == null || sal.getSubCode().equals("")) {
+			System.out.println("섭코드가 비어있네!");
+			if(subNameCodeList.get(0).getSubCode() != null && !subNameCodeList.get(0).getSubCode().equals("")) {
+				
+				sal.setSubCode(subNameCodeList.get(0).getSubCode());
+				System.out.println("리스트의 0 번째 섭코드 : "+subNameCodeList.get(0).getSubCode());
+			}else {
+				sal.setSubCode("");
+			}
+		}
+		
+		
 		
 		List<AttendStudent> attendList = service.selectAttendList(sal,cPage, numPerPage);
 		if(attendList != null && !attendList.isEmpty()) {
@@ -155,7 +167,6 @@ public class ProfessorController2 {
 			attendList.add(new AttendStudent("조회결과 없음"));
 			model.addAttribute("attendList",attendList);
 		}
-		System.out.println(sal.getSubCode());
 		int totalData = service.countAttendList(sal);
 		
 		///SUB_CODE 와 PROF_ID 베이스 + sal의 조건들 사용

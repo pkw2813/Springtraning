@@ -60,7 +60,7 @@
               <div class="card">
                 <div class="card-body">
                   
-                  <c:if test="${r.reqAnswer eq null eq ''}">
+              	   <c:if test="${r.reqAnswer eq null or r.reqAnswer eq ''}">	
                   <h4 class="card-title">아래에 답변을 입력 할 수 있습니다.</h4>
                   <p class="card-description">
                     <hr/>
@@ -78,27 +78,42 @@
                     <button type="reset" class="btn btn-danger">취소</button>
                   </form>
                   </c:if>
+                  
+                  <!--  답변이 이미 등록된 경우 -->
                   <c:if test="${r.reqAnswer ne null and r.reqAnswer ne ''}">
                   <h4 class="card-title">아래에 답변을 수정 할 수 있습니다.</h4>
                   <p class="card-description">
                     <hr/>
                   </p>
+                  <form action="${path }/prof/updateAnswer.hd" method="post" class="forms-sample">
                   <div class="form-group">
                       <label for="exampleTextarea1">답변 내용</label>
-                     <textarea name="reqAnswer" class="form-control" id="exampleTextarea1" rows="4" readonly>${r.reqAnswer }</textarea>
+                     <textarea name="reqAnswer" class="form-control" id="admitTextArea" rows="4" readonly>${r.reqAnswer }</textarea>
                     </div>
                     <input type="hidden" name="profId" value="${r.profId }"/>
                     <input type="hidden" name="subCode" value="${r.subCode }"/>
                     <input type="hidden" name="stuNo" value="${r.stuNo }"/>
                     <input type="hidden" name="acaYearSem" value="${r.acaYearSem }"/>
-                    <button type="submit" class="btn btn-warning mr-2">답변수정</button>
+                    <button type="button" id="admitBtn" class="btn btn-warning mr-2" >답변수정</button>
                     <button type="reset" class="btn btn-danger">취소</button>
+                    </form>
                   </c:if>
                 </div>
               </div>
             </div>
 </section>
-			
+	<script>
+		$('#admitBtn').mouseup(function(){
+			$('#admitBtn').attr("class", "btn btn-primary mr-2 admitBtnAfter");
+			$('#admitBtn').html("답변등록");
+			$('#admitTextArea').removeAttr("readonly");
+			$(document).ready(function(){
+			 $('#admitBtn').attr("type", "submit");
+			})
+		});
+		
+		
+	</script>
   <!-- plugins:js -->
  <script src="${path }/resources/assets/vendors/base/vendor.bundle.base.js"></script>
   <!-- endinject -->
