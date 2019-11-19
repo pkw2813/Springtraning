@@ -61,7 +61,7 @@
 								<tbody>
 									<tr>
 										<td>
-											<select name="subCode" class="form-control form-control-sm">
+											<select name="subCode" class="form-control form-control-sm" required>
 													<option value="" selected>과목선택</option>
 													<c:forEach items="${subNameCodeList }" var="subList">
 														<option value="${subList.subCode }">${subList.subName }</option>
@@ -69,7 +69,7 @@
 											</select>
 										</td>
 										<td>
-									        <input name="checkDate" style="text-align : center;" id="dateInput" type="text" class="form-control form-control-sm "/>
+									        <input name="checkDate" style="text-align : center;" id="dateInput" type="text" class="form-control form-control-sm " required/>
 									        
 										    <script type="text/javascript" >
 												$("#dateInput").datepicker();
@@ -88,6 +88,7 @@
 												<option value="2">2학년</option>
 												<option value="3">3학년</option>
 												<option value="4">4학년</option>
+												<option value="5">5학년</option>
 										</select></td>
 										<td>
 										<input type="text" class="form-control form-control-sm" id="inlineFormInputName2"
@@ -125,6 +126,7 @@
 									</tr>
 								</thead>
 								<tbody>
+								<form action="${path }/prof/insertStatus.hd" method="post" id="insertForm">
 								<c:forEach items="${attendList }" var="list">
 									<tr class="success">
 										<td>${list.deptName }</td>
@@ -140,7 +142,7 @@
 												<c:when test="${list.status ne null }">${list.status }</c:when>
 											</c:choose>
 										</td>
-										<td><select name="attendStatus" class="form-control form-control-sm">
+										<td><select name="insertStatus" class="form-control form-control-sm">
 												<option value="" selected>출결입력</option>
 												<option value="출석">출석</option>
 												<option value="결석">결석</option>
@@ -148,12 +150,18 @@
 												<option value="조퇴">조퇴</option>
 										</select></td>
 										<td>
-											<button type="button" class="btn btn-success btn-toggle"
-												id='classViewBtn' onclick="viewStuAttend('${list.stuNo}');">조회</button>
-										
+										<!-- id='classViewBtn'  -->
+											<button type="button" class="btn btn-success btn-toggle" 
+												onclick="viewStuAttend('${list.stuNo}');">조회</button>
+											<button type="button" style="display : none;" id="ajaxAttendBtn"></button>
 										</td>
 									</tr>
+									<input type="hidden" value="${list.stuNo }" name="insertStuNo"/>
 								</c:forEach>
+									<button type='submit' id="runInsertBtn" style="display : none;"></button>
+									<input type="hidden" value="${sal.subCode }" name="insertSubCode"/>
+									<input type="hidden" value="${sal.subCode }" name="insertSubCode"/>
+								</form>
 								</tbody>
 							</table>
 							<br/>
@@ -179,7 +187,43 @@
 									cache : false, // 이걸 안쓰거나 true하면 수정해도 값반영이 잘안된다
 					      			
 									success : function(data){
+										//스크립트 시작
+										var attendList2 = " <div class='modal-header ' >";
+										attendList2 += "<table class='table table-bordered table-hover table-condensed ' >";
+										attendList2 += "<thead class='thead-dark'>";
+										//학생정보 시작
+										attendList2 += "<tr><th>강의명 : "+data[1].subName+"</th><th>"+data[1].stuName+"</th><th>"+data[1].deptName+"</th><th>"+data[1].grade+"학년</th></tr>";
+										//학생정보 끝 
+										attendList2 += "</thead>";
 										
+										attendList2 += "</table></div>"; 
+										//모달헤더 끝
+
+										//모달 바디 시작
+										attendList2 += "<div class='modal-body table-responsive' style='height : 400px;'><table class='table table-bordered table-hover table-condensed '><thead>";
+										attendList2 += "<tr><td>강의날짜</td><td>출석여부</td></tr>"
+										attendList2 += "</thead><tbody>";
+										//상세정보 시작
+										for(let i = 0; i < data.length; i++) {
+										attendList2 += "<tr><th>"+data[i].atDate+"</th><th>"+data[i].status+"</th></tr>";
+										}
+										//상세정보 끝
+										attendList2 += "</tbody></table></div><div class='modal-footer'></div>";
+										
+										$('#innerModal').html(attendList2);
+										
+										
+										var attendScript = "<script>";
+										
+										
+										
+										attendScript += "(function ($) {$('#ajaxAttendBtn').trigger('click');})(jQuery);";
+										attendScript += "<";
+										attendScript += "/script>";
+										
+										//스크립트 끝
+										$('#innerModal').append(attendScript);
+			
 										
 										
 									}
@@ -188,111 +232,27 @@
 					      
 					      	
 					      </script>
-					      <!-- @@출석부 Modal content Start@@ -->
-
-							<div id="classViewModal" class="modal">
-						      <div class="modal-content">
-						         <span class="close" id="closeClassView">&times;</span>
-						        <!-- Modal body start -->
-						        <div class="modal-header">
-											<table class="table table-bordered table-hover table-condensed">
-												<thead class="thead-dark">
-													<tr>
-														<th>철학 입문</th>
-														<th>박성술</th>
-														<th>영어과</th>
-														<th>3학년</th>
-													</tr>
-												</thead>
-											</table>
-										</div>
-										<div class="modal-body">
-											<table class="table table-bordered table-hover table-condensed">
-												<thead>
-													<tr>
-														<th>날짜</th>
-														<th>상태</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>2019/11/01</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="modal-footer">
-											
-										</div>
-						        <!-- Modal body end -->
-						      </div>
-						 
-						    </div>
-    					      <!-- @@Modal content End@@ -->
+   <!-- @@출석부 Modal content Start@@ -->
+    <div id="AttendModal" class="modal " >
+      <!-- Modal content -->
+      <div class="modal-content " >
+         <span class="close" id="closeAttend">&times;</span>
+         <div id="innerModal" >
+         
+         </div>
     
-    <script>
-     // Get the modal
-        var classViewModal = document.getElementById('classViewModal');
- 
-        // Get the button that opens the modal
-        var classViewBtn = document.getElementById("classViewBtn");
- 
-        // Get the <span> element that closes the modal
-        var closeClassView = document.getElementById("closeClassView");                                          
-        // When the user clicks on the button, open the modal 
-        classViewBtn.onclick = function() {
-           classViewModal.style.display = "block";
-        }
- 
-        // When the user clicks on <span> (x), close the modal
-        closeClassView.onclick = function() {
-        	classViewModal.style.display = "none";
-        }
+      </div>
+ 	<!-- Modal content End -->
+    </div>	
+<!-- Modal End -->	
 
- 
-        // When the user clicks anywhere outside of the modal, close it
-        /* window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        } */
-
-        </script>
-							
-							
-		<script type="text/javascript">
-		/* $(document).ready(function(){
-		$.datepicker.setDefaults($.datepicker.regional["ko"])
-		$("#dateInput").datepicker();
-			
-		}); */
-		</script>
-							<!-- <script>
-								$(document)
-										.ready(
-												function() {
-													$('head')
-															.append(
-																	'<style type="text/css">.modal .modal-body {max-height: '
-																			+ ($(
-																					'body')
-																					.height() * .7)
-																			+ 'px;overflow-y: auto;}.modal-open .modal{overflow-y: hidden !important;}</style>');
-												});
-
-							/* 	$('#myModal').modal("toggle");
-								// 반대로 모달상태를 전환함
-								$('#myModal').modal("hide");
-								// 모달창 열기
-								$('#myModal').modal("show"); */
-								// 모달창 닫음
-							</script> -->
+		
 						</div>
 					</div>
 
 				<div class="card-footer" style="text-align : center;">
-					<button class="btn btn-info">등록</button>
-					<button class="btn btn-info">취소</button>
+					<button id="insertStatus" class="btn btn-info">등록</button>
+					<button type="reset" class="btn btn-info">취소</button>
 				</div>
 				</div>
 			</div>
@@ -300,8 +260,72 @@
 	</div>
 
 	<!-- Main-content End -->
+  <script>
+  		var insertBtn = document.getElementById('insertStatus');
+  		insertBtn.onclick = function() {
+  			var insertSubCodeVal = "${sal.subCode}";
+  			var insertSubCode = "<input name='insertSubCode' type='hidden' value='"+insertSubCodeVal+"'/>";
+  			$('#insertForm').append(insertSubCode);
+  			
+  			var checkDateVal = "${sal.checkDate}";
+  			var insertDate = "<input name='insertDate' type='hidden' value='"+checkDateVal+"'/>";
+  			$('#insertForm').append(insertDate);
+  			
+  			(function ($) {$('#runInsertBtn').trigger('click');})(jQuery);
 
+  		};
+  </script>	
+	
+	
+  <script>
+  
+  		
+     // Get the modal
+    	 
+    	var AttendModal = document.getElementById('AttendModal');
 
+        // Get the button that opens the modal
+        var viewAttend = document.getElementById("ajaxAttendBtn");
+ 
+        // Get the <span> element that closes the modal
+        var closeAttend = document.getElementById("closeAttend");                                          
+        // When the user clicks on the button, open the modal 
+
+       viewAttend.onclick = function() {
+        	AttendModal.style.display = "block"; 
+        }; 
+ 
+        // When the user clicks on <span> (x), close the modal
+
+       closeAttend.onclick = function() {
+    	   AttendModal.style.display = "none"; 
+        };
+        </script> 
+<!-- attendList +="$(document).ready(function(){";
+				attendList +="$('#ajaxTriggerBtn').bind('click',function(){";
+				attendList +="var classViewModal = document.getElementById('classViewModal');";
+				attendList +="var classViewBtn = document.getElementById('ajaxTriggerBtn');";
+				attendList +="var closeClassView = document.getElementById('closeClassView'); ";
+				attendList +="$(document).on('click',classViewBtn,function(){";
+				attendList +="$(classViewModal).css('display','block');";
+				attendList +="});";
+				attendList +="$(document).on('click',closeClassView,function(){";
+				attendList +="$(classViewModal).css('display','none');";
+						attendList +="});";
+					attendList +="});";
+				attendList +="});";
+				
+				attendList += "$('#ajaxTriggerBtn').trigger('click');";
+				attendList += "<";
+				
+				    /*     $(document).on("click","#btn",function(){
+        	$(classViewModal).css("display","block");
+        }); */
+				       /* $(document).on("click",closeClassView,function(){
+    		$(classViewModal).css("display","none");
+       }); */
+				
+				 ->
 
 	<!-- Body section End -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

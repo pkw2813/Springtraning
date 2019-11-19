@@ -1,7 +1,5 @@
 package com.kh.finalProject.professor.model.vo;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +18,7 @@ public class SelectAttendList {
 	private String grade;
 	private String deptName;
 	private String sysdate;
-	
+	private String status;
 	//ajax용 변수
 	private String stuNo;
 	

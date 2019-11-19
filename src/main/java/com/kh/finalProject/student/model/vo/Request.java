@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Request {
 
 	private String stuNo;
+	private String stuName;
 	private String reqDate;
 	private String reqTitle;
 	private String reqContent;

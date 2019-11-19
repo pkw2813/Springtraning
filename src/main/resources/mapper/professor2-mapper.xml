@@ -4,7 +4,7 @@
 
 
 	<select id="selectSysdate" resultType="string">
-		SELECT TO_CHAR(SYSDATE,'YYYY-MM-DD') FROM DUAL
+		SELECT TO_CHAR(SYSDATE,'YYYY/MM/DD') FROM DUAL
 	</select>
 
 
@@ -88,13 +88,17 @@
 		</if>
 		AND (SELECT SUB_YEAR FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) = #{subYear}
 		AND (SELECT SUB_CODE FROM HD_SUBJECT_TB WHERE SUB_CODE = #{subCode}) = #{subCode} -->
-		SELECT * 
-		FROM HD_SUB_REQ_TB A
-		      JOIN (SELECT A2.STU_NAME, A2.STU_NO, A2.DEPT_CODE, B2.DEPT_NAME, SUBSTR(STU_YEAR_SEM,1,1) AS GRADE, A2.STU_ADDR, A2.STU_EMAIL, A2.GENDER, A2.STU_TEL 
-		            FROM HD_STUDENT_TB A2
-		            JOIN (SELECT * FROM HD_DEPARTMENT_TB) B2 ON (A2.DEPT_CODE = B2.DEPT_CODE)
-		            ) 
-		      B ON (A.STU_NO = B.STU_NO)
+		SELECT * FROM(
+        SELECT * 
+                FROM (SELECT A.SUB_CODE, PROF_ID,STU_NO,CONCAT(CONCAT(SUB_YEAR,'-'),SUB_SEMESTER) AS ACA_YEAR_SEM
+        FROM HD_CLASS_TB A
+        LEFT JOIN HD_SUBJECT_TB USING(SUB_SEQ)
+        RIGHT JOIN HD_SUB_REQ_TB USING(SUB_SEQ)) A
+                      JOIN (SELECT A2.STU_NAME, A2.STU_NO, A2.DEPT_CODE, B2.DEPT_NAME, SUBSTR(STU_YEAR_SEM,1,1) AS GRADE, A2.STU_ADDR, A2.STU_EMAIL, A2.GENDER, A2.STU_TEL 
+                            FROM HD_STUDENT_TB A2
+                            JOIN (SELECT * FROM HD_DEPARTMENT_TB) B2 ON (A2.DEPT_CODE = B2.DEPT_CODE)
+                            ) 
+                      B ON (A.STU_NO = B.STU_NO))
 		WHERE SUB_CODE = #{subCode} AND SUBSTR(ACA_YEAR_SEM,1,4) = #{subYear}
 			<if test='grade != null &amp; grade != ""'>
 			AND GRADE = #{grade}
@@ -108,16 +112,19 @@
 	</select>
 	
 	<select id="countInClass" parameterType="selectInClass" resultType="_int">
-	    SELECT COUNT(*)
-	    FROM (SELECT * 
-			 FROM HD_SUB_REQ_TB A
-			      JOIN (SELECT A2.STU_NAME, A2.STU_NO, A2.DEPT_CODE, B2.DEPT_NAME, SUBSTR(STU_YEAR_SEM,1,1) AS GRADE, A2.STU_ADDR, A2.STU_EMAIL, A2.GENDER, A2.STU_TEL 
-			            FROM HD_STUDENT_TB A2
-			            JOIN (SELECT * FROM HD_DEPARTMENT_TB) B2 ON (A2.DEPT_CODE = B2.DEPT_CODE)
-			            ) 
-			      B ON (A.STU_NO = B.STU_NO)
-		     WHERE SUB_CODE = #{subCode} AND SUBSTR(ACA_YEAR_SEM,1,4) = #{subYear})
-		WHERE 1=1     
+		SELECT COUNT(*) 
+		FROM(
+        SELECT * 
+                FROM (SELECT A.SUB_CODE, PROF_ID,STU_NO,CONCAT(CONCAT(SUB_YEAR,'-'),SUB_SEMESTER) AS ACA_YEAR_SEM
+        FROM HD_CLASS_TB A
+        LEFT JOIN HD_SUBJECT_TB USING(SUB_SEQ)
+        RIGHT JOIN HD_SUB_REQ_TB USING(SUB_SEQ)) A
+                      JOIN (SELECT A2.STU_NAME, A2.STU_NO, A2.DEPT_CODE, B2.DEPT_NAME, SUBSTR(STU_YEAR_SEM,1,1) AS GRADE, A2.STU_ADDR, A2.STU_EMAIL, A2.GENDER, A2.STU_TEL 
+                            FROM HD_STUDENT_TB A2
+                            JOIN (SELECT * FROM HD_DEPARTMENT_TB) B2 ON (A2.DEPT_CODE = B2.DEPT_CODE)
+                            ) 
+                      B ON (A.STU_NO = B.STU_NO))
+		WHERE SUB_CODE = #{subCode} AND SUBSTR(ACA_YEAR_SEM,1,4) = #{subYear}
 		<if test='grade != null &amp; grade !="" '>
 			AND GRADE = #{grade}
 		</if>
@@ -170,7 +177,10 @@
 		       (SELECT BOOK_NAME FROM HD_SUBJECT_TB WHERE SUB_CODE=#{subCode} AND PROF_ID=#{profId}) AS BOOK_NAME, 
 	        	(SELECT COUNT(*)
 	        	FROM (SELECT * 
-	        	FROM HD_SUB_REQ_TB
+	        	FROM (SELECT A.SUB_CODE, PROF_ID,STU_NO,CONCAT(CONCAT(SUB_YEAR,'-'),SUB_SEMESTER) AS ACA_YEAR_SEM
+						FROM HD_CLASS_TB A
+						LEFT JOIN HD_SUBJECT_TB USING(SUB_SEQ)
+						RIGHT JOIN HD_SUB_REQ_TB USING(SUB_SEQ))
 	        	WHERE SUB_CODE =#{subCode} AND PROF_ID=#{profId} )) AS CAPACITY
 	        	
 			  FROM HD_CLASS_TB
@@ -179,96 +189,174 @@
 	</select>
 	
 	<select id="selectAttendList" parameterType="selectAttendList" resultMap="attendlistResult">
-		SELECT * 
-		FROM    (SELECT ORI.*, 
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='출석') AS ATTEND,
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS ABSENT,
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='지각') AS LATE,
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='조퇴') AS EALRY_LEAVE
-		            
-		        FROM   (SELECT STU_NO, SUB_CODE, PROF_ID,GRADE  , STU_NAME, DEPT_CODE, DEPT_NAME, ACA_YEAR_SEM,
-		    
-		                (SELECT DISTINCT(SUB_YEAR) AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_YEAR,
-		                (SELECT DISTINCT(SUB_SEMESTER) AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_SEMESTER
-		            
-		            FROM HD_SUB_REQ_TB A
-		            LEFT JOIN ( SELECT DISTINCT(STU_NO) AS STN, STU_NAME, DEPT_CODE, SUBSTR(STU_YEAR_SEM , 1,1) AS GRADE 
-		                                                                            ,(SELECT DEPT_NAME 
-		                                                                              FROM HD_DEPARTMENT_TB A 
-		                                                                              WHERE A.DEPT_CODE = B1.DEPT_CODE) AS DEPT_NAME
-		                        FROM HD_STUDENT_TB B1
-		                        LEFT JOIN HD_SUB_REQ_TB USING(STU_NO)
-		                        ) B ON (A.STU_NO = B.STN)
-		            WHERE 1 = 1 
-		            <if test='subCode != null and subCode != "" '>
-		            AND SUB_CODE = #{subCode} 
-		            </if>
-		            AND PROF_ID = #{profId}
-		        ) ORI
-        )
-      <if test='subCode != null and subCode != "" '>
-      				LEFT JOIN (SELECT STU_NO,STATUS, TO_CHAR(AT_DATE,'YYYY//MM/DD') AS AT_DATE 
-					   FROM HD_ATTENDANCE_TB
-					   WHERE  TO_CHAR(AT_DATE,'YYYY/MM/DD') = #{checkDate}) USING(STU_NO)
-       	 	WHERE 1 = 1
-        
-	      </if>
+SELECT DISTINCT(ARI.STU_NO),PROF_ID, SUB_CODE, GRADE, ARI.STU_NAME, DEPT_CODE, DEPT_NAME, ACA_YEAR_SEM, SUB_YEAR, SUB_SEMESTER, ATTEND, ABSENT, LATE, EALRY_LEAVE, STATUS, AT_DATE
+FROM    (SELECT ORI.*, 
+                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='출석') AS ATTEND,
+                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS ABSENT,
+                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='지각') AS LATE,
+                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='조퇴') AS EALRY_LEAVE
+            
+        FROM   (SELECT DISTINCT(STU_NO) AS STU_NO, SUB_CODE, PROF_ID, GRADE, STU_NAME, DEPT_CODE, DEPT_NAME, ACA_YEAR_SEM, 
+    
+                (SELECT DISTINCT(SUB_YEAR) AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_SEQ = B.SUB_SEQ) AS SUB_YEAR,
+                (SELECT DISTINCT(SUB_SEMESTER) AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_SEQ = B.SUB_SEQ) AS SUB_SEMESTER
+            
+            FROM HD_SUB_REQ_TB A
+            RIGHT JOIN ( SELECT DISTINCT(STU_NO) AS STN, STU_NAME, DEPT_CODE, SUBSTR(STU_YEAR_SEM , 1,1) AS GRADE 
+                                                                            ,(SELECT DEPT_NAME 
+                                                                              FROM HD_DEPARTMENT_TB A 
+                                                                              WHERE A.DEPT_CODE = B1.DEPT_CODE) AS DEPT_NAME,F.PROF_ID ,F.ACA_YEAR_SEM,F.SUB_CODE
+                        FROM HD_STUDENT_TB B1
+                        RIGHT JOIN (SELECT A.SUB_CODE, PROF_ID,STU_NO,CONCAT(CONCAT(SUB_YEAR,'-'),SUB_SEMESTER) AS ACA_YEAR_SEM
+                                    FROM HD_CLASS_TB A
+                                    LEFT JOIN HD_SUBJECT_TB USING(SUB_SEQ)
+                                    RIGHT JOIN HD_SUB_REQ_TB USING(SUB_SEQ)) F USING(STU_NO)
+                        ) B ON (A.STU_NO = B.STN)
+            WHERE 1 = 1 
+            AND PROF_ID = #{profId}
+	   		<if test='subCode != null &amp; subCode !="" '>
+			AND SUB_CODE = #{subCode}
+			</if>
+            
+             ) ORI
+       WHERE 1 = 1
+       AND SUB_YEAR = '2019'
+       AND SUB_SEMESTER = '2'
+)
+
+ARI
+LEFT JOIN (SELECT STU_NO, STATUS, TO_CHAR(AT_DATE,'YYYY/MM/DD') AS AT_DATE
+            FROM HD_ATTENDANCE_TB ORI2
+            WHERE (TO_CHAR(AT_DATE,'YYYY/MM/DD')) = #{checkDate}
+			) ORI2 ON(ARI.STU_NO = ORI2.STU_NO)
 	      <!--  첫화면 출력 용 -->
-	      <if test='subCode == null or subCode == "" '>
-	       WHERE 1 = 2
-	      </if>
 	</select>
 	
 	<select id="countAttendList" parameterType="selectAttendList" resultType="_int">
 	
-		SELECT COUNT(*) 
-		FROM    (SELECT ORI.*, 
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='출석') AS ATTEND,
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS ABSENT,
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='지각') AS LATE,
-		                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='조퇴') AS EALRY_LEAVE
-		            
-		         FROM   (SELECT STU_NO, SUB_CODE, PROF_ID,GRADE  , STU_NAME, DEPT_CODE, DEPT_NAME, ACA_YEAR_SEM,
-		    
-			                (SELECT DISTINCT(SUB_YEAR) AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_YEAR,
-			                (SELECT DISTINCT(SUB_SEMESTER) AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_CODE = B.SUB_CODE) AS SUB_SEMESTER
-		            
-			            FROM HD_SUB_REQ_TB A
-			            LEFT JOIN ( SELECT DISTINCT(STU_NO) AS STN, STU_NAME, DEPT_CODE, SUBSTR(STU_YEAR_SEM , 1,1) AS GRADE 
-			                                                                            ,(SELECT DEPT_NAME 
-			                                                                              FROM HD_DEPARTMENT_TB A 
-			                                                                              WHERE A.DEPT_CODE = B1.DEPT_CODE) AS DEPT_NAME
-			                        FROM HD_STUDENT_TB B1
-			                        LEFT JOIN HD_SUB_REQ_TB USING(STU_NO)
-			                        ) B ON (A.STU_NO = B.STN)
-		            WHERE 1 = 1 
-		            <if test='subCode != null and subCode != "" '>
-		            AND SUB_CODE = #{subCode} 
-		            </if>
-		            AND PROF_ID = #{profId}
-		        ) ORI
-        )
-        <!-- 날짜가 바뀜에 따라 해당 날짜에 출석여부를 알 수 있다 // 조인을 이용해서 기존  테이블과 별개로 동작하게 한다.  -->
-		<if test='subCode != null and subCode != "" '>
-			LEFT JOIN (SELECT STU_NO,STATUS, TO_CHAR(AT_DATE,'YYYY//MM/DD') AS AT_DATE 
-					   FROM HD_ATTENDANCE_TB
-					   WHERE  TO_CHAR(AT_DATE,'YYYY/MM/DD') = #{checkDate}) USING(STU_NO)
-       	 	WHERE 1 = 1
-        
-	      </if>
+SELECT COUNT(DISTINCT(ARI.STU_NO)) 
+FROM    (SELECT ORI.*, 
+                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='출석') AS ATTEND,
+                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='결석') AS ABSENT,
+                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='지각') AS LATE,
+                (SELECT COUNT(*) FROM HD_ATTENDANCE_TB WHERE STU_NO = ORI.STU_NO AND STATUS='조퇴') AS EALRY_LEAVE
+            
+        FROM   (SELECT DISTINCT(STU_NO) AS STU_NO, SUB_CODE, PROF_ID, GRADE, STU_NAME, DEPT_CODE, DEPT_NAME, ACA_YEAR_SEM, 
+    
+                (SELECT DISTINCT(SUB_YEAR) AS SY FROM HD_SUBJECT_TB B WHERE A.SUB_SEQ = B.SUB_SEQ) AS SUB_YEAR,
+                (SELECT DISTINCT(SUB_SEMESTER) AS SS FROM HD_SUBJECT_TB B WHERE A.SUB_SEQ = B.SUB_SEQ) AS SUB_SEMESTER
+            
+            FROM HD_SUB_REQ_TB A
+            RIGHT JOIN ( SELECT DISTINCT(STU_NO) AS STN, STU_NAME, DEPT_CODE, SUBSTR(STU_YEAR_SEM , 1,1) AS GRADE 
+                                                                            ,(SELECT DEPT_NAME 
+                                                                              FROM HD_DEPARTMENT_TB A 
+                                                                              WHERE A.DEPT_CODE = B1.DEPT_CODE) AS DEPT_NAME,F.PROF_ID ,F.ACA_YEAR_SEM,F.SUB_CODE
+                        FROM HD_STUDENT_TB B1
+                        RIGHT JOIN (SELECT A.SUB_CODE, PROF_ID,STU_NO,CONCAT(CONCAT(SUB_YEAR,'-'),SUB_SEMESTER) AS ACA_YEAR_SEM
+                                    FROM HD_CLASS_TB A
+                                    LEFT JOIN HD_SUBJECT_TB USING(SUB_SEQ)
+                                    RIGHT JOIN HD_SUB_REQ_TB USING(SUB_SEQ)) F USING(STU_NO)
+                        ) B ON (A.STU_NO = B.STN)
+            WHERE 1 = 1 
+            AND PROF_ID = #{profId}
+   	   		<if test='subCode != null &amp; subCode !="" '>
+			AND SUB_CODE = #{subCode}
+			</if>
+             ) ORI
+       WHERE 1 = 1
+       AND SUB_YEAR = '2019'
+       AND SUB_SEMESTER = '2'
+)
+
+ARI
+LEFT JOIN (SELECT STU_NO, STATUS, TO_CHAR(AT_DATE,'YYYY/MM/DD') AS AT_DATE
+            FROM HD_ATTENDANCE_TB ORI2
+            WHERE (TO_CHAR(AT_DATE,'YYYY/MM/DD')) = #{checkDate}
+			) ORI2 ON(ARI.STU_NO = ORI2.STU_NO)
 	      <!--  첫화면 출력 용 -->
-	      <if test='subCode == null or subCode == "" '>
-	       WHERE 1 = 2
-	      </if>
       
 	</select>
 	
+	<select id="selectOneStuAttendList" parameterType="selectAttendList" resultMap="attendlistResult">
+        SELECT *
+		FROM   (SELECT TO_CHAR(AT_DATE,'YYYY/MM/DD') AS AT_DATE, STATUS ,ORI.STU_NO,PROF_ID,
+		                (SELECT STU_NAME FROM HD_STUDENT_TB WHERE STU_NO = ORI.STU_NO) AS STU_NAME,GRADE, DEPT_NAME,
+		                (SELECT SUB_NAME FROM HD_CURRICULUM_TB WHERE SUB_CODE = ORI.SUB_CODE) AS SUB_NAME
+		        FROM HD_ATTENDANCE_TB ORI
+		        JOIN (SELECT STU_NO , STU_NAME , SUBSTR(STU_YEAR_SEM,1,1) AS GRADE, DEPT_CODE ,DEPT_NAME
+		              FROM HD_STUDENT_TB
+		              LEFT JOIN (SELECT DEPT_CODE, DEPT_NAME FROM HD_DEPARTMENT_TB) USING(DEPT_CODE)
+		                         WHERE STU_NO = #{stuNo}) C ON(C.STU_NO = ORI.STU_NO) 
+				WHERE ORI.STU_NO = #{stuNo}
+		        AND PROF_ID = #{profId}
+		        AND SUB_CODE = #{subCode})
+		ORDER BY AT_DATE DESC
+	</select>
+	
+	
+	<insert id="insertAttend" parameterType="selectAttendList">
+			INSERT INTO HD_ATTENDANCE_TB VALUES(#{subCode},#{profId},#{stuNo},'2019-2',#{status},#{checkDate})
+	</insert>
+	
+	
+	<select id="selectReqList" parameterType="selectInClass" resultMap="RequestResult">
+		SELECT STU_NO, REQ_DATE, REQ_TITLE, REQ_CONTENT, ACA_YEAR_SEM , PROF_ID, SUB_CODE, REQ_YN, REQ_ANSWER, PROF_NAME, (SELECT STU_NAME FROM HD_STUDENT_TB WHERE STU_NO = A.STU_NO) AS STU_NAME
+		FROM HD_REQUEST_TB A
+		WHERE 1=1
+		<if test='subCode != null &amp; subCode !=""'>
+		AND SUB_CODE = #{subCode}
+		</if>
+		AND PROF_ID = #{profId}
+		<if test='subYear !=null &amp; subYear !=""'>
+		AND ACA_YEAR_SEM = CONCAT(CONCAT(#{subYear},'-'),#{subSemester})
+		</if>
+		
+		
+	</select>
+	
+	<select id="countReqList" parameterType="selectInClass" resultType="_int">
+		SELECT COUNT(*) 
+		FROM HD_REQUEST_TB
+		WHERE 1=1
+		<if test='subCode != null &amp; subCode !=""'>
+		AND SUB_CODE = #{subCode}
+		</if>
+		AND PROF_ID = #{profId}
+		<if test='subYear !=null &amp; subYear !=""'>
+		AND ACA_YEAR_SEM = CONCAT(CONCAT(#{subYear},'-'),#{subSemester})
+		</if>
+	</select>
+	
+	<update id="updateAnswer" parameterType="request">
+		UPDATE HD_REQUEST_TB SET REQ_ANSWER = #{reqAnswer} 
+		WHERE PROF_ID = #{profId} 
+		AND SUB_CODE = #{subCode} 
+		AND STU_NO = #{stuNo}
+		AND ACA_YEAR_SEM = #{acaYearSem} 
+	</update>
 	
 	
 	<!-- @@@@@@@@@@@@@@ ResultMap @@@@@@@@@@@@@@@@@@@2 생성  -->
+	<resultMap type="request" id="RequestResult">
+		<result column="STU_NO" property="stuNo"/>
+		<result column="STU_NAME" property="stuName"/>
+		<result column="REQ_DATE" property="reqDate"/>
+		<result column="REQ_TITLE" property="reqTitle"/>
+		<result column="REQ_CONTENT" property="reqContent"/>
+		<result column="ACA_YEAR_SEM" property="acaYearSem"/>
+		<result column="PROF_ID" property="profId"/>
+		<result column="SUB_CODE" property="subCode"/>
+		<result column="REQ_YN" property="reqYn"/>
+		<result column="REQ_ANSWER" property="reqAnswer"/>
+		<result column="PROF_NAME" property="profName"/>
+		
+	</resultMap>
+	
+	
 	<resultMap type="attendStudent" id="attendlistResult">
 		<result column="STU_NO" property="stuNo"/>
 		<result column="SUB_CODE" property="subCode"/>
+		<result column="SUB_NAME" property="subName"/>
 		<result column="PROF_ID" property="profId"/>
 		<result column="GRADE" property="grade"/>
 		<result column="STU_NAME" property="stuName"/>

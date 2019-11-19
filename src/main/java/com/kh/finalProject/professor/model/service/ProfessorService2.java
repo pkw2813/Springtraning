@@ -11,6 +11,7 @@ import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
 import com.kh.finalProject.professor.model.vo.Select_SubjectNameCode;
+import com.kh.finalProject.student.model.vo.Request;
 import com.kh.finalProject.student.model.vo.Student;
 
 public interface ProfessorService2 {
@@ -41,5 +42,14 @@ public interface ProfessorService2 {
 	
 	int countAttendList(SelectAttendList sal);
 	
+	List<AttendStudent> selectOneStuAttendList(SelectAttendList sal);
+	
+	int insertAttend(SelectAttendList sal);
+	
+	List<Request> selectReqList(SelectInClass sic , int cPage, int numPerPage);
+	
+	int countReqList(SelectInClass sic);
+	
+	int updateAnswer(Request req);
 	
 }

@@ -16,6 +16,7 @@ import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
 import com.kh.finalProject.professor.model.vo.Select_SubjectNameCode;
+import com.kh.finalProject.student.model.vo.Request;
 import com.kh.finalProject.student.model.vo.Student;
 
 @Service
@@ -92,6 +93,40 @@ public class ProfessorServiceImpl2 implements ProfessorService2{
 		
 		return result;
 	}
+
+	@Override
+	public List<AttendStudent> selectOneStuAttendList(SelectAttendList sal) {
+		
+		List<AttendStudent> list = dao.selectOneStuAttendList(session, sal);
+		return list;
+	}
+
+	@Override
+	public int insertAttend(SelectAttendList sal) {
+		int result = dao.insertAttend(session, sal);
+		
+		return result;
+	}
+
+	@Override
+	public List<Request> selectReqList(SelectInClass sic, int cPage, int numPerPage) {
+		List<Request> list = dao.selectReqList(session, sic, cPage, numPerPage);
+		
+		return list;
+	}
+
+	@Override
+	public int countReqList(SelectInClass sic) {
+
+		return dao.countReqList(session, sic);
+	}
+
+	@Override
+	public int updateAnswer(Request req) {
+		return dao.updateAnswer(session, req);
+	}
+	
+	
 	
 	
 	

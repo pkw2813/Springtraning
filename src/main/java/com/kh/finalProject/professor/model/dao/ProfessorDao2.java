@@ -13,6 +13,7 @@ import com.kh.finalProject.professor.model.vo.SelectInClass;
 import com.kh.finalProject.professor.model.vo.SelectInMajor;
 import com.kh.finalProject.professor.model.vo.Select_ClassInfo;
 import com.kh.finalProject.professor.model.vo.Select_SubjectNameCode;
+import com.kh.finalProject.student.model.vo.Request;
 import com.kh.finalProject.student.model.vo.Student;
 
 public interface ProfessorDao2 {
@@ -38,5 +39,15 @@ public interface ProfessorDao2 {
 	List<AttendStudent> selectAttendList(SqlSessionTemplate session, SelectAttendList sal, int cPage, int numPerPage);
 	
 	int countAttendList(SqlSessionTemplate session, SelectAttendList sal);
+	
+	List<AttendStudent> selectOneStuAttendList(SqlSessionTemplate session, SelectAttendList sal);
+	
+	int insertAttend(SqlSessionTemplate session , SelectAttendList sal);
+	
+	List<Request> selectReqList(SqlSessionTemplate session, SelectInClass sic, int cPage, int numPerPage);
+	
+	int countReqList(SqlSessionTemplate session , SelectInClass sic);
+	
+	int updateAnswer(SqlSessionTemplate session, Request req);
 	
 }
