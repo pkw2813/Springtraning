@@ -75,6 +75,9 @@ public class ClassController {
 		List<Map> list=service.selectClass(param,cPage,numPerPage);
 		int totalData = service.countSelectClass(param);
 		
+		Map planList=service.selectPlan();
+		m.addAttribute("applyDay",planList);
+		
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
 		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/selectClass.hd"));

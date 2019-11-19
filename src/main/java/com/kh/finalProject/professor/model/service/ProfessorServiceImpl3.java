@@ -22,18 +22,42 @@ public class ProfessorServiceImpl3 implements ProfessorService3{
 	
 	
 	@Override
-	public List<Map> gradeEdit(String profId) {
+	public List<Map> gradeEdit(String profId,int cPage,int numPerPage) {
 		
-		return dao.gradeEdit(session,profId);
+		return dao.gradeEdit(session,profId,cPage,numPerPage);
+	}
+
+	
+	
+
+
+
+	@Override
+	public int countAllStudent(String profId) {
+		
+		return dao.countAllStudent(session,profId);
 	}
 
 
 
 
+
+
 	@Override
-	public List<Map> choiceClass(Map<String, Object> param) {
+	public int countChoiceStudent(Map<String, Object> param) {
+		
+		return dao.countChoiceStudent(session,param);
+	}
+
+
+
+
+
+
+	@Override
+	public List<Map> choiceClass(Map<String, Object> param,int cPage,int numPerPage) {
 	
-		return dao.choiceClass(session,param);
+		return dao.choiceClass(session,param,cPage,numPerPage);
 		
 	}
 

@@ -3,6 +3,7 @@ package com.kh.finalProject.professor.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,18 +18,33 @@ public class ProfessorDaoImpl3 implements ProfessorDao3 {
 	
 	
 	@Override
-	public List<Map> gradeEdit(SqlSessionTemplate session,String profId) {
-	
+	public List<Map> gradeEdit(SqlSessionTemplate session,String profId,int cPage,int numPerPage) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return session.selectList("prof3.gradeEdit",profId);
 	}
 
 	@Override
-	public List<Map> choiceClass(SqlSessionTemplate session, Map<String,Object> param) {
-		
+	public List<Map> choiceClass(SqlSessionTemplate session, Map<String,Object> param,int cPage,int numPerPage) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return session.selectList("prof3.choiceClass",param);
 	}
 
 	
+	
+	@Override
+	public int countAllStudent(SqlSessionTemplate session, String profId) {
+		
+		return session.selectOne("prof3.countAllStudent",profId);
+	}
+	
+	
+
+	@Override
+	public int countChoiceStudent(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.selectOne("prof3.countChoiceStudent",param);
+	}
+
 	@Override
 	public Map<String, Object> stuInsertScore(SqlSessionTemplate session, Map<String, Object> param) {
 		

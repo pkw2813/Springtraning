@@ -50,7 +50,7 @@ public class StudentController1 {
 		return loc;	
 	}	
 
-	@RequestMapping("/student/studentInfoUpdate.hd")	
+	@RequestMapping("/student/studentInfoUpdate.hd")
 	public String studentInfoUpdate(HttpSession session,Model m) {	
 		Student s=(Student)session.getAttribute("loginMember");	
 		String studentNo = s.getStuNo();	

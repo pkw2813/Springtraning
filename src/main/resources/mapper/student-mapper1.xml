@@ -26,7 +26,7 @@
 
 	</select>
 	<select id="selectPlan" resultType="map">
-		select * from hd_plan_tb where PLAN_NAME='수강신청' AND SYSDATE <![CDATA[<]]> PLAN_END_DATE AND SYSDATE<![CDATA[>]]> PLAN_START_DATE
+		select * from hd_plan_tb where PLAN_NAME LIKE '%수강%' AND PLAN_NAME LIKE '%신청%' AND SYSDATE <![CDATA[<]]> PLAN_END_DATE AND SYSDATE<![CDATA[>]]> PLAN_START_DATE
 	</select>
 	<select id="selectClass" parameterType="map" resultType="map">
 

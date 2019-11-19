@@ -8,8 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 public interface ProfessorService3 {
 	//서버의 현재 날짜 조회
 	
-	List<Map> gradeEdit(String profId);
-	List<Map> choiceClass(Map<String,Object> param);
+	List<Map> gradeEdit(String profId,int cPage,int numPerPage);
+	List<Map> choiceClass(Map<String,Object> param,int cPage,int numPerPage);
+	int countAllStudent(String profId);
+	int countChoiceStudent(Map<String,Object> param);
 	Map<String,Object> gradeFlag(Map<String,Object> param);
 	int firstGrade(Map<String,Object> param);
 	Map<String,Object> stuInsertScore(Map<String,Object> param);

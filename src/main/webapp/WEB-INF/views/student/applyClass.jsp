@@ -30,12 +30,11 @@
 		.marginLeft {
 			margin-left:10px;
 		}
-		.btn btn-outline-primary btn-sm{
-			
-		}
+		
 		#classInfo>tr{
 		font-size:25px;
 		}
+		
 		
 		#classInfoTitle>th{
 		border:1px solid Lightgray;
@@ -54,9 +53,15 @@
 		width:70px;
 		height:30px;
 		padding:5px;
-		color:black;
 		display:inline-block;
 		}
+	select {
+		
+			color:black;
+			
+		}
+		
+		
 	</style>
 	
 	
@@ -80,11 +85,11 @@
         <th colspan="11" style="font-size:25px;font-family:arial">강의조회/신청</th>
       </tr>
     </thead>
-    	<form method="get" action="${path }/student/selectClass.hd">
+    	<form method="post" action="${path }/student/selectClass.hd">
     	
 				<tr>
 				<td>이수구분
-				<select class="form-control" id="chk_isu" name="chk_isu" style="width:100px">
+				<select class="form-control" id="chk_isu" name="chk_isu" style="width:100px;color:black">
 					<option value="">전체</option>
 					<option value="전공필수">전공필수</option>
 					<option value="교양필수">교양필수</option>
@@ -94,7 +99,7 @@
 				</td>
 				
 				<td>학부검색
-				<select class="form-control" id="chk_school" name="chk_school" style="width:100px">
+				<select class="form-control" id="chk_school" name="chk_school" style="width:100px;color:black">
 					<option value="">선택</option>
 					<option value="A">인문대학</option>
 					<option value="B">공과대학</option>
@@ -102,7 +107,7 @@
 				</select>
 				
 				<td>학과검색
-				<select class="form-control" id="chk_dept" name="chk_dept" style="width:160px;">
+				<select class="form-control" id="chk_dept" name="chk_dept" style="width:160px;color:black">
 					<option id="school0" value="">학과를선택하세요</option>
 					<option id="school1" value=""></option>
 					<option id="school2" value=""></option>
@@ -110,7 +115,7 @@
 				</select>
 			
 				<td>개설년도
-				<select class="form-control" id="chk_year" name="chk_year">
+				<select class="form-control" id="chk_year" name="chk_year" style="color:black">
 					<option value="">전체</option>
 					<option id="thisYear" value=""></option>
 					<option id="year2" value=""></option>
@@ -121,7 +126,7 @@
 				</td>
 				
 				<td>개설학기
-				<select class="form-control" id="chk_sem" name="chk_sem" style="width:50px">
+				<select class="form-control" id="chk_sem" name="chk_sem" style="width:70px;color:black">
 					<option value="">전체</option>
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -189,11 +194,9 @@
 				<td><c:out value='${e["SUB_TYPE"] }'/></td>
 				<td>최대: <c:out value='${e["COMPLETE_PT"] }'/></td>
 				<td>매주: <c:out value='${e["SUB_DATE"] }'/> <c:out value='${e["SUB_TIME"] }'/></td>
-				
-				
-				
 				<td><c:out value='${e["PRE_CAPA"] }'/>/<c:out value='${e["CAPACITY"]}'/></td>
 				<td><c:out value='${e["SUB_ROOM"] }'/></td>
+				
 				<td style="text-align:center">
 				<button id='button-profEval' style="font-size:12px;font-weight:bold;height:25px;" class="btn btn-primary btn-xs" onclick="profEval(this.id,this.value)" 
 				value='${e["SUB_NAME"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>보기 
@@ -207,7 +210,12 @@
 				
 				</c:if>
 				
-				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null or applyDay["PLAN_NO_SEQ"] ne ""}'>
+				<c:if test='${applyDay["PLAN_NO_SEQ"] eq null or applyDay["PLAN_NO_SEQ"] eq ""}'>
+				신청기간이 아닙니다
+				</c:if>
+				
+				
+				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null and applyDay["PLAN_NO_SEQ"] ne ""}'>
 				<c:if test='${ e["PRE_CAPA"]-e["CAPACITY"] eq 0}'>
 				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
 				value='${loginMember.stuNo },${e["SUB_SEQ"]},${e["CAPACITY"]}' disabled>정원초과</button>

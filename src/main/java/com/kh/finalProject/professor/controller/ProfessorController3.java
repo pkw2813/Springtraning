@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService3;
 import com.kh.finalProject.professor.model.vo.Professor;
 
@@ -28,24 +29,26 @@ public class ProfessorController3 {
 	
 	
 	@RequestMapping("/prof/editClassPoint.hd")	
-	public String gradeEdit(HttpSession session, Model m,HttpServletRequest req) {	
+	public String gradeEdit(HttpSession session, Model m,HttpServletRequest req,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {	
 		
 		Professor p=(Professor)session.getAttribute("loginMember");
+		int numPerPage=10;
+	
 		
 		/*Map<String,Object> param=new HashMap();*/
 		String profId=p.getProfId();
 		
-		
-		
-		
 		/*String profPw=p.getProfPw();*/
 		/* param.put("profId",profId); */
 		/*param.put("profPw",profPw);*/
-		List<Map> list = service.gradeEdit(profId);
+		List<Map> list = service.gradeEdit(profId,cPage,numPerPage);
 		List<Map> studyList=service.studyList(profId);
-		List<Map> acasemList=service.acasemList(profId);
+		int totalData = service.countAllStudent(profId);
 		
-		m.addAttribute("acasemList",acasemList);
+		
+		
+		m.addAttribute("totalCount",totalData);
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/editClassPoint.hd"));
 		m.addAttribute("studyList",studyList);
 		m.addAttribute("list",list);
 	
@@ -55,23 +58,28 @@ public class ProfessorController3 {
 	}	
 	
 	@RequestMapping("/prof/choiceClass.hd")	
-	public String choiceClass(HttpSession session, Model m,HttpServletRequest req) {
+	public String choiceClass(HttpSession session, Model m,HttpServletRequest req,@RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
 		Map<String,Object> param = new HashMap();
 		Professor p=(Professor)session.getAttribute("loginMember");
 		String profId=p.getProfId();
+		int numPerPage=10;
 		
 		String subSeq=req.getParameter("selectSubListhd");
 		String semester=req.getParameter("semChoicehd");
+		if(req.getParameter("selectListNum")!=null) {
+		numPerPage=Integer.parseInt(req.getParameter("selectListNum"));
+		}
 		param.put("subSeq",subSeq);
 		param.put("semester",semester);
 		param.put("profId",profId);
-		List<Map> list = service.choiceClass(param);
 		
-		
+		List<Map> list = service.choiceClass(param,cPage,numPerPage);
 		List<Map> studyList=service.studyList(profId);
-		List<Map> acasemList=service.acasemList(profId);
+		int totalData = service.countChoiceStudent(param);
 		
-		m.addAttribute("acasemList",acasemList);
+		
+		m.addAttribute("totalCount",totalData);
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/choiceClass.hd"));
 		m.addAttribute("studyList",studyList);
 		m.addAttribute("list",list);
 	

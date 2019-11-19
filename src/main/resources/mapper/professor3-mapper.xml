@@ -5,35 +5,27 @@
 
 		<select id="gradeEdit" parameterType="string" resultType="map">
 			
-        SELECT ROWNUM,T.* from(SELECT * FROM HD_CLASS_TB A
-        LEFT JOIN HD_SUB_REQ_TB B ON A.SUB_SEQ=B.SUB_SEQ
-        JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
+        SELECT ROWNUM,T.* from(SELECT * FROM HD_SUB_REQ_TB A
+        RIGHT JOIN HD_CLASS_TB  B ON A.SUB_SEQ=B.SUB_SEQ
+        JOIN HD_STUDENT_TB C ON A.STU_NO=C.STU_NO
         JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
         JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
-        where A.PROF_ID=#{profId}
-        ORDER BY SUB_NAME
-           ) T
-        
+        where B.PROF_ID=#{profId} ORDER BY E.SUB_NAME) T
 		</select>
 	
 	<select id="choiceClass" parameterType="map" resultType="map">
 			
-        SELECT ROWNUM,T.* from(SELECT * FROM HD_CLASS_TB A
-        LEFT JOIN HD_SUB_REQ_TB B ON A.SUB_SEQ=B.SUB_SEQ
-        JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
+        SELECT ROWNUM,T.* from(SELECT * FROM HD_SUB_REQ_TB A
+        RIGHT JOIN HD_CLASS_TB  B ON A.SUB_SEQ=B.SUB_SEQ
+        JOIN HD_STUDENT_TB C ON A.STU_NO=C.STU_NO
         JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
         JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
-        where A.PROF_ID=#{profId}) T
+        where B.PROF_ID=#{profId} ORDER BY E.SUB_NAME) T
         WHERE 1=1
         
      	<if test="subSeq !=null and subSeq !=''">
      	AND SUB_SEQ=${subSeq}
      	</if>
-     	
-     	<if test="semester !=null and semester !=''">
-     	AND ACA_YEAR_SEM=#{semester}
-     	</if>
-     
 	</select>
 	
 	<select id="stuInsertScore" parameterType="map" resultType="map">
@@ -99,13 +91,12 @@
         where A.PROF_ID=#{profId}) T
 	</select>
 	
+	
+	
+	
 	<select id="acasemList" parameterType="string" resultType="map">
 		SELECT ROWNUM,T.* from(SELECT DISTINCT F.ACA_YEAR_SEM FROM HD_CLASS_TB A
-        LEFT JOIN HD_SUB_REQ_TB B ON A.SUB_SEQ=B.SUB_SEQ
-        JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
-        JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
-        JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
-        JOIN HD_GRADE_TB F ON A.SUB_SEQ=F.SUB_SEQ 
+        JOIN HD_GRADE_TB F ON A.SUB_SEQ=F.SUB_SEQ
         where A.PROF_ID=#{profId}) T
 	</select>
 	
@@ -138,6 +129,38 @@
 	<select id="totalGradeNull" parameterType="map" resultType="_int">
 	SELECT COUNT(*) FROM HD_GRADE_TB a  where sub_seq=${subSeq} AND TOTAL_GRADE=NULL order by TOTAL_GRADE
 	</select>
+	
+	
+	<select id="countAllStudent" parameterType="string" resultType="_int">
+	
+		SELECT COUNT(*) FROM (SELECT ROWNUM,T.* from(SELECT * FROM HD_SUB_REQ_TB A
+        RIGHT JOIN HD_CLASS_TB  B ON A.SUB_SEQ=B.SUB_SEQ
+        JOIN HD_STUDENT_TB C ON A.STU_NO=C.STU_NO
+        JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
+        JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
+        where B.PROF_ID=#{profId} ORDER BY E.SUB_NAME) T)
+	
+	</select>
+	
+	
+	<select id="countChoiceStudent" parameterType="map" resultType="_int">
+	
+		SELECT COUNT(*) from(SELECT * FROM HD_SUB_REQ_TB A
+        RIGHT JOIN HD_CLASS_TB  B ON A.SUB_SEQ=B.SUB_SEQ
+        JOIN HD_STUDENT_TB C ON A.STU_NO=C.STU_NO
+        JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
+        JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
+        where B.PROF_ID=#{profId} ORDER BY E.SUB_NAME) T
+        WHERE 1=1
+        
+        <if test="subSeq !=null and subSeq !=''">
+     	AND SUB_SEQ=${subSeq}
+     	</if>
+	
+	
+	</select>
+	
+	
 	
 	
 	

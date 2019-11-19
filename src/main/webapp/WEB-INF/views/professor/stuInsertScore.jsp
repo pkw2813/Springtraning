@@ -164,7 +164,7 @@ table {
 						
 					<td>
 						<c:if test="${result.ASSIGN_1_1 eq '0' }">
-						평가없음
+						<input id="ASSIGN_1" value=0 disabled> 평가없음
 						</c:if>
 						
 						<c:if test="${result.ASSIGN_1_1 > '0' or result.ASSIGN_1_1 ne null }">
@@ -182,7 +182,7 @@ table {
 					
 					<td>
 						<c:if test="${result.ASSIGN_2_1 eq '0' }">
-						평가없음
+						<input id=ASSIGN_2 value=0 disabled>평가없음
 						</c:if>
 						
 						<c:if test="${result.ASSIGN_2_1 > '0' or result.ASSIGN_2_1 ne null }">
@@ -200,7 +200,7 @@ table {
 					
 					<td>
 						<c:if test="${result.ASSIGN_3_1 eq '0' }">
-						평가없음
+						<input id=ASSIGN_3 value=0 disabled>평가없음
 						</c:if>
 						
 						<c:if test="${result.ASSIGN_3_1 > '0' or result.ASSIGN_3_1 ne null }">
@@ -218,7 +218,7 @@ table {
 					
 					<td>
 						<c:if test="${result.ASSIGN_4_1 eq '0' }">
-						평가없음
+						<input id=ASSIGN_4 value=0 disabled>평가없음
 						</c:if>
 						
 						<c:if test="${result.ASSIGN_4_1 > '0' or result.ASSIGN_4_1 ne null }">
@@ -315,14 +315,15 @@ table {
 						<td colspan="4" style="text-align:center;">
 					
 					
-					<c:if test="${totalGradeNull > 0}">
-					아직 평가가 끝나지않은 학생이있습니다 학생의 모든 점수가 결정된 이후 사용 가능합니다.
+					<c:if test="${result.TOTAL_GRADE eq null}">
+					아직 평가가 끝나지않은 학생이있습니다 학생의 모든 점수가 결정된 이후 입력 가능합니다.
 					</c:if>
 					
+					<c:if test="${result.TOTAL_GRADE ne null}">
 					
 					<c:if test="${totalGradeNull eq 0}">
-						 ${gradeNow.ROWNUM}/${howManyStudent.COUNT} (석차/현재수강인원) 상위 백분율(${(gradeNow.ROWNUM/howManyStudent.COUNT)*100} %)<p style="color:red;font-size:10">상위백분율이란 현재석차/현재수강인원*100(예:50명중 1등 0% / 50명중 50등 100%)</p>
-					
+						 ${gradeNow.ROWNUM}/${howManyStudent.COUNT} (석차/현재수강인원) 상위 백분율 ( <fmt:formatNumber pattern="###.##">${((gradeNow.ROWNUM+0.01)/(howManyStudent.COUNT+0.01))*100}</fmt:formatNumber>  %)<p style="color:red;font-size:10">상위백분율이란 현재석차/현재수강인원*100(예:50명중 1등 0% / 50명중 50등 100%)</p>
+						
 						<c:if test="${result.GRADE eq '0'}">
 						<input id=GRADE value="${result.GRADE}">
 						<button class="btn btn-primary btn-sm buttonFont" value="GRADE,${result.SUB_SEQ},${result.STU_NO}," onclick="updatePoint(value)">입력</button>
@@ -332,7 +333,7 @@ table {
 						<input id=GRADE value="${result.GRADE}" disabled> 평가완료 
 						</c:if>
 					</c:if>
-					
+						</c:if>
 					
 					</td>
 					</tr>
@@ -380,6 +381,20 @@ table {
 <script>
 
 
+
+
+$("#ASSIGN_1").keyup(function(){
+	
+		if($("#ASSIGN_1").val()<0||$("#ASSIGN_1").val()>100){
+			alert("점수는 0~100점까지만 입력가능합니다")
+			$("#ASSIGN_1").val("");
+			$("#ASSIGN_1").focus;
+		}
+}); 
+
+
+
+
 	
 	
 
@@ -408,15 +423,25 @@ var closePw = document.getElementById("closePw");
 // When the user clicks on the button, open the modal 
 
 
-$(document).ready(function(){
 
+
+
+
+if(typeof sessionStorage.getItem('pwCheck')== 'string'){
+	headerModal1.style.display = "none";
+	
+}else{
 	headerModal1.style.display = "block";
+}
 
-});
+console.log(typeof sessionStorage.getItem('pwCheck'));
+
 
 
 
 function updatePoint(value){
+		
+	
 		var asdff = value.split(",");
 		var id=asdff[0];
 		value+=document.getElementById(id).value;
@@ -469,7 +494,8 @@ function updatePoint(value){
           	 }
 		});
 		
-		
+
+
 		$("#pwNow").keyup(function(){
 			pwNow=$("#pwNow").val();
 			if(pwNow.length>1){
@@ -478,23 +504,27 @@ function updatePoint(value){
 	            url: "${path}/prof/checkInPw.hd",
 	            type: "post",
 	            data: {"pwNow":pwNow},
-	            
 	            success: function(flag){
+	            pwcheck=true;
 	   			viewflag=flag;
 	            	 if(flag === "true"){
 	            	  $("#pwTrue").show();
 	            	   $("#pwFalse").hide();
 	            	   $("#pwConfirm").attr("disabled",false);
+	            	   sessionStorage.setItem('pwCheck', true);
 	            	 }else{
 	            		 viewflag=flag;
 	            	  $("#pwFalse").show(); 
 	            	  $("#pwTrue").hide();
 	            	  $("#pwConfirm").attr("disabled",true);
+	           
+	            	  
+
 	            	 }
 	            },
 	            error: function(){
 	                alert("관리자에게 문의바랍니다 1588-5588");
-	                pwcheck1="false";
+	             
 	                
 	            }
 	        });
@@ -508,50 +538,51 @@ function updatePoint(value){
 		$("#autoCacul").click(function autoCacul(){
 			
 			
-		if(${result.ASSIGN_1}==null){
+			
+		if($("#ASSIGN_1").val()==null){
 			var assign1=0;	
 		}else{
-			var assign1=(${result.ASSIGN_1}*${result.ASSIGN_1_1})/100;
+			var assign1=($("#ASSIGN_1").val()*${result.ASSIGN_1_1})/100;
 		}
 		
-		if(${result.ASSIGN_2}==null){
+		if($("#ASSIGN_2").val()==null){
 			var assign2=0;	
 		}else{
-			var assign2=(${result.ASSIGN_2}*${result.ASSIGN_2_1})/100;
+			var assign2=($("#ASSIGN_2").val()*${result.ASSIGN_2_1})/100;
 		}
 		
-		if(${result.ASSIGN_3}==null){
+		if($("#ASSIGN_3").val()==null){
 			var assign3=0;	
 		}else{
-			var assign3=(${result.ASSIGN_3}*${result.ASSIGN_3_1})/100;
+			var assign3=($("#ASSIGN_3").val()*${result.ASSIGN_3_1})/100;
 		}
 		
-		if(${result.ASSIGN_4}==null){
+		if($("#ASSIGN_4").val()==null){
 			var assign4=0;	
 		}else{
-			var assign4=(${result.ASSIGN_4}*${result.ASSIGN_4_1})/100;
+			var assign4=($("#ASSIGN_4").val()*${result.ASSIGN_4_1})/100;
 		}
 		
-		if(${result.MTERM}==null){
+		if($("#MTERM").val()==null){
 			var mterm=0;	
 		}else{
-			var mterm=(${result.MTERM}*${result.MTERM_1})/100;
+			var mterm=($("#MTERM").val()*${result.MTERM_1})/100;
 		}
 		
-		if(${result.FTERM}==null){
+		if($("#FTERM").val()==null){
 			var fterm=0;	
 		}else{
-			var fterm=(${result.FTERM}*${result.FTERM_1})/100;
+			var fterm=($("#FTERM").val()*${result.FTERM_1})/100;
 		}
 		
-		if(${result.STATUS_GRADE}==null){
+		if($("#STATUS_GRADE").val()==null){
 			var statusgrade=0;	
 		}else{
-			var statusgrade=(${result.STATUS_GRADE}*${result.STATUS_GRADE_1})/100;
+			var statusgrade=($("#STATUS_GRADE").val()*${result.STATUS_GRADE_1})/100;
 		}
 		
 			var totalPoint=assign1+assign2+assign3+assign4+mterm+fterm+statusgrade;
-			var totalgrade=totalPoint*0.045
+			var totalgrade=totalPoint*0.045;
 			console.log(totalgrade);
 			$("#TOTAL_GRADE").val(totalgrade.toFixed(1));
 			
