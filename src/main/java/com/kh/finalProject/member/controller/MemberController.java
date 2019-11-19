@@ -182,20 +182,36 @@ public class MemberController {
 		if(loginNo.equals("s")) {
 			mc.createEmailCheck1(stuEmail, pwRandom, request);
 		}
-		
-		
-		
-		
 		return "jsonView";
 	}
 	
-	/*
-	 * @RequestMapping("/stuRandomCheck.hd");
-	 * 
-	 * @ResponseBody public Stirng stuRandomCheck() {
-	 * 
-	 * }
-	 */
+	@RequestMapping("/stuRandomCheck.hd")
+	@ResponseBody
+	public Boolean stuRandomCheck(@RequestParam String stuRandomCheck, HttpSession session) {
+		Boolean bl=false;
+		if(stuRandomCheck.equals(session.getAttribute("authCode"))) {
+			bl=true;
+		}else {
+			bl=false;
+		}
+		
+		return bl;
+	}
+	
+	@RequestMapping("/stuPwChange.hd")
+	public String stuPwChange(@RequestParam String stuPw, @RequestParam String stuPwCk) {
+		System.out.println(stuPw+stuPwCk+"////asdihasdohvaoibaoihabihbaoijbsaoihbsaoihsab");
+		String msg="";
+		String loc="";
+		
+		int result=0;
+		if(stuPw.equals(stuPwCk)) {
+			/* result=stuService.stuPwChange(); */
+		}else {
+			msg="비밀번호가 일치하지 않습니다. 다시확인해주세요";
+		}
+		return "redirect:/index.jsp";
+	}
 	
 
 }

@@ -276,8 +276,8 @@ $(function(){
                      <input type="hidden" id="pwRandom" name="pwRandom" value=""/>
                      <input type="text" id="stuNo" name="stuNo" placeholder="학번을 입력해주세요" class="form-control" autocomplete="off"/><br/>
                      <input type="text" id="stuEmail" name="stuEmail" placeholder="등록된 이메일을 입력해주세요" class="form-control" autocomplete="off"/><br/>
-                     <div id="pwP">
                      </div>
+                     <div id="pwP">
                      </div>
                      <input type="button" class="btn btn-info btn-sm pull-right" id="pwSearchclose1" value="취소" style="float: right; margin: 7px;">
                      <div id="pwDiv">
@@ -300,8 +300,8 @@ $(function(){
                      <input type="hidden" id="emPwRandom" name="empPwRandom" value=""/>
                      <input type="text" id="empNo" name="searchNo" placeholder="사번을 입력해주세요" class="form-control" autocomplete="off"/><br/>
                      <input type="text" id="empEmail" name="searchEmail" placeholder="등록된 이메일을 입력해주세요" class="form-control" autocomplete="off"/><br/>
-                     <div id="empPwP">
                      </div>
+                     <div id="empPwP">
                      </div>
                      <input type="button" id="" class="btn btn-info btn-sm pull-right" id="empPwSearchclose1" value="취소" style="float: right; margin: 7px;">
                      <div id="empPwDiv">
@@ -370,22 +370,49 @@ $(function(){
 			  var stuRandom="";
 			  var stuRandomBtn="";
 			  stuRandom+="<input type='text' class='form-control' value='' id='stuRandomCheck' placeholder='인증번호를 입력해주세요.'/>";
-			  stuRandomBtn+="<button id='stuRandomCheckBtn'  onclick='stuRandomCheckBtn();' class='btn btn-info btn-sm pull-right'>인증번호 확인</button>";
+			  stuRandomBtn+="<button id='stuRandomCheckBtn' class='btn btn-info btn-sm pull-right'>인증번호 확인</button>";
+			  var stuRanP="<p style='color:red;'>인증번호를 타인에게 노출하지마세요</p>";
 		  $(".pwUpDiv").html(stuRandom);
           $("#pwDiv").html(stuRandomBtn);
-          $("#pwP").html("");
+          $("#pwP").html(stuRanP);
           $("#pwSearchclose1").remove();
+			  $("#stuRandomCheckBtn").on("click",function(){
+				  var stuRandomCheck=$("#stuRandomCheck").val();
+			   	   $.ajax({
+			   		   url:"${path}/stuRandomCheck.hd",
+			   	   	   data:{"stuRandomCheck":stuRandomCheck},
+			   	   	   success:function(data){
+			   	   		   console.log(data);
+			   	   		   var ranCheckArr="";
+			   	   		   var ranCheckBtnArr="";
+			   	   		   var pwArrP="";
+			   	   		   if(data==true){
+			   	   			ranCheckArr+="<br><input type='password' class='form-control' value='' id='changeStuPw' placeholder='변경할 비밀번호 입력'/><br>";
+			   	   			ranCheckArr+="<input type='password' class='form-control' value='' id='changeStuPwCk' placeholder='비밀번호 재입력'/>";
+			   	   			ranCheckBtnArr="<button id='stuPwSuccess' class='btn btn-info btn-sm pull-right'>변경 완료</button>";
+				   	   		$(".pwUpDiv").html(ranCheckArr);
+				            $("#pwDiv").html(ranCheckBtnArr);
+				            $("#pwP").html("");
+			   	   		   }else if(data==false){
+			   	   			pwArrP="<p style='color:red;'>인증번호가 일치하지 않습니다.</p>";
+			   	   			$("#pwP").html(pwArrP);
+			   	   		   }
+			   	   		   $("#stuPwSuccess").click(function(){
+			   	   			   var changeStuPw=$("#changeStuPw").val();
+			   	   			   var changeStuPwCk=$("#changeStuPwCk").val();
+			   	   			   location.href="${path}/stuPwChange.hd?stuPw="+changeStuPw+"&stuPwCk="+changeStuPwCk;
+			   	   		   });
+
+			   	   	   }
+			   	   });
+			  })
 		  }
 	   });
    }
    
-  /*  function stuRandomCheckBtn(){
-	   var stuRandomCheck=$("#stuRandomCheck").val();
-	   $.ajax({
-		   url:"${path}/stuRandomCheck.hd",
-	   	   data:{},
-	   });
-   } */
+   
+   
+   
    
    $(function(){
 	      $("#empEmail").keyup(function(){
@@ -495,31 +522,31 @@ $(function(){
       }
       
       
-    // //전화번호 정규표현식
-    let regPhone = /^\d{3}\d{3,4}\d{4}$/;
-    
-    let phone = $('#beforePhone');
-            if (!phone.val()) {
-                alert('전화번호를 입력해주세요.');
-                phone.focus();
-                return false;
-            } else {
-                if (!regPhone.test(phone.val().trim())) {
-                    alert('전화번호 형식이 유효하지 않습니다.');
-                    phone.focus();
-                    return false;
-                }
-            }
+      
+      // //전화번호 정규표현식
+     let regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+      // let regPhone = /^\d{3}\d{3,4}\d{4}$/;
+      
+      let phone = $('#phone');
+              if (!phone.val()) {
+                  alert('전화번호를 입력해주세요.');
+                  phone.focus();
+                  return false;
+              } else {
+                  if (!regPhone.test(phone.val().trim())) {
+                      alert('전화번호 형식이 유효하지 않습니다.');
+                      phone.focus();
+                      return false;
+                  }
+              }
 
-   // //이메일 인증을 완료했는지 확인
+     // //이메일 인증을 완료했는지 확인
 
-         let checkEmail = $('.flagEmail').val();
-         console.log(checkEmail);
-         if(checkEmail == 'false') {
-            alert("이메일 인증을 완료해주세요.");
-               return false;
-         }
-
+           let checkEmail = $('#email').val();
+           if(checkEmail == null) {
+              alert("이메일 인증을 완료해주세요.");
+                 return false;
+           }
 
          // 학과 선택
          let chooseDept = $(".selectdep").val();
@@ -527,12 +554,10 @@ $(function(){
             alert("학과를 선택해 주세요.");
             return false;
          }
-
-
-
-         //주민등록 번호
-         let jumin = document.getElementById('jumin').value;
-         if(jumin == "") {
+           //주민등록 번호
+           let juminCk = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
+           let jumin = document.getElementById('empSsn').value;
+           if(jumin == "") {
             alert("주민번호를 입력해주세요");
             return false;
          }else if(jumin.length < 13){
