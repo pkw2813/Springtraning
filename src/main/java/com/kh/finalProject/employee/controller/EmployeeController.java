@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.beforeStudent.model.service.BeforeStuService;
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.common.encrypt.MyEncrypt;
+import com.kh.finalProject.common.encrypt.Sha256Encrypto;
 import com.kh.finalProject.email.controller.MailController;
 import com.kh.finalProject.employee.model.service.EmployeeService;
 import com.kh.finalProject.employee.model.vo.Employee;
@@ -39,7 +40,8 @@ public class EmployeeController {
 	private MyEncrypt enc;
 	@Autowired
 	private EmployeeService service;
-
+	@Autowired
+	private Sha256Encrypto encSha;
 	@Autowired
 	BeforeStuService bService;
 
@@ -77,7 +79,7 @@ public class EmployeeController {
 		try {
 			int result = service.insertNewStu(s, beforeStu);
 			handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!", "아이디 : " + s.getStuNo()
-					+ "   \r\n    비밀번호 : " + enc.decrypt(s.getStuPw()) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
+					+ "   \r\n    비밀번호 : " + s.getStuNo().subSequence(0, 3) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -390,8 +392,8 @@ public class EmployeeController {
 		try {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
 			s.setStuPw(enc.decrypt(bs.getBeforeNo()).substring(0, 6));
-			// 패스워드 초기 패스워드 암호화함
-			s.setStuPw(enc.encrypt(s.getStuPw()));
+			// 패스워드 초기 패스워드 단방향 암호화함
+			s.setStuPw(encSha.encrypt(s.getStuPw()));
 
 			// 성별땜에
 			bs.setBeforeNo(enc.decrypt(bs.getBeforeNo()));

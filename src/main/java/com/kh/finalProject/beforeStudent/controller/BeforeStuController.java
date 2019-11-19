@@ -3,11 +3,8 @@ package com.kh.finalProject.beforeStudent.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.finalProject.beforeStudent.model.service.BeforeStuService;
 import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 import com.kh.finalProject.common.encrypt.MyEncrypt;
+import com.kh.finalProject.common.encrypt.Sha256Encrypto;
 
 @Controller
 public class BeforeStuController {

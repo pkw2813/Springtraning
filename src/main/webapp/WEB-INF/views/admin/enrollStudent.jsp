@@ -55,6 +55,7 @@ function insertNewStu(result) {
 		url: "${pageContext.request.contextPath}/insertNewStu.do",
 		data : {"beforeStu" : result},
 		success : function(data) {
+			location.href="${path}/enrollStudent.hd";
 		}
 
 	});

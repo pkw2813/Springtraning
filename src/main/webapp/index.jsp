@@ -527,7 +527,7 @@ $(function(){
      let regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
       // let regPhone = /^\d{3}\d{3,4}\d{4}$/;
       
-      let phone = $('#phone');
+      let phone = $('#beforePhone');
               if (!phone.val()) {
                   alert('전화번호를 입력해주세요.');
                   phone.focus();
