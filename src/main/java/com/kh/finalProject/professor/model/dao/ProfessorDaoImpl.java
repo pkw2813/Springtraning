@@ -11,10 +11,9 @@ import com.kh.finalProject.professor.model.vo.Professor;
 public class ProfessorDaoImpl implements ProfessorDao {
 
 	@Override
-	public Professor selectOne(SqlSessionTemplate session, String loginId, String loginPwd) {
+	public Professor selectOne(SqlSessionTemplate session, String loginId) {
 		Professor pro=new Professor();
 		pro.setProfId(loginId);
-		pro.setProfPw(loginPwd);
 		return session.selectOne("professor.selectOne", pro);
 	}
 

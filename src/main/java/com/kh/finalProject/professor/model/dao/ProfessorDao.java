@@ -8,7 +8,7 @@ import com.kh.finalProject.professor.model.vo.Professor;
 
 public interface ProfessorDao {
 	
-	Professor selectOne(SqlSessionTemplate session, String loginId, String loginPwd);
+	Professor selectOne(SqlSessionTemplate session, String loginId);
 	Map empIdSearchModal(SqlSessionTemplate session, Map map);
 
 }

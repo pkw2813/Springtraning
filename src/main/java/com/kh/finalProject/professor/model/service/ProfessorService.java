@@ -6,6 +6,6 @@ import com.kh.finalProject.professor.model.vo.Professor;
 
 public interface ProfessorService {
 	
-	Professor selectOne(String loginId,String loginPwd);
+	Professor selectOne(String loginId);
 	Map empIdSearchModal(Map map);
 }

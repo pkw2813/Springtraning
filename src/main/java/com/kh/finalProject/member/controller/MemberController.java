@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.finalProject.common.encrypt.Sha256Encrypto;
 import com.kh.finalProject.email.controller.MailController;
 import com.kh.finalProject.employee.model.service.EmployeeService;
 import com.kh.finalProject.employee.model.vo.Employee;
@@ -35,6 +36,8 @@ public class MemberController {
 	private ProfessorService proService;
 	@Autowired
 	private MailController mc;
+	@Autowired
+	Sha256Encrypto encSha;
 	
 	
 	@RequestMapping("/main.hd")
@@ -59,14 +62,18 @@ public class MemberController {
 		String msg="";
 		String loc="";
 
+				// 로그인 matches 양식
+		//String su = "911010";
+		//System.out.println("매치 :" + s.getStuPw().matches(su));
 		if(loginNo.equals("s")) {
-			Student stu=stuService.selectOne(loginId,loginPwd);
+			Student stu=stuService.selectOne(loginId);
+			System.out.println("매치 : " + stu.getStuPw().matches(encSha.encrypt(loginPwd)));
 			session.setAttribute("loginMember", stu);
 		}else if(loginNo.equals("p")){
-			Professor pro=proService.selectOne(loginId,loginPwd);
+			Professor pro=proService.selectOne(loginId);
 			session.setAttribute("loginMember", pro);
 		}else{
-			Employee emp=empService.selectOne(loginId,loginPwd);
+			Employee emp=empService.selectOne(loginId);
 			session.setAttribute("loginMember", emp);
 		}
 		if(session.getAttribute("loginMember")!=null) {

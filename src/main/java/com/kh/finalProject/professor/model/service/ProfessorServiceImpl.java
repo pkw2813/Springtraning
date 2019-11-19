@@ -18,8 +18,8 @@ public class ProfessorServiceImpl implements ProfessorService{
 	private SqlSessionTemplate session;
 
 	@Override
-	public Professor selectOne(String loginId, String loginPwd) {
-		Professor pro=dao.selectOne(session, loginId, loginPwd);
+	public Professor selectOne(String loginId) {
+		Professor pro=dao.selectOne(session, loginId);
 		return pro;
 	}
 

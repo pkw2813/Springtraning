@@ -9,10 +9,9 @@ import com.kh.finalProject.student.model.vo.Student;
 public class StudentDaoImpl implements StudentDao {
 
 	@Override
-	public Student selectOne(SqlSessionTemplate session, String loginId, String loginPwd) {
+	public Student selectOne(SqlSessionTemplate session, String loginId) {
 		Student s=new Student();
 		s.setStuNo(loginId);
-		s.setStuPw(loginPwd);
 		return session.selectOne("student.selectOne", s);
 	}
 

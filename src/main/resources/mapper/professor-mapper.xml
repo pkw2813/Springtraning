@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="professor">
 	<select id="selectOne" parameterType="professor" resultMap="professorResult">
-		SELECT * FROM HD_PROFESSOR_TB WHERE prof_Id=#{profId} AND prof_Pw=#{profPw} AND SUBSTR(prof_Id,1,1)='P'
+		SELECT * FROM HD_PROFESSOR_TB WHERE prof_Id=#{profId} AND SUBSTR(prof_Id,1,1)='P'
 	</select>
 
 	<select id="selectProfList" resultType="map" parameterType="string">

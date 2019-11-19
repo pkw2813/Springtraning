@@ -23,8 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private SqlSessionTemplate session;
 
 	@Override
-	public Employee selectOne(String loginId, String loginPwd) {
-		Employee emp=dao.selectOne(session,loginId,loginPwd);
+	public Employee selectOne(String loginId) {
+		Employee emp=dao.selectOne(session,loginId);
 		return emp;
 	}
 

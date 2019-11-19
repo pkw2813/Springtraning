@@ -17,8 +17,8 @@ public class StudentServiceImpl implements StudentService {
 	
 
 	@Override
-	public Student selectOne(String loginId, String loginPwd) {
-		Student stu=dao.selectOne(session, loginId, loginPwd);
+	public Student selectOne(String loginId) {
+		Student stu=dao.selectOne(session, loginId);
 		return stu;
 	}
 

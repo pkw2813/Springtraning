@@ -16,10 +16,9 @@ import com.kh.finalProject.student.model.vo.Student;
 public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
-	public Employee selectOne(SqlSessionTemplate session, String loginId, String loginPwd) {
+	public Employee selectOne(SqlSessionTemplate session, String loginId) {
 		Employee emp=new Employee();
 		emp.setEmpId(loginId);
-		emp.setEmpPw(loginPwd);
 		return session.selectOne("employee.selectOne",emp);
 	}
 

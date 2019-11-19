@@ -12,7 +12,7 @@ import com.kh.finalProject.student.model.vo.Student;
 
 public interface EmployeeDao {
 	
-	Employee selectOne(SqlSessionTemplate session, String loginId, String loginPwd);
+	Employee selectOne(SqlSessionTemplate session, String loginId);
 
 	List enrollStuList(SqlSessionTemplate session);
 	

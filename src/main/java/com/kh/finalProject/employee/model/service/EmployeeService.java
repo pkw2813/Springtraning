@@ -10,7 +10,7 @@ import com.kh.finalProject.student.model.vo.Student;
 
 public interface EmployeeService {
 	
-	Employee selectOne(String loginId,String loginPwd);
+	Employee selectOne(String loginId);
 
 	List enrollStuList();
 	
