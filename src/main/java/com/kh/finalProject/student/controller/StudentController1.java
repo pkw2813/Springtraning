@@ -34,11 +34,13 @@ public class StudentController1 {
 		Student result = service.selectStudent(studentNo);	
 		String addr=result.getStuAddr();	
 		String[] addrArr=addr.split("PSTC");
+		
 		if(addrArr.length==2) {
 			result.setStuAddr(addrArr[1]);	
 		}else {
 			result.setStuAddr(addr);
 		}
+		
 		m.addAttribute("student", result);	
 		String loc;	
 		if(result.getStuAccount()==null||result.getStuImgOriname()==null) {	
