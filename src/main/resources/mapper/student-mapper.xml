@@ -64,6 +64,8 @@
         AND STU_NO=#{stuNo}
         </if>
         </select>
+        
+        
   	
   	
   	<resultMap id="studentResult" type="student">

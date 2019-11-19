@@ -40,6 +40,16 @@ public class BeforeStuServiceImpl implements BeforeStuService{
 				} 
 		return result;
 	}
+
+	@Override
+	public int deleteBstuList(String deptCode) throws Exception {
+		int result = dao.deleteBstuList(session, deptCode);
+		if(result == 0) {
+			new Exception();
+		}
+		return result;
+	}
+	
 	
 	
 	

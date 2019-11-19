@@ -35,6 +35,9 @@
 	DELETE FROM hd_admission_tb WHERE BEFORE_STU_SEQ = #{beforeStu}
 	</delete>
 	
+	<delete id="deleteBstuList">
+	DELETE FROM hd_admission_tb WHERE DEPT_CODE = #{deptCode}
+	</delete>
 	
 
 	<resultMap type="beforeStudent" id="selectMap">

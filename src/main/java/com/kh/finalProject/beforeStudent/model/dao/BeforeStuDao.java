@@ -14,4 +14,6 @@ public interface BeforeStuDao {
 	public List<Map> selectDeptList(SqlSessionTemplate session, String result);
 	
 	public int insertBeforeStudent(SqlSessionTemplate session, BeforeStu s);
+	
+	int deleteBstuList(SqlSessionTemplate session, String deptCode);
 }

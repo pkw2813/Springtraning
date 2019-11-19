@@ -118,7 +118,8 @@ $(function() {
 		
 		
     // //전화번호 정규표현식
-    let regPhone = /^\d{3}\d{3,4}\d{4}$/;
+	let regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+    // let regPhone = /^\d{3}\d{3,4}\d{4}$/;
     
  	let phone = $('#phone');
             if (!phone.val()) {
@@ -141,11 +142,12 @@ $(function() {
 				   return false;
 			}
 			//주민등록 번호
+			let juminCk = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
 			let jumin = document.getElementById('empSsn').value;
 			if(jumin == "") {
 				alert("주민번호를 입력해주세요");
 				return false;
-			}else if(jumin.length < 13){
+			}else if(!jumin.test(jumin)){
 				alert("정확한 주민번호를 입력해 주세요.");
 				return false;
 			}

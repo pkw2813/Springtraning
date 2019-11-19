@@ -60,6 +60,20 @@ public class EmployeeController {
 	public int insertNewStu(@RequestParam int beforeStu, HttpServletRequest req) {
 		BeforeStu bs = service.selectBeforeStu(beforeStu);
 		Student s = settingNewStudent(bs);
+		if(Integer.parseInt(s.getStuNo().substring(8, 10)) > 50) {
+			System.out.println(Integer.parseInt(s.getStuNo().substring(8, 10)));
+			try {
+				int result = bService.deleteBstuList(s.getDeptCode());
+				handler.forSendEmail(s.getStuEmail(), "KH 대학교 입학 관현안내", s.getStuName() + "님의 입학 신청 결과 정원초과로 입학이 불가능하다는 것을 알립니다.", req);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return 0;
+			}
+
+			return beforeStu;
+
+		}
+		
 		try {
 			int result = service.insertNewStu(s, beforeStu);
 			handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!", "아이디 : " + s.getStuNo()

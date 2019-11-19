@@ -7,9 +7,11 @@ import com.kh.finalProject.beforeStudent.model.vo.BeforeStu;
 
 public interface BeforeStuService {
 
-	public List<Map> selectColList();
+	List<Map> selectColList();
 	
-	public List<Map> selectDeptList(String result);
+	List<Map> selectDeptList(String result);
 	
-	public int insertBeforeStudent(BeforeStu s) throws Exception;
+	int insertBeforeStudent(BeforeStu s) throws Exception;
+	
+	int deleteBstuList(String deptCode) throws Exception;
 }

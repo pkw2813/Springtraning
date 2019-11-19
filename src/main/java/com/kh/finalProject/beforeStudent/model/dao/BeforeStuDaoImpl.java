@@ -26,6 +26,11 @@ public class BeforeStuDaoImpl implements BeforeStuDao{
 		return session.insert("beforeStu.insertBeforeStudent", s);
 	}
 
+	@Override
+	public int deleteBstuList(SqlSessionTemplate session, String deptCode) {
+		return session.delete("beforeStu.deleteBstuList", deptCode);
+	}
+
 	
 	
 	
