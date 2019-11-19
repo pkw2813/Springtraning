@@ -166,6 +166,12 @@ public class StudentDaoImpl1 implements StudentDao1 {
 		
 	}
 
+	@Override
+	public Map selectStuInfo(SqlSessionTemplate session, String stuId) {
+	
+		return session.selectOne("student1.selectStuInfo",stuId);
+	}
+
 	
 	
 	

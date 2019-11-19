@@ -62,6 +62,18 @@
 		}
 		
 		
+	#Progress_Loading{
+	 position: absolute;
+	 left: 50%;
+	 top: 50%;
+	 background: #ffffff;
+	 background-color: rgba( 255, 255, 255, 0.2 );
+	 
+	 
+	 
+	 
+	 
+		}
 	</style>
 	
 	
@@ -159,6 +171,7 @@
 				<th>과목명</th>
 				<th>담당교수</th>
 				<th>이수구분</th>
+				<th>타전공여부</th>
 				<th>이수학점</th>
 				<th>강의시간</th>
 				<th>수강여석</th>
@@ -190,8 +203,15 @@
 				<td><c:out value='${e["SUB_YEAR"]}'/>-<c:out value='${e["SUB_SEMESTER"]}'/></td>
 				<td><c:out value='${e["DEPT_NAME"] }'/></td>
 				<td><c:out value='${e["SUB_NAME"] }'/></td>
+				
+				
+				
 				<td><c:out value='${e["PROF_NAME"] }'/></td>
 				<td><c:out value='${e["SUB_TYPE"] }'/></td>
+				<td>
+					<c:if test="${e.DEPT_CODE eq stuInfo.DEPT_CODE}">전공과목</c:if>
+					<c:if test="${e.DEPT_CODE ne stuInfo.DEPT_CODE}">타전공</c:if>
+				</td>
 				<td>최대: <c:out value='${e["COMPLETE_PT"] }'/></td>
 				<td>매주: <c:out value='${e["SUB_DATE"] }'/> <c:out value='${e["SUB_TIME"] }'/></td>
 				<td><c:out value='${e["PRE_CAPA"] }'/>/<c:out value='${e["CAPACITY"]}'/></td>
@@ -262,6 +282,11 @@
 	</div>
 	</div>
 	</div>
+	
+	<div id = "Progress_Loading"><!-- 로딩바 -->
+		<img id="LoadImg" height="60px" width="60px" src="${path }/resources/images/image/prograssLoading.gif"/>
+	</div>
+	
 	
 	
 	<script>
@@ -420,6 +445,20 @@
 		
 	
 	
+ 	$(document).ready(function(){
+ 		
+ 	   $('#Progress_Loading').hide(); //첫 시작시 로딩바를 숨겨준다.
+ 	})
+ 	.ajaxStart(function(){
+ 		$('#Progress_Loading').show(); //ajax실행시 로딩바를 보여준다.
+ 	})
+ 	.ajaxStop(function(){
+ 		$('#Progress_Loading').hide(); //ajax종료시 로딩바를 숨겨준다.
+ 	});
+ 	
+ 	
+ 	
+ 	
 	</script>
 	
 	

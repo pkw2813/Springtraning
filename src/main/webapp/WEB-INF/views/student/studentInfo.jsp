@@ -32,6 +32,15 @@ table {
 		padding:5px;
 		}
 
+
+	#Progress_Loading{
+	 position: absolute;
+	 left: 50%;
+	 top: 50%;
+	 background: #ffffff;
+		}
+
+
 </style>
 
 <script>
@@ -228,15 +237,34 @@ table {
 						</div>
 
 						<br>
+<div id = "Progress_Loading"><!-- 로딩바 -->
+	<img id="LoadImg" height="50px" width="50px" src="${path }/resources/images/image/prograssLoading.gif"/>
+</div>
 
 
 
 
-						<script>
-							$("#regStatus").val('${student.regStatus}');
-							$("#gender").val('${student.gender}');
-						</script>
+<script>
+
+	$("#regStatus").val('${student.regStatus}');
+	$("#gender").val('${student.gender}');
+	$(document).ready(function(){
+ 		
+	 	   $('#Progress_Loading').hide(); //첫 시작시 로딩바를 숨겨준다.
+	 	})
+	 	.ajaxStart(function(){
+	 		$('#Progress_Loading').show(); //ajax실행시 로딩바를 보여준다.
+	 	})
+	 	.ajaxStop(function(){
+	 		$('#Progress_Loading').hide(); //ajax종료시 로딩바를 숨겨준다.
+	 	});
+	
+	
+	
+	
+</script>
 
 
 
-						<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+
+				<jsp:include page="/WEB-INF/views/common/footer.jsp" />

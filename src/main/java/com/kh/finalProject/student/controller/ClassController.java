@@ -38,13 +38,14 @@ public class ClassController {
 		int numPerPage=10;
 		int count=0;
 		List<Map> list=service.selectAllClass(stuId,cPage,numPerPage);
+		Map stuInfo=service.selectStuInfo(stuId);
 		int totalData = service.countAllClass(stuId);
 		/* int applyClassNow =service.alpplyClassNow() */
 		Map planList=service.selectPlan();
 		
 		
 		
-		
+		m.addAttribute("stuInfo",stuInfo);
 		m.addAttribute("applyDay",planList);
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
@@ -74,7 +75,8 @@ public class ClassController {
 		param.put("chk_subName",req.getParameter("chk_subName"));
 		List<Map> list=service.selectClass(param,cPage,numPerPage);
 		int totalData = service.countSelectClass(param);
-		
+		Map stuInfo=service.selectStuInfo(stuId);
+		m.addAttribute("stuInfo",stuInfo);
 		Map planList=service.selectPlan();
 		m.addAttribute("applyDay",planList);
 		

@@ -84,7 +84,7 @@ public class StudentController1 {
 			s.setStuImgRename("false");	
 		}	
 		s.setStuNo(stuNo);	
-		s.setStuEmail(stuEmail);	
+		s.setStuEmail(stuEmail);
 		s.setStuTel(stuTel);	
 		s.setStuAddr(stuAddr);	
 		s.setStuAccount(stuAccount);	

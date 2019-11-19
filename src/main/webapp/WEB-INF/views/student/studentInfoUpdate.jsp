@@ -52,7 +52,12 @@
 		height:30px;
 		padding:5px;
 		}
-		
+		#Progress_Loading{
+	 position: absolute;
+	 left: 50%;
+	 top: 50%;
+	 background: #ffffff;
+		}
 		
 	
 		
@@ -246,10 +251,6 @@
        
      </form>
       </div>
-
-    
-
-	
 	</div>
 	</div>
 	</div>
@@ -257,10 +258,28 @@
 	</div>
 	</div>
 	
-	
+	<div id = "Progress_Loading"><!-- 로딩바 -->
+	<img id="LoadImg" height="50px" width="50px" src="${path }/resources/images/image/prograssLoading.gif"/>
+</div>
 	
 	
 	<script>
+	
+	
+	$(document).ready(function(){
+ 		
+	 	   $('#Progress_Loading').hide(); //첫 시작시 로딩바를 숨겨준다.
+	 	})
+	 	.ajaxStart(function(){
+	 		$('#Progress_Loading').show(); //ajax실행시 로딩바를 보여준다.
+	 	})
+	 	.ajaxStop(function(){
+	 		$('#Progress_Loading').hide(); //ajax종료시 로딩바를 숨겨준다.
+	 	});
+	
+	
+	
+	
 	
 	$("#bankName").change(function(){
 		
@@ -424,7 +443,7 @@
 		 var eng = pw.search(/[a-z]/ig);
 		 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-		 if(pw.length < 8 || pw.length > 20){	 
+		  if(pw.length < 8 || pw.length > 20){	 
 			status="8글자이상 20자이내로 가능합니다"
 		
 			return status;

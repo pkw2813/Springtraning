@@ -11,7 +11,6 @@ public interface StudentService1 {
 	List<Map> selectApplyClass(String stuNo);
 	Student selectStudent(String studentNo);
 	int studentInfoUpdate(Student s);
-	
 	List<Map> selectAllClass(String stuId,int cPage,int numPerPage);
 	List<Map> selectClass(Map<String,Object>param,int cPage,int numPerPage);
 	Map selectPlan();
@@ -33,5 +32,6 @@ public interface StudentService1 {
 	int updatePreCapa(Map<String,String> param);
 	int updatePreCapaCancel(Map<String,String> param);
 	Map<String,String> capacityNow(String subSeq);
+	Map selectStuInfo(String stuId);
 	
 }

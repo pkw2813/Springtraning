@@ -55,6 +55,15 @@
 		}
 	
 	
+	#Progress_Loading{
+	 position: absolute;
+	 left: 50%;
+	 top: 50%;
+	 background: #ffffff;
+	  background-color: rgba( 255, 255, 255, 0.2 );
+		}
+		
+		
 		
 	</style>
 	
@@ -258,10 +267,25 @@
 	</div>
 	
 	
+	<div id = "Progress_Loading"><!-- 로딩바 -->
+	<img id="LoadImg" height="50px" width="50px" src="${path }/resources/images/image/prograssLoading.gif"/>
+</div>
+
 	
 	
 	<script>
-	
+ 	$(document).ready(function(){
+ 		
+  	   $('#Progress_Loading').hide(); //첫 시작시 로딩바를 숨겨준다.
+  	})
+  	.ajaxStart(function(){
+  		$('#Progress_Loading').show(); //ajax실행시 로딩바를 보여준다.
+  	})
+  	.ajaxStop(function(){
+  		$('#Progress_Loading').hide(); //ajax종료시 로딩바를 숨겨준다.
+  	});
+ 	
+ 	
 	$("#bankName").change(function(){
 		
 		$("#AccountNumber").val("");

@@ -37,5 +37,5 @@ public interface StudentDao1 {
 	int updatePreCapa(SqlSessionTemplate session,Map<String,String> param);
 	int updatePreCapaCancel(SqlSessionTemplate session,Map<String,String> param);
 	Map<String,String> capacityNow(SqlSessionTemplate session,String subSeq);
-	
+	Map selectStuInfo(SqlSessionTemplate session,String stuId);
 }

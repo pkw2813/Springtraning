@@ -171,11 +171,11 @@
 	</select>
 
 	<select id="selectProfInfo" parameterType="map" resultType="map">
-		select * FROM HD_PROFESSOR_TB A ,HD_CLASS_TB B,HD_SUBJECT_TB
-		C,HD_DEPARTMENT_TB D
-		WHERE A.PROF_ID = B.PROF_ID AND B.SUB_CODE=C.SUB_CODE AND
-		C.DEPT_CODE=D.DEPT_CODE
-		AND A.PROF_ID=#{profId} AND SUB_NAME=#{subName}
+		select * FROM HD_PROFESSOR_TB A 
+        left join HD_CLASS_TB B on a.prof_id=b.prof_id
+        join HD_SUBJECT_TB c on b.sub_seq=c.sub_seq
+        join HD_DEPARTMENT_TB D on c.dept_code=d.dept_code
+        where a.PROF_ID=#{profId} AND SUB_NAME=#{subName}
 	</select>
 
 	<insert id="applyClass" parameterType="map">
@@ -352,8 +352,11 @@
 		SELECT * FROM HD_CLASS_TB WHERE SUB_SEQ=#{subSeq}
 	</select>
 
+<select id="selectStuInfo" parameterType="string" resultType="map">
 
-
+	SELECT * FROM HD_STUDENT_TB WHERE STU_NO=#{stuId}
+</select>
+	
 
 	<resultMap id="studentResult" type="student">
 		<result column="STU_NO" property="stuNo" />

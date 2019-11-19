@@ -86,10 +86,15 @@ table {
 	width:100%;
 	height:100%;
 }
-#asdf{
-	
-}
 
+
+	#Progress_Loading{
+	 position: absolute;
+	 left: 50%;
+	 top: 50%;
+	 background: #ffffff;
+	  background-color: rgba( 255, 255, 255, 0.2 );
+		}
 
 
 </style>
@@ -370,8 +375,13 @@ table {
 </div>
 
 
-	
+	<div id = "Progress_Loading"><!-- 로딩바 -->
+	<img id="LoadImg" height="50px" width="50px" src="${path }/resources/images/image/prograssLoading.gif"/>
+</div>
 
+
+ 	
+ 	
 
 
 
@@ -381,7 +391,16 @@ table {
 <script>
 
 
-
+$(document).ready(function(){
+		
+	   $('#Progress_Loading').hide(); //첫 시작시 로딩바를 숨겨준다.
+	})
+	.ajaxStart(function(){
+		$('#Progress_Loading').show(); //ajax실행시 로딩바를 보여준다.
+	})
+	.ajaxStop(function(){
+		$('#Progress_Loading').hide(); //ajax종료시 로딩바를 숨겨준다.
+	});
 
 $("#ASSIGN_1").keyup(function(){
 	
@@ -433,8 +452,6 @@ if(typeof sessionStorage.getItem('pwCheck')== 'string'){
 }else{
 	headerModal1.style.display = "block";
 }
-
-console.log(typeof sessionStorage.getItem('pwCheck'));
 
 
 
@@ -583,7 +600,7 @@ function updatePoint(value){
 		
 			var totalPoint=assign1+assign2+assign3+assign4+mterm+fterm+statusgrade;
 			var totalgrade=totalPoint*0.045;
-			console.log(totalgrade);
+			
 			$("#TOTAL_GRADE").val(totalgrade.toFixed(1));
 			
 			

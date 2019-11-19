@@ -171,4 +171,14 @@ public class StudentServiceImpl1 implements StudentService1 {
 	
 	}
 
+	@Override
+	public Map selectStuInfo(String stuId) {
+		
+		return dao.selectStuInfo(session,stuId);
+	}
+
+	
+	
+	
+	
 }
