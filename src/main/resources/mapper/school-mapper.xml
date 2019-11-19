@@ -63,7 +63,13 @@
 	</select>
 	
 	<select id="empIdSearchModal" parameterType="map" resultType="map">
-		SELECT PROF_ID, PROF_NAME, EMAIL FROM HD_PROFESSOR_TB WHERE PROF_NAME=#{searchName} AND EMAIL=#{searchEmail}
+		SELECT PROF_ID, PROF_NAME, EMAIL FROM HD_PROFESSOR_TB WHERE EMAIL=#{searchEmail}
+		<if test="searchName != null">
+			AND PROF_NAME=#{searchName}
+		</if>
+		<if test="searchNo != null">
+			AND PROF_ID=#{searchNo}
+		</if>
 	</select>
 	
 	

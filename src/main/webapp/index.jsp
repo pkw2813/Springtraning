@@ -15,7 +15,6 @@
 <link href='http://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'/>
 <link href="${path}/resources/css/login.css" rel="stylesheet" type='text/css'/>
 <script src="${path }/resources/js/jquery-3.4.1.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Haxa Direct</title>
@@ -59,7 +58,8 @@ $(function(){
           emparr+="<input type='text' name='loginId' placeholder='사번을 입력해주세요' class='form-control input-md'>";
           emparr+="<input type='password' name=loginPwd placeholder='비밀번호를 입력해주세요' class='form-control input-md input_pwd'>";
           emparr+="<div class='spacing'>";
-          emparr+="<a href='#' onclick='empIdSearchModal();'>사번 / 비밀번호 찾기 </a><br/></div>";
+          emparr+="<span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a</span> / ";
+          emparr+="<span><a href='#' onclick='empPwSearchModal();'>비밀번호 찾기</a></span><br/></div>";
           emparr+="<label><input type='checkbox' name='idSave' /><small>아이디 저장</small></label>";
           emparr+="<input type='submit' class='btn btn-info btn-sm pull-right' value='로그인'></form>";
          $(".panel-heading").html("<h3 class='panel-title'>교수 로그인</h3>");
@@ -79,7 +79,8 @@ $(function(){
           emparr+="<input type='text' name='loginId' placeholder='사번을 입력해주세요' class='form-control input-md'>";
           emparr+="<input type='password' name=loginPwd placeholder='비밀번호를 입력해주세요' class='form-control input-md input_pwd'>";
           emparr+="<div class='spacing'>";
-          emparr+="<a href='#' onclick='empIdSearchModal();'>사번 / 비밀번호 찾기 </a><br/></div>";
+          emparr+="<span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a></span> / ";
+          emparr+="<span><a href='#' onclick='empPwSearchModal();'>비밀번호 찾기</a></span><br/></div>";
           emparr+="<label><input type='checkbox' name='idSave' /><small>아이디 저장</small></label>";
           emparr+="<input type='submit' class='btn btn-info btn-sm pull-right' value='로그인'></form>";
          $(".panel-heading").html("<h3 class='panel-title'>교직원 로그인</h3>");
@@ -158,6 +159,7 @@ $(function(){
                <div class="col-md-7" style="border-left: 1px solid #ccc; height: 160px">
                
                   <form class="form-horizontal" action="${path }/login.hd" method='post'>
+                  	 <input type="hidden" name="loginNo" value="s"/>
                      <input type="text" name="loginId" placeholder="학번을 입력해주세요" class="form-control input-md">
                      <input type="password" name="loginPwd" placeholder="비밀번호를 입력해주세요" class="form-control input-md input_pwd">
                      <div class="spacing">
@@ -256,8 +258,8 @@ $(function(){
                      <input type="text" id="reqTitle" name="stuEmail" placeholder="등록된 이메일을 입력해주세요" class="form-control" autocomplete="off"/><br/>
                      <input type="hidden" value="s" />
                      </div>
-                     <input type="button" class="btn btn-inverse-info btn-fw" id="idSearchclose1" value="취소" style="float: right; margin: 7px;">
-                     <input type="submit" class="btn btn-inverse-info btn-fw" value="전송" style="float: right; margin: 7px;">
+                     <input type="button" class="btn btn-info btn-sm pull-right" id="idSearchclose1" value="취소" style="float: right; margin: 7px;">
+                     <input type="submit" class="btn btn-info btn-sm pull-right" value="전송" style="float: right; margin: 7px;">
                      <br>
                      <br>
                </form>   
@@ -266,22 +268,43 @@ $(function(){
           
           <div id="pwSearchModal" class="modal">
             <div class="modal-content" style="width:400px;">
-               <%-- <form action="${path }/stuIdSearch.hd"> --%>
+              <form>
                      <span class="close" id="pwSearchclose">&times;</span>
-                     <p>학번 찾기</p>
-                     <div class="form-group"><br/>
+                     <p>비밀번호 찾기</p>
+                     <div class="form-group pwUpDiv"><br/>
                      <input type="hidden" name="loginNo" id="loginNo" value="s"/>
                      <input type="hidden" id="pwRandom" name="pwRandom" value=""/>
                      <input type="text" id="stuNo" name="stuNo" placeholder="학번을 입력해주세요" class="form-control" autocomplete="off"/><br/>
                      <input type="text" id="stuEmail" name="stuEmail" placeholder="등록된 이메일을 입력해주세요" class="form-control" autocomplete="off"/><br/>
                      <div id="pwP">
                      </div>
-                     <input type="hidden" value="s" />
                      </div>
-                     <input type="button" class="btn btn-inverse-info btn-fw" id="pwSearchclose1" value="취소" style="float: right; margin: 7px;">
+                     <input type="button" class="btn btn-info btn-sm pull-right" id="pwSearchclose1" value="취소" style="float: right; margin: 7px;">
                      <div id="pwDiv">
                      <!-- <input type="submit" class="btn btn-inverse-info btn-fw" value="인증번호 발송" style="float: right; margin: 7px;">
                      <p>안녕</p> -->
+                     </div>
+                     <br>
+                     <br>
+               </form>
+            </div>
+          </div>
+          
+          <div id="empPwSearchModal" class="modal">
+            <div class="modal-content" style="width:400px;">
+               <%-- <form action="${path }/stuIdSearch.hd"> --%>
+                     <span class="close" id="empPwSearchclose">&times;</span>
+                     <p>비밀번호 찾기</p>
+                     <div class="form-group"><br/>
+                     <input type="hidden" name="loginNo" id="loginNo1" value="e"/>
+                     <input type="hidden" id="emPwRandom" name="empPwRandom" value=""/>
+                     <input type="text" id="empNo" name="searchNo" placeholder="사번을 입력해주세요" class="form-control" autocomplete="off"/><br/>
+                     <input type="text" id="empEmail" name="searchEmail" placeholder="등록된 이메일을 입력해주세요" class="form-control" autocomplete="off"/><br/>
+                     <div id="empPwP">
+                     </div>
+                     </div>
+                     <input type="button" id="" class="btn btn-info btn-sm pull-right" id="empPwSearchclose1" value="취소" style="float: right; margin: 7px;">
+                     <div id="empPwDiv">
                      </div>
                      <br>
                      <br>
@@ -296,12 +319,12 @@ $(function(){
                      <p>사번 찾기</p>
                      <div class="form-group"><br/>
                      <input type="hidden" name="loginNo" value="e"/>
-                     <input type="text" id="searchName" name="searchName" placeholder="이름을 입력해주세요" class="form-control" autocomplete="off" required="required"/><br/>
-                     <input type="text" id="searchEmail" name="searchEmail" placeholder="등록된 이메일을 입력해주세요" class="form-control" autocomplete="off"/><br/>
+                     <input type="text" id="searchName" placeholder="이름을 입력해주세요" class="form-control" autocomplete="off" required="required"/><br/>
+                     <input type="text" id="searchEmail" placeholder="등록된 이메일을 입력해주세요" class="form-control" autocomplete="off"/><br/>
                      <input type="hidden" value="s" />
                      </div>
-                     <input type="button" class="btn btn-inverse-info btn-fw" id="empIdSearchclose1" value="취소" style="float: right; margin: 7px;">
-                     <input type="submit" class="btn btn-inverse-info btn-fw" value="전송" style="float: right; margin: 7px;">
+                     <input type="button" class="btn btn-info btn-sm pull-right" id="empIdSearchclose1" value="취소" style="float: right; margin: 7px;">
+                     <input type="submit" class="btn btn-info btn-sm pull-right" value="전송" style="float: right; margin: 7px;">
                      <br>
                      <br>
                </form>   
@@ -321,10 +344,10 @@ $(function(){
                var pwArr="";
                var pwArrP="";
                if(data!=null&&data!=""){
-                  pwArr+="<input type='submit' class='btn btn-inverse-info btn-fw' value='인증번호 발송' style='float: right; margin: 7px'>";
+                  pwArr+="<input type='button' id='stuPwRandomBtn' class='btn btn-info btn-sm pull-right' onclick='stuPw();' value='인증번호 발송' style='float: right; margin: 7px'>";
                   pwArrP+="<p style='color:blue;'>인증번호 발송버튼을 눌러주세요</p>"
                }else{
-                  pwArrP="<p style='color:red;'>아이디/이메일을 입력해주세요</p>"
+                  pwArrP="<p style='color:red;'>학번 / 등록된 이메일을 입력해주세요</p>"
                }
                $("#pwDiv").html(pwArr);
                $("#pwP").html(pwArrP);
@@ -332,6 +355,61 @@ $(function(){
          });
       });
    });
+   
+  
+   
+   
+   function stuPw(){
+	   var pwRandom=$("#pwRandom").val();
+	   var loginNo=$("#loginNo").val();
+	   var stuEmail=$("#stuEmail").val();
+	   $.ajax({
+		  url:"${path}/stuPwRandom.hd",
+		  data:{"pwRandom":pwRandom,"loginNo":loginNo,"stuEmail":stuEmail},
+		  success:function(data){
+			  var stuRandom="";
+			  var stuRandomBtn="";
+			  stuRandom+="<input type='text' class='form-control' value='' id='stuRandomCheck' placeholder='인증번호를 입력해주세요.'/>";
+			  stuRandomBtn+="<button id='stuRandomCheckBtn'  onclick='stuRandomCheckBtn();' class='btn btn-info btn-sm pull-right'>인증번호 확인</button>";
+		  $(".pwUpDiv").html(stuRandom);
+          $("#pwDiv").html(stuRandomBtn);
+          $("#pwP").html("");
+          $("#pwSearchclose1").remove();
+		  }
+	   });
+   }
+   
+  /*  function stuRandomCheckBtn(){
+	   var stuRandomCheck=$("#stuRandomCheck").val();
+	   $.ajax({
+		   url:"${path}/stuRandomCheck.hd",
+	   	   data:{},
+	   });
+   } */
+   
+   $(function(){
+	      $("#empEmail").keyup(function(){
+	         var searchNo=$("#empNo").val();
+	         var searchEmail=$("#empEmail").val();
+	         var loginNo=$("#loginNo1").val();
+	         $.ajax({
+	            url:"${path}/stuPwSearch.hd",
+	            data:{"searchNo":searchNo,"searchEmail":searchEmail,"loginNo":loginNo},
+	            success:function(data){
+	               var pwArr="";
+	               var pwArrP="";
+	               if(data!=null&&data!=""){
+	                  pwArr+="<input type='submit' class='btn btn-info btn-sm pull-right' value='인증번호 발송' style='float: right; margin: 7px'>";
+	                  pwArrP+="<p style='color:blue;'>인증번호 발송버튼을 눌러주세요</p>"
+	               }else{
+	                  pwArrP="<p style='color:red;'>사번 / 등록된 이메일을 입력해주세요</p>"
+	               }
+	               $("#empPwDiv").html(pwArr);
+	               $("#empPwP").html(pwArrP);
+	            }
+	         });
+	      });
+	   });
    
 
 
@@ -364,11 +442,27 @@ $(function(){
       }
    }
    
+   function empPwSearchModal(){
+	      pwSearchModal1();
+	      var empPwSearchModal = document.getElementById('empPwSearchModal');
+	      var empPwSearchclose = document.getElementById("empPwSearchclose");                                          
+	      var empPwSearchclose1 = document.getElementById("empPwSearchclose1"); 
+	      empPwSearchModal.style.display = "block";
+	      empPwSearchModal.style.display = "block";
+	      empPwSearchclose.onclick = function() {
+	    	  empPwSearchModal.style.display = "none";
+	      }
+	      empPwSearchclose1.onclick = function() {
+	    	  empPwSearchModal.style.display = "none";
+	      }
+	   }
+   
    function pwSearchModal1() {
          $.ajax({
             url :"${path}/email.do",
             success : function(data) {
           $("#pwRandom").attr('value',data.random);
+          $("#emPwRandom").attr('value',data.random);
             }
          });
       }

@@ -36,6 +36,7 @@ public class MemberController {
 	@Autowired
 	private MailController mc;
 	
+	
 	@RequestMapping("/main.hd")
 	public String main() {
 		return "common/main";
@@ -89,8 +90,8 @@ public class MemberController {
 	
 	@RequestMapping("/stuIdSearch.hd")
 	public String stuIdSearch(Student s, @RequestParam String loginNo, HttpServletRequest req,Model model,
-			@RequestParam String searchName,
-			@RequestParam String searchEmail
+			@RequestParam(value="searchName", required=false, defaultValue="0" ) String searchName,
+			@RequestParam(value="searchEmail", required=false, defaultValue="0" ) String searchEmail
 			) {
 		StringBuilder sb = new StringBuilder();
 		String msg="";
@@ -98,6 +99,7 @@ public class MemberController {
 		Map map=new HashMap<>();
 		map.put("searchName", searchName);
 		map.put("searchEmail", searchEmail);
+		System.out.println(map);
 		if(loginNo.equals("s")) {
 			Student stu=stuService.stuIdSearch(s);
 			if(stu!=null) {
@@ -133,10 +135,13 @@ public class MemberController {
 	
 	@RequestMapping("/stuPwSearch.hd")
 	@ResponseBody
-	public String stuPwSearch(Student s, @RequestParam String loginNo) {
-		
-		System.out.println(s);
-		System.out.println(loginNo);
+	public String stuPwSearch(Student s, @RequestParam String loginNo,Model model,
+			@RequestParam(value="searchNo", required=false, defaultValue="0" ) String searchNo,
+			@RequestParam(value="searchEmail", required=false, defaultValue="0" ) String searchEmail
+			) {
+		Map map=new HashMap<>();
+		map.put("searchNo", searchNo);
+		map.put("searchEmail", searchEmail);
 		ObjectMapper mapper=new ObjectMapper();
 		String jsonArr="";
 				if(loginNo.equals("s")) {
@@ -149,14 +154,48 @@ public class MemberController {
 								e.printStackTrace();
 							}
 						}
-					}else{
-						
-						
+					}
+				}else {
+					Map m=proService.empIdSearchModal(map);
+					if(m!=null) {
+						System.out.println(m.get("PROF_ID").equals(map.get("searchNo"))&&m.get("EMAIL").equals(map.get("searchEmail")));
+						if(m.get("PROF_ID").equals(map.get("searchNo"))&&m.get("EMAIL").equals(map.get("searchEmail"))) {
+							try {
+								jsonArr=mapper.writeValueAsString(m);
+							} catch (JsonProcessingException e) {
+								e.printStackTrace();
+							}
+						}
 					}
 				}
 		return jsonArr;
 	}
 	
+	@RequestMapping("/stuPwRandom.hd")
+	@ResponseBody
+	public String pwRandom(
+			@RequestParam String pwRandom,
+			@RequestParam String loginNo,
+			@RequestParam String stuEmail,
+			HttpServletRequest request
+			) {
+		if(loginNo.equals("s")) {
+			mc.createEmailCheck1(stuEmail, pwRandom, request);
+		}
+		
+		
+		
+		
+		return "jsonView";
+	}
+	
+	/*
+	 * @RequestMapping("/stuRandomCheck.hd");
+	 * 
+	 * @ResponseBody public Stirng stuRandomCheck() {
+	 * 
+	 * }
+	 */
 	
 
 }

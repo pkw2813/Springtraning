@@ -48,6 +48,20 @@ public class MailController {
 		return String.valueOf(flag);
 	}
 	
+	@ResponseBody
+	public String createEmailCheck1(@RequestParam String userEmail, @RequestParam String random, HttpServletRequest request) {
+		int ran = new Random().nextInt(900000) + 100000;
+		HttpSession session = request.getSession(true);
+		String authCode = String.valueOf(ran);
+		session.setAttribute("authCode", authCode);
+		session.setAttribute("random", random);
+		String subject ="KH대학교 비밀번호 찾기 이메일 인증 코드 발급 안내 입니다.";
+		StringBuilder sb = new StringBuilder();
+		sb.append("귀하의 인증 코드는 "+ authCode + "입니다.");
+		boolean flag = mailService.send(subject, sb.toString(), "lgwan840@gmail.com", userEmail)?true:false;
+		return String.valueOf(flag);
+	}
+	
 	@RequestMapping(value="/emailAuth.do")
 	@ResponseBody
 	public String emailAuth(@RequestParam String authCode, @RequestParam String random, HttpSession session) {
