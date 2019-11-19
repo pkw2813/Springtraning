@@ -199,18 +199,23 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/stuPwChange.hd")
-	public String stuPwChange(@RequestParam String stuPw, @RequestParam String stuPwCk) {
-		System.out.println(stuPw+stuPwCk+"////asdihasdohvaoibaoihabihbaoijbsaoihbsaoihsab");
+	public String stuPwChange(@RequestParam String stuPw, @RequestParam String stuPwCk, @RequestParam String stuNo,Model model) {
 		String msg="";
-		String loc="";
+		String loc="/";
 		
 		int result=0;
+		
 		if(stuPw.equals(stuPwCk)) {
-			/* result=stuService.stuPwChange(); */
+			result=stuService.stuPwChange(stuPw,stuNo);
+			msg="변경된 비밀번호로 로그인해주시기 바랍니다.";
 		}else {
-			msg="비밀번호가 일치하지 않습니다. 다시확인해주세요";
+			msg="변경할 비밀번호가 일치하지 않습니다. 다시확인해주세요";
 		}
-		return "redirect:/index.jsp";
+		
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		
+		return "common/msg";
 	}
 	
 

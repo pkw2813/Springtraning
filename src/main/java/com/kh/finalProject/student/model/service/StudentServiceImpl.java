@@ -29,6 +29,12 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 
+	@Override
+	public int stuPwChange(String stuPw,String stuNo) {
+		return dao.stuPwChange(session, stuPw,stuNo);
+	}
+
+
 	
 	
 	

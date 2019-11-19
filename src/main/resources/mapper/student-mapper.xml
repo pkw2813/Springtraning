@@ -63,7 +63,10 @@
         <if test="stuNo !=null">
         AND STU_NO=#{stuNo}
         </if>
-        </select>
+    </select>
+    <update id="stuPwUpdate" parameterType="string">
+    	UPDATE HD_STUDENT_TB SET STU_PW=#{stuPw} WHERE STU_NO=#{stuNo}
+    </update>
         
         
   	

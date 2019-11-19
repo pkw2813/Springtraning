@@ -20,6 +20,17 @@ public class StudentDaoImpl implements StudentDao {
 	public Student stuIdSearch(SqlSessionTemplate session, Student s) {
 		return session.selectOne("student.stuIdSearch",s);
 	}
+
+	@Override
+	public int stuPwChange(SqlSessionTemplate session, String stuPw,String stuNo) {
+		Student s=new Student();
+		s.setStuNo(stuNo);
+		s.setStuPw(stuPw);
+		System.out.println(s+"asdljasdilhsajsajasijlsadljasdli");
+		return session.update("student.stuPwUpdate", s);
+	}
+	
+	
 	
 	
 	

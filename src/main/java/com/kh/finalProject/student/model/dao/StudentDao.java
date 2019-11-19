@@ -8,4 +8,5 @@ public interface StudentDao {
 	
 	Student selectOne(SqlSessionTemplate session,String loginId, String loginPwd);
 	Student stuIdSearch(SqlSessionTemplate session,Student s);
+	int stuPwChange(SqlSessionTemplate session, String stuPw,String stuNo);
 }

@@ -6,4 +6,5 @@ public interface StudentService {
 	
 	Student selectOne(String loginId,String loginPwd);
 	Student stuIdSearch(Student s);
+	int stuPwChange(String stuPw,String stuNo);
 }

@@ -58,8 +58,7 @@ $(function(){
           emparr+="<input type='text' name='loginId' placeholder='사번을 입력해주세요' class='form-control input-md'>";
           emparr+="<input type='password' name=loginPwd placeholder='비밀번호를 입력해주세요' class='form-control input-md input_pwd'>";
           emparr+="<div class='spacing'>";
-          emparr+="<span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a</span> / ";
-          emparr+="<span><a href='#' onclick='empPwSearchModal();'>비밀번호 찾기</a></span><br/></div>";
+          emparr+="<br/><span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a</span><br/></div>";
           emparr+="<label><input type='checkbox' name='idSave' /><small>아이디 저장</small></label>";
           emparr+="<input type='submit' class='btn btn-info btn-sm pull-right' value='로그인'></form>";
          $(".panel-heading").html("<h3 class='panel-title'>교수 로그인</h3>");
@@ -79,8 +78,7 @@ $(function(){
           emparr+="<input type='text' name='loginId' placeholder='사번을 입력해주세요' class='form-control input-md'>";
           emparr+="<input type='password' name=loginPwd placeholder='비밀번호를 입력해주세요' class='form-control input-md input_pwd'>";
           emparr+="<div class='spacing'>";
-          emparr+="<span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a></span> / ";
-          emparr+="<span><a href='#' onclick='empPwSearchModal();'>비밀번호 찾기</a></span><br/></div>";
+          emparr+="<br/><span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a></span><br/></div>";
           emparr+="<label><input type='checkbox' name='idSave' /><small>아이디 저장</small></label>";
           emparr+="<input type='submit' class='btn btn-info btn-sm pull-right' value='로그인'></form>";
          $(".panel-heading").html("<h3 class='panel-title'>교직원 로그인</h3>");
@@ -363,6 +361,7 @@ $(function(){
 	   var pwRandom=$("#pwRandom").val();
 	   var loginNo=$("#loginNo").val();
 	   var stuEmail=$("#stuEmail").val();
+	   var stuNo=$("#stuNo").val();
 	   $.ajax({
 		  url:"${path}/stuPwRandom.hd",
 		  data:{"pwRandom":pwRandom,"loginNo":loginNo,"stuEmail":stuEmail},
@@ -376,7 +375,7 @@ $(function(){
           $("#pwDiv").html(stuRandomBtn);
           $("#pwP").html(stuRanP);
           $("#pwSearchclose1").remove();
-			  $("#stuRandomCheckBtn").on("click",function(){
+			  $("#stuRandomCheckBtn").click(function(){
 				  var stuRandomCheck=$("#stuRandomCheck").val();
 			   	   $.ajax({
 			   		   url:"${path}/stuRandomCheck.hd",
@@ -400,7 +399,8 @@ $(function(){
 			   	   		   $("#stuPwSuccess").click(function(){
 			   	   			   var changeStuPw=$("#changeStuPw").val();
 			   	   			   var changeStuPwCk=$("#changeStuPwCk").val();
-			   	   			   location.href="${path}/stuPwChange.hd?stuPw="+changeStuPw+"&stuPwCk="+changeStuPwCk;
+			   	   			   
+			   	   			   location.href="${path}/stuPwChange.hd?stuPw="+changeStuPw+"&stuPwCk="+changeStuPwCk+"&stuNo="+stuNo;
 			   	   		   });
 
 			   	   	   }
@@ -556,7 +556,7 @@ $(function(){
          }
            //주민등록 번호
            let juminCk = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
-           let jumin = document.getElementById('empSsn').value;
+           let jumin = document.getElementById('jumin').value;
            if(jumin == "") {
             alert("주민번호를 입력해주세요");
             return false;
