@@ -60,9 +60,10 @@
         <a class="navbar-brand brand-logo-mini" href="${path }/main.hd"><img src="${path }/resources/assets/images/logo-mini.svg" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-        <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
           <span class="ti-view-list"></span>
-        </button> -->
+        </button>
+        <!-- 헤더 검색창
         <ul class="navbar-nav mr-lg-2">
           <li class="nav-item nav-search d-none d-lg-block">
             <div class="input-group">
@@ -75,13 +76,22 @@
             </div>
             </li>
         </ul>
+         -->
         <ul class="navbar-nav navbar-nav-right">
+        
         <li class="nav-item dropdown mr-1">
            <button id="reqBtn" class="btn btn-inverse-info btn-fw">
-               건의
+               	건의 등록
             </button>
         </li>
-          <li class="nav-item dropdown mr-1">
+        
+        <li class="nav-item dropdown mr-1">
+           <button id="" class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/reqAnswer.hd?userId=${userId }'" >
+               	건의/답변 내역
+            </button>
+        </li>
+        <li class="nav-item dropdown mr-1"></li>
+          <%-- <li class="nav-item dropdown mr-1">
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
               <i class="ti-email mx-0"></i>
             </a>
@@ -172,16 +182,16 @@
                 </div>
               </a>
             </div>
-          </li>
+          </li> --%>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="${path }/resources/assets/images/faces/face28.jpg" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
+              <!-- <a class="dropdown-item">
                 <i class="ti-settings text-primary"></i>
                 Settings
-              </a>
+              </a> -->
               <a class="dropdown-item" href="${path }/login">
                 <i class="ti-settings text-primary"></i>
                 Login

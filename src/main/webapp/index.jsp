@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>KH 대학교</title>
 </head>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -26,9 +27,9 @@ $(function(){
    var emparr="";
    $(".login_stu").click(function(){
       $(".login_stu").removeClass(".hvr-bounce-to-right");
-      $(".login_stu").css("backgroundColor","#46b8ff");
-      $(".login_pro").css("backgroundColor","#abdbff");
-      $(".login_emp").css("backgroundColor","#abdbff");
+      $(".login_stu").css("backgroundColor","rgba(91,192,222)");
+      $(".login_pro").css("backgroundColor","rgba(91,192,222,0.7)");
+      $(".login_emp").css("backgroundColor","rgba(91,192,222,0.7)");
       $.ajax({
           success:function(){
           emparr="<form class='form-horizontal' action='${path }/login.hd' method='post'>";
@@ -48,9 +49,9 @@ $(function(){
    });
    $(".login_pro").click(function(){
       $(".login_pro").removeClass(".hvr-bounce-to-right");
-      $(".login_pro").css("backgroundColor","#46b8ff");
-      $(".login_stu").css("backgroundColor","#abdbff");
-      $(".login_emp").css("backgroundColor","#abdbff");
+      $(".login_pro").css("backgroundColor","rgba(91,192,222)");
+      $(".login_stu").css("backgroundColor","rgba(91,192,222,0.7)");
+      $(".login_emp").css("backgroundColor","rgba(91,192,222,0.7)");
       $.ajax({
           success:function(){
           emparr="<form class='form-horizontal' action='${path }/login.hd' method='post'>";
@@ -58,7 +59,7 @@ $(function(){
           emparr+="<input type='text' name='loginId' placeholder='사번을 입력해주세요' class='form-control input-md'>";
           emparr+="<input type='password' name=loginPwd placeholder='비밀번호를 입력해주세요' class='form-control input-md input_pwd'>";
           emparr+="<div class='spacing'>";
-          emparr+="<br/><span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a</span><br/></div>";
+          emparr+="<span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a></span><br/></div>";
           emparr+="<label><input type='checkbox' name='idSave' /><small>아이디 저장</small></label>";
           emparr+="<input type='submit' class='btn btn-info btn-sm pull-right' value='로그인'></form>";
          $(".panel-heading").html("<h3 class='panel-title'>교수 로그인</h3>");
@@ -68,9 +69,9 @@ $(function(){
    });
    $(".login_emp").click(function(){
       $(".login_emp").removeClass(".hvr-bounce-to-right");
-      $(".login_emp").css("backgroundColor","#46b8ff");
-      $(".login_stu").css("backgroundColor","#abdbff");
-      $(".login_pro").css("backgroundColor","#abdbff");
+      $(".login_emp").css("backgroundColor","rgba(91,192,222)");
+      $(".login_stu").css("backgroundColor","rgba(91,192,222,0.7)");
+      $(".login_pro").css("backgroundColor","rgba(91,192,222,0.7)");
       $.ajax({
           success:function(){
           emparr="<form class='form-horizontal' action='${path }/login.hd' method='post'>";
@@ -78,7 +79,7 @@ $(function(){
           emparr+="<input type='text' name='loginId' placeholder='사번을 입력해주세요' class='form-control input-md'>";
           emparr+="<input type='password' name=loginPwd placeholder='비밀번호를 입력해주세요' class='form-control input-md input_pwd'>";
           emparr+="<div class='spacing'>";
-          emparr+="<br/><span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a></span><br/></div>";
+          emparr+="<span><a href='#' onclick='empIdSearchModal();'>사번 찾기 </a></span><br/></div>";
           emparr+="<label><input type='checkbox' name='idSave' /><small>아이디 저장</small></label>";
           emparr+="<input type='submit' class='btn btn-info btn-sm pull-right' value='로그인'></form>";
          $(".panel-heading").html("<h3 class='panel-title'>교직원 로그인</h3>");
@@ -134,7 +135,7 @@ $(function(){
    <div class="middlePage">
       <div class="page-header">
          <h3 class="logo">
-            안녕하세요 서울대학교 종합정보 시스템입니다.
+            안녕하세요 KH대학교 종합정보 시스템입니다.
          </h3>
       </div>
       <div class="panel panel-info">
@@ -375,6 +376,7 @@ $(function(){
           $("#pwDiv").html(stuRandomBtn);
           $("#pwP").html(stuRanP);
           $("#pwSearchclose1").remove();
+          
 			  $("#stuRandomCheckBtn").click(function(){
 				  var stuRandomCheck=$("#stuRandomCheck").val();
 			   	   $.ajax({
@@ -405,7 +407,7 @@ $(function(){
 
 			   	   	   }
 			   	   });
-			  })
+			  });
 		  }
 	   });
    }

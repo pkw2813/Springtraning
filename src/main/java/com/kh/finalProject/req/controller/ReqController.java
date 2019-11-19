@@ -57,7 +57,7 @@ public class ReqController {
 	@ResponseBody
 	public String reqList(Model model, @RequestParam(value="index", required=false, defaultValue="0" ) int index, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage,
 			HttpServletResponse res) {
-		int numPerPage=4;
+		int numPerPage=5;
 		ObjectMapper mapper=new ObjectMapper();
 		List<Req> allList=service.reqList(index, cPage, numPerPage);
 		String jsonStr="";
@@ -97,6 +97,30 @@ public class ReqController {
 		
 		return "common/msg";
 	}
+	
+	@RequestMapping("/reqAnswer.hd")
+	public String reqAnswerView(@RequestParam String userId,Model model) {
+		Boolean flag=true;
+		List<Req> sendList=null;
+		List<Req> answerList=null;
+
+		sendList=service.reqSendList(userId,flag);
+		flag=false;
+		answerList=service.reqSendList(userId,flag);
+
+		model.addAttribute("sendList", sendList);
+		model.addAttribute("answerList", answerList);
+		
+		return "req/reqAnswerList";
+	}
+	
+	@RequestMapping("/reqAnswerOne.hd")
+	public String reqAnswerOne(@RequestParam int reqNo, Model model) {
+		Req req=service.reqOne(reqNo);
+		model.addAttribute("reqOne",req);
+		return "req/reqOne";
+	}
+	
 
 }
 

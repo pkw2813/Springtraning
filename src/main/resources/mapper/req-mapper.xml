@@ -42,6 +42,14 @@
   	select count(*) from HD_REQ_TB where FROM_NAME='EA000000000' AND REQ_READ='처리 완료'
   </select>
   
+  <select id="reqSendList" resultMap="reqResult" parameterType="string">
+  	SELECT REQ_NO, REQ_TITLE, REQ_CONTENTS, FROM_NAME, TO_NAME, REQ_READ, to_char(TO_TIME, 'YYYY-MM-DD HH24:MI')AS TO_TIME FROM HD_REQ_TB WHERE TO_NAME=#{userId} ORDER BY TO_TIME
+  </select>
+  
+  <select id="reqAnswerList" resultMap="reqResult" parameterType="string">
+  	SELECT REQ_NO, REQ_TITLE, REQ_CONTENTS, FROM_NAME, TO_NAME, REQ_READ, to_char(TO_TIME, 'YYYY-MM-DD HH24:MI')AS TO_TIME FROM HD_REQ_TB WHERE FROM_NAME=#{userId} ORDER BY TO_TIME
+  </select>
+  
   <resultMap id="reqResult" type="req">
 		<result column="REQ_NO" property="reqNo" />
 		<result column="REQ_TITLE" property="reqTitle" />

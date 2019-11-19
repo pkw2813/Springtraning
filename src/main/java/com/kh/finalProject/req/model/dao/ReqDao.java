@@ -13,4 +13,5 @@ public interface ReqDao {
 	int selectReqCount(SqlSessionTemplate session,int index);
 	Req reqOne(SqlSessionTemplate session,int reqNo);
 	int answerUpdate(SqlSessionTemplate session,int reqNo);
+	List<Req> reqSendList(SqlSessionTemplate session, String userId,Boolean flag);
 }

@@ -3,6 +3,16 @@
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<%@ page import="com.kh.finalProject.student.model.vo.Student" %>
+<%@ page import="com.kh.finalProject.employee.model.vo.Employee" %>
+<%@ page import="com.kh.finalProject.professor.model.vo.Professor" %>
+<% if(session.getAttribute("loginMember") instanceof Professor){%>
+<c:set var="userId" value="${loginMember.profId }"/>
+<%} else if(session.getAttribute("loginMember") instanceof Student){%>
+<c:set var="userId" value="${loginMember.stuNo }"/>
+<%} else if(session.getAttribute("loginMember") instanceof Employee){%> 
+<c:set var="userId" value="${loginMember.empId }"/>
+<%} %>
 <style>
 	th{
 		text-align:center !important;
@@ -21,22 +31,24 @@
 	<div class="content-wrapper">
 			   <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Hoverable Table</h4>
-                  <p class="card-description">
-                    Add class <code>.table-hover</code>
-                  </p>
+                  <h4 class="card-title">Title : ${reqOne.reqTitle }</h4>
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
                         <tr>
                           <td class="firsttd">보낸 사람</td>
-                          <td>${reqOne.toName }</td>
+                          <c:if test="${reqOne.toName eq 'E00000000'}">
+                          <td>관리자</td>
+                          </c:if>
+                          <c:if test="${reqOne.toName ne 'E00000000'}">
+                          <td>${reqOne.toName}</td>
+                          </c:if>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>보낸 시간</td>
-                          <td>${reqOne.toTime }</td>
+                          <td>${reqOne.toTime}${userId }</td>
                         </tr>
                         <tr>
                         </tr>
@@ -51,13 +63,20 @@
                           </td>
                         </tr>
                         <tr>
-                        	<td colspan="2">
-                        		<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/answerUpdate.hd?reqNo=${reqOne.reqNo }&reqTitle=${reqOne.reqTitle }&reqContents=${reqOne.reqContents }&toName=${reqOne.toName }&fromName=${reqOne.fromName }&toTime=${reqOne.toTime }&reqRead=${reqOne.reqRead} '">처리 완료</button>&nbsp&nbsp&nbsp&nbsp
-                        		<c:if test="${reqOne.reqRead eq '처리 완료'}">
-                        		<button class="btn btn-inverse-info btn-fw" id="answerBtn">답변 보내기</button>&nbsp&nbsp&nbsp&nbsp
-                        		</c:if>
-                        		<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/reqList.hd'">목록으로</button>
-                        	</td>
+	                        <c:if test="${userId == 'E00000000'}">
+	                        	<td colspan="2">
+	                        		<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/answerUpdate.hd?reqNo=${reqOne.reqNo }&reqTitle=${reqOne.reqTitle }&reqContents=${reqOne.reqContents }&toName=${reqOne.toName }&fromName=${reqOne.fromName }&toTime=${reqOne.toTime }&reqRead=${reqOne.reqRead} '">처리 완료</button>&nbsp&nbsp&nbsp&nbsp
+	                        		<c:if test="${reqOne.reqRead eq '처리 완료'}">
+	                        		<button class="btn btn-inverse-info btn-fw" id="answerBtn">답변 보내기</button>&nbsp&nbsp&nbsp&nbsp
+	                        		</c:if>
+	                        		<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/reqList.hd'">목록으로</button>
+	                        	</td>
+	                        </c:if>
+	                        <c:if test="${userId != 'E00000000'}">
+		                        <td colspan="2">
+		                        	<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/reqAnswer.hd?userId=${userId }'">목록으로</button>
+		                        </td>
+	                        </c:if>
                         </tr>
                       </tbody>
                     </table>
@@ -98,25 +117,25 @@
     
     <script>
      // Get the modal
-        var modal = document.getElementById("answerModal");
+        var answerModal = document.getElementById("answerModal");
  
         // Get the button that opens the modal
-        var btn = document.getElementById("answerBtn");
+        var answerBtn = document.getElementById("answerBtn");
  
         // Get the <span> element that closes the modal
-        var close = document.getElementById("close2");                                          
-        var close1 = document.getElementById("close3");  
+        var close2 = document.getElementById("close2");                                          
+        var close3 = document.getElementById("close3");  
         // When the user clicks on the button, open the modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
+        answerBtn.onclick = function() {
+        	answerModal.style.display = "block";
         }
  
         // When the user clicks on <span> (x), close the modal
-        close.onclick = function() {
-            modal.style.display = "none";
+        close2.onclick = function() {
+        	answerModal.style.display = "none";
         }
-        close1.onclick = function() {
-            modal.style.display = "none";
+        close3.onclick = function() {
+        	answerModal.style.display = "none";
         }
         </script>
            

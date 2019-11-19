@@ -11,5 +11,5 @@ public interface ReqService {
 	int selectReqCount(int index);
 	Req reqOne(int reqNo);
 	int answerUpdate(int reqNo);
-
+	List<Req> reqSendList(String userId,Boolean flag);
 }

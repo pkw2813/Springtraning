@@ -41,7 +41,7 @@
 	</select>
 	
 	<select id="subTarget" parameterType="string" resultMap="curriculumMap">
-		SELECT TARGET_SUBJECT FROM HD_CURRICULUM_TB WHERE SUB_NAME=#{subName}
+		SELECT TARGET_SUBJECT, SUB_CODE FROM HD_CURRICULUM_TB WHERE SUB_NAME=#{subName}
 	</select>
 	
 <resultMap id="curriculumMap" type="curriculum">

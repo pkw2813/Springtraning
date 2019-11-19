@@ -51,6 +51,11 @@ public class ReqServiceImpl implements ReqService {
 		return answerUpdate;
 	}
 
+	@Override
+	public List<Req> reqSendList(String userId, Boolean flag) {
+		return dao.reqSendList(session,userId,flag);
+	}
+
 	
 	
 	

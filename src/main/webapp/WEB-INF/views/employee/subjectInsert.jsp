@@ -132,8 +132,8 @@
                           <label class="col-sm-3 col-form-label">이수 학점</label>
                           <div class="col-sm-9">
                             <select class="form-control" id="comPt" name="completePt">
-                            	<option value="1">2학점</option>
-                            	<option value="2">3학점</option>
+                            	<option value="2">2학점</option>
+                            	<option value="3">3학점</option>
                             </select>
                           </div>
                         </div>
@@ -382,10 +382,10 @@
 			var cp=$("#comPt").val();
 			var intrt=parseInt(rt);
 			
-			if(cp==2){
+			if(cp==3){
 				$("#subTime").val(rt+","+(intrt+1)+":00,"+(intrt+2)+":00");
 			}
-			else if(cp==1){
+			else if(cp==2){
 				$("#subTime").val(rt+","+(intrt+1)+":00");
 			}
 			
@@ -429,7 +429,7 @@
 				var comPt=$("#comPt").val();
 				var roomTime=$("#roomTime").val();
 
-				var intcom=parseInt(comPt);
+				var intcom=parseInt(comPt-1);
 				var introomt=parseInt(roomTime);
 				
 				$("#endTime").val(intcom+introomt+":50");
@@ -541,7 +541,7 @@
         				for(let i = 0; i < re.length; i++) {
         					var dataDept=re[i];
 	        				subNameArr+="<option value='"+dataDept['SUB_NAME']+"'  class='subName'>"+dataDept['SUB_NAME']+"</option>";
-	        				subCodeArr="<input type='hidden' name='subCode' value='"+dataDept["SUB_CODE"]+"'>";
+	        				subCodeArr="<input type='hidden' name='subCode' id='subCode' value=''>";
         				}
         				$('#subName').html(subNameArr);
     						$('#subName').change(function(){
@@ -634,6 +634,7 @@
 	        		success:function(data){
 	        			var re=JSON.parse(data);
 	        			$("#targetSubject").val(re["targetSubject"]);
+	        			$("#subCode").val(re["subCode"]);
 	        		}
 	        	});
 	        });

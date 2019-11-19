@@ -37,6 +37,19 @@ public class ReqDaoImpl implements ReqDao {
 		return session.update("req.answerUpdate", reqNo);
 	}
 
+	@Override
+	public List<Req> reqSendList(SqlSessionTemplate session, String userId,Boolean flag) {
+		List<Req> list=null;
+		if(flag==true) {
+			 list=session.selectList("req.reqSendList",userId);
+		}else {
+			 list=session.selectList("req.reqAnswerList",userId);	
+		}
+		return list;
+	}
+	
+	
+
 	
 	
 	
