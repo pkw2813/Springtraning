@@ -154,10 +154,37 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int deptEmpCount(Map map) {
 		return dao.deptEmpCount(session, map);
 	}
+
+	@Override
+	public List<Student> searchStuList(int cPage, int numPerPage, String search) {
+		return dao.searchStuList(session, cPage, numPerPage, search);
+	}
+
+	@Override
+	public int searchstuCount(String search) {
+		return dao.searchstuCount(session, search);
+	}
+
+	@Override
+	public List<Professor> searchProfList(int cPage, int numPerPage, String search) {
+		return dao.searchProfList(session, cPage, numPerPage, search);
+	}
+	@Override
+	public int searchProfCount(String search) {
+		return dao.searchProfCount(session, search);
+	}
+
+	@Override
+	public List<Employee> searchEmpList(int cPage, int numPerPage, String search) {
+		return dao.searchEmpList(session, cPage, numPerPage, search);
+	}
+
+	@Override
+	public int searchEmpCount(String search) {
+		return dao.searchEmpCount(session, search);
+	}
 	
-	
-	
-	
+		
 	
 	
 	

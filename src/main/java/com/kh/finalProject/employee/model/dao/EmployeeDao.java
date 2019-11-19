@@ -64,5 +64,17 @@ public interface EmployeeDao {
 	
 	int deptEmpCount(SqlSessionTemplate saession, Map map);
 	
+
+	List<Student >searchStuList(SqlSessionTemplate session, int cPage, int numPerPage, String search);
+	
+	int searchstuCount(SqlSessionTemplate session, String search);
+	
+	List<Professor> searchProfList(SqlSessionTemplate session, int cPage, int numPerPage, String search);
+	
+	int searchProfCount(SqlSessionTemplate session, String search);
+	
+	List<Employee> searchEmpList(SqlSessionTemplate session, int cPage, int numPerPage, String search);
+	
+	int searchEmpCount(SqlSessionTemplate session, String search);
 	
 }

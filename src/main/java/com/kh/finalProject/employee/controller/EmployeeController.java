@@ -46,13 +46,13 @@ public class EmployeeController {
 	@Autowired
 	BeforeStuService bService;
 
-	static Map<Object, Integer> count = new HashMap();
+	static Map<Object, Integer> count = new HashMap<Object, Integer>();
 
 	@RequestMapping("/enrollStudent.hd")
 	public ModelAndView enrollStudent() {
 		ModelAndView mv = new ModelAndView();
 
-		List list = service.enrollStuList();
+		List<?> list = service.enrollStuList();
 		mv.setViewName("admin/enrollStudent");
 		mv.addObject("list", list);
 		return mv;
@@ -183,31 +183,31 @@ public class EmployeeController {
 
 	@RequestMapping("/col/changeColList.hd")
 	@ResponseBody
-	public Map changeColList(@RequestParam(value = "index", required = false, defaultValue = "0") int index,
+	public Map<String, Object> changeColList(@RequestParam(value = "index", required = false, defaultValue = "0") int index,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession s) {
 		Employee e = (Employee) s.getAttribute("loginMember");
 		int numPerPage = 5;
 		String result = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode().substring(0, 1);
 		if (index == 0) {
-			List<Student> list = service.selectStuList(cPage, numPerPage, result);
+			List<?> list = service.selectStuList(cPage, numPerPage, result);
 			int totalData = service.stuCount(result);
-			Map map = new HashMap();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", list);
 			map.put("pageBar", PageFactory.getAjaxPageBar(index, totalData, cPage, numPerPage,
 					"/finalProject/col/changeColList.hd"));
 			return map;
 		} else if (index == 1) {
-			List<Professor> list = service.selectProfList(cPage, numPerPage, result);
+			List<?> list = service.selectProfList(cPage, numPerPage, result);
 			int totalData = service.profCount(result);
-			Map map = new HashMap();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", list);
 			map.put("pageBar", PageFactory.getAjaxPageBar(index, totalData, cPage, numPerPage,
 					"/finalProject/col/changeColList.hd"));
 			return map;
 		} else {
-			List<Employee> list = service.selectEmpList(cPage, numPerPage, result);
+			List<?> list = service.selectEmpList(cPage, numPerPage, result);
 			int totalData = service.empListCount(result);
-			Map map = new HashMap();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", list);
 			map.put("pageBar", PageFactory.getAjaxPageBar(index, totalData, cPage, numPerPage,
 					"/finalProject/col/changeColList.hd"));
@@ -215,7 +215,37 @@ public class EmployeeController {
 		}
 	}
 
-	
+	@RequestMapping("/col/searchColList.hd")
+	@ResponseBody
+	public Map<String, Object> searchColList(@RequestParam(value = "index", required = false, defaultValue = "0") int index,
+			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, String search, HttpSession s) {
+		int numPerPage = 5;
+		if (index == 0) {
+			List<Student> list = service.searchStuList(cPage, numPerPage, search);
+			int totalData = service.searchstuCount(search);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("pageBar", PageFactory.getSearchNavPageBar(index, totalData, cPage, numPerPage,
+					"/finalProject/col/searchColList.hd"));
+			return map;
+		} else if (index == 1) {
+			List<Professor> list = service.searchProfList(cPage, numPerPage, search);
+			int totalData = service.searchProfCount(search);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("pageBar", PageFactory.getSearchNavPageBar(index, totalData, cPage, numPerPage,
+					"/finalProject/col/searchColList.hd"));
+			return map;
+		} else {
+			List<Employee> list = service.searchEmpList(cPage, numPerPage, search);
+			int totalData = service.searchEmpCount(search);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("pageBar", PageFactory.getSearchNavPageBar(index, totalData, cPage, numPerPage,
+					"/finalProject/col/searchColList.hd"));
+			return map;
+		}
+	}
 	
 	@RequestMapping("/deptStu")
 	public ModelAndView deptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, 
@@ -224,7 +254,7 @@ public class EmployeeController {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 5;
 		Employee e = (Employee)session.getAttribute("loginMember");
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode().substring(0, 1);
 		String s = search.equals("")?null:search;
 		map.put("deptCode", deptCode);
@@ -243,12 +273,12 @@ public class EmployeeController {
 	
 	@RequestMapping("/ajax/deptStu")
 	@ResponseBody
-	public Map ajaxDeptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+	public Map<String, Object> ajaxDeptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
 									@RequestParam(value="search", required = false, defaultValue = "") String search,
 										HttpSession session) {
 	int numPerPage = 5;
 	Employee e = (Employee)session.getAttribute("loginMember");
-	Map map = new HashMap();
+	Map<String, Object> map = new HashMap<String, Object>();
 	String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode();
 	String s = search.equals("")?null:search;
 	map.put("deptCode", deptCode);
@@ -280,12 +310,12 @@ public class EmployeeController {
 	
 	@RequestMapping("/ajax/deptProf")
 	@ResponseBody
-	public Map ajaxDeptProf(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+	public Map<String, Object> ajaxDeptProf(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
 							@RequestParam(value="search", required = false, defaultValue = "") String search,
 								HttpSession session) {
 				int numPerPage = 5;
 				Employee e = (Employee)session.getAttribute("loginMember");
-				Map map = new HashMap();
+				Map<String, Object> map = new HashMap<String, Object>();
 				String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode();
 				String s = search.equals("")?null:search;
 				map.put("deptCode", deptCode);
@@ -309,7 +339,7 @@ public class EmployeeController {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 5;
 		Employee e = (Employee)session.getAttribute("loginMember");
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode().substring(0, 1);
 		String s = search.equals("")?null:search;
 		map.put("deptCode", deptCode);
@@ -328,12 +358,12 @@ public class EmployeeController {
 	
 	@RequestMapping("/ajax/deptEmp")
 	@ResponseBody
-	public Map ajaxDeptEmp(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+	public Map<String, Object> ajaxDeptEmp(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
 									@RequestParam(value="search", required = false, defaultValue = "") String search,
 										HttpSession session) {
 	int numPerPage = 5;
 	Employee e = (Employee)session.getAttribute("loginMember");
-	Map map = new HashMap();
+	Map<String, Object> map = new HashMap<String, Object>();
 	String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode();
 	String s = search.equals("")?null:search;
 	map.put("deptCode", deptCode);
@@ -352,10 +382,10 @@ public class EmployeeController {
 	
 	
 	// 학과 코드랑
-	public Map settingStudentNumber(String deptCode) {
+	public Map<Object, Integer> settingStudentNumber(String deptCode) {
 		int deptCount = service.selectDeptCount(deptCode);
 		List<Map> colList = bService.selectColList();
-		for (Map col : colList) {
+		for (Map<?, ?> col : colList) {
 			List<Map> deptList = bService.selectDeptList((String) col.get("COL_CODE"));
 			for (int i = 0; i < deptList.size(); i++) {
 				if (count.containsKey(deptList.get(i).get("DEPT_CODE"))) {
@@ -385,7 +415,7 @@ public class EmployeeController {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String sysdate = sdf.format(date);
-		Map sMap = settingStudentNumber(bs.getBeforeDeptCode());
+		Map<Object, Integer> sMap = settingStudentNumber(bs.getBeforeDeptCode());
 		int stuNum = (int) sMap.get(bs.getBeforeDeptCode());
 		String stuNo = "S" + sysdate.substring(0, 4) + bs.getBeforeDeptCode() + String.format("%03d", stuNum);
 		s.setStuNo(stuNo);

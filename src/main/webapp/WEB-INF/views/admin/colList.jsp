@@ -31,7 +31,7 @@
                           <div class="input-group as">
                             <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
                               <span class="input-group-text" id="search">
-                              <i class="ti-search"></i>
+                              <i class="ti-search" onclick=""><input type="button" id="searchBtn" onclick="getSearchData();"></i>
                               </span>
                             </div>
                             <input type="text" class="form-control" id="searchStu" placeholder="Search now" aria-label="search" aria-describedby="search">
@@ -76,7 +76,7 @@
                })
                
 	             $(".nav-tabs>li").on("click",function(){ 
-	            	 ajaxData($(this).index());
+	             ajaxData($(this).index());  
 	             });
 
      function ajaxData(index,cPage){
@@ -95,13 +95,66 @@
 	          				 arr+="<td>" + data['list'][i].ADDRESS +"</td></tr>";
 	          			 }
                      arr+="<input type='hidden' id='eveIndex' value='"+index+"'/>";
+                     $('#searchStu').val("");
                          $("#tbody").html(arr);
 	          			 $("#pageConainer").html(data['pageBar']);
 
 	          		 }
 	          	 	});
-               }
+               };
+              //  keyup 쓰면 데이터의 숫자가 많은 ajax 데이터가 나중에 조회되어서 이상해짐
+    //  $('#searchStu').on('keyup', function(){
+	  //           console.log($('#eveIndex').val());
+    //           getSearchData($('#eveIndex').val());
+	  //            });
+       function getSearchData() {
+          let search = $('#searchStu').val().toUpperCase();
+          let index = $('#eveIndex').val();
+          $.ajax({
+            type:'post',
+            url:"${path}/col/searchColList.hd",
+            data:{'search':search, "index": index},
+            success: function(data){
+              let profList = "";
+              for(let i = 0; i < data['list'].length; i++) {
 
+              profList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
+              profList += "<td>"+data['list'][i].PHONE+"</td><td>"+data['list'][i].EMAIL+"</td><td>"+data['list'][i].ADDRESS+"</td>";
+              profList += "<td><input type='button' class='btn btn-outline-success btn-fw' onclick='detailProf("+data['list'][i].PROF_ID+");' value='상세 정보'/></td>";				
+              profList += "</tr>";
+              }
+              profList+="<input type='hidden' id='eveIndex' value='"+index+"'/>";
+
+              $('#tbody').html(profList);
+              $('#pageConainer').html(data['pageBar']);
+             }
+          })
+        };
+       
+
+          function getSearchListA(index, pageNo) {
+          let search = $('#searchStu').val().toUpperCase();
+          $.ajax({
+              type:'post',
+              url:"${path}/col/searchColList.hd",
+              data:{'search':search,'index':index,
+                  'cPage':pageNo},
+              success: function(data){
+                let profList = "";
+                for(let i = 0; i < data['list'].length; i++) {
+
+                profList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
+                profList += "<td>"+data['list'][i].PHONE+"</td><td>"+data['list'][i].EMAIL+"</td><td>"+data['list'][i].ADDRESS+"</td>";
+                profList += "<td><input type='button' class='btn btn-outline-success btn-fw' onclick='detailProf("+data['list'][i].PROF_ID+");' value='상세 정보'/></td>";				
+                profList += '</tr>';
+                }
+                profList+="<input type='hidden' id='eveIndex' value='"+index+"'/>";
+
+                $('#tbody').html(profList);
+                $('#pageConainer').html(data['pageBar']);
+              }
+            })
+        }
 
 </script>
 

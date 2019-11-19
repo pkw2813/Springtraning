@@ -60,4 +60,17 @@ public interface EmployeeService {
 	
 	int deptEmpCount(Map map);
 	
+	List<Student >searchStuList(int cPage, int numPerPage, String search);
+	
+	int searchstuCount(String search);
+	
+	List<Professor> searchProfList(int cPage, int numPerPage, String search);
+	
+	int searchProfCount(String search);
+	
+	List<Employee> searchEmpList(int cPage, int numPerPage, String search);
+	
+	int searchEmpCount(String search);
+	
+	
 	}

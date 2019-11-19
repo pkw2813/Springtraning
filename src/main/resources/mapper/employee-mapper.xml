@@ -64,8 +64,42 @@
 		</if>
 	</select>
 	
+	<select id="searchStuList" parameterType="string" resultType="map">
+		SELECT STU_NO AS PROF_ID, STU_NAME AS PROF_NAME, DEPT_NAME, STU_TEL AS PHONE, STU_EMAIL AS EMAIL, STU_ADDR AS ADDRESS FROM HD_STUDENT_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE)
+ 		WHERE STU_NO LIKE '%${value}%' OR STU_NAME LIKE '%${value}%'
+		 ORDER BY ENTER_DATE DESC, DEPT_CODE
+	</select>
 	
-	
+	<select id="searchstuCount" parameterType="string"  resultType="_int">
+	SELECT COUNT(*) FROM HD_STUDENT_TB
+  		WHERE STU_NO LIKE '%${value}%' OR STU_NAME LIKE '%${value}%'   <!-- '%'||#searchKeyword#||'%' --> 
+	</select>
+
+	<select id="searchProfList" parameterType="string" resultType="map">
+	SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE)
+		WHERE SUBSTR(PROF_ID,1,1) = 'P'
+		AND PROF_ID LIKE '%${value}%' OR PROF_NAME LIKE '%${value}%'
+		 ORDER BY PROF_ENROLL DESC, DEPT_CODE
+	</select>
+
+	<select id="searchProfCount" parameterType="string"  resultType="_int">
+	SELECT COUNT(*) FROM HD_PROFESSOR_TB
+  		WHERE SUBSTR(PROF_ID,1,1) = 'P'
+		AND PROF_ID LIKE '%${value}%' OR PROF_NAME LIKE '%${value}%'  
+	</select>
+
+	<select id="searchEmpList" parameterType="string" resultType="map">
+		SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE)
+		WHERE SUBSTR(PROF_ID,1,1) = 'E'
+		AND PROF_ID LIKE '%${value}%' OR PROF_NAME LIKE '%${value}%'
+		 ORDER BY PROF_ENROLL DESC, DEPT_CODE
+	</select>
+
+	<select id="searchEmpCount" parameterType="string" resultType="_int">
+	SELECT COUNT(*) FROM HD_PROFESSOR_TB
+  		WHERE SUBSTR(PROF_ID,1,1) = 'E'
+		AND PROF_ID LIKE '%${value}%' OR PROF_NAME LIKE '%${value}%'  
+	</select>
 	
 	<resultMap id="employeeResult" type="employee">
 		<result column="PROF_ID" property="empId" />

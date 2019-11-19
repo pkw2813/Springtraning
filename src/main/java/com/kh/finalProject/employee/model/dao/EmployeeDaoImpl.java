@@ -153,6 +153,40 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int deptEmpCount(SqlSessionTemplate session, Map map) {
 		return session.selectOne("employee.deptEmpCount", map);
 	}
+
+	@Override
+	public List<Student> searchStuList(SqlSessionTemplate session, int cPage, int numPerPage, String search) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("employee.searchStuList",search, row);
+	}
+
+	@Override
+	public int searchstuCount(SqlSessionTemplate session, String search) {
+		return session.selectOne("employee.searchstuCount", search);
+	}
+
+	@Override
+	public List<Professor> searchProfList(SqlSessionTemplate session, int cPage, int numPerPage, String search) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("employee.searchProfList",search, row);
+	}
+
+	@Override
+	public int searchProfCount(SqlSessionTemplate session, String search) {
+		return session.selectOne("employee.searchstuCount", search);
+	}
+
+	@Override
+	public List<Employee> searchEmpList(SqlSessionTemplate session, int cPage, int numPerPage, String search) {
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("employee.searchEmpList",search, row);
+	}
+
+	@Override
+	public int searchEmpCount(SqlSessionTemplate session, String search) {
+		return session.selectOne("employee.searchstuCount", search);
+	}
+	
 	
 	
 	

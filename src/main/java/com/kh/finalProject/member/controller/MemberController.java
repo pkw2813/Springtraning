@@ -62,9 +62,6 @@ public class MemberController {
 		String msg="";
 		String loc="";
 
-				// 로그인 matches 양식
-		//String su = "911010";
-		//System.out.println("매치 :" + s.getStuPw().matches(su));
 		if(loginNo.equals("s")) {
 			Student stu=stuService.selectOne(loginId);
 //			if(bEnc.matches(loginPwd, stu.getStuPw())){
@@ -218,7 +215,11 @@ public class MemberController {
 		int result=0;
 		
 		if(stuPw.equals(stuPwCk)) {
+			// 암호화 더미 다들어가면 주석 품고 지워주세요
 			result=stuService.stuPwChange(stuPw,stuNo);
+//			String password = bEnc.encode(stuPw);
+//			result=stuService.stuPwChange(password,stuNo);
+
 			msg="변경된 비밀번호로 로그인해주시기 바랍니다.";
 		}else {
 			msg="변경할 비밀번호가 일치하지 않습니다. 다시확인해주세요";
