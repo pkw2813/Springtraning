@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kh.finalProject.common.encrypt.Sha256Encrypto;
 import com.kh.finalProject.email.controller.MailController;
 import com.kh.finalProject.employee.model.service.EmployeeService;
 import com.kh.finalProject.employee.model.vo.Employee;
@@ -36,8 +35,6 @@ public class MemberController {
 	private ProfessorService proService;
 	@Autowired
 	private MailController mc;
-	@Autowired
-	Sha256Encrypto encSha;
 	
 	
 	@RequestMapping("/main.hd")
@@ -67,7 +64,6 @@ public class MemberController {
 		//System.out.println("매치 :" + s.getStuPw().matches(su));
 		if(loginNo.equals("s")) {
 			Student stu=stuService.selectOne(loginId);
-			System.out.println("매치 : " + stu.getStuPw().matches(encSha.encrypt(loginPwd)));
 			session.setAttribute("loginMember", stu);
 		}else if(loginNo.equals("p")){
 			Professor pro=proService.selectOne(loginId);
