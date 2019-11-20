@@ -104,11 +104,7 @@
 	          		 }
 	          	 	});
                };
-              //  keyup 쓰면 데이터의 숫자가 많은 ajax 데이터가 나중에 조회되어서 이상해짐
-    //  $('#searchStu').on('keyup', function(){
-	  //           console.log($('#eveIndex').val());
-    //           getSearchData($('#eveIndex').val());
-	  //            });
+  
        function getSearchData() {
           let search = $('#searchStu').val().toUpperCase();
           let index = $('#eveIndex').val();
