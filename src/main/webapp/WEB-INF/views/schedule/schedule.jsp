@@ -148,7 +148,7 @@
             type: 'post',
             //인포 찾기
             data: {"start": moment(new Date(calendar.state.dateProfile.activeRange.start)).format('YYYY-01-01'),
-                   "end": moment(new Date(calendar.state.dateProfile.activeRange.end)).add(1,'year').format('YYYY-03-01')},
+                   "end": moment(new Date(calendar.state.dateProfile.activeRange.end)).add(1,'year').format('YYYY-03-25')},
             success: function(data) {
               if(data != null) {
                   $.each(data, function(key, items) {
