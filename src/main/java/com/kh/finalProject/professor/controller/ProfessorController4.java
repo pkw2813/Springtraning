@@ -90,6 +90,9 @@ public class ProfessorController4 { // 황준순 전용
 		}
 		System.out.println("subSeq:"+subSeq);
 		System.out.println("ifps.getSubSeq():"+ifps.getSubSeq());
+		if(ifps.getSubSeq()==null) {
+			ifps.setSubSeq("0");
+		}
 		int numPerPage=5;
 		List<AssignmentRegister> arList=service.selectAsgmtBoardList(cPage, numPerPage, ifps);
 		int totalData=service.selectAsgmtBoardCount(ifps);
