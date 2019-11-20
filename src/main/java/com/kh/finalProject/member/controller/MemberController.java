@@ -231,8 +231,6 @@ public class MemberController {
 		int result=0;
 		
 		if(stuPw.equals(stuPwCk)) {
-			// 암호화 더미 다들어가면 주석 품고 지워주세요
-//			result=stuService.stuPwChange(stuPw,stuNo);
 			result=stuService.stuPwChange(bEnc.encode(stuPw),stuNo);
 
 			msg="변경된 비밀번호로 로그인해주시기 바랍니다.";
