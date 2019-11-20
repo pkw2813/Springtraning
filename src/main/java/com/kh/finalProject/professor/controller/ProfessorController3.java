@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,8 @@ public class ProfessorController3 {
 
 	@Autowired
 	ProfessorService3 service;
-
+	@Autowired
+	private BCryptPasswordEncoder pwEncoder;
 	
 	
 	@RequestMapping("/prof/editClassPoint.hd")	
@@ -90,7 +92,7 @@ public class ProfessorController3 {
 	public String stuInsertScore(HttpSession session, Model m,HttpServletRequest req) {	
 		Map<String,Object> param=new HashMap();	
 		String value=req.getParameter("value");
-		System.out.println(value);
+	
 		String[] value1=value.split(",");
 		String stuId=value1[0];
 		String subSeq=value1[1];
@@ -124,10 +126,10 @@ public class ProfessorController3 {
 		 m.addAttribute("totalGradeNull",totalGradeNull);
 		 m.addAttribute("gradeNow",gradeNow);
 		 m.addAttribute("howManyStudent",howManyStudent);
-		 System.out.println("asdasd"+gradeNow);
-		 System.out.println("asdasds"+howManyStudent);
+		
+	
 		 m.addAttribute("result",result);
-		 System.out.println(result);
+	
 		
 		
 		return "professor/stuInsertScore";
@@ -171,23 +173,24 @@ public class ProfessorController3 {
 			Professor p=(Professor)session.getAttribute("loginMember");
 			String pwNow=req.getParameter("pwNow");
 			String profId=p.getProfId();
-			
-			System.out.println("pwNow:"+pwNow);
-			
-			Map<String, Object> profPw=service.checkInPw(profId);
-			
-			String profPw1=(String)profPw.get("PROF_PW");
 			String flag ="";
 			
-			System.out.println("pwNow:"+profPw1);
+			Map<String, Object> profPw=service.checkInPw(profId);
+		
+			String profPw1=(String)profPw.get("PROF_PW");
+	
+			String pwck="false";
 			
-			if(pwNow.equals(profPw1)) {
-				flag="true";
-			}
-			else {
+			if(pwEncoder.matches(pwNow,profPw1)) {
 				
-				flag= "false";
+				flag="true";
+				
+			}else {	flag= "false";
+			
 			}
+			
+			
+		
 			
 			
 			

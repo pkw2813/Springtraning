@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,19 +20,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.finalProject.common.encrypt.MyEncrypt;
+import com.kh.finalProject.common.encrypt.RSAEncrypto;
 import com.kh.finalProject.student.model.service.StudentService1;
 import com.kh.finalProject.student.model.vo.Student;	
 
 @Controller	
 public class StudentController1 {	
 	@Autowired	
-	private StudentService1 service;	
+	private StudentService1 service;
+	@Autowired
+	private MyEncrypt enc;
+	@Autowired
+	private BCryptPasswordEncoder pwEncoder;
 
 	@RequestMapping("/student/studentInfo.hd")	
 	public String selectStudent(HttpSession session, Model m) {	
 		Student s=(Student)session.getAttribute("loginMember");	
-		String studentNo = s.getStuNo();	
-		Student result = service.selectStudent(studentNo);	
+		String studentNo = s.getStuNo();
+		///////////////////////////////////////////////////////////////////
+		Student result = service.selectStudent(studentNo);
+		
+	
+		
+		try {
+			String str = enc.decrypt(result.getStuSsn());
+			result.setStuSsn(str);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	
 		String addr=result.getStuAddr();	
 		String[] addrArr=addr.split("PSTC");
 		
@@ -56,8 +77,16 @@ public class StudentController1 {
 	public String studentInfoUpdate(HttpSession session,Model m) {	
 		Student s=(Student)session.getAttribute("loginMember");	
 		String studentNo = s.getStuNo();	
-		Student result = service.selectStudent(studentNo);	
+		Student result = service.selectStudent(studentNo);
 		
+		try {
+			String str = enc.decrypt(result.getStuSsn());
+			result.setStuSsn(str);
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+	
 		m.addAttribute("student", result);	
 		return "student/studentInfoUpdate";	
 	}	
@@ -80,6 +109,8 @@ public class StudentController1 {
 
 		int result=0;	
 
+		
+		
 		if(stuFile.equals("false")) {	
 			s.setStuImgRename("false");	
 		}	
@@ -89,6 +120,7 @@ public class StudentController1 {
 		s.setStuAddr(stuAddr);	
 		s.setStuAccount(stuAccount);	
 		s.setStuImgRename(stuFile);	
+
 		
 		String saveDir = req.getSession().getServletContext().getRealPath("/resources/images/image");	
 		File dir = new File(saveDir);	
@@ -145,11 +177,15 @@ public class StudentController1 {
 		ModelAndView mv=new ModelAndView();
 		Student loginMember=(Student)session.getAttribute("loginMember");
 		String stuId=loginMember.getStuNo();
-		String stuPw=service.selectNowPw(stuId);
-		String changePwck=req.getParameter("pwNow");
+		
+		String stuPwDB=service.selectNowPw(stuId); // DB에 저장된 암호
+
+		String insertPw=req.getParameter("pwNow"); // view에서 입력받은 암호
+	
 		
 		String pwck="false";
-		if(stuPw.equals(changePwck)) {
+		
+		if(pwEncoder.matches(insertPw, stuPwDB)) {
 			pwck="true";
 		}else {pwck="false";
 		}
@@ -157,7 +193,7 @@ public class StudentController1 {
 		mv.addObject("pwck",pwck);
 		mv.setViewName("jsonView");
 		
-	
+
 		return mv;
 	}
 	
@@ -166,11 +202,14 @@ public class StudentController1 {
 		Map<String,String> userInfo = new HashMap();
 		Student loginMember=(Student)session.getAttribute("loginMember");
 		String stuId=loginMember.getStuNo();
-		String stuPw=req.getParameter("pwfinal");
-		System.out.println("id:"+stuId);
-		System.out.println("pw:"+stuPw);
+		String insertPw=req.getParameter("pwfinal");
+		
+
+		String insertPwEnc = pwEncoder.encode(insertPw); 
+		
+		
 		userInfo.put("stuId", stuId);
-		userInfo.put("stuPw", stuPw);
+		userInfo.put("stuPw", insertPwEnc);
 		int result=service.updatePw(userInfo);
 		
 		return "/student/studentInfoUpdate";
