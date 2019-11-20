@@ -3,6 +3,8 @@ package com.kh.finalProject.school.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +29,7 @@ public class SchoolController {
 	 
 	
 	@RequestMapping("/school.hd")
-	public String school(Model model, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
+	public String school(Model model, HttpServletRequest req, @RequestParam(value="cPage",required=false,defaultValue="1")int cPage) {
 		int numPerPage=4;
 
 		int colCount=service.colCount();
@@ -35,7 +37,7 @@ public class SchoolController {
 		List<Map> deptList=service.deptList(cPage,numPerPage);
 		int totalData=service.deptCount();
 		
-		model.addAttribute("pageBar",PageFactory.getPageBar(totalData,cPage,numPerPage,"/finalProject/school.hd"));
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData,cPage,numPerPage,req.getContextPath()+"/school.hd"));
 		
 		model.addAttribute("colCount",colCount);
 		model.addAttribute("deptCount",totalData);

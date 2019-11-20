@@ -63,7 +63,7 @@
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <a class="navbar-toggler navbar-toggler align-self-center" data-toggle="minimize">
           <!-- <span class="ti-view-list"></span> -->
-          <i class="ti-menu-alt" style="font-size:25px; margin-left:-55px; color:#185c9c"></i>
+          <i class="ti-menu-alt" style="font-size:25px; margin-left:-35px; color:#185c9c"></i>
         </a>
         <!-- 헤더 검색창
         <ul class="navbar-nav mr-lg-2">
@@ -442,7 +442,7 @@
         <%} %>
       </nav>
       
-      <div id="reqModal" class="modal">
+      <div id="reqModal" class="modal" style="z-index:9999">
  
       <!-- Modal content -->
       <div class="modal-content">

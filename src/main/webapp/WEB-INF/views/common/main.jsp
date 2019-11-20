@@ -57,10 +57,10 @@
 
 
           locale: 'ko',
-          selectable: true,  //사용자가 클릭 및 드래그하여 선택을 할 수 있도록
-          selectHelper: true,//사용자가 드래그되는 동안 "자리"이벤트를 그릴 것인지 여부를 지정할 수 있습니다.
+         // selectable: true,  //사용자가 클릭 및 드래그하여 선택을 할 수 있도록
+         // selectHelper: true,//사용자가 드래그되는 동안 "자리"이벤트를 그릴 것인지 여부를 지정할 수 있습니다.
           // 선택했을때 함수
-          select: function(data) {            
+          /* select: function(data) {            
            let end = moment(new Date(moment(data.endStr, "YYYY-MM-DD").subtract(1, 'days').toDate())).format('YYYY-MM-DD');
            $(".modalCal").modal("show");
            $(".modal-backdrop").css("display","block");
@@ -76,8 +76,8 @@
               .val(end);
             $("#save-event").show();
             $("input").prop("readonly", false);
-          },
-           eventClick:function(event) {
+          }, */
+           /* eventClick:function(event) {
                 if(confirm("일정을 삭제 하시겠습니까?")) {
                   // 삭제하는 로직 작성
                   $.ajax({
@@ -94,7 +94,7 @@
 
                   });
                 }
-            }
+            } */
      	
     });//calendar종료
  $(function(){
@@ -128,7 +128,7 @@
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
-              alert("Error when fetching events: " + textStatus + " - " + errorThrown);
+            /*   alert("Error when fetching events: " + textStatus + " - " + errorThrown); */
             }
         });
    
@@ -136,7 +136,7 @@
         });  
     
         // 모달창 close 하는 함수
-        $(function(){
+       /*  $(function(){
           $(".btn-default").click(function(){
             $(".modal-content").css("display","none");
             $(".modal-backdrop").css("display","none");
@@ -150,7 +150,7 @@
             $(".modal-backdrop").css("display","none");
 
           });
-        });
+        }); */
         
 
         function insertPlan() {
@@ -209,17 +209,17 @@
 }
 
 
-input {
+/* input {
   width: 50%;
-}
+} */
 
 input[type="text"][readonly] {
   border: 2px solid rgba(0, 0, 0, 0);
 }
 
-/*info btn*/
+/*info btn*//* 
 .dropbtn {
-  /*background-color: #4CAF50;*/
+  background-color: #4CAF50;
   background-color: #eee;
   margin: 10px;
   padding: 8px 16px 8px 16px;
@@ -266,8 +266,8 @@ input[type="text"][readonly] {
 
 .dropdown:hover .dropbtn span {
   color: white;
-}
-
+} */
+/* 
 .modal-content {
   display: none;
   position: absolute !important;
@@ -281,7 +281,7 @@ input[type="text"][readonly] {
   display: inline-block !important;
   width: 250px !important;
   /* float: left; */
-}
+} */
 
 .col-xs-4 {
   margin-left: 25px;
@@ -316,10 +316,36 @@ input[type="text"][readonly] {
 
 		<div class="main-panel">
       <div class="content-wrapper">
+      <!-- <div class="row">
+              		<div class="col-lg-4 grid-margin stretch-card">
+				 <div class="card card-body">
+				        	<button type="button" class="btn btn-outline-danger btn-icon-text" style="font-size:15px">
+                          <i class="ti-tag btn-icon-prepend" style="font-size:15px"></i>                                                    
+                          취업률 1위
+                        </button>
+                    </div>
+                 </div>   
+                    <div class="col-lg-4 grid-margin stretch-card">
+                 <div class="card card-body">
+                        <button type="button" class="btn btn-outline-primary btn-icon-text"  style="font-size:15px">
+                          대학평가 1위
+                          <i class="ti-medall-alt btn-icon-append"  style="font-size:15px"></i>                                                                              
+                        </button>
+                        </div>
+                 </div>   
+                    <div class="col-lg-4 grid-margin stretch-card">
+                 <div class="card card-body">
+                        <button type="button" class="btn btn-outline-success btn-icon-text" style="font-size:15px">
+                          교수평가 1위
+                          <i class="ti-medall btn-icon-append" style="font-size:15px"></i>                                                                              
+                        </button>
+			        </div>
+				</div>
+	</div> -->
       <div class="row">
         <div class="col-lg-6 grid-margin stretch-card">
         <div class='card card-body'>
-          <h4 class="card-title">KH 대학교</h4>
+          <h4 class="card-title">KH University</h4>
                   <p class="card-description">
                     일정 안내 <code>-</code>
                   </p>
@@ -365,7 +391,7 @@ input[type="text"][readonly] {
 			
 				<div class="col-lg-6 grid-margin stretch-card">
 				<div class='card card-body'>
-                  <h4 class="card-title">KH 대학교</h4>
+                  <h4 class="card-title">KH University</h4>
                   <p class="card-description">
                     공지 게시판 <code>-</code>
                   </p>

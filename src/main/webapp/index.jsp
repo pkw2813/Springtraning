@@ -370,7 +370,7 @@ $(function(){
 			  var stuRandom="";
 			  var stuRandomBtn="";
 			  stuRandom+="<input type='text' class='form-control' value='' id='stuRandomCheck' placeholder='인증번호를 입력해주세요.'/>";
-			  stuRandomBtn+="<button id='stuRandomCheckBtn' class='btn btn-info btn-sm pull-right'>인증번호 확인</button>";
+			  stuRandomBtn+="<button id='stuRandomCheckBtn' type='button' class='btn btn-info btn-sm pull-right'>인증번호 확인</button>";
 			  var stuRanP="<p style='color:red;'>인증번호를 타인에게 노출하지마세요</p>";
 		  $(".pwUpDiv").html(stuRandom);
           $("#pwDiv").html(stuRandomBtn);
@@ -390,7 +390,7 @@ $(function(){
 			   	   		   if(data==true){
 			   	   			ranCheckArr+="<br><input type='password' class='form-control' value='' id='changeStuPw' placeholder='변경할 비밀번호 입력'/><br>";
 			   	   			ranCheckArr+="<input type='password' class='form-control' value='' id='changeStuPwCk' placeholder='비밀번호 재입력'/>";
-			   	   			ranCheckBtnArr="<button id='stuPwSuccess' class='btn btn-info btn-sm pull-right'>변경 완료</button>";
+			   	   			ranCheckBtnArr="<button id='stuPwSuccess' type='button' class='btn btn-info btn-sm pull-right'>변경 완료</button>";
 				   	   		$(".pwUpDiv").html(ranCheckArr);
 				            $("#pwDiv").html(ranCheckBtnArr);
 				            $("#pwP").html("");
