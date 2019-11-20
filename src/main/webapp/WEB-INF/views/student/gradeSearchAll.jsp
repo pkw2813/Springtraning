@@ -12,7 +12,8 @@
 <style>
 .form-control {
 	width: 150px;
-	height: 52.4px;
+	height: 32px;
+	margin-top: 8px;
 }
 
 th, td, .my-header {
@@ -56,9 +57,7 @@ pre {
 					<script>
 					$(function(){
 						$('#selectGradeMenu').change(function() {
-								alert("뭐든");
 								var value = $(this).val();
-								console.log(value);
 								$.ajax({
 									url : "${path}/student/gradeSearchAll1.hd",
 									data : {"GradeMenu" : value},

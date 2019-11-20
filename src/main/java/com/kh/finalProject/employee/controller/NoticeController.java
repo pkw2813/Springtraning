@@ -1,5 +1,8 @@
 package com.kh.finalProject.employee.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.employee.model.service.NoticeService;
 import com.kh.finalProject.employee.model.vo.NoticeVo;
@@ -32,7 +37,6 @@ public class NoticeController {
 	        	n.setRegDate(n.getRegDate().substring(0, 10));
 	        }
 	        int totalData = service.countNoticeList();
-	        model.addAttribute("list", list);
 			model.addAttribute("list", list);
 			model.addAttribute("totalCount", totalData);
 			model.addAttribute("pageBar",
@@ -42,20 +46,62 @@ public class NoticeController {
 	    }
 	    
 	    
-	    //공지사항 작성 틀
-	    @RequestMapping(value="/notice/writeForm.hd")
+	    //공지사항 작성 창 전환용
+	    @RequestMapping(value="/notice/noticeForm.hd")
 	    public String writeNoticeForm() throws Exception{
-	        
-	        return "notice/writeForm";
+	    	return "employee/noticeForm";
 	    }
 	    
 	    //공지등록
-	    @RequestMapping(value="/notice/write.hd")
-	    public String write(@ModelAttribute("noticeVo") NoticeVo noticeVo, Model model) throws Exception{
+	    @RequestMapping(value="/notice/insertNotice.hd")
+	    public String write(@ModelAttribute("noticeVo") NoticeVo noticeVo, Model model, MultipartFile[] upFile, HttpServletRequest req) throws Exception{
+        	String msg = "";
+	        String loc = "";
+	        //----다중 파일업로드 처리-----
 	        
-	        int result = service.insertNotice(noticeVo);
-	        
-	        return "redirect:/notice/noticeList.hd";
+			ModelAndView mv = new ModelAndView();
+			String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/NoticeFile");
+			
+			List<NoticeVo> list = new ArrayList<NoticeVo>();
+					
+			File dir = new File(saveDir);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
+			for(MultipartFile f : upFile) {
+				if(!f.isEmpty()) {
+					String oriFileName = f.getOriginalFilename();
+					String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+					int random = (int)(Math.random()*1000);
+					String reName = sdf.format(System.currentTimeMillis())+"_"+random+ext;
+					
+					f.transferTo(new File(saveDir+"/"+reName));
+					NoticeVo nVo = new NoticeVo();
+					nVo.setOriFileName(oriFileName);
+					nVo.setReFileName(reName);
+					
+					list.add(nVo);
+				}
+				
+			}
+			
+			try {
+				service.insertNotice(noticeVo,list);
+				msg = "등록 성공";
+				loc = "";
+			} catch(RuntimeException e) {
+				e.printStackTrace();
+				msg = "등록 실패";
+				loc = "";
+			}
+			
+			model.addAttribute("msg", msg);
+			model.addAttribute("loc", loc);
+			
+	        return "common/msg";
 	    }
 	    
 	    //게시글 조회

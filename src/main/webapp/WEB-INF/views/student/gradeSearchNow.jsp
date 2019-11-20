@@ -67,10 +67,10 @@ pre {
 													<td><c:out value="${l.subType}" /></td>
 													<td><c:out value="${l.rcvCredits}" /></td>
 												
-												<c:if test="${Assess.evalPoint eq null}">
-													<td colspan="4"><button type="button" id="profassess${s.count}" class="btn btn-warning btn-xs" style="font-size:13px">수강평가</button></td>
+												<c:if test="${l.evalPoint eq null and l.evalComment eq null}">
+													<td colspan="4"><button type="button" id="profassess${s.count}" class="btn btn-warning btn-xs" style="font-size:13px; font-weight:bold; width:250px;">수강평가</button></td>
 												</c:if>	
-												<c:if test="${Assess.evalPoint ne null}">
+												<c:if test="${l.evalPoint ne null and l.evalComment ne null}">
 													<td><c:out value="${l.grade}" /></td>
 													<td><c:out value="${l.retake}" /></td>
 													<c:if test="${l.reqDate eq null }">
@@ -236,6 +236,132 @@ pre {
 					</div>
 			</div>
 		</div>
+		
+		<!-- 수강평가 모달 -->
+		<div id="profassessModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content" style="width: 800px">
+				<div id="topCloseProfAssessBotton" style="text-align: right">
+					<span class="close" id="closeProfAssess" Style="width: 50px;">&times;</span>
+				</div>
+				<form name="myProfAssessFrm" action="${path}/myProfAssess.hd" method="post">
+				<div>
+					<p style="font-family: jua; font-size: 30px; font-style:">수강평가</p>
+					<hr>
+				</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-12">
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">교과목명 : </label>
+								<div class="col-sm-10" style="width:10px;">
+ 									<input type="text" class="form-control" name="subName" id="subName_pfa" readonly="readonly" />
+								</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">담당교수 : </label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" name="profName" id="profName_pfa" readonly="readonly"/>
+								</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">평가일자 : </label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" name="evalDate" id="evalDate_pfa" readonly="readonly"/>
+								</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- 평가 하는 로직    평가는 점수와 내용을 적으면 됨. -->
+						<div class="row">
+							<div class="col-md-12">
+							<div class="form-group row">
+	                        	<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">평가점수 : </label>
+		                            <div class="form-check" >
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="0">
+		                                0 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="1">
+		                                1 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="2">
+		                                2 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="3">
+		                                3 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="4">
+		                                4 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="5">
+		                                5 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="6">
+		                                6 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="7">
+		                                7 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="8">
+		                                8 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="9">
+		                                9 </label>
+		                            </div>
+		                            <div class="form-check">
+		                              <label class="form-check-label">
+		                                <input type="radio" class="form-check-input" name="evalPoint" value="10">
+		                                10 </label>
+		                            </div>
+							</div>
+							</div>
+                        </div>
+						<hr>
+						<p style="font-family: jua; font-size: 15px;">강의평가</p>
+						<textarea class="form-control" rows="5" cols="90" name="evalComment" id="evalConmment" required="required"></textarea>	
+						
+						<input type="hidden" name="stuNo" id="stuNo_pfa" value="${loginMember.stuNo}" readonly="readonly"/>
+						<input type="hidden" name="acaYearSem" id="acaYearSem_pfa" value="acaYearSem" readonly="readonly"/>
+						<input type="hidden" name="subCode" id="subCode_pfa" value="subCode" readonly="readonly"/>
+						<input type="hidden" name="profId" id="profId_pfa" value="profId" readonly="readonly"/>		
+					</div>
+					<div style="text-align: center">
+						<input type="reset" class="btn btn-inverse-info btn-fw" id="closeAppeal3" value="취소" style="float: right; margin: 7px;">
+						<input type="submit" class="btn btn-inverse-info btn-fw" id="closeAppeal2" value="제출" style="float: right; margin: 7px;">						
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		
 <style>
 .modal {
 	z-index: 9999;
@@ -243,6 +369,7 @@ pre {
 </style>
 
 <script>
+$("[name=evalPoint]").attr("required",true);
 
 /* function taeyoug1(event) {
 	console.log("taeyoung1");
@@ -254,10 +381,13 @@ pre {
 	var AppealModal = document.getElementById('appealModal');
 	//답변보기 모달
 	var AnswerModal = document.getElementById('answerModal');
-
+	//수강평가 모달
+	var ProfassessModal = document.getElementById('profassessModal');
+	
     // Get the <span> element that closes the modal
     var closeAppeal = document.getElementById("closeAppeal");                                          
     var closeAnswer = document.getElementById("closeAnswer");  
+    var closeProfAssess = document.getElementById("closeProfAssess");  
     
     var closeAppeal2 = document.getElementById("closeAppeal2");
     var closeAppeal3 = document.getElementById("closeAppeal3");
@@ -268,6 +398,9 @@ pre {
     }
     closeAnswer.onclick = function() {
     	AnswerModal.style.display = "none";
+    }
+    closeProfAssess.onclick = function() {
+    	ProfassessModal.style.display = "none";
     }
     
     closeAppeal2.onclick = function() {
@@ -283,6 +416,8 @@ pre {
  	var year = today.getFullYear();
  	var month = today.getMonth() + 1;
  	var date = today.getDate();
+ 	
+ <%-- 	var ProfassessBtn<%=(i+1)%> = document.getElementById("profassess<%=(i+1)%>"); --%>
     
     <%
     	List<Grade> gradeList = null;
@@ -292,10 +427,10 @@ pre {
     %>
      <%if(gradeList!=null) { 
     	for(int i=0; i<gradeList.size(); i++) { %>
+    	<% if(gradeList.get(i).getEvalPoint()!=null) { // 수강 평가를 했으면  %>
      	// Get the button that opens the modal
         var AppealheaderBtn<%=(i+1)%> = document.getElementById("appeal<%=(i+1)%>");
         var AnswerheaderBtn<%=(i+1)%> = document.getElementById("answer<%=(i+1)%>");
-        
         
      	// When the user clicks on the button, open the modal 
         <%-- AppealheaderBtn<%=(i+1)%>.onclick = function() {
@@ -353,13 +488,31 @@ pre {
 			<% } else if(gradeList.get(i).getReqAwswer() == null){ %>
 				alert("답변 대기중 입니다.");
 			<% } %>
-		   
         });
-        <%}%>
+        <%} // else문 끝 %>
    		<%
-    	}%>
+    		}else if(gradeList.get(i).getEvalPoint()==null){ // 수강 평가를 안했으면 
+    			%>
+    			var ProfassessheaderBtn<%=(i+1)%> = document.getElementById("profassess<%=(i+1)%>");
+    			
+    			ProfassessheaderBtn<%=(i+1)%>.addEventListener('click', function(e){
+    		        	alert(this.id);		        	
+    		            ProfassessModal.style.display = "block";
+    		            $("#subName_pfa").val(""); // 초기화
+    		            $("#subName_pfa").val("<%=gradeList.get(i).getSubName()%>");
+    		            $("#profName_pfa").val("");
+    		            $("#profName_pfa").val("<%=gradeList.get(i).getProfName()%>"+"교수");
+    		            $("#evalDate_pfa").val("");
+    		            $("#evalDate_pfa").val(year+"/"+month+"/"+date);
+    		            $("#acaYearSem_pfa").val("");
+			            $("#acaYearSem_pfa").val("<%=gradeList.get(i).getAcaYearSem()%>");
+			            $("#subCode_pfa").val("");
+			            $("#subCode_pfa").val("<%=gradeList.get(i).getSubCode()%>");
+			            $("#profId_pfa").val("");
+			            $("#profId_pfa").val("<%=gradeList.get(i).getProfId()%>");
+    		   });
+    	<%} // for문 끝 %>
     <%}%>
-    
-    
+    <%}%>
 </script>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

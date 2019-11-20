@@ -21,6 +21,7 @@ public interface StudentService2 {
 	List<Map> SemesterGrades(InfoForSearchGrade ifsg);
 	
 	int insertAppeal(Request request);
+	int insertProfAssess(ProfAssess profassess);
 	
 	/* List<Request> selectRequest(); */
 	

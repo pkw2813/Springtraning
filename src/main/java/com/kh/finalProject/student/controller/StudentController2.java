@@ -355,6 +355,7 @@ public class StudentController2 {
 		 * 
 		 * } }
 		 */
+			System.out.println("gradeNow:"+gradeNow);
 			model.addAttribute("gradeNow", gradeNow);
 		/*
 		 * List<Request> requestList = service.selectRequest();
@@ -389,7 +390,26 @@ public class StudentController2 {
 		model.addAttribute("loc",loc);
 		return "common/msg";
 //		return "redirect:/gradeSearchNow.jsp";
-		
 	}
+	
+	@RequestMapping("/myProfAssess.hd")
+	public String insertProfAssess(ProfAssess profassess, HttpSession session, Model model) {
+		
+		System.out.println("평가!"+profassess);
+		int result = service.insertProfAssess(profassess); //이의신청 버튼을 눌러서 이의신청을 함.
+		String msg="";
+		String loc="/student/gradeSearchNow.hd";
+				
+		if(result>0) {
+			msg="평가완료";
+		} else {
+			msg="평가실패. 다시 시도해 주세요.";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		return "common/msg";
+	}
+	
+	
 	
 }

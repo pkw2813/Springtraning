@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.finalProject.student.model.vo.Grade;
 import com.kh.finalProject.student.model.vo.InfoForSearchGrade;
+import com.kh.finalProject.student.model.vo.ProfAssess;
 import com.kh.finalProject.student.model.vo.Request;
 
 @Repository
@@ -42,6 +43,10 @@ public class StudentDaoImpl2 implements StudentDao2 {
 		return session.insert("student2.insertRequest",request);
 	}
 
+	@Override
+	public int insertProfAssess(SqlSessionTemplate session, ProfAssess profassess) {
+		return session.insert("student2.insertProfAssess",profassess);
+	}
 	/*
 	 * @Override public List<Request> selectRequestList(SqlSessionTemplate session)
 	 * { return session.selectList("student2.selectRequestList"); }
@@ -66,6 +71,7 @@ public class StudentDaoImpl2 implements StudentDao2 {
 	public List<Grade> selectacaYearSem(SqlSessionTemplate session, InfoForSearchGrade ifsg) {
 		return session.selectList("student2.selectacaYearSem",ifsg);
 	}
+
 
 //	@Override
 //	public List<Grade> insertProfAssess(SqlSessionTemplate session, InfoForSearchGrade ifsg) {

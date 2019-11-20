@@ -13,6 +13,7 @@ public interface NoticeDao {
 	int countNoticeList(SqlSessionTemplate session);
 	
 	int insertNotice(SqlSessionTemplate session, NoticeVo noticeVo);
+	int insertNoticeAttachment(SqlSessionTemplate session, NoticeVo nVo);
 
 	List<NoticeVo> selectNoticeByCode(SqlSessionTemplate session, NoticeVo noticeVo);
 

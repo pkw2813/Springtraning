@@ -79,8 +79,10 @@ public class EmployeeController {
 		
 		try {
 			int result = service.insertNewStu(s, beforeStu);
+			System.out.println("번호 : " + bs.getBeforeNo());
+			System.out.println(enc.decrypt(bs.getBeforeNo()+""));
 			handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!", "아이디 : " + s.getStuNo()
-					+ "   \r\n    비밀번호 : " + bs.getBeforeStu()+"".substring(0, 5) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
+					+ "   \r\n    비밀번호 : " + enc.decrypt(bs.getBeforeNo()+"").substring(0, 5) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -143,7 +145,7 @@ public class EmployeeController {
 		try {
 			int result = service.insertNewEmp(e);
 			handler.forSendEmail(e.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!", "아이디 : " + e.getEmpId()
-					+ "   \r\n    비밀번호 : " + enc.decrypt(e.getEmpPw()) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
+					+ "   \r\n    비밀번호 : " + enc.decrypt(e.getEmpSsn().subSequence(0, 5) + "") + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
@@ -159,7 +161,7 @@ public class EmployeeController {
 		try {
 			int result = service.insertNewProf(prof);
 			handler.forSendEmail(prof.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!", "아이디 : " + prof.getProfId()
-					+ "   \r\n    비밀번호 : " + enc.decrypt(prof.getProfPw()) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.",
+					+ "   \r\n    비밀번호 : " + enc.decrypt(prof.getProfSsn().subSequence(0, 5) + "") + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.",
 					req);
 		} catch (Exception x) {
 			x.printStackTrace();
@@ -476,7 +478,7 @@ public class EmployeeController {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
 			emp.setEmpPw(e.getEmpSsn().substring(0, 6));
 			// 패스워드 초기 패스워드 암호화함
-			emp.setEmpPw(enc.encrypt(emp.getEmpPw()));
+			emp.setEmpPw(bEnc.encode(emp.getEmpSsn().subSequence(0, 5) + ""));
 			// 성별땜에
 			// 성별 설정
 			emp.setGender(e.getEmpSsn().substring(6, 7).equals("1") || e.getEmpSsn().substring(6, 7).equals("3") ? "남"
@@ -519,7 +521,7 @@ public class EmployeeController {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
 			prof.setProfPw(p.getProfSsn().substring(0, 6));
 			// 패스워드 초기 패스워드 암호화함
-			prof.setProfPw(enc.encrypt(prof.getProfPw()));
+			prof.setProfPw(bEnc.encode(prof.getProfPw()));
 			// 성별땜에
 			// 성별 설정
 			prof.setGender(

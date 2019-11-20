@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="empListCount" resultType="_int"  parameterType="string">
-		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'E'
+		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'E'
 		<if test="value != null">
 		AND SUBSTR(DEPT_CODE,1,1) = #{value}
 		</if>
@@ -25,11 +25,11 @@
 	</select>
 	
 	<select id="changeEmpCount" resultType="_int" parameterType="string">
-		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
+		SELECT NVL()COUNT(*),0) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
 	</select>
 	
 	<select id="selectEmpLastNum" resultType="_int" parameterType="string">
-		SELECT MAX(SUBSTR(PROF_ID,9,2)) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
+		SELECT NVL(MAX(SUBSTR(PROF_ID,9,2)),0) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
 	</select>
 	
 	<insert id="insertNewEmp" parameterType="employee">
@@ -38,7 +38,7 @@
 	
 	
 	<select id="empLastNumCheck" parameterType="string" resultType="_int">
-		SELECT COUNT(*) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
+		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
 	</select>
 	
 	<select id="deptEmp" resultType="map" parameterType="map">
@@ -54,7 +54,7 @@
 	</select>
 	
 	<select id="deptEmpCount" resultType="_int" parameterType="map">
-  		SELECT COUNT(*) FROM HD_PROFESSOR_TB
+  		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB
   		WHERE SUBSTR(PROF_ID,1,1) = 'E'
   		<if test="deptCode != null">
 		AND DEPT_CODE = #{deptCode}
@@ -71,7 +71,7 @@
 	</select>
 	
 	<select id="searchstuCount" parameterType="string"  resultType="_int">
-	SELECT COUNT(*) FROM HD_STUDENT_TB
+	SELECT NVL(COUNT(*),0) FROM HD_STUDENT_TB
   		WHERE STU_NO LIKE '%${value}%' OR STU_NAME LIKE '%${value}%'   <!-- '%'||#searchKeyword#||'%' --> 
 	</select>
 
@@ -83,7 +83,7 @@
 	</select>
 
 	<select id="searchProfCount" parameterType="string"  resultType="_int">
-	SELECT COUNT(*) FROM HD_PROFESSOR_TB
+	SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB
   		WHERE SUBSTR(PROF_ID,1,1) = 'P'
 		AND PROF_ID LIKE '%${value}%' OR PROF_NAME LIKE '%${value}%'  
 	</select>
@@ -96,7 +96,7 @@
 	</select>
 
 	<select id="searchEmpCount" parameterType="string" resultType="_int">
-	SELECT COUNT(*) FROM HD_PROFESSOR_TB
+	SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB
   		WHERE SUBSTR(PROF_ID,1,1) = 'E'
 		AND PROF_ID LIKE '%${value}%' OR PROF_NAME LIKE '%${value}%'  
 	</select>
