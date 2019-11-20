@@ -37,18 +37,18 @@
                       <thead>
                         <tr>
                           <td class="firsttd">보낸 사람</td>
-                          <c:if test="${reqOne.toName eq 'E00000000'}">
+                         <%--  <c:if test="${reqOne.toName eq 'E00000000'}">
                           <td>관리자</td>
                           </c:if>
-                          <c:if test="${reqOne.toName ne 'E00000000'}">
+                          <c:if test="${reqOne.toName ne 'E00000000'}"> --%>
                           <td>${reqOne.toName}</td>
-                          </c:if>
+                          <%-- </c:if> --%>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>보낸 시간</td>
-                          <td>${reqOne.toTime}${userId }</td>
+                          <td>${reqOne.toTime}</td>
                         </tr>
                         <tr>
                         </tr>

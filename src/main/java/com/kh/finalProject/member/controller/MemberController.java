@@ -1,6 +1,7 @@
 package com.kh.finalProject.member.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.email.controller.MailController;
 import com.kh.finalProject.employee.model.service.EmployeeService;
+import com.kh.finalProject.employee.model.service.NoticeService;
 import com.kh.finalProject.employee.model.vo.Employee;
+import com.kh.finalProject.employee.model.vo.NoticeVo;
+import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService;
 import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.student.model.service.StudentService;
@@ -35,13 +39,29 @@ public class MemberController {
 	@Autowired 
 	private ProfessorService proService;
 	@Autowired
+	private NoticeService service;
+	@Autowired
 	private MailController mc;
 	@Autowired
 	private BCryptPasswordEncoder bEnc;
 	
 	
 	@RequestMapping("/main.hd")
-	public String main() {
+	public String main(Model model, HttpServletRequest req, 
+    		@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage) {
+		
+		int numPerPage = 8;         
+        
+        List<NoticeVo> list = service.selectNoticeList(cPage, numPerPage);
+        for(NoticeVo n : list) {
+        	n.setRegDate(n.getRegDate().substring(0, 10));
+        }
+        int totalData = service.countNoticeList();
+		model.addAttribute("list", list);
+		System.out.println(list);
+		model.addAttribute("totalCount", totalData);
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, req.getContextPath()+"/notice.hd"));
+		
 		return "common/main";
 	}
 	

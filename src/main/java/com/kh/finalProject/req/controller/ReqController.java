@@ -118,7 +118,7 @@ public class ReqController {
 	public String reqAnswerOne(@RequestParam int reqNo, Model model) {
 		Req req=service.reqOne(reqNo);
 		model.addAttribute("reqOne",req);
-		return "req/reqOne";
+		return "req/reqAnswerOne";
 	}
 	
 

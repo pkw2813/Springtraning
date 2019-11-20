@@ -108,6 +108,7 @@
 	                    <div class="col-sm-12">
 	                    	<input type="submit" value="저장" class="btn btn-inverse-info btn-fw" id="insBtn"/>&nbsp&nbsp
 	                    	<input type="reset" value="초기화" class="btn btn-inverse-info btn-fw"/>
+	                    	<button></button>
 	                    </div>
                   </form>
                 </div>
@@ -195,7 +196,6 @@
             					colListHtml = "<option value='select' id='selColleage'>학부 선택</option>";
             					for(let i = 0; i < data.list.length; i++) {
             						let cols = data.list[i];
-            						console.log(cols['COL_CODE']);
             						colListHtml += "<option value='"+cols['COL_CODE']+"'  class='colList'>"+cols['COL_NAME']+"</option>";
             					}
             					
@@ -210,13 +210,11 @@
               
                $(function(){
             	 	$('.selectColleage').change(function(){
-            	 		console.log($('.selectColleage').val());
             			$.ajax({
             				type : "post",
             				url: "${pageContext.request.contextPath}/selectDeptList.do",
             				data: {"result" : $('.selectColleage').val()},
             				success: function(data) {
-            					console.log(data);
             					let deptListHtml = "<option value='select' id='selectDepartment'>학과 선택</option>";
             					for(let i = 0; i < data.list.length; i++) {
             						let depts = data.list[i];
@@ -287,13 +285,11 @@
 		    	   $("input:radio[name=membershipRadios]").click(function(){
 			    	   var st = $(":input:radio[name=membershipRadios]:checked").val();
 			    	   var year=$("#year option:selected").val();
-			    	   console.log(st);
 					   if(st=='-01'){
 						   $("#payDay").val(year+"0201");
 					   }else{
 						   $("#payDay").val((year)+"0810");
 					   }
-					   console.log($("#year option:selected").val());
 			   		});
 		       });
 		       
@@ -336,6 +332,11 @@
 		    		 }
 		    	  }); 
 		       });
+		       
+		       $(document).ready(function() { 
+		    	   $('input').attr('required', true); 
+		       });
+
 
               </script>
 

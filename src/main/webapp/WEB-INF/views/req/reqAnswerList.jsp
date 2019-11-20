@@ -69,7 +69,7 @@
                       </thead>
                       <tbody>
 	                      <c:forEach var="a" items="${answerList }" varStatus="v">
-	                        <tr onclick="location.href='${path}/reqAnswerOne.hd?reqNo=${s.reqNo }'">
+	                        <tr onclick="location.href='${path}/reqAnswerOne.hd?reqNo=${a.reqNo }'">
 	                          <td>${v.count }</td>
 	                          <td>${a.reqTitle }</td>
 	                          <td>${a.reqContents }</td>
