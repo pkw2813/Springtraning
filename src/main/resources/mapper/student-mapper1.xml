@@ -21,7 +21,7 @@
 		         from  hd_class_tb A
                  join hd_sub_req_tb r on a.sub_seq=r.sub_seq
                  WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
-		         order by sub_year desc
+		         order by sub_year desc , sub_semester desc
 		         )ta
 
 	</select>
@@ -42,7 +42,7 @@
 		         from  hd_class_tb A
                  join hd_sub_req_tb r on a.sub_seq=r.sub_seq
                  WHERE R.stu_no=#{stuId})SUB_REQ ON SUB_REQ.SUB_seq=a.sub_seq
-		         order by sub_year desc
+		         order by sub_year desc , sub_semester desc
 		         )ta
 
 		where 1=1

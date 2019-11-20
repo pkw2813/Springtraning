@@ -179,16 +179,7 @@
 				<th>수강평</th>
 				<th>신청/철회</th>
 				</tr>
-				<c:if test='${empty list}'>
-				</table>
-				<table>
-				<tr id=classInfo>
-				<td style="text-align:center">
-				<img id="LoadImg" height="300px" width="400px" style="padding:20px;"src="${path}/resources/images/image/selectNothing.jpg"/>
-				</td>
-				</tr>
-				</table>
-				</c:if>
+				
 				<h6 style="font-size:12px;color:red">
 				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null or applyDay["PLAN_NO_SEQ"] ne ""}'>
 				이번학기 수강신청 가능일은
@@ -200,17 +191,17 @@
 				<c:forEach items="${list}" var="e" varStatus="v">
 				<tr id="classInfo">
 				<td><c:out value='${e["ROWNUM"] }'/></td>
-				<td><c:out value='${e["SUB_YEAR"]}'/>-<c:out value='${e["SUB_SEMESTER"]}'/></td>
+				
+				<td><c:out value='${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'/></td>
+		
 				<td><c:out value='${e["DEPT_NAME"] }'/></td>
 				<td><c:out value='${e["SUB_NAME"] }'/></td>
-				
-				
 				
 				<td><c:out value='${e["PROF_NAME"] }'/></td>
 				<td><c:out value='${e["SUB_TYPE"] }'/></td>
 				<td>
-					<c:if test="${e.DEPT_CODE eq stuInfo.DEPT_CODE}">전공과목</c:if>
-					<c:if test="${e.DEPT_CODE ne stuInfo.DEPT_CODE}">타전공</c:if>
+					<c:if test="${fn:substring(e.DEPT_CODE,0,2) eq fn:substring(stuInfo.DEPT_CODE,0,2)}">전공과목</c:if>
+					<c:if test="${fn:substring(e.DEPT_CODE,0,2) ne fn:substring(stuInfo.DEPT_CODE,0,2)}">타전공</c:if>
 				</td>
 				<td>최대: <c:out value='${e["COMPLETE_PT"] }'/></td>
 				<td>매주: <c:out value='${e["SUB_DATE"] }'/> <c:out value='${e["SUB_TIME"] }'/></td>
@@ -218,24 +209,33 @@
 				<td><c:out value='${e["SUB_ROOM"] }'/></td>
 				
 				<td style="text-align:center">
-				<button id='button-profEval' style="font-size:12px;font-weight:bold;height:25px;" class="btn btn-primary btn-xs" onclick="profEval(this.id,this.value)" 
+				<button id='button-profEval' style="font-size:12px;font-weight:bold;height:25px;" class="btn btn-primary btn-xs" onclick="profEval(this.value)" 
 				value='${e["SUB_NAME"]},${e["PROF_ID"]},${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}'>보기 
 				</button>
 				</td>
 				
 				<td style="text-align:center">
 				
-				<c:if test='${ e["PRE_CAPA"]-e["CAPACITY"] eq 0}'>
-				
-				
-				</c:if>
-				
 				<c:if test='${applyDay["PLAN_NO_SEQ"] eq null or applyDay["PLAN_NO_SEQ"] eq ""}'>
 				신청기간이 아닙니다
 				</c:if>
 				
+				<c:set var="now" value="<%=new java.util.Date()%>" />
+				<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set>
+				<c:set var="sysSem"><fmt:formatDate value="${now}" pattern="MM" /></c:set>
 				
-				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null and applyDay["PLAN_NO_SEQ"] ne ""}'>
+			 	<c:if test="${sysSem le 6}"><c:set var="sysSem">1</c:set></c:if>
+			 	<c:if test="${sysSem gt 7}"><c:set var="sysSem">2</c:set></c:if> 
+				<c:set var="sysYs">${sysYear}-${sysSem}</c:set>
+				<c:set var="classYs">${e["SUB_YEAR"]}-${e["SUB_SEMESTER"]}</c:set>
+				 
+				 
+				
+				
+				
+				<c:if test="${sysYs eq classYs}">
+				
+				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null and applyDay["PLAN_NO_SEQ"] ne ""}'>	
 				<c:if test='${ e["PRE_CAPA"]-e["CAPACITY"] eq 0}'>
 				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"
 				value='${loginMember.stuNo },${e["SUB_SEQ"]},${e["CAPACITY"]}' disabled>정원초과</button>
@@ -245,16 +245,17 @@
 				value='${loginMember.stuNo },${e["SUB_SEQ"]}'>신청</button>
 				</c:if>
 				
-				
 				<c:if test='${e["STU_NO"] eq loginMember.stuNo}'>
 				<button id="button-cancelClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="cancelClass(this.id,this.value)" class="btn btn-danger btn-xs"
 				value='${loginMember.stuNo},${e["SUB_SEQ"]}'>취소</button>
 				</td>		
 				</c:if>
+				</c:if>			
 				</c:if>
 				
-	
-						
+				<c:if test="${sysYs ne classYs}">
+				
+				</c:if>
 				
 				<c:if test='${empty list}'>
 				<td></td>
@@ -265,6 +266,16 @@
 				
 				</c:forEach>
 				
+				</table>
+				</c:if>
+				<c:if test='${empty list}'>
+				</table>
+				<table>
+				<tr id=classInfo>
+				<td style="text-align:center">
+				<img id="LoadImg" height="300px" width="400px" style="padding:20px;"src="${path}/resources/images/image/selectNothing.jpg"/>
+				</td>
+				</tr>
 				</table>
 				</c:if>
 				<br><br>
@@ -350,25 +361,28 @@
 					$("#school3").text("경영학과");
 			  }
 			});
-		
-		function profEval(clickedId,value){
+	
+				function profEval(value){
+					
+					$("#profEvalForm").attr("value",value);
+				
+					 var myForm = document.popForm;
+					 var url= "${path}/student/profEval.hd";    //팝업창 페이지 URL
+					 var winWidth = 1000;
+				     var winHeight = 1000;
+				     var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
+					
+				   
+				    window.open("" ,"popForm",
+						       "toolbar=no, width=1000, height=700, directories=no, status=no,scrollorbars=no, resizable=no");
+				    myForm.action =url;
+					myForm.method="post";
+					myForm.target="popForm";
+					myForm.submit();
+					
+				}
 			
-			$("#profEvalForm").attr("value",value);
 		
-			 var myForm = document.popForm;
-			 var url= "${path}/student/profEval.hd";    //팝업창 페이지 URL
-			 var winWidth = 1000;
-		     var winHeight = 1000;
-		     var popupOption= "width="+winWidth+", height="+winHeight;    //팝업창 옵션(optoin)
-			
-		   
-		    window.open("" ,"popForm",
-				       "toolbar=no, width=1000, height=700, directories=no, status=no,scrollorbars=no, resizable=no");
-		    myForm.action =url;
-			myForm.method="post";
-			myForm.target="popForm";
-			myForm.submit();
-		}
 		
 		function applyClass(id,value){
 			if (confirm("신청하시겠습니까??") == true){    //확인
@@ -443,8 +457,6 @@
 			 
  	}
 		
-	
-	
  	$(document).ready(function(){
  		
  	   $('#Progress_Loading').hide(); //첫 시작시 로딩바를 숨겨준다.
@@ -455,6 +467,9 @@
  	.ajaxStop(function(){
  		$('#Progress_Loading').hide(); //ajax종료시 로딩바를 숨겨준다.
  	});
+ 	
+ 	
+	
  	
  	
  	
