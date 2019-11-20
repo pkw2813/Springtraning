@@ -63,11 +63,11 @@ public class EmployeeController {
 	public int insertNewStu(@RequestParam int beforeStu, HttpServletRequest req) {
 		BeforeStu bs = service.selectBeforeStu(beforeStu);
 		Student s = settingNewStudent(bs);
-		if(Integer.parseInt(s.getStuNo().substring(8, 10)) > 50) {
-			System.out.println(Integer.parseInt(s.getStuNo().substring(8, 10)));
+		if (Integer.parseInt(s.getStuNo().substring(8, 10)) > 50) {
 			try {
 				int result = bService.deleteBstuList(s.getDeptCode());
-				handler.forSendEmail(s.getStuEmail(), "KH 대학교 입학 관현안내", s.getStuName() + "님의 입학 신청 결과 정원초과로 입학이 불가능하다는 것을 알립니다.", req);
+				handler.forSendEmail(s.getStuEmail(), "KH 대학교 입학 관현안내",
+						s.getStuName() + "님의 입학 신청 결과 정원초과로 입학이 불가능하다는 것을 알립니다.", req);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return 0;
@@ -76,13 +76,13 @@ public class EmployeeController {
 			return beforeStu;
 
 		}
-		
+
 		try {
 			int result = service.insertNewStu(s, beforeStu);
-			System.out.println("번호 : " + bs.getBeforeNo());
-			System.out.println(enc.decrypt(bs.getBeforeNo()+""));
-			handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!", "아이디 : " + s.getStuNo()
-					+ "   \r\n    비밀번호 : " + enc.decrypt(bs.getBeforeNo()+"").substring(0, 5) + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
+			handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!",
+					"아이디 : " + s.getStuNo() + "   \r\n    비밀번호 : " + enc.decrypt(bs.getBeforeNo() + "").substring(0, 6)
+							+ " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.",
+					req);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -139,16 +139,25 @@ public class EmployeeController {
 
 	@RequestMapping("/employee/insertEmp.hd")
 	public String insertEmp(Employee emp, HttpServletRequest req) {
+		System.out.println("emp : " + emp);
 		String msg = "";
 		String loc = "";
 		Employee e = settingNewEmployee(emp);
+		System.out.println("e:" + e);
 		try {
 			int result = service.insertNewEmp(e);
-			handler.forSendEmail(e.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!", "아이디 : " + e.getEmpId()
-					+ "   \r\n    비밀번호 : " + enc.decrypt(e.getEmpSsn().subSequence(0, 5) + "") + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.", req);
+			handler.forSendEmail(e.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!",
+					"아이디 : " + e.getEmpId() + "   \r\n    비밀번호 : " + (enc.decrypt(e.getEmpSsn()+"").subSequence(0, 6))
+							+ " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.",
+					req);
+			loc = "/enrollemployee.hd";
+			msg = "직원 등록 성공!";
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
+		HttpSession session = req.getSession();
+		session.setAttribute("msg", msg);
+		session.setAttribute("loc", loc);
 
 		return "common/msg";
 	}
@@ -160,12 +169,19 @@ public class EmployeeController {
 		Professor prof = settingNewProfessor(p);
 		try {
 			int result = service.insertNewProf(prof);
-			handler.forSendEmail(prof.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!", "아이디 : " + prof.getProfId()
-					+ "   \r\n    비밀번호 : " + enc.decrypt(prof.getProfSsn().subSequence(0, 5) + "") + " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.",
+			handler.forSendEmail(prof.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!",
+					"아이디 : " + prof.getProfId() + "   \r\n    비밀번호 : "
+							+ (enc.decrypt(prof.getProfSsn()) + "").substring(0, 6)
+							+ " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.",
 					req);
+			msg = "교수 등록 성공!";
+			loc = "/enrollprofessor.hd";
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
+		HttpSession session = req.getSession();
+		session.setAttribute("msg", msg);
+		session.setAttribute("loc", loc);
 
 		return "common/msg";
 	}
@@ -185,11 +201,12 @@ public class EmployeeController {
 
 	@RequestMapping("/col/changeColList.hd")
 	@ResponseBody
-	public Map<String, Object> changeColList(@RequestParam(value = "index", required = false, defaultValue = "0") int index,
+	public Map<String, Object> changeColList(
+			@RequestParam(value = "index", required = false, defaultValue = "0") int index,
 			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession s) {
 		Employee e = (Employee) s.getAttribute("loginMember");
 		int numPerPage = 5;
-		String result = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode().substring(0, 1);
+		String result = e.getDeptCode().substring(0, 1).equals("0") ? null : e.getDeptCode().substring(0, 1);
 		if (index == 0) {
 			List<?> list = service.selectStuList(cPage, numPerPage, result);
 			int totalData = service.stuCount(result);
@@ -219,8 +236,10 @@ public class EmployeeController {
 
 	@RequestMapping("/col/searchColList.hd")
 	@ResponseBody
-	public Map<String, Object> searchColList(@RequestParam(value = "index", required = false, defaultValue = "0") int index,
-			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, String search, HttpSession s) {
+	public Map<String, Object> searchColList(
+			@RequestParam(value = "index", required = false, defaultValue = "0") int index,
+			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, String search,
+			HttpSession s) {
 		int numPerPage = 5;
 		if (index == 0) {
 			List<Student> list = service.searchStuList(cPage, numPerPage, search);
@@ -248,141 +267,125 @@ public class EmployeeController {
 			return map;
 		}
 	}
-	
+
 	@RequestMapping("/deptStu")
-	public ModelAndView deptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, 
-								@RequestParam(value="search", required = false, defaultValue = "") String search,
-									HttpSession session) {
+	public ModelAndView deptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+			@RequestParam(value = "search", required = false, defaultValue = "") String search, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 5;
-		Employee e = (Employee)session.getAttribute("loginMember");
+		Employee e = (Employee) session.getAttribute("loginMember");
 		Map<String, Object> map = new HashMap<String, Object>();
-		String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode().substring(0, 1);
-		String s = search.equals("")?null:search;
+		String deptCode = e.getDeptCode().substring(0, 1).equals("0") ? null : e.getDeptCode().substring(0, 1);
+		String s = search.equals("") ? null : search;
 		map.put("deptCode", deptCode);
 		map.put("search", s);
 		List<Student> list = service.deptStu(cPage, numPerPage, map);
 		int totalData = service.deptStuCount(map);
 		mv.addObject("list", list);
 		mv.addObject("totalData", totalData);
-		mv.addObject("pageBar",
-				PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/deptStu.hd"));
+		mv.addObject("pageBar", PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/deptStu.hd"));
 		mv.setViewName("admin/deptStu");
 		return mv;
-	
+
 	}
-	
-	
+
 	@RequestMapping("/ajax/deptStu")
 	@ResponseBody
-	public Map<String, Object> ajaxDeptStu(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
-									@RequestParam(value="search", required = false, defaultValue = "") String search,
-										HttpSession session) {
-	int numPerPage = 5;
-	Employee e = (Employee)session.getAttribute("loginMember");
-	Map<String, Object> map = new HashMap<String, Object>();
-	String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode();
-	String s = search.equals("")?null:search;
-	map.put("deptCode", deptCode);
-	map.put("search", s);
-	List<Student> list = service.deptStu(cPage, numPerPage, map);
-	int totalData = service.deptStuCount(map);
-	map.put("list", list);
-	map.put("cPage", cPage);
-	map.put("pageBar",
-			PageFactory.getSearchPageBar(totalData, cPage, numPerPage, "/finalProject/ajax/deptStu"));
-	return map;
+	public Map<String, Object> ajaxDeptStu(
+			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+			@RequestParam(value = "search", required = false, defaultValue = "") String search, HttpSession session) {
+		int numPerPage = 5;
+		Employee e = (Employee) session.getAttribute("loginMember");
+		Map<String, Object> map = new HashMap<String, Object>();
+		String deptCode = e.getDeptCode().substring(0, 1).equals("0") ? null : e.getDeptCode();
+		String s = search.equals("") ? null : search;
+		map.put("deptCode", deptCode);
+		map.put("search", s);
+		List<Student> list = service.deptStu(cPage, numPerPage, map);
+		int totalData = service.deptStuCount(map);
+		map.put("list", list);
+		map.put("cPage", cPage);
+		map.put("pageBar", PageFactory.getSearchPageBar(totalData, cPage, numPerPage, "/finalProject/ajax/deptStu"));
+		return map;
 	}
 
 	@RequestMapping("/deptPro.hd")
-	public ModelAndView deptPro(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, HttpSession session) {
+	public ModelAndView deptPro(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+			HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 5;
-		Employee e = (Employee)session.getAttribute("loginMember");
-		String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode();
+		Employee e = (Employee) session.getAttribute("loginMember");
+		String deptCode = e.getDeptCode().substring(0, 1).equals("0") ? null : e.getDeptCode();
 		List<Professor> list = service.changeProfessor(cPage, numPerPage, deptCode);
 		int totalData = service.changeProfessorCount(deptCode);
 		mv.addObject("list", list);
 		mv.addObject("totalData", totalData);
-		mv.addObject("pageBar",
-				PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/deptPro.hd"));
+		mv.addObject("pageBar", PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/deptPro.hd"));
 		mv.setViewName("admin/deptPro");
 		return mv;
 	}
-	
+
 	@RequestMapping("/ajax/deptProf")
 	@ResponseBody
-	public Map<String, Object> ajaxDeptProf(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
-							@RequestParam(value="search", required = false, defaultValue = "") String search,
-								HttpSession session) {
-				int numPerPage = 5;
-				Employee e = (Employee)session.getAttribute("loginMember");
-				Map<String, Object> map = new HashMap<String, Object>();
-				String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode();
-				String s = search.equals("")?null:search;
-				map.put("deptCode", deptCode);
-				map.put("search", s);
-				List<Employee> list = service.deptProf(cPage, numPerPage, map);
-				int totalData = service.deptProfCount(map);
-				map.put("list", list);
-				map.put("cPage", cPage);
-				map.put("pageBar",
-				PageFactory.getSearchPageBar(totalData, cPage, numPerPage, "/finalProject/ajax/deptProf"));
-				return map;
+	public Map<String, Object> ajaxDeptProf(
+			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+			@RequestParam(value = "search", required = false, defaultValue = "") String search, HttpSession session) {
+		int numPerPage = 5;
+		Employee e = (Employee) session.getAttribute("loginMember");
+		Map<String, Object> map = new HashMap<String, Object>();
+		String deptCode = e.getDeptCode().substring(0, 1).equals("0") ? null : e.getDeptCode();
+		String s = search.equals("") ? null : search;
+		map.put("deptCode", deptCode);
+		map.put("search", s);
+		List<Employee> list = service.deptProf(cPage, numPerPage, map);
+		int totalData = service.deptProfCount(map);
+		map.put("list", list);
+		map.put("cPage", cPage);
+		map.put("pageBar", PageFactory.getSearchPageBar(totalData, cPage, numPerPage, "/finalProject/ajax/deptProf"));
+		return map;
 	}
-	
-	
-	
-	
+
 	@RequestMapping("/deptEmp.hd")
-	public ModelAndView deptEmp(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, 
-								@RequestParam(value="search", required = false, defaultValue = "") String search,
-									HttpSession session) {
+	public ModelAndView deptEmp(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+			@RequestParam(value = "search", required = false, defaultValue = "") String search, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 5;
-		Employee e = (Employee)session.getAttribute("loginMember");
+		Employee e = (Employee) session.getAttribute("loginMember");
 		Map<String, Object> map = new HashMap<String, Object>();
-		String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode().substring(0, 1);
-		String s = search.equals("")?null:search;
+		String deptCode = e.getDeptCode().substring(0, 1).equals("0") ? null : e.getDeptCode().substring(0, 1);
+		String s = search.equals("") ? null : search;
 		map.put("deptCode", deptCode);
 		map.put("search", s);
 		List<Employee> list = service.deptEmp(cPage, numPerPage, map);
 		int totalData = service.deptEmpCount(map);
 		mv.addObject("list", list);
 		mv.addObject("totalData", totalData);
-		mv.addObject("pageBar",
-				PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/deptStu.hd"));
+		mv.addObject("pageBar", PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/deptStu.hd"));
 		mv.setViewName("admin/deptEmp");
 		return mv;
-	
+
 	}
-	
-	
+
 	@RequestMapping("/ajax/deptEmp")
 	@ResponseBody
-	public Map<String, Object> ajaxDeptEmp(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
-									@RequestParam(value="search", required = false, defaultValue = "") String search,
-										HttpSession session) {
-	int numPerPage = 5;
-	Employee e = (Employee)session.getAttribute("loginMember");
-	Map<String, Object> map = new HashMap<String, Object>();
-	String deptCode = e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode();
-	String s = search.equals("")?null:search;
-	map.put("deptCode", deptCode);
-	map.put("search", s);
-	List<Employee> list = service.deptEmp(cPage, numPerPage, map);
-	int totalData = service.deptEmpCount(map);
-	map.put("list", list);
-	map.put("cPage", cPage);
-	map.put("pageBar",
-			PageFactory.getSearchPageBar(totalData, cPage, numPerPage, "/finalProject/ajax/deptStu"));
-	return map;
+	public Map<String, Object> ajaxDeptEmp(
+			@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
+			@RequestParam(value = "search", required = false, defaultValue = "") String search, HttpSession session) {
+		int numPerPage = 5;
+		Employee e = (Employee) session.getAttribute("loginMember");
+		Map<String, Object> map = new HashMap<String, Object>();
+		String deptCode = e.getDeptCode().substring(0, 1).equals("0") ? null : e.getDeptCode();
+		String s = search.equals("") ? null : search;
+		map.put("deptCode", deptCode);
+		map.put("search", s);
+		List<Employee> list = service.deptEmp(cPage, numPerPage, map);
+		int totalData = service.deptEmpCount(map);
+		map.put("list", list);
+		map.put("cPage", cPage);
+		map.put("pageBar", PageFactory.getSearchPageBar(totalData, cPage, numPerPage, "/finalProject/ajax/deptStu"));
+		return map;
 	}
-	
-	
-	
-	
-	
+
 	// 학과 코드랑
 	public Map<Object, Integer> settingStudentNumber(String deptCode) {
 		int deptCount = service.selectDeptCount(deptCode);
@@ -428,7 +431,7 @@ public class EmployeeController {
 			// 패스워드 초기 패스워드 단방향 암호화함
 			System.out.println("암호화전 pw : " + s.getStuPw());
 			System.out.println("암호화전pw : " + bEnc.encode(s.getStuPw()));
-			
+
 			s.setStuPw(bEnc.encode(s.getStuPw()));
 
 			// 성별땜에
@@ -465,20 +468,16 @@ public class EmployeeController {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String sysdate = sdf.format(date);
-		int empNum = 0;
-		if (service.empLastNumCheck(e.getDeptCode()) > 0) {
-			empNum = service.selectEmpLastNum(e.getDeptCode());
-		} else {
-			empNum = 1;
-		}
-		String empNo = "E" + sysdate.substring(0, 4) + e.getDeptCode() + String.format("%02d", empNum);
+		int empNum = service.selectEmpLastNum(e.getDeptCode());
+		System.out.println("lastNum : " + empNum);
+		String empNo = "E" + sysdate.substring(0, 4) + e.getDeptCode() + String.format("%02d", empNum + 1);
 		emp.setEmpId(empNo);
 		emp.setEmpName(e.getEmpName());
 		try {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
 			emp.setEmpPw(e.getEmpSsn().substring(0, 6));
 			// 패스워드 초기 패스워드 암호화함
-			emp.setEmpPw(bEnc.encode(emp.getEmpSsn().subSequence(0, 5) + ""));
+			emp.setEmpPw(bEnc.encode((e.getEmpSsn() + "").substring(0, 5)));
 			// 성별땜에
 			// 성별 설정
 			emp.setGender(e.getEmpSsn().substring(6, 7).equals("1") || e.getEmpSsn().substring(6, 7).equals("3") ? "남"
@@ -508,13 +507,9 @@ public class EmployeeController {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String sysdate = sdf.format(date);
-		int profNum = 0;
-		if (service.empLastNumCheck(p.getDeptCode()) > 0) {
-			profNum = service.selectProfLastNum(p.getDeptCode());
-		} else {
-			profNum = 1;
-		}
-		String rofNo = "P" + sysdate.substring(0, 4) + p.getDeptCode() + String.format("%02d", profNum);
+		int profNum = service.selectProfLastNum(p.getDeptCode());
+		System.out.println(profNum);
+		String rofNo = "P" + sysdate.substring(0, 4) + p.getDeptCode() + String.format("%02d", profNum + 1);
 		prof.setProfId(rofNo);
 		prof.setProfName(p.getProfName());
 		try {
@@ -544,7 +539,9 @@ public class EmployeeController {
 		prof.setAddress(p.getAddress());
 		prof.setDeptCode(p.getDeptCode());
 		prof.setEmail(p.getEmail());
+		System.out.println(prof.getAddress());
 //		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-1" : "미정");
+
 		return prof;
 	}
 

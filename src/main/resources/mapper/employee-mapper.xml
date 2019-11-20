@@ -7,25 +7,25 @@
 	
 	<select id="selectEmpList" resultType="map"  parameterType="string">
 		SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E'
-		<if test="value != null">
-		AND SUBSTR(DEPT_CODE,1,1) = #{value}
-		</if>
-		ORDER BY DEPT_CODE
 	</select>
 	
 	<select id="empListCount" resultType="_int"  parameterType="string">
-		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'E'
-		<if test="value != null">
-		AND SUBSTR(DEPT_CODE,1,1) = #{value}
-		</if>
+		SELECT NVL(COUNT(*),1) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'E'
 	</select>
 	
 	<select id="changeEmp" parameterType="string" resultType="map">
 			SELECT * FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode} ORDER BY PROF_NAME
+			<if test="value != null">
+			AND DEPT_CODE = #{value}
+			</if>
+			ORDER BY DEPT_CODE
 	</select>
 	
 	<select id="changeEmpCount" resultType="_int" parameterType="string">
-		SELECT NVL()COUNT(*),0) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
+		SELECT NVL()COUNT(*),1) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
+		<if test="value != null">
+			 AND DEPT_CODE = #{value}
+		</if>
 	</select>
 	
 	<select id="selectEmpLastNum" resultType="_int" parameterType="string">
@@ -38,7 +38,7 @@
 	
 	
 	<select id="empLastNumCheck" parameterType="string" resultType="_int">
-		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
+		SELECT NVL(COUNT(*),1) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'E' AND DEPT_CODE = #{deptCode}
 	</select>
 	
 	<select id="deptEmp" resultType="map" parameterType="map">

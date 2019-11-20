@@ -81,7 +81,7 @@ public class MemberController {
 		
 		String msg="";
 		String loc="";
-
+		System.out.println("111111111111111");
 		if(loginNo.equals("s")) {
 			Student stu=stuService.selectOne(loginId);
 //			if(bEnc.matches(loginPwd, stu.getStuPw())){
@@ -90,7 +90,7 @@ public class MemberController {
 		}else if(loginNo.equals("p")){
 			Professor pro=proService.selectOne(loginId);
 //			if(bEnc.matches(loginPwd, pro.getProfId())){
-			session.setAttribute("loginMember", pro);
+				session.setAttribute("loginMember", pro);
 //			}
 		}else{
 			Employee emp=empService.selectOne(loginId);

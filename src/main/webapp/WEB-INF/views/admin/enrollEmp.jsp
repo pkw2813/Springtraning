@@ -90,6 +90,7 @@
 					<input type="button" onclick="sample6_execDaumPostcode();"  class="myI-1-add btn-address btn btn-info" value="우편번호 찾기 "/>
 					<input type="text" id="sample6_address" name="address1" class="myI-1 form-control" placeholder="주소 " readonly>
 					<input type="text" id="sample6_detailAddress" name="address2" class="myI-1 form-control" placeholder="상세주소 ">
+					<input type='hidden' name='address' id='addr'/> 
 				</div>
 		</fieldset>
 
@@ -143,11 +144,11 @@ $(function() {
 			}
 			//주민등록 번호
 			let juminCk = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
-			let jumin = document.getElementById('empSsn').value;
+			let jumin = document.getElementById('jumin').value;
 			if(jumin == "") {
 				alert("주민번호를 입력해주세요");
 				return false;
-			}else if(!jumin.test(jumin)){
+			}else if(jumin.length < 13){
 				alert("정확한 주민번호를 입력해 주세요.");
 				return false;
 			}
@@ -167,17 +168,12 @@ $(function() {
                 return false;
             }
 
-
-            let postCode = document.getElementById('sample6_postcode').value;
-            let addrCode = document.getElementById("sample6_address").value;
-            let detailAddr = document.getElementById("sample6_detailAddress").value;
-			let beforeAddr = "<input type='hidden' name='address' value='"+postCode+" / "+addrCode+" / "+detailAddr+"'/>"; 
-			document.getElementsByClassName("inputAddress")[0].innerHTML += beforeAddr;
-	
+            let postCode = $('#sample6_postcode').val();
+            let addrCode = $("#sample6_address").val();
+            let detailAddr = $("#sample6_detailAddress").val();
+			$('#addr').val(postCode + " / " + addrCode + " / " + detailAddr);
 	});
 });
-
-
 
 function setJumin(obj) {
 	let ju = obj.value;

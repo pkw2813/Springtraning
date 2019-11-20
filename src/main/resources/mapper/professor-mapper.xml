@@ -14,7 +14,7 @@
 	</select>	
 
 	<select id="profCount" resultType="_int" parameterType="string">
-		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
+		SELECT NVL(COUNT(*),1) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
 		<if test="value != null">
 		AND SUBSTR(DEPT_CODE,1,1) = #{value}
 		</if>
@@ -29,14 +29,14 @@
 	</select>
 	
 	<select id="changeProfessorCount" resultType="_int" parameterType="string">
-		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
+		SELECT NVL(COUNT(*),1) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
 		<if test="value != null">
 			 AND DEPT_CODE = #{value}
 			</if>
 	</select>
 	
 	<select id="selectProfLastNum" parameterType="string" resultType="_int">
-		SELECT MAX(SUBSTR(PROF_ID,9,2)) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'P' AND DEPT_CODE = #{deptCode}
+		SELECT NVL(MAX(SUBSTR(PROF_ID,9,2)),0) FROM HD_PROFESSOR_TB JOIN HD_DEPARTMENT_TB USING(DEPT_CODE) WHERE SUBSTR(PROF_ID,1,1) = 'P' AND DEPT_CODE = #{deptCode}
 	</select>
 	
 	<insert id="insertNewProf" parameterType="professor">
