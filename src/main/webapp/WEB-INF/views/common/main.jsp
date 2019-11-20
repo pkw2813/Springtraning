@@ -14,20 +14,6 @@
 	<script src='${path}/resources/js/ko.js'></script>
 <jsp:include page="header.jsp" />
 
-<!-- <div class="main-panel">
-	<div class="content-wrapper">
-		<div class="row">
-			<div class="col-md-12 grid-margin">
-				<div class="d-flex justify-content-between align-items-center">
-					<div>
-						<h4 class="font-weight-bold mb-0">Main Content</h4>
-					</div>
-				</div>
-			</div>
-			</div>
-			<div class="row"> -->
-			
-
             
  
   <script type="text/javascript">
@@ -49,53 +35,11 @@
         header: {
             left: 'prev,next today',
             center: 'title',
-            // right: 'dayGridMonth,timeGridWeek,timeGridDay'
             right: ''
         },
          editable: true,
-        
-
-
           locale: 'ko',
-         // selectable: true,  //사용자가 클릭 및 드래그하여 선택을 할 수 있도록
-         // selectHelper: true,//사용자가 드래그되는 동안 "자리"이벤트를 그릴 것인지 여부를 지정할 수 있습니다.
-          // 선택했을때 함수
-          /* select: function(data) {            
-           let end = moment(new Date(moment(data.endStr, "YYYY-MM-DD").subtract(1, 'days').toDate())).format('YYYY-MM-DD');
-           $(".modalCal").modal("show");
-           $(".modal-backdrop").css("display","block");
-           $('.modal-content').css('display','block');
-            $(".modalCal")
-              .find("#title")
-              .val("");
-            $(".modalCal")
-              .find("#starts-at")
-              .val(data.startStr);
-            $(".modalCal")
-              .find("#ends-at")
-              .val(end);
-            $("#save-event").show();
-            $("input").prop("readonly", false);
-          }, */
-           /* eventClick:function(event) {
-                if(confirm("일정을 삭제 하시겠습니까?")) {
-                  // 삭제하는 로직 작성
-                  $.ajax({
-                    type:"post",
-                    url:'${path}/deleteCalendar.hd',
-                    data:{"title" : event.event._def.title,
-                          "start" : moment(event.event._instance.range.start).format('YYYY-MM-DD'),
-                          "end" : moment(event.event._instance.range.end).add(-1,'day').format('YYYY-MM-DD'),
-                          "deptCode": event.event._def.groupId
-                          },
-                          success:function(data) {
-                            location.href='${path}/schedule.hd';
-                          }
 
-                  });
-                }
-            } */
-     	
     });//calendar종료
  $(function(){
     calendar.render();
@@ -111,7 +55,7 @@
                     $.each(items,function(index, item) {
                       let depCode = "${sessionScope.loginMember.deptCode }";
                       let flag = moment(new Date()).format('YYYY-MM-DD') > moment(new Date(item['enDate'])).format('YYYY-MM-DD')?'rgba(0, 0, 0, 0.2)':depCode == item['deptCode']?"rgba(235, 160, 160, 0.3)":"rgba(104, 175, 255, 0.2)";
-                      let title = depCode == item['deptCode']?item['planName']: "[" +item['deptName'] +"] " + item['planName'];
+                      let title = depCode == item['deptCode']?item['planName']:item['deptCode'].substring(0,1) == '0'?"[대학 일정] " + item['planName']: "[" +item['deptName'] +"] " + item['planName'];
                       let end = moment(new Date(item['stDate'])).format('YYYY-MM-DD') == moment(new Date(item['enDate'])).format('YYYY-MM-DD')?moment(new Date(item['enDate'])).format('YYYY-MM-DD'):moment(new Date(item['enDate'])).add(1,'day').format('YYYY-MM-DD');
                           let setData = {
                               "title" : title,
@@ -123,42 +67,15 @@
                           calendar.addEvent(setData);
                     })
                   }) 
-                //just to give a visual on the data. From what you were doing in your example it looks like your data is already in a format suitable to be used by fullCalendar, so no need to push it all into another array
               }
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
-            /*   alert("Error when fetching events: " + textStatus + " - " + errorThrown); */
             }
         });
    
       });
         });  
-    
-        // 모달창 close 하는 함수
-       /*  $(function(){
-          $(".btn-default").click(function(){
-            $(".modal-content").css("display","none");
-            $(".modal-backdrop").css("display","none");
-
-          });
-        }); 
-
-        $(function(){
-          $(".closeCal").click(function(){
-            $(".modal-content").css("display","none");
-            $(".modal-backdrop").css("display","none");
-
-          });
-        }); */
-        
-
-        function insertPlan() {
-          let start = $('#starts-at').val();
-          let end = $('#ends-at').val();
-          let title = $('#title').val();
-          location.href='${pageContext.request.contextPath}/insertPlan.hd?start='+start+'&end='+end+'&title='+title+'&url=/schedule.hd';
-        }
 
      
 </script>

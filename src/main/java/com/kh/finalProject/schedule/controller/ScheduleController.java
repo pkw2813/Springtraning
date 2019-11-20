@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.employee.model.vo.Employee;
+import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.schedule.model.service.ScheduleService;
 import com.kh.finalProject.schedule.model.vo.Schedule;
+import com.kh.finalProject.student.model.vo.Student;
 
 @Controller
 public class ScheduleController {
@@ -33,8 +35,16 @@ public class ScheduleController {
 	public HashMap<String, Object> getCalendar(String start, String end, HttpSession s)  {
 		HashMap resultMap = new HashMap();		
 		HashMap map = new HashMap();
-		Employee e = (Employee)s.getAttribute("loginMember");
-		resultMap.put("deptCode", e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode());
+		if(s.getAttribute("loginMember") instanceof Employee) {
+			Employee e = (Employee)s.getAttribute("loginMember");
+			resultMap.put("deptCode", e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode());			
+		}else if(s.getAttribute("loginMember") instanceof Professor) {
+			Professor e = (Professor)s.getAttribute("loginMember");
+			resultMap.put("deptCode", e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode());			
+		}else if(s.getAttribute("loginMember") instanceof Student) {
+			Student e = (Student)s.getAttribute("loginMember");
+			resultMap.put("deptCode", e.getDeptCode().substring(0, 1).equals("0")?null:e.getDeptCode());			
+		}
 		resultMap.put("start", start);
 		resultMap.put("end", end);
 		List<Schedule> list = service.getCalendar(resultMap);

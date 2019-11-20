@@ -155,8 +155,9 @@
                     $.each(items,function(index, item) {
                       let depCode = "${sessionScope.loginMember.deptCode }";
                       let flag = moment(new Date()).format('YYYY-MM-DD') > moment(new Date(item['enDate'])).format('YYYY-MM-DD')?'rgba(0, 0, 0, 0.2)':depCode == item['deptCode']?"rgba(235, 160, 160, 0.3)":"rgba(104, 175, 255, 0.2)";
-                      let title = depCode == item['deptCode']?item['planName']: "[" +item['deptName'] +"] " + item['planName'];
+                      let title = depCode == item['deptCode']?item['planName']:item['deptCode'].substring(0,1) == '0'?"[대학 일정] " + item['planName']: "[" +item['deptName'] +"] " + item['planName'];
                       let end = moment(new Date(item['stDate'])).format('YYYY-MM-DD') == moment(new Date(item['enDate'])).format('YYYY-MM-DD')?moment(new Date(item['enDate'])).format('YYYY-MM-DD'):moment(new Date(item['enDate'])).add(1,'day').format('YYYY-MM-DD');
+                          console.log(item['deptCode'].substring(0,1));
                           let setData = {
                               "title" : title,
                               "start" : moment(new Date(item['stDate'])).format('YYYY-MM-DD'),
@@ -172,7 +173,7 @@
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
-              alert("Error when fetching events: " + textStatus + " - " + errorThrown);
+              alert("달력 생성 오류");
             }
         });
    

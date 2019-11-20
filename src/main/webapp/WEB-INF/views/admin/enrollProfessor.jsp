@@ -187,10 +187,6 @@ $(function() {
             let addrCode = $("#sample6_address").val();
             let detailAddr = $("#sample6_detailAddress").val();
 			$('#addr').val(postCode + " / " + addrCode + " / " + detailAddr);
-			console.log(postCode);
-			console.log(addrCode);
-			console.log(detailAddr);
-			console.log($('#addr').val());
 	});
 });
 
