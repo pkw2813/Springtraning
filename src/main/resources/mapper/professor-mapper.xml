@@ -14,7 +14,7 @@
 	</select>	
 
 	<select id="profCount" resultType="_int" parameterType="string">
-		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
+		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
 		<if test="value != null">
 		AND SUBSTR(DEPT_CODE,1,1) = #{value}
 		</if>
@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="changeProfessorCount" resultType="_int" parameterType="string">
-		SELECT COUNT(*) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
+		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB WHERE SUBSTR(PROF_ID,1,1) = 'P'
 		<if test="value != null">
 			 AND DEPT_CODE = #{value}
 			</if>
@@ -56,7 +56,7 @@
 	</select>
 	
 	<select id="deptProfCount" resultType="_int" parameterType="map">
-  		SELECT COUNT(*) FROM HD_PROFESSOR_TB
+  		SELECT NVL(COUNT(*),0) FROM HD_PROFESSOR_TB
 		WHERE SUBSTR(PROF_ID,1,1) = 'P'
   		<if test="deptCode != null">
 		AND DEPT_CODE = #{deptCode}
