@@ -31,7 +31,7 @@
                           <div class="input-group as">
                             <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
                               <span class="input-group-text" id="search">
-                              <i class="ti-search" onclick=""><input type="button" id="searchBtn" onclick="getSearchData();"></i>
+                              <i class="ti-search" onclick="getSearchData();"></i>
                               </span>
                             </div>
                             <input type="text" class="form-control" id="searchStu" placeholder="Search now" aria-label="search" aria-describedby="search">
@@ -70,6 +70,8 @@
 
 
 <script>
+
+  $("#searchStu").keyup(function(e){if(e.keyCode == 13)  getSearchData(); });
 
      $(function(){
             	   $(".nav-tabs>li").first().trigger("click");

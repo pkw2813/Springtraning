@@ -52,7 +52,7 @@
 
 
 <div id="myModal" class="modal">
-	<div class="modal-content">
+	<div class="modal-content" id="modal-content">
 		<form action="${path}/employee/insertEmp.hd" method="POST">
 		<span class="close">&times;</span>
 		<p>교직원 등록</p>
@@ -200,7 +200,7 @@ function setJumin(obj) {
 function showViewNewEmp() {
    let checkDept = $(".selectdep").val();
    if(checkDept != null) {
-   $(".modal").css("display","block");
+   $("#myModal").css("display","block");
    $(".selectdep").val(checkDept);
    }else {
 	   alert("학과 선택 이후에 진행해 주세요.");
@@ -210,13 +210,13 @@ function showViewNewEmp() {
 
 $(function(){
 	$(".btn_close").click(function(){
-		$(".modal").css("display","none");
+		$("#myModal").css("display","none");
 	});
 });
 
 $(function(){
 	$(".close").click(function(){
-		$(".modal").css("display","none");
+		$("#myModal").css("display","none");
 	});
 });
 
@@ -345,7 +345,7 @@ function sample6_execDaumPostcode() {
 	.gap3{
 		height:300px;
 	}
-	.modal{
+	#myModal{
 		display: none;
 		position : fixed;
 		z-index: 1;
@@ -359,7 +359,7 @@ function sample6_execDaumPostcode() {
         }
     
         /* Modal Content/Box */
-        .modal-content {
+        #modal-content {
             background-color: #fefefe;
             margin: 15% auto; /* 15% from the top and centered */
             padding: 20px;
