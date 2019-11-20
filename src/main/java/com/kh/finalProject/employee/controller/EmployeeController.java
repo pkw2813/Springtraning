@@ -519,7 +519,6 @@ public class EmployeeController {
 		prof.setAddress(p.getAddress());
 		prof.setDeptCode(p.getDeptCode());
 		prof.setEmail(p.getEmail());
-//		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-1" : "미정");
 
 		return prof;
 	}

@@ -31,9 +31,6 @@ public class RSAEncrypto implements MyEncrypt {
 		//작업용 경로
 		path = path.substring(0, path.lastIndexOf("/target"));
 		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hd");
-//		war 업로드 할 때는 아래로 교체
-//		path = path.substring(0, path.lastIndexOf("/classes"));
-//		File f = new File(path + "/keys.hd");
 		
 		if(f.exists()) {
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
