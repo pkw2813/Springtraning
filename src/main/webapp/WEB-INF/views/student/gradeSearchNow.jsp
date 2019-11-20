@@ -81,7 +81,7 @@ pre {
 														<td><button type="button" id="appeal${s.count}" class="btn btn-danger btn-xs" style="font-size:13px">이의신청</button></td>
 														<td></td>
 													</c:if>
-													<c:if test="${l.reqDate ne null }">
+													<c:if test="${l.reqDate ne null}">
 														<td><button type="button" id="appeal${s.count}" class="btn btn-danger btn-xs" style="font-size:13px">이의신청중</button></td>
 													</c:if>
 													<c:if test="${l.reqDate ne null and l.reqAwswer eq null }">
@@ -248,7 +248,7 @@ pre {
 				<div id="topCloseProfAssessBotton" style="text-align: right">
 					<span class="close" id="closeTopProfAssess" Style="width: 50px;">&times;</span>
 				</div>
-				<form name="myProfAssessFrm" action="${path}/myProfAssess.hd" method="post">
+				<form name="myProfAssessFrm" action="${path}/myProfAssess.hd" method="post" onsubmit="return checkContent();">
 				<div>
 					<p style="font-family: jua; font-size: 30px; font-style:">수강평가</p>
 					<hr>
@@ -325,7 +325,7 @@ pre {
                         </div>
 						<hr>
 						<p style="font-family: jua; font-size: 15px;">강의평가</p>
-						<textarea class="form-control" rows="5" cols="90" name="evalComment" id="evalConmment" required="required"></textarea>	
+						<textarea class="form-control" rows="5" cols="90" name="evalComment" id="evalConmment"></textarea>	
 						
 						<input type="hidden" name="stuNo" id="stuNo_pfa" value="${loginMember.stuNo}" readonly="readonly"/>
 						<input type="hidden" name="acaYearSem" id="acaYearSem_pfa" value="acaYearSem" readonly="readonly"/>
@@ -348,7 +348,26 @@ pre {
 </style>
 
 <script>
-$("[name=evalPoint]").attr("required",true);
+function checkContent(){
+	var flag=false;
+	$.each($(".form-check-input"),function(i,items){
+		if($(items).is(":checked")){
+			flag=true;
+		}
+	});
+	if(!flag){
+		alert("평점을 입력해주세요!");
+		return false;
+	}
+	var content=$("#evalConmment").val();
+
+	if(content.trim().length<1){
+		alert("평가내용을 입력해야합니다.");
+		$("#evalConmment").focus();
+		return false;
+	}
+	
+}
 
 /* function taeyoug1(event) {
 	console.log("taeyoung1");
@@ -395,9 +414,7 @@ $("[name=evalPoint]").attr("required",true);
     	AppealModal.style.display = "none";
     }
     
-    submitProfassess.onclick = function() {
-    	ProfassessModal.style.display = "none";
-    }
+
     resetProfassess.onclick = function() {
     	ProfassessModal.style.display = "none";
     }
