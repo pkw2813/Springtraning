@@ -4,7 +4,7 @@
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="{$pageContext.request.contextPath}"/>
 
-	<jsp:include page = "/WEB-INF/views/common/son_pro_header.jsp">
+	<jsp:include page = "/WEB-INF/views/common/header.jsp">
 		<jsp:param name="pageTitle" value=""/>
 	</jsp:include>
 
@@ -33,16 +33,16 @@
 							<table class="table spacing" style="text-align:center;">
 								<tr>
 									<th style="color:red;">* 현재 비밀번호 : </th>
-									<td><input style="background-color:lightgray;" class="btn form-control" type='password' name="profPw"/></td>
+									<td><input style="background-color:lightgray;" class="btn form-control" type='password' name="profPw" required/></td>
 							    </tr>
 							    <tr>
 							    	<th style="color:blue;">변경할 비밀번호 : </th>
-							    	<td><input id="checkPwd" style="background-color:lightgray;" class="btn form-control" type='password' name="profPwdUpdate"/></td>
+							    	<td><input id="checkPwd" style="background-color:lightgray;" class="btn form-control" type='password' name="profPwdUpdate" required/></td>
 							    	<td id="checkPwdOn" style="display:none;"></td>
 							    </tr>
 							    <tr>
 							    	<th style="color:blue;">비밀번호 확인 : </th>
-							    	<td id="checkPwdOn1_"><input id="checkPwd_" style="background-color:lightgray;" class="btn form-control" type='password' name="profPwdReUpdate"/></td>
+							    	<td id="checkPwdOn1_"><input id="checkPwd_" style="background-color:lightgray;" class="btn form-control" type='password' name="profPwdReUpdate" required/></td>
 							    </tr>
 							 </table>
 									<p id="checkPwdOn_" style="display:none;text-align:center;"></p>

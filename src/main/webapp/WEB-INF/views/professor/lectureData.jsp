@@ -54,7 +54,7 @@
 								</c:if>
 								<td style="width:100px;"><c:out value="${ board.PROF_NAME}"/></td>
 								<td style="width:50px;"><fmt:formatDate value="${board.PROF_BOARD_DATE }" pattern="yyyy-MM-dd"/></td>
-								<td style="width:40px;">임시</td>
+								<td style="width:40px;">${board.PROF_BOARD_READCOUNT }</td>
 							</tr>
 							</c:if>
 							</c:forEach>
@@ -83,11 +83,15 @@
 </div>
 
 <script>
+
+function fn_insertBoard(){
+	location.href="${pageContext.request.contextPath}/professor/insertBoard";
+}
+
 $(function(){
 
 	$("#typing").keyup(function(){
 		var items = $(this).val();
-		if(items.trim()){
 			$.ajax({
 				url:"${pageContext.request.contextPath}/professor/searchData",
 				data:{search:items},
@@ -98,21 +102,22 @@ $(function(){
 					for(var i =0; i<board.length; i++){
 						
 						console.log(board[i].PROF_NAME);
-						content += "<tr>";
-						content += "<td>"+board[i].PROF_BOARD_NO+"</td>";
-						content += "<td>"+board[i].PROF_BOARD_TYPE+"</td>";
-						content += "<td><a href='${pageContext.request.contextPath}/professor/selectBoardView?profBoardNo="+board[i].PROF_BOARD_NO+"'>"+board[i].PROF_BOARD_TITLE+"</a></td>";
-						content += "<td>"+board[i].PROF_BOARD_ATTACH+"</td>";
-						content += "<td>"+board[i].PROF_NAME+"</td>";
-						content += "<td>"+board[i].PROF_BOARD_DATE+"</td>";
-						content += "<td>"+board[i].PROF_BOARD_DATE+"</td>";
+						content += "<tr id='searchTb'>";
+						content += "<td style='width:80px;'>"+board[i].PROF_BOARD_NO+"</td>";
+						content += "<td style='width:100px;'>"+board[i].PROF_BOARD_TYPE+"</td>";
+						content += "<td style='width:70px;'><a href='${pageContext.request.contextPath}/professor/selectBoardView?profBoardNo="+board[i].PROF_BOARD_NO+"'>"+board[i].PROF_BOARD_TITLE+"</a></td>";
+						
+						content += "<td style='width:70px;'>"+board[i].ATTACH+"</td>";
+						
+						content += "<td style='width:100px;'>"+board[i].PROF_NAME+"</td>";
+						content += "<td style='width:50px;'>"+board[i].BODATE+"</td>";
+						content += "<td style='width:40px;'>"+board[i].PROF_BOARD_READCOUNT+"</td>";
 						content += "</tr>";
 					}
 					
 					$("#tbody").html(content);
 				}
 			});
-		}
 	});
 
 });

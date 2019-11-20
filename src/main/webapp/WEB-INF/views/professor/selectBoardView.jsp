@@ -72,11 +72,11 @@
 						<div class="col-3"></div>
 						<div class="col-3"></div>
 						<div class="col-6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<c:if test="${loginMember.profId != null && loginMember.profName == profBoard.profName }">
+						<%-- <c:if test="${loginMember.profId != null && loginMember.profName == profBoard.profName }"> --%>
 							<input type='button' id="updateBoard" class="btn btn-dark" value=" 글 수정 "/>
 							<input class="btn btn-dark" type='button' id="deleteBoard" value=" 글 삭제 "/>
+						<%-- </c:if> --%>
 							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 "/>
-						</c:if>
 						</div>
 					</div>
 			</div>
@@ -85,14 +85,25 @@
 </div>
 
 <script>
+
 	$("#updateBoard").click(function(){
-			location.href="${pageContext.request.contextPath}/profBoard/updateBoard?profBoardNo=${profBoard.profBoardNo}";
-	});
-	$("#deleteBoard").click(function(){
-		if(confirm("삭제하시겠습니까?")==true){
-			location.href="${pageContext.request.contextPath}/profBoard/deleteBoard?profBoardNo=${profBoard.profBoardNo}";
+		if(${loginMember.profId != profBoard.profId}){
+			alert("작성자만 수정할 수 있습니다.");
 		}else{
-			return false;
+			location.href="${pageContext.request.contextPath}/profBoard/updateBoard?profBoardNo=${profBoard.profBoardNo}";
+		}
+	});
+	
+	
+	$("#deleteBoard").click(function(){
+		if(${loginMember.profId != profBoard.profId}){
+			alert("작성자만 삭제할 수 있습니다.")
+		}else{
+			if(confirm("삭제하시겠습니까?")==true){
+				location.href="${pageContext.request.contextPath}/profBoard/deleteBoard?profBoardNo=${profBoard.profBoardNo}";
+			}else{
+				return false;
+			}
 		}
 	});
 
@@ -137,7 +148,7 @@
 	
 	$(function(){
 		$("#boardView").click(function(){
-			history.back();
+			location.href="${pageContext.request.contextPath}/professor/lectureData";
 		});
 	});
 

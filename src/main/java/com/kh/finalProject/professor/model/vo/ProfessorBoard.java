@@ -19,4 +19,5 @@ public class ProfessorBoard {
 	private String profOrifilename;
 	private String profRefilename;
 	private Date profBoardDate;
+	private String profId;
 }

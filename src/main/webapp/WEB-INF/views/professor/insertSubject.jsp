@@ -45,7 +45,7 @@
 									<tr style="height:20px;">
 										<td style="text-align:center;">${cv.SUB_TYPE }</td>
 										<input class="subCodeYn" type='hidden' value="${cv.SUB_CODE }" name='subCode'/>
-										<td style="text-align:center;font-size:5px;">
+										<td style="text-align:center;font-size:8px;">
 											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }&profId=${loginMember.profId }&subTime=${cv.SUB_TIME }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
 											${cv.SUB_NAME }
 											</a>
@@ -86,7 +86,7 @@
 									<tr style="height:20px;">
 										<td style="text-align:center;">${cv.SUB_TYPE }</td>
 										<input class="subCodeYn" type='hidden' value="${cv.SUB_CODE }" name='subCode'/>
-										<td style="text-align:center;font-size:5px;">
+										<td style="text-align:center;font-size:8px;">
 											<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${cv.SUB_CODE }&profId=${loginMember.profId }&subTime=${cv.SUB_TIME }','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">
 											${cv.SUB_NAME }
 											</a>

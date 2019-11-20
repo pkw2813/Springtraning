@@ -195,8 +195,19 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	}
 //	게시판select
 	@Override
-	public ProfessorBoard selectBoardView(int profBoardNo) {
-		return dao.selectBoardView(session, profBoardNo);
+	@Transactional
+	public ProfessorBoard selectBoardView(int profBoardNo,boolean hasRead) throws RuntimeException {
+		
+		int result = 0;
+		
+		ProfessorBoard pb = dao.selectBoardView(session, profBoardNo); 
+		if(!hasRead && pb != null) {
+			result = dao.updateReadCount(session, profBoardNo);
+			if(result == 0) {
+				throw new RuntimeException();
+			}
+		}
+		return pb;
 	}
 	@Override
 	public List<ProfBoardAttachment> selectProfAttachment(int profBoardNo) {
@@ -282,10 +293,26 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		
 		return schedule;
 	}
+	@Override
+	public List<Map<String,String>> deptCodeView(String deptCode){
+		List<Map<String,String>> deptCodeView = dao.deptCodeView(session,deptCode);
+		return deptCodeView;
+	}
+	//교수별 deptCode select
+	@Override
+	public List<Map<String,String>> selectDeptCode(String deptCode){
+		List<Map<String,String>> selectDeptCode = dao.selectDeptCode(session,deptCode);
+		return selectDeptCode;
+	}
+	@Override
+	public List<Map<String,String>> selectDeptName(String deptCode){
+		List<Map<String,String>> selectDeptName = dao.selectDeptName(session, deptCode);
+		return selectDeptName;
+	}
 	//강의 자료 게시판
 	@Override
-	public List<Map<String,String>> searchData(String search){
-		List<Map<String,String>> searchData = dao.searchData(session,search);
+	public List<Map<String,String>> searchData(Map<String,String> search_){
+		List<Map<String,String>> searchData = dao.searchData(session,search_);
 		return searchData;
 	}
 	//강의계획서 검색
@@ -293,5 +320,22 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 	public List<Map<String,String>> searchPlan(Map<String,String> typing_){
 		List<Map<String,String>> searchPlan = dao.searchPlan(session,typing_);
 		return searchPlan;
+	}
+	//교수별 강의 내역
+	@Override
+	public List<Map<String,String>> profPlanResult(int cPage, int numPerPage){
+		List<Map<String,String>> profPlanResult = dao.profPlanResult(session,cPage,numPerPage);
+		return profPlanResult;
+	}
+	@Override
+	public int totalPlanResult() {
+		int totalData = dao.totalPlanResult(session);
+		return totalData;
+	}
+	//내 강의 내역
+	@Override
+	public List<Map<String,String>> myPlanResult(String profId){
+		List<Map<String,String>> myPlanResult = dao.myPlanResult(session, profId);
+		return myPlanResult;
 	}
 }

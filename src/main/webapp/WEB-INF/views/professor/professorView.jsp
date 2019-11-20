@@ -67,7 +67,7 @@
 								<tr>
 									<th>주민번호</th>
 									<td>
-										<c:out value="${loginMember.profSsn }"/>
+										<c:out value="${jumin }"/>
 									</td>
 								</tr>
 								<tr>

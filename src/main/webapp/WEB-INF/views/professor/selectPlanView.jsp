@@ -8,6 +8,11 @@
 		<jsp:param name="pageTitle" value=""/>
 	</jsp:include>
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> <!-- 구글 i태그 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" /> <!-- 폰트어썸 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script> <!-- jsPDF -->
+<script src="${pageContext.request.contextPath }/resources/js/html2canvas.js"></script> <!-- html2canvas -->
+
 <div class="main-panel">
 	<div class="content-wrapper">
 <!-- Body section Start -->	
@@ -18,8 +23,17 @@
 			</div>
 			</div>
 <!-- Main Content start -->	
+
 <div class="row">
-	<div class="col-12 grid-margin stretch-card">
+<div class="col-10"></div>
+<div class="col-2">
+	<i class="material-icons"><input type='button' style="border:0;background-color:rgba(255,255,255,0.3);" id="pdfschedule" value="picture_as_pdf"/></i>
+	<i class="material-icons"><input type='button' style="border:0;background-color:rgba(255,255,255,0.3);" value='print' onclick='printSchedule();'></i>
+</div>
+</div>
+
+<div class="row">
+	<div id="printme" class="col-12 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body" style="margin:30px;">
 				<!-- <div class="row"><p style="font-size:25px;">글작성</p></div> -->
@@ -255,6 +269,52 @@
 </div>
 
 <script>
+
+//프린트 버튼
+function printSchedule(){
+	var printme = document.getElementById("printme");
+	var pt=window.open('','Print-Window');
+	pt.document.open();
+	pt.document.write('<html>'
+			+'<head>'
+			+'<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">'
+			+'</head>'
+			+'<body onload="window.print()">'
+			+printme.innerHTML
+			+'</body></html>');
+	pt.document.body.innerHTML+='<script src="${pageContext.request.contextPath}/resources/js/bootstrap.js">'+'</'+'script>';
+	pt.document.body.innerHTML+='<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">'+'</'+'script>';
+	pt.document.body.innerHTML+='<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">'+'</'+'script>';
+	pt.document.close();
+	pt.location.reload();
+	pt.print();
+	pt.close();
+}
+
+
+//PDF로 저장
+$('#pdfschedule').click((e) => {
+	html2canvas(document.querySelector("#printme")).then(canvas => { // jsPDF 객체 생성 생성자에는 가로, 세로 설정, 페이지 크기 등등 설정할 수 있다.
+		// 현재 파라미터는 기본값이다 굳이 쓰지 않아도 되는데 저것이 기본값이라고 보여준다.
+		var imgData = canvas.toDataURL('image/png'); //이미지 코드뽑기
+		var imgWidth = 210; //이미지 width값 설정
+		var pageHeight = 295; // 페이지 height값 설정
+		var imgHeight = canvas.height * imgWidth / canvas.width; //이미지 height값 설정
+		var heightLeft = imgHeight;
+		var doc = new jsPDF('p', 'mm');
+		var position = 0;
+		doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+		heightLeft -= pageHeight;
+		while (heightLeft >= 0) {
+			position = heightLeft - imgHeight; doc.addPage();
+			doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+			heightLeft -= pageHeight; 
+		}
+		doc.save('강의 시간표.pdf');
+
+	});
+});
+
 
 $("#updatePlan").click(function(){
 	location.href="${pageContext.request.contextPath}/professor/updatePlan?planNo=${plan.planNo}";

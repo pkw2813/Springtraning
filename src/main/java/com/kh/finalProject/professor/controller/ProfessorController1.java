@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +28,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.finalProject.common.encrypt.MyEncrypt;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.service.ProfessorService1;
 import com.kh.finalProject.professor.model.vo.InsertClass;
@@ -43,6 +47,8 @@ public class ProfessorController1 {
 	@Autowired
 	private ProfessorService1 service;
 	
+	@Autowired
+	private MyEncrypt enc;
 	
 	
 	//과목선택
@@ -56,7 +62,7 @@ public class ProfessorController1 {
 		
 		Map<String,String> param = new HashMap<String,String>();
 		param.put("subCode",subCode);
-		param.put("subTime",subTime);
+		param.put("subTime",subTime.trim());
 		
 		logger.info("param : "+param);
 		
@@ -198,9 +204,23 @@ public class ProfessorController1 {
 	}
 	//교수정보
 	@RequestMapping("/professor/professorView")
-	public String professorView(Model model, String profId) {
+	public String professorView(Model model, String profId, HttpSession session) {
+		Professor pro = new Professor();
+		pro = (Professor)session.getAttribute("loginMember");
+		
+		//복호화
+		try {
+			String jumin = enc.decrypt(pro.getProfSsn()).subSequence(0, 8)+"******";
+			model.addAttribute("jumin",jumin);
+			logger.info("주민번호 : "+jumin);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 		List<Subject> p = service.professorView(profId);
+		
+		logger.info("리스트 : "+p);
 		
 		model.addAttribute("prof",p);
 		
@@ -225,10 +245,10 @@ public class ProfessorController1 {
 		int result = service.updateProfessorEnd(p);
 		if(result>0) {
 			msg = "수정완료";
-			loc = "/index.jsp";
+			loc = "/professor/professorView?profId="+p.getProfId();
 		}else {
 			msg = "수정실패";
-			loc = "/index.jsp";
+			loc = "/professor/professorView?profId="+p.getProfId();
 		}
 		
 		model.addAttribute("msg",msg);
@@ -247,7 +267,7 @@ public class ProfessorController1 {
 		return "professor/profUpdatePwd";
 	}
 	@RequestMapping("/professor/profUpdatePwdEnd")
-	public String profUpdatePwdEnd(Model model, HttpServletRequest req, Professor p) {
+	public String profUpdatePwdEnd(Model model, HttpServletRequest req, Professor p, HttpSession session) {
 		
 		String profId = req.getParameter("profId");
 		String profPw = req.getParameter("profPw");
@@ -265,11 +285,13 @@ public class ProfessorController1 {
 		int result = service.profUpdatePwdEnd(map);
 		
 		if(result>0) {
-			msg = "비밀번호 변경완료";
+			msg = "비밀번호 변경완료! 다시 로그인 해주세요.";
 			loc = "/index.jsp";
+			session.invalidate();
 		}else {
 			msg = "비밀번호가 다릅니다!";
-			loc = "/index.jsp";
+//			loc = "/professor/profUpdatePwdEnd?profId="+profId;
+			loc = "/professor/updatePwd?profId="+profId;
 		}
 		
 		model.addAttribute("msg",msg);
@@ -297,6 +319,55 @@ public class ProfessorController1 {
 		
 		return "professor/lectureData";
 	}
+	//게시판 보기
+	@RequestMapping("/professor/selectBoardView")
+	public ModelAndView selectBoardView(int profBoardNo,HttpServletRequest req,HttpServletResponse res) {
+		
+		//쿠키값
+		Cookie[] cookies = req.getCookies();
+		String boardCookieVal = "";
+		boolean hasRead = false;
+		
+		if(cookies != null) {
+			for(Cookie c : cookies) {
+				String name = c.getName();
+				String value = c.getValue();
+				if("boardCookie".equals(name)) {
+					boardCookieVal = value; //이전값 보관
+					if(value.contains("|"+profBoardNo+"|")) {
+						hasRead = true;
+						break;
+					}
+				}
+			}
+		}
+		//안읽었을때 쿠키에 조회수 추가
+		//현재 profBoardNo에 기록
+		if(!hasRead) {
+			Cookie c = new Cookie("boardCookie",boardCookieVal+"|"+profBoardNo+"|");
+			c.setMaxAge(-1); //로그아웃시 삭제됨
+			res.addCookie(c);
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		
+		ProfessorBoard pb = service.selectBoardView(profBoardNo,hasRead);
+		List<ProfBoardAttachment> pba = service.selectProfAttachment(profBoardNo);
+		
+		try {
+			mv.addObject("profBoard",pb);
+			mv.addObject("profAttachment",pba);
+			logger.info("조회수 증가");
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+			logger.info("조회수 증가안함");
+		}
+		
+		
+		mv.setViewName("/professor/selectBoardView");
+		
+		return mv;
+	}
 	//게시판 등록
 	@RequestMapping("/professor/insertBoard")
 	public String insertBoard(Model model) {
@@ -307,27 +378,9 @@ public class ProfessorController1 {
 		
 		return "professor/insertBoard";
 	}
-	//게시판 보기
-	@RequestMapping("/professor/selectBoardView")
-	public ModelAndView selectBoardView(int profBoardNo) {
-		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("profBoard",service.selectBoardView(profBoardNo));
-		mv.addObject("profAttachment",service.selectProfAttachment(profBoardNo));
-		
-		logger.info(""+profBoardNo);
-		logger.info(""+mv.getModel());
-		logger.info(""+mv.getModelMap());
-		logger.info(""+service.selectBoardView(profBoardNo));
-		logger.info(""+service.selectProfAttachment(profBoardNo));
-		
-		mv.setViewName("/professor/selectBoardView");
-		
-		return mv;
-	}
+	
 	@RequestMapping("/professor/insertBoardEnd")
-	public ModelAndView insertBoardEnd(MultipartFile[] upFile, HttpServletRequest req, ProfessorBoard pb) {
+	public ModelAndView insertBoardEnd(MultipartFile[] upFile, HttpServletRequest req, ProfessorBoard pb, String profId) {
 
 		String msg = "";
 		String loc = "";
@@ -368,6 +421,8 @@ public class ProfessorController1 {
 			
 		}
 		
+		pb.setProfId(profId);
+		
 		try {
 			service.insertBoardEnd(pb,list);
 			msg = "작성 완료";
@@ -388,12 +443,48 @@ public class ProfessorController1 {
 	}
 	//게시판수정
 	@RequestMapping("/profBoard/updateBoard")
-	public ModelAndView updateBoard(int profBoardNo) {
+	public ModelAndView updateBoard(int profBoardNo, HttpServletRequest req, HttpServletResponse res) {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.addObject("prof",service.selectBoardView(profBoardNo));
-		mv.addObject("profAttachment",service.selectProfAttachment(profBoardNo));
+		//쿠키값
+		Cookie[] cookies = req.getCookies();
+		String boardCookieVal = "";
+		boolean hasRead = false;
+		
+		if(cookies != null) {
+			for(Cookie c : cookies) {
+				String name = c.getName();
+				String value = c.getValue();
+				if("boardCookie".equals(name)) {
+					boardCookieVal = value; //이전값 보관
+					if(value.contains("|"+profBoardNo+"|")) {
+						hasRead = true;
+						break;
+					}
+				}
+			}
+		}	
+				
+		//안읽었을때 쿠키에 조회수 추가
+		//현재 profBoardNo에 기록
+		if(!hasRead) {
+			Cookie c = new Cookie("boardCookie",boardCookieVal+"|"+profBoardNo+"|");
+			c.setMaxAge(-1); //로그아웃시 삭제됨
+			res.addCookie(c);
+		}
+		
+		try {
+			mv.addObject("prof",service.selectBoardView(profBoardNo,hasRead));
+			mv.addObject("profAttachment",service.selectProfAttachment(profBoardNo));
+			logger.info("조회수 증가");
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+			logger.info("조회수 안올라감");
+		}
+		
+//		mv.addObject("prof",service.selectBoardView(profBoardNo,hasRead));
+//		mv.addObject("profAttachment",service.selectProfAttachment(profBoardNo));
 		
 		
 		mv.setViewName("/professor/updateBoard");
@@ -675,12 +766,45 @@ public class ProfessorController1 {
 	@RequestMapping("/professor/deptProfSchedule")
 	public String deptProfSchedule(Model model,String deptCode) {
 		
+		
+		
 		logger.info("deptCode : "+deptCode);
 		List<Map<String,String>> schedule = service.deptProfScheduleView(deptCode);
+		List<Map<String,String>> deptCodeView = service.deptCodeView(deptCode);
 		logger.info("교수별 강의시간표 : " + schedule);
 		model.addAttribute("schedule",schedule);
+		model.addAttribute("deptCodeView",deptCodeView);
 		
 		return "professor/deptProfSchedule";
+	}
+	//교수별 강의시간표 deptcode select
+	@RequestMapping("/professor/selectDeptProfSchedule")
+	public ModelAndView selectDeptProfSchedule(String deptCode, HttpServletResponse res, Model model) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		List<Map<String,String>> selectDeptCode = service.selectDeptCode(deptCode);
+		List<Map<String,String>> selectDeptName = service.selectDeptName(deptCode);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		
+		mv.addObject("selectDeptCode",selectDeptCode);
+		mv.addObject("selectDeptName",selectDeptName);
+		mv.setViewName("professor/selectDeptProfSchedule");
+		
+//		model.addAttribute("selectDeptCode",selectDeptCode);
+		
+//		try {
+//			jsonStr = mapper.writeValueAsString(selectDeptCode);
+//		}catch(JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
+		
+		//res.setContentType("application/json;charset=UTF-8");
+		
+		return mv;
+//		return "professor/selectDeptProfSchedule";
 	}
 	//강의자료 게시판
 	@RequestMapping("/professor/searchData")
@@ -691,7 +815,10 @@ public class ProfessorController1 {
 		
 		logger.info("입력값 : "+search);
 		
-		List<Map<String,String>> searchData = service.searchData(search);
+		Map<String,String> search_ = new HashMap<String,String>();
+		search_.put("search",search);
+		
+		List<Map<String,String>> searchData = service.searchData(search_);
 //		List<Map<String,String>> searchData = service.searchData(search,cPage,numPerPage); 페이징
 		
 		int totalData = service.selectBoardCount();
@@ -743,7 +870,45 @@ public class ProfessorController1 {
 		
 		return jsonStr;
 	}
-	
+	//교수별 강의내역
+	@RequestMapping("/professor/profPlanResult")
+	public ModelAndView profPlanResult(@RequestParam(value="cPage",required=false,defaultValue="1") int cPage) {
+		
+		int numPerPage = 10;
+		
+		ModelAndView mv = new ModelAndView();
+		
+		List<Map<String,String>> profPlanResult = service.profPlanResult(cPage,numPerPage);
+		int totalData = service.totalPlanResult();
+		
+		mv.addObject("planResult",profPlanResult);
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/profPlanResult"));
+		mv.setViewName("/professor/profPlanResult");
+		
+		return mv;
+	}
+	//내 강의내역
+	@RequestMapping("/professor/myPlanResult")
+	@ResponseBody
+	public String myPlanResult(String profId, HttpServletResponse res) {
+		
+		logger.info("profId는 ? "+profId);
+		
+		List<Map<String,String>> myPlanResult = service.myPlanResult(profId);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		
+		try {
+			jsonStr = mapper.writeValueAsString(myPlanResult);
+		}catch(JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		res.setContentType("application/json;charset=UTF-8");
+		
+		return jsonStr;
+	}
 }
 
 

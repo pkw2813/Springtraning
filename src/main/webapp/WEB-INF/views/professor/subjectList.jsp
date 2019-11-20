@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
  <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -55,7 +56,18 @@
 				<td>${subject.DEPT_CODE }</td>
 				<td>${subject.SUB_ROOM }</td>
 				<td>${subject.SUB_DATE }</td>
-				<td>${subject.SUB_TIME }</td>
+				<td>
+					<%-- <c:set var="subTime" value="${subject.SUB_TIME }"/>
+					
+					<c:if test="${fn:length(subTime) == 11}">
+					<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,6,11) }"/>
+					</c:if>
+					<c:if test="${fn:length(subTime) == 17}">
+					<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,12,17) }"/>
+					</c:if> --%>
+					${subject.SUB_TIME }
+					
+				</td>
 			</tr>
 			<input type='hidden' value="${subject.SUB_SEQ }"/>
 		</c:forEach>

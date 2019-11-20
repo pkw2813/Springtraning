@@ -26,7 +26,7 @@
 		<div class="card">
 			<div class="card-body">
 				<!-- <div class="row"><p style="font-size:25px;">글작성</p></div> -->
-				<form action="${pageContext.request.contextPath }/professor/insertBoardEnd" method="post" enctype="multipart/form-data">
+				<form action="${pageContext.request.contextPath }/professor/insertBoardEnd?profId=${loginMember.profId}" method="post" enctype="multipart/form-data">
 					<div class="row" style="margin:5px;">
 						<div class="col-12">
 							<table class="spacing">
@@ -76,8 +76,8 @@
 						<div class="col-4">&nbsp;
 						<c:if test="${loginMember != null }">
 							<input class="btn btn-dark" type='submit' value=" 글 작성 "/>&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 ">
 						</c:if>
+							<input type='button' id="boardView" class="btn btn-dark" value=" 글 목록 ">
 						</div>
 					</div>
 				</form>

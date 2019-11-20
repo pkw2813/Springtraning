@@ -23,7 +23,14 @@
 			<div class="col-md-12 grid-margin">
 				<div class="d-flex justify-content-between align-items-center">
 					<div>
-						<h4 class="font-weight-bold mb-0">시간표</h4>
+						<h4 class="font-weight-bold mb-0">학과별 시간표</h4>
+					</div>
+					<div>
+						<select id="selectDeptCode" class="form-control">
+							<c:forEach items="${deptCodeView }" var="deptCode">
+							<option value="${deptCode.DEPT_CODE }">${deptCode.DEPT_NAME }</option>
+							</c:forEach>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -33,8 +40,8 @@
 <div class="row">
 <div class="col-10"></div>
 <div class="col-2">
-	<i class="material-icons"><input type='button' style="border:0;" id="pdfschedule" value="picture_as_pdf"/></i>
-	<i class="material-icons"><input type='button' style="border:0;" value='print' onclick='printSchedule();'></i>
+	<i class="material-icons"><input type='button' style="border:0;background-color:rgba(255,255,255,0.3);" id="pdfschedule" value="picture_as_pdf"/></i>
+	<i class="material-icons"><input type='button' style="border:0;background-color:rgba(255,255,255,0.3);" value='print' onclick='printSchedule();'></i>
 </div>
 </div>
 
@@ -44,6 +51,9 @@
 			<div class="card-body">
 			
 			<div class="gap" style="height:20px;"></div>
+			
+			<div id="ajaxTable">
+			
 			<div class="col-12" style="text-align:center;">
 				<c:forEach items="${schedule }" var="deptName" begin="1" end="2">
 					<c:if test="${deptName != null}">
@@ -67,7 +77,7 @@
 						</tr>
 					</thead>
 					
-					<tbody>
+					<tbody id="tbody">
 						<tr>
 							<!-- <th style="width:50px;"><input type='text' value="1교시 (09:00~10:00)" style="border:none;text-align:center;font-weight:bold;" readonly/></th> -->
 							<th style="width:50px;">1교시 (09:00~09:50)</th>
@@ -175,7 +185,23 @@
 		</div>
 	</div>
 </div>
+</div>
 <script>
+
+$("#selectDeptCode").change(function(){
+	console.log($(this).val());
+	var deptCode = $(this).val();
+	$.ajax({
+		url:"${pageContext.request.contextPath}/professor/selectDeptProfSchedule",
+		data:{deptCode:deptCode},
+		success:function(data){
+			console.log(data);
+			$("#ajaxTable").html(data);
+			
+			
+		}
+	});
+});
 
 //PDF로 저장
 $('#pdfschedule').click((e) => {

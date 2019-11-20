@@ -44,7 +44,7 @@ public interface ProfessorService1 {
 	//게시판 삭제
 	int deleteBoard(ProfessorBoard pb, ProfBoardAttachment pba) throws RuntimeException;
 	//게시판select
-	ProfessorBoard selectBoardView(int profBoardNo);
+	ProfessorBoard selectBoardView(int profBoardNo, boolean hasRead) throws RuntimeException;
 	List<ProfBoardAttachment> selectProfAttachment(int profBoardNo);
 	//subject조회
 	List<Subject> subjectCodeView(int cPage, int numPerPage, String profId);
@@ -61,9 +61,18 @@ public interface ProfessorService1 {
 	List<Map<String,String>> profSchedule(String profId);
 	//교수별 스케줄
 	List<Map<String,String>> deptProfScheduleView(String deptCode);
+	List<Map<String,String>> deptCodeView(String deptCode);
+	//교수별 스케줄 select deptcode
+	List<Map<String,String>> selectDeptCode(String deptCode);
+	List<Map<String,String>> selectDeptName(String deptCode);
 	//강의 자료 게시판
-	List<Map<String,String>> searchData(String search);
+	List<Map<String,String>> searchData(Map<String,String> search_);
 //	List<Map<String,String>> searchData(String search,int cPage, int numPerPage);
 	//강의계획서 검색
 	List<Map<String,String>> searchPlan(Map<String,String> typing_);
+	//교수별 강의 내역
+	List<Map<String,String>> profPlanResult(int cPage, int numPerPage);
+	int totalPlanResult();
+	//내 강의 내역
+	List<Map<String,String>> myPlanResult(String profId);
 }

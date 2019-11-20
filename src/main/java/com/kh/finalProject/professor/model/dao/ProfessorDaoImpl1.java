@@ -127,6 +127,11 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	public ProfessorBoard selectBoardView(SqlSessionTemplate session, int profBoardNo) {
 		return session.selectOne("professor1.selectBoardView",profBoardNo);
 	}
+	//게시판 조회
+	@Override
+	public int updateReadCount(SqlSessionTemplate session, int profBoardNo) {
+		return session.update("professor1.updateReadCount",profBoardNo);
+	}
 	@Override
 	public List<ProfBoardAttachment> selectProfAttachment(SqlSessionTemplate session, int profBoardNo) {
 		return session.selectList("professor1.selectProfAttachment",profBoardNo);
@@ -177,15 +182,43 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	public List<Map<String,String>> deptProfScheduleView(SqlSessionTemplate session, String deptCode){
 		return session.selectList("professor1.deptProfSchedule",deptCode);
 	}
+	@Override
+	public List<Map<String,String>> deptCodeView(SqlSessionTemplate session, String deptCode){
+		return session.selectList("professor1.deptCodeView",deptCode);
+	}
+	//교수별 시간표 deptCode select
+	@Override
+	public List<Map<String,String>> selectDeptCode(SqlSessionTemplate session, String deptCode){
+		return session.selectList("professor1.selectDeptCode",deptCode);
+	}
+	@Override
+	public List<Map<String,String>> selectDeptName(SqlSessionTemplate session, String deptCode){
+		return session.selectList("professor1.selectDeptName",deptCode);
+	}
 	//강의 자료 게시판 검색
 	@Override
-	public List<Map<String,String>> searchData(SqlSessionTemplate session, String search){
+	public List<Map<String,String>> searchData(SqlSessionTemplate session, Map<String,String> search_){
 //		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return session.selectList("professor1.searchData",search);
+		return session.selectList("professor1.searchData",search_);
 	}
 	//강의 계획서 검색
 	@Override
 	public List<Map<String,String>> searchPlan(SqlSessionTemplate session, Map<String,String> typing_){
 		return session.selectList("professor1.searchPlan",typing_);
+	}
+	//교수별 강의 내역
+	@Override
+	public List<Map<String,String>> profPlanResult(SqlSessionTemplate session, int cPage, int numPerPage){
+		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("professor1.profPlanResult",cPage,row);
+	}
+	@Override
+	public int totalPlanResult(SqlSessionTemplate session) {
+		return session.selectOne("professor1.totalPlanResult");
+	}
+	//내 강의 내역
+	@Override
+	public List<Map<String,String>> myPlanResult(SqlSessionTemplate session, String profId){
+		return session.selectList("professor1.myPlanResult",profId);
 	}
 }

@@ -54,6 +54,8 @@ public interface ProfessorDao1 {
 	int deleteAttachment(SqlSessionTemplate session, ProfBoardAttachment pba);
 	//게시판 상세
 	ProfessorBoard selectBoardView(SqlSessionTemplate session, int profBoardNo);
+	//조회수
+	int updateReadCount(SqlSessionTemplate session, int profBoardNo);
 	List<ProfBoardAttachment> selectProfAttachment(SqlSessionTemplate session, int profBoardNo);
 //	subject
 	List<Subject> subjectCodeView(SqlSessionTemplate session,int cPage, int numPerPage, String profId);
@@ -72,9 +74,18 @@ public interface ProfessorDao1 {
 	List<Map<String,String>> profSchedule(SqlSessionTemplate session, String profId);
 	//교수별 시간표
 	List<Map<String,String>> deptProfScheduleView(SqlSessionTemplate session,String deptCode);
+	List<Map<String,String>> deptCodeView(SqlSessionTemplate session, String deptCode);
+	//교수별 시간표 deptCode select
+	List<Map<String,String>> selectDeptCode(SqlSessionTemplate session, String deptCode);
+	List<Map<String,String>> selectDeptName(SqlSessionTemplate session, String deptCode);
 	//강의 자료 게시판
-	List<Map<String,String>> searchData(SqlSessionTemplate session, String search);
+	List<Map<String,String>> searchData(SqlSessionTemplate session, Map<String,String> search_);
 	//강의 계획서 검색
 	List<Map<String,String>> searchPlan(SqlSessionTemplate session, Map<String,String> typing_);
+	//교수별 강의 내역
+	List<Map<String,String>> profPlanResult(SqlSessionTemplate session, int cPage, int numPerPage);
+	int totalPlanResult(SqlSessionTemplate session);
+	//내 강의 내역
+	List<Map<String,String>> myPlanResult(SqlSessionTemplate session, String profId);
 
 }
