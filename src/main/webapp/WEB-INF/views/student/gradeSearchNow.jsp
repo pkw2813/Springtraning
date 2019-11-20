@@ -23,6 +23,10 @@ pre {
 .row{
 	margin:-1px 0;
 }
+.form-check{
+	margin-top:15px;
+}
+
 </style>
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -103,7 +107,7 @@ pre {
 			<!-- Modal content -->
 			<div class="modal-content" style="width: 800px">
 				<div id="topCloseBotton" style="text-align: right">
-					<span class="close" id="closeAppeal" Style="width: 50px;">&times;</span>
+					<span class="close" id="closeTopAppeal" Style="width: 50px;">&times;</span>
 				</div>
 				<form name="myAppealFrm" action="${path}/myAppeal.hd" method="post">
 					<p style="font-family: jua; font-size: 30px; font-style:">성적이의신청</p>
@@ -166,8 +170,8 @@ pre {
 						
 					</div>
 					<div style="text-align: center">
-						<input type="reset" class="btn btn-inverse-info btn-fw" id="closeAppeal3" value="취소" style="float: right; margin: 7px;">
-						<input type="submit" class="btn btn-inverse-info btn-fw" id="closeAppeal2" value="제출" style="float: right; margin: 7px;">
+						<input type="reset" class="btn btn-inverse-info btn-fw" id="resetAppeal" value="취소" style="float: right; margin: 7px;">
+						<input type="submit" class="btn btn-inverse-info btn-fw" id="submitAppeal" value="제출" style="float: right; margin: 7px;">
 					</div>
 				</form>
 			</div>
@@ -178,7 +182,7 @@ pre {
 			<!-- Modal content -->
 			<div class="modal-content" style="width: 800px">
 				<div id="topCloseAnswerBotton" style="text-align: right">
-					<span class="close" id="closeAnswer" Style="width: 50px;">&times;</span>
+					<span class="close" id="closeTopAnswer" Style="width: 50px;">&times;</span>
 				</div>
 				<div>
 					<p style="font-family: jua; font-size: 30px; font-style:">성적이의신청결과</p>
@@ -242,7 +246,7 @@ pre {
 			<!-- Modal content -->
 			<div class="modal-content" style="width: 800px">
 				<div id="topCloseProfAssessBotton" style="text-align: right">
-					<span class="close" id="closeProfAssess" Style="width: 50px;">&times;</span>
+					<span class="close" id="closeTopProfAssess" Style="width: 50px;">&times;</span>
 				</div>
 				<form name="myProfAssessFrm" action="${path}/myProfAssess.hd" method="post">
 				<div>
@@ -286,57 +290,32 @@ pre {
 							<div class="col-md-12">
 							<div class="form-group row">
 	                        	<label class="col-sm-2 col-form-label" style="font-family: jua; text-align:center; letter-spacing:2px; font-size: 15px;">평가점수 : </label>
-		                            <div class="form-check" >
+		                            <div class="col-sm-1 form-check" >
 		                              <label class="form-check-label">
 		                                <input type="radio" class="form-check-input" name="evalPoint" value="0">
 		                                0 </label>
 		                            </div>
-		                            <div class="form-check">
-		                              <label class="form-check-label">
-		                                <input type="radio" class="form-check-input" name="evalPoint" value="1">
-		                                1 </label>
-		                            </div>
-		                            <div class="form-check">
+		                            <div class="col-sm-1 form-check">
 		                              <label class="form-check-label">
 		                                <input type="radio" class="form-check-input" name="evalPoint" value="2">
 		                                2 </label>
 		                            </div>
-		                            <div class="form-check">
-		                              <label class="form-check-label">
-		                                <input type="radio" class="form-check-input" name="evalPoint" value="3">
-		                                3 </label>
-		                            </div>
-		                            <div class="form-check">
+		                            <div class="col-sm-1 form-check">
 		                              <label class="form-check-label">
 		                                <input type="radio" class="form-check-input" name="evalPoint" value="4">
 		                                4 </label>
 		                            </div>
-		                            <div class="form-check">
-		                              <label class="form-check-label">
-		                                <input type="radio" class="form-check-input" name="evalPoint" value="5">
-		                                5 </label>
-		                            </div>
-		                            <div class="form-check">
+		                            <div class="col-sm-1 form-check">
 		                              <label class="form-check-label">
 		                                <input type="radio" class="form-check-input" name="evalPoint" value="6">
 		                                6 </label>
 		                            </div>
-		                            <div class="form-check">
-		                              <label class="form-check-label">
-		                                <input type="radio" class="form-check-input" name="evalPoint" value="7">
-		                                7 </label>
-		                            </div>
-		                            <div class="form-check">
+		                            <div class="col-sm-1 form-check">
 		                              <label class="form-check-label">
 		                                <input type="radio" class="form-check-input" name="evalPoint" value="8">
 		                                8 </label>
 		                            </div>
-		                            <div class="form-check">
-		                              <label class="form-check-label">
-		                                <input type="radio" class="form-check-input" name="evalPoint" value="9">
-		                                9 </label>
-		                            </div>
-		                            <div class="form-check">
+		                            <div class="col-sm-1 form-check">
 		                              <label class="form-check-label">
 		                                <input type="radio" class="form-check-input" name="evalPoint" value="10">
 		                                10 </label>
@@ -354,8 +333,8 @@ pre {
 						<input type="hidden" name="profId" id="profId_pfa" value="profId" readonly="readonly"/>		
 					</div>
 					<div style="text-align: center">
-						<input type="reset" class="btn btn-inverse-info btn-fw" id="closeAppeal3" value="취소" style="float: right; margin: 7px;">
-						<input type="submit" class="btn btn-inverse-info btn-fw" id="closeAppeal2" value="제출" style="float: right; margin: 7px;">						
+						<input type="reset" class="btn btn-inverse-info btn-fw" id="resetProfassess" value="취소" style="float: right; margin: 7px;">
+						<input type="submit" class="btn btn-inverse-info btn-fw" id="submitProfassess" value="제출" style="float: right; margin: 7px;">						
 					</div>
 				</form>
 			</div>
@@ -385,29 +364,42 @@ $("[name=evalPoint]").attr("required",true);
 	var ProfassessModal = document.getElementById('profassessModal');
 	
     // Get the <span> element that closes the modal
-    var closeAppeal = document.getElementById("closeAppeal");                                          
-    var closeAnswer = document.getElementById("closeAnswer");  
-    var closeProfAssess = document.getElementById("closeProfAssess");  
+    var closeTopAppeal = document.getElementById("closeTopAppeal");                                          
+    var closeTopAnswer = document.getElementById("closeTopAnswer");  
+    var closeTopProfAssess = document.getElementById("closeTopProfAssess");  
     
-    var closeAppeal2 = document.getElementById("closeAppeal2");
-    var closeAppeal3 = document.getElementById("closeAppeal3");
+    var submitAppeal = document.getElementById("submitAppeal");
+    var resetAppeal = document.getElementById("resetAppeal");
+    
+    //교수평가 닫기 버튼
+    var submitProfassess = document.getElementById("submitProfassess");
+    var resetProfassess = document.getElementById("resetProfassess");
     
     // When the user clicks on <span> (x), close the modal
-    closeAppeal.onclick = function() {
+    closeTopAppeal.onclick = function() {
     	AppealModal.style.display = "none";
     }
-    closeAnswer.onclick = function() {
-    	AnswerModal.style.display = "none";
-    }
-    closeProfAssess.onclick = function() {
+    
+    closeTopProfAssess.onclick = function() {
     	ProfassessModal.style.display = "none";
     }
     
-    closeAppeal2.onclick = function() {
+    closeTopAnswer.onclick = function() {
+    	AnswerModal.style.display = "none";
+    }
+    
+    submitAppeal.onclick = function() {
     	AppealModal.style.display = "none";
     }
-    closeAppeal3.onclick = function() {
+    resetAppeal.onclick = function() {
     	AppealModal.style.display = "none";
+    }
+    
+    submitProfassess.onclick = function() {
+    	ProfassessModal.style.display = "none";
+    }
+    resetProfassess.onclick = function() {
+    	ProfassessModal.style.display = "none";
     }
     
     
@@ -496,7 +488,6 @@ $("[name=evalPoint]").attr("required",true);
     			var ProfassessheaderBtn<%=(i+1)%> = document.getElementById("profassess<%=(i+1)%>");
     			
     			ProfassessheaderBtn<%=(i+1)%>.addEventListener('click', function(e){
-    		        	alert(this.id);		        	
     		            ProfassessModal.style.display = "block";
     		            $("#subName_pfa").val(""); // 초기화
     		            $("#subName_pfa").val("<%=gradeList.get(i).getSubName()%>");
