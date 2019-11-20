@@ -60,7 +60,7 @@ public class MemberController {
 		model.addAttribute("list", list);
 		System.out.println(list);
 		model.addAttribute("totalCount", totalData);
-		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, req.getContextPath()+"/notice.hd"));
+		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, req.getContextPath()+"/main.hd"));
 		
 		return "common/main";
 	}

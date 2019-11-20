@@ -61,9 +61,10 @@
         <a class="navbar-brand brand-logo mr-5" href="${path }/main.hd"><img src="${path }/resources/images/image/khlogo.jpg" style="width:70%; height:53%;"/></a> 
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-          <span class="ti-view-list"></span>
-        </button>
+        <a class="navbar-toggler navbar-toggler align-self-center" data-toggle="minimize">
+          <!-- <span class="ti-view-list"></span> -->
+          <i class="ti-menu-alt" style="font-size:25px; margin-left:-55px; color:#185c9c"></i>
+        </a>
         <!-- 헤더 검색창
         <ul class="navbar-nav mr-lg-2">
           <li class="nav-item nav-search d-none d-lg-block">

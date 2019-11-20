@@ -309,6 +309,8 @@ input[type="text"][readonly] {
        th,td{
        	text-align:center;
        }
+       
+       
 
 </style>
 
@@ -317,7 +319,10 @@ input[type="text"][readonly] {
       <div class="row">
         <div class="col-lg-6 grid-margin stretch-card">
         <div class='card card-body'>
-          
+          <h4 class="card-title">KH 대학교</h4>
+                  <p class="card-description">
+                    일정 안내 <code>-</code>
+                  </p>
          
     <!-- 이건 행사 신청을 위한 drop event 
       <div id="external-events">
@@ -360,9 +365,9 @@ input[type="text"][readonly] {
 			
 				<div class="col-lg-6 grid-margin stretch-card">
 				<div class='card card-body'>
-                  <h4 class="card-title">Hoverable Table</h4>
+                  <h4 class="card-title">KH 대학교</h4>
                   <p class="card-description">
-                    Add class <code>.table-hover</code>
+                    공지 게시판 <code>-</code>
                   </p>
                   <div class="table-responsive"  style="overflow-y:hidden;">
                     <table class="table table-hover">
@@ -391,6 +396,13 @@ input[type="text"][readonly] {
                 </div>
               </div>
 			</div>
+			
+			<style>
+				h2{
+			       	font-size:20px;
+			       }
+			
+			</style>
 
 
 			<jsp:include page="footer.jsp" />
