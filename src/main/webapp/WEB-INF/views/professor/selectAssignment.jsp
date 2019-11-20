@@ -65,7 +65,11 @@
 								<table class="table">
 									<tr>
 										<th class="divGreen">제목</th>
-										<td class="divGreen"><div id="asgmtTitle"></div></td>
+										<td class="divGreen"><div id="asgmtTitle">
+										<c:if test="${ar ne null}">
+											<c:out value="${ar.asgmtRegdTitle }"/>
+										</c:if>
+										</div></td>
 									</tr>
 									<tr>
 										<th>작성자</th>
@@ -92,7 +96,14 @@
 										<td>
 										<div id="attachFile">
 											<c:if test="${ar ne null}">
-												<c:out value="${ar.asgmtRegdOrifileName }"></c:out>
+												<c:if test="${ar.asgmtRegdOrifileName ne null}">
+												<i class="ti-file" style="cursor: pointer" onclick="fileDownload('${ar.asgmtRegdOrifileName}','${ar.asgmtRegdRefileName }');">
+												${ar.asgmtRegdOrifileName }
+												</i>
+												</c:if>
+												<c:if test="${ar.asgmtRegdOrifileName eq null}">
+													첨부파일 없음
+												</c:if>
 											</c:if>
 										</div>
 										</td>
@@ -102,28 +113,16 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="form-group col-5">
-								</div>
-								<div class="form-group col-7">
-			                      <label>첨부파일</label>
-			                      <input type="file" name="img[]" class="file-upload-default">
-			                      <div class="input-group col-12">
-			                        <input type="text" class="form-control file-upload-info" disabled="" placeholder="업로드할 파일을 선택해주세요.">
-			                        <span class="input-group-append">
-			                          <button class="file-upload-browse btn btn-primary" type="button">첨부파일 선택</button>
-			                        </span>
-			                      </div>
-			                    </div>
+								<div class="col-12" style="height:20px;"></div>
 							</div>
-
 							<div class="form-group">
-								<textarea class="form-control" id="exampleTextarea1" rows="25" style="font-weight:bold; color:black; background-color:#cef1da;" readonly></textarea>
+								<textarea class="form-control" id="exampleTextarea1" rows="25" style="font-weight:bold; color:black; background-color:#cef1da;" readonly><c:if test="${ar ne null}"><c:out value="${ar.asgmtRegdContent }"/></c:if></textarea>
 							</div>
 						</div>
 
 						<div class="card-footer" style="text-align:center;">
-							<button class="btn btn-primary mr-2" onclick="test();">수정</button>
-							<button class="btn btn-inverse-dark btn-fw" onclick="test();">목록으로</button>
+							<button class="btn btn-primary mr-2" onclick="modifyBtn();">수정</button>
+							<button class="btn btn-inverse-dark btn-fw" onclick="moveBoard();">목록으로</button>
 
 						</div>
 					<!-- </form> -->
@@ -133,15 +132,21 @@
 	</div>
 
 <script>
-		<c:if test="${ar ne null}">
-			$("#asgmtTitle").html('<c:out value="${ar.asgmtRegdTitle }"/>');
-			$("#exampleTextarea1").val('<c:out value="${ar.asgmtRegdContent }"/>');
-		</c:if>
+		
+		function fileDownload(oName, rName)
+		{
+			oName=encodeURIComponent(oName);
+			location.href="${path}/prof/asgmtFiledownLoad.do?oName="+oName+"&rName="+rName;
+		}
 	
 	
-		function test() {
-		alert("버튼이 눌림!");
-	}
+		function modifyBtn() {
+			alert("수정 버튼이 눌림!!");
+		}
+		
+		function moveBoard() {
+			history.back();
+		}
 
 </script>
 

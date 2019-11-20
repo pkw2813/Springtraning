@@ -37,6 +37,11 @@ public class ProfessorDaoImpl4 implements ProfessorDao4 {
 		return session.selectOne("prof4.selectAssignment", ifpa);
 	}
 
+	@Override
+	public int insertAssignment(SqlSessionTemplate session, AssignmentRegister ar) {
+		return session.insert("prof4.insertAssignment", ar);
+	}
+
 	
 	
 	

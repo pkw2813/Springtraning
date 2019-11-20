@@ -13,4 +13,5 @@ public interface ProfessorService4 { // 황준순 전용
 	List<AssignmentRegister> selectAsgmtBoardList(int cPage, int numPerPage, InfoForProfSubject ifps);
 	int selectAsgmtBoardCount(InfoForProfSubject ifps);
 	AssignmentRegister selectAssignment(InfoForProfAssignment ifpa);
+	int insertAssignment(AssignmentRegister ar);
 }

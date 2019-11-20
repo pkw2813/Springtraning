@@ -22,9 +22,9 @@ List<ProfSubject> profSubjectList=null;
 	
 %>
 <style>
-	div {
+	/* div {
 		border: 1px solid black;
-	}
+	} */
 	.table td {
 		text-align:center;
 	}
@@ -39,19 +39,24 @@ List<ProfSubject> profSubjectList=null;
 			<div class="col-12 grid-margin">
 				<div class="d-flex justify-content-between align-items-center">
 					<div id="assignmentTitle">
-						<h3 class="font-weight-bold mb-0">
+						<h4 class="font-weight-bold mb-0">
 						<c:out value="${acaYear}"/>학년도 <c:out value="${acaSemester}"/>학기
+						<input type="hidden" id="acaYearSem" value="<c:out value='${acaYear}'/>학년도 <c:out value='${acaSemester}'/>학기"/>
 						<% for(int i=0; i<profSubjectList.size(); i++) { 
 							if(curSubSeq!=null) {
 								if(profSubjectList.get(i).getSubSeq().equals(curSubSeq)) { %>
-								<%=profSubjectList.get(i).getSubName() %>&nbsp;과제 게시판
+								[<%=profSubjectList.get(i).getSubName() %>]&nbsp;과제 게시판
+								<input type="hidden" id="subSeq" value="<%=profSubjectList.get(i).getSubSeq()%>"/>
+								<input type="hidden" id="subName" value="<%=profSubjectList.get(i).getSubName()%>"/>
 						<% 		}
 							}else { %>
-								<%=profSubjectList.get(0).getSubName() %>&nbsp;과제 게시판
+								[<%=profSubjectList.get(0).getSubName() %>]&nbsp;과제 게시판
+								<input type="hidden" id="subSeq" value="<%=profSubjectList.get(0).getSubSeq()%>"/>
+								<input type="hidden" id="subName" value="<%=profSubjectList.get(0).getSubName()%>"/>
 						<% 		break;
 							}
 						} %>
-						</h3>
+						</h4>
 					</div>
 				</div>
 			</div>
@@ -96,7 +101,7 @@ List<ProfSubject> profSubjectList=null;
 							<div class="col-12">
 							<div class="table-responsive">
 								<table class="table">
-									<tr>
+									<tr style="background-color:#c9ebd1;">
 										<th>번호</th>
 										<th>제목</th>
 										<th>작성자</th>
@@ -111,7 +116,14 @@ List<ProfSubject> profSubjectList=null;
 										<td style="width:100px;"><a href="${path }/prof/selectAssignment?subSeq=${arL.subSeq}&asgmtNo=${arL.asgmtNo}">${arL.asgmtRegdTitle}</a></td>
 										<td style="width:100px;">${arL.profName}</td>
 										<td style="width:70px;"><fmt:formatDate value="${arL.asgmtRegdDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
-										<td style="width:100px;"><c:out value="${ arL.asgmtRegdOrifileName}"/></td>
+										<td style="width:100px;">
+											<c:if test="${ arL.asgmtRegdOrifileName ne null}">
+												<c:out value="${ arL.asgmtRegdOrifileName}"/>
+											</c:if>
+											<c:if test="${ arL.asgmtRegdOrifileName eq null}">
+												파일 없음
+											</c:if>
+										</td>
 										<td style="width:50px;"><c:out value="${ arL.readCount}"/></td>
 									</tr>
 									</c:if>
@@ -146,7 +158,7 @@ List<ProfSubject> profSubjectList=null;
 
 <script>
 	$("#subjectName").change(function() {
-		//alert($("#subjectName option:selected").text()+" 과목 게시판을 조회합니다."); 
+		alert($("#subjectName option:selected").text()+" 과목 게시판을 조회합니다."); 
 		$("#assignmentTitle").html("<h3 class='font-weight-bold mb-0'><c:out value='${acaYear}'/>학년도 <c:out value='${acaSemester}'/>학기 "+$("#subjectName option:selected").text()+" 과제 게시판"+"</h3>");
 		location.href="${path}/prof/assignmentBoard.hd?subSeq="+$(this).val();
 	});
@@ -157,7 +169,7 @@ List<ProfSubject> profSubjectList=null;
 	}
 	
 	function assignmentReg() {
-		location.href="${path}/prof/assignmentRegister.hd";
+		location.href="${path}/prof/assignmentRegister.hd?acaYearSem="+$("#acaYearSem").val()+"&subSeq="+$("#subSeq").val()+"&subName="+$("#subName").val();
 	}
 
 </script>

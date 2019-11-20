@@ -43,6 +43,14 @@
 	 	background-position: 1% 1%;
 	 	height:100px;
 	 }
+	 .btn-primary {
+	    background-color: #3ec172;
+	    border-color: #3ec172;
+	}
+	.btn-primary:hover {
+	    background-color: #0dad4c;
+	    border-color: #0dad4c;
+	}
 </style>
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -167,7 +175,7 @@
 							<%if(tuition.getPaymentStat()=='Y') { %>
 							<h3 class="font-weight-bold mb-0" style="color:royalblue;">납부 완료</h3>
 							<%}else if(tuition.getPaymentStat()=='N') { %>
-								<input type="button" class="btn btn-primary" value="납부하기" onclick="payTuition();">
+								<input type="button" class="btn btn-primary font-weight-bold" style="font-size:25px; width:70%;" value="납부하기" onclick="payTuition();">
 							<%} %>
 							</div>
 						</div>

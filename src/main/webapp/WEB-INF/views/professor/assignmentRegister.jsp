@@ -18,14 +18,10 @@
 			<div class="col-12 grid-margin">
 				<div class="d-flex justify-content-between align-items-center">
 					<div id="assignmentTitle">
-						<h3 class="font-weight-bold mb-0">
-						<c:forEach var="list" items="${profSubjectList}" varStatus="s">
-							<c:if test="${s.count eq 1}">
-								<c:out value="${acaYear}"/>학년도 <c:out value="${acaSemester}"/>학기
-								<c:out value="${list.subName }"/>&nbsp;과제 등록하기
-							</c:if>
-						</c:forEach>
-						</h3>
+						<h4 class="font-weight-bold mb-0">
+							<c:out value="${acaYearSem}"/>
+							[<c:out value="${subName }"/>]&nbsp;과제 등록하기
+						</h4>
 					</div>
 				</div>
 			</div>
@@ -34,16 +30,17 @@
 		<div class="row">
 			<div class="col-12 grid-margin stretch-card">
 				<div class="card">
-					<!-- <form class="forms"> -->
+					<form class="forms" name="boardFrm" action="${path}/prof/assignmentRegisterEnd.do" method="post" onsubmit="return validate();"  enctype="multipart/form-data" >
 						<div class="card-body">
 							<div class="row">
 								<div class="form-group col-5">
 									<label for="exampleInputName1">과제 제목</label>
-									<input type="text" class="form-control" id="exampleInputName1" placeholder="과제 제목을 입력해주세요.">
+									<input type="text" class="form-control" name="asgmtTitle" id="asgmtTitle" placeholder="과제 제목을 입력해주세요.">
+									<input type="hidden" name="subSeq" value="<c:out value='${subSeq}'/>"/>
 								</div>
 								<div class="form-group col-7">
 			                      <label>첨부파일</label>
-			                      <input type="file" name="img[]" class="file-upload-default">
+			                      <input type="file" name="asgmtFile" class="file-upload-default">
 			                      <div class="input-group col-12">
 			                        <input type="text" class="form-control file-upload-info" disabled="" placeholder="업로드할 파일을 선택해주세요.">
 			                        <span class="input-group-append">
@@ -54,17 +51,17 @@
 							</div>
 
 							<div class="form-group">
-								<label for="exampleTextarea1">과제 설명</label>
-								<textarea class="form-control" id="exampleTextarea1" rows="25"></textarea>
+								<label for="asgmtContent">과제 설명</label>
+								<textarea class="form-control"  name="asgmtContent" id="asgmtContent" rows="25"></textarea>
 							</div>
 						</div>
 
 						<div class="card-footer" style="text-align:center;">
-							<button class="btn btn-primary mr-2" onclick="test();">등록</button>
-							<button class="btn btn-inverse-dark btn-fw" onclick="test();">취소</button>
+							<input type="submit" class="btn btn-primary mr-2" value="등록"/>
+							<button class="btn btn-inverse-dark btn-fw" onclick="cancel();">취소</button>
 
 						</div>
-					<!-- </form> -->
+					</form>
 				</div>
 			</div>
 		</div>
@@ -72,8 +69,11 @@
 
 <script>
 	
-	function test() {
-		alert("버튼이 눌림!");
+	function asgmtRegister() { // 과제 등록 버튼이 눌리면 호출됨
+		alert("과제 등록 버튼이 눌림!");
+	}
+	function cancel() {
+		history.back();
 	}
 
 </script>

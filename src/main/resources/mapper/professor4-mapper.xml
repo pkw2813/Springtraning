@@ -23,6 +23,8 @@
 		ON AR.SUB_SEQ=S.SUB_SEQ
 		AND S.SUB_YEAR=#{acaYear}
 		AND S.SUB_SEMESTER=#{acaSemester}
+		JOIN HD_CLASS_TB C
+		ON C.SUB_SEQ=S.SUB_SEQ
 		JOIN HD_PROFESSOR_TB P
 		ON AR.PROF_ID=P.PROF_ID
 		ORDER BY ASGMT_REGD_DATE DESC
@@ -37,6 +39,8 @@
 		ON AR.SUB_SEQ=S.SUB_SEQ
 		AND S.SUB_YEAR=#{acaYear}
 		AND S.SUB_SEMESTER=#{acaSemester}
+		JOIN HD_CLASS_TB C
+		ON C.SUB_SEQ=S.SUB_SEQ
 		ORDER BY ASGMT_REGD_DATE DESC
 	</select>
 	
@@ -51,9 +55,17 @@
 		ON AR.SUB_SEQ=S.SUB_SEQ
 		AND S.SUB_YEAR=#{acaYear}
 		AND S.SUB_SEMESTER=#{acaSemester}
+		JOIN HD_CLASS_TB C
+		ON C.SUB_SEQ=S.SUB_SEQ
 		JOIN HD_PROFESSOR_TB P
 		ON AR.PROF_ID=P.PROF_ID
 	</select>
+	
+	<insert id="insertAssignment" parameterType="assignmentRegister">
+		INSERT INTO HD_ASGMT_REGD_TB VALUES
+		(SEQ_ASGMT_SEQ.NEXTVAL, ${asgmtSeq}, #{profId}, #{asgmtNo}, #{asgmtRegdTitle}, 
+		#{asgmtRegdContent}, SYSTIMESTAMP, 0, #{asgmtRegdOrifileName}, #{asgmtRegdRefileName})
+	</insert>
 
 
   	<resultMap id="profSubjectResult" type="profSubject">
