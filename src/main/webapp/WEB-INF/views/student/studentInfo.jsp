@@ -41,6 +41,8 @@ table {
 		}
 
 
+
+
 </style>
 
 <script>
@@ -138,7 +140,7 @@ table {
 									<th>지도교수</th>
 									<td><input class="form-control" type="text" value="${student.profId}"
 										disabled /></td>
-									<th>학과명</th>
+									<th>학과코드</th>
 									<td><input class="form-control" type="text" value="${student.deptCode}"
 										 disabled /></td>
 									<th>계좌번호</th>

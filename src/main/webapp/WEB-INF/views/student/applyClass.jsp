@@ -181,11 +181,16 @@
 				</tr>
 				
 				<h6 style="font-size:12px;color:red">
-				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null or applyDay["PLAN_NO_SEQ"] ne ""}'>
-				이번학기 수강신청 가능일은
+				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null and applyDay["PLAN_NO_SEQ"] ne ""}'>
+				이번학기 수강신청 가능일은 
 				<fmt:formatDate value='${applyDay["PLAN_START_DATE"]}' pattern="MM월 dd일"/> ~ <fmt:formatDate value='${applyDay["PLAN_END_DATE"]}' pattern="MM월 dd일"/>
 				까지입니다 신청기간 이후에는 신청이 불가하니 꼭 기간을 확인하시어 신청해주시기 바랍니다.
 				</c:if>
+				
+				<c:if test='${applyDay["PLAN_NO_SEQ"] eq null or applyDay["PLAN_NO_SEQ"] eq ""}'>
+				<h6 style="font-size:12px;color:red">수강신청 기간이 아닙니다</h6>
+				</c:if>
+				
 				</h6>
 				<c:if test="${!empty list}">
 				<c:forEach items="${list}" var="e" varStatus="v">
@@ -217,7 +222,7 @@
 				<td style="text-align:center">
 				
 				<c:if test='${applyDay["PLAN_NO_SEQ"] eq null or applyDay["PLAN_NO_SEQ"] eq ""}'>
-				신청기간이 아닙니다
+				
 				</c:if>
 				
 				<c:set var="now" value="<%=new java.util.Date()%>" />
@@ -234,7 +239,6 @@
 				
 				
 				<c:if test="${sysYs eq classYs}">
-				
 				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null and applyDay["PLAN_NO_SEQ"] ne ""}'>	
 				<c:if test='${ e["PRE_CAPA"]-e["CAPACITY"] eq 0}'>
 				<button id="button-applyClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="applyClass(this.id,this.value)" class="btn btn-primary btn-xs"

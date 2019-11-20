@@ -45,6 +45,7 @@
 		}
 		.modal-header,.modal-body,.modal-footer{
 			z-index:1001;
+			text-align:center;
 		}
 		.form-control{
 		font-size: 12px;
@@ -217,29 +218,29 @@
 	
 	 
 	<!-- 비번교체 모달 -->
-	 <div id="pwChangeModal" class="modal">
+	 <div id="pwChangeModal" class="modal" >
       <!-- Modal content -->
       <div class="modal-content" style="width:400px">
       	<div id="topCloseBotton" style="text-align:right">
          <span class="close" id="closePw" Style="width:50px;">&times;</span>
   		</div>
-        
+      
          <p style="font-family:jua;font-size:40px;">비밀번호변경</p>
-         <div class="form-group">
+         <div class="form-group" style="text-align:center">
          <hr>
          <p style="font-family:jua;font-size:15px;font-style: ">현재비밀번호</p>
          
-         <input type="password" id="pwNow" name="pwNow"  style="font-family:jua" class="form-control" placeholder="현재비밀번호입력" required />
+         <input type="password" id="pwNow" name="pwNow"  style="font-family:jua;width:200px" placeholder="현재비밀번호입력" required />
          <p id="pwTrue" style="font-family:jua;font-size:12px;color:green">비밀번호가 일치합니다</p>
          <p id="pwFalse" style="font-family:jua;font-size:12px;color:red">비밀번호가 일치하지 않습니다</p>
          <hr>
          <p style="font-family:jua;font-size:15px;">변경하실 비밀번호</p>
-         <input type="password" class="form-control" id="pw-Change" name="toName" required/>
+         <input type="password"  id="pw-Change" name="toName" style="width:200px" required/>
          <p id="pwChangeTrue" style="font-family:jua;font-size:12px;color:green">올바른 비밀번호입니다</p>
          <p id="pwChangeFalse" style="font-family:jua;font-size:12px;color:red"></p>
          <hr>
          <p style="font-family:jua;font-size:15px;">비밀번호 확인</p>
- 		<input type="password" class="form-control" id="pw-checkChange" name="toName" required/>
+ 		<input type="password" id="pw-checkChange" name="toName" style="width:200px" required/>
  		<p id="pw-checkChangeTrue" style="font-family:jua;font-size:12px;color:green">새비밀번호와 일치합니다</p>
          <p id="pw-checkChangeFalse" style="font-family:jua;font-size:12px;color:red">새 비밀번호와 일치하지 않습니다</p>
          <hr>
@@ -248,7 +249,7 @@
          <button class="btn btn-inverse-info btn-fw" id="pwChangeConfirm" value="확인" style="float: right; margin: 7px" disable>확인</button>
        	</div>
          </div>
-       
+       </div>
      </form>
       </div>
 	</div>
@@ -256,7 +257,7 @@
 	</div>
 	</div>
 	</div>
-	</div>
+
 	
 	<div id = "Progress_Loading"><!-- 로딩바 -->
 	<img id="LoadImg" height="50px" width="50px" src="${path }/resources/images/image/prograssLoading.gif"/>

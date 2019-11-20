@@ -10,7 +10,7 @@
 
 
 	<style>
-	
+
 		tr, td, th {
 			text-align: left;
 			font-size: 13px;
@@ -177,15 +177,7 @@
 				<th>취소</th>
 				<th>신청결과</th>
 				</tr>
-				<c:if test='${empty list}'>
-				</table>
-				<table>
-				<tr id=classInfo>
-				<td style="text-align:center">
-				<img id="LoadImg" height="300px" width="500px" src="${path}/resources/images/image/selectNothing.jpg"/>
-				</td>
-				</tr>
-				</c:if>
+				
 				
 				<c:if test='${!empty list}'>
 				<c:forEach items="${list}" var="e" varStatus="v">
@@ -209,27 +201,43 @@
 				
 				
 				<td style="text-align:center">
-				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null or applyDay["PLAN_NO_SEQ"] ne ""}'>
+				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null and applyDay["PLAN_NO_SEQ"] ne ""}'>
 				<button id="button-cancelClass" style="font-size:12px;font-weight:bold;height:25px;" onclick="cancelClass(this.id,this.value)" class="btn btn-danger btn-xs"
 				value='${loginMember.stuNo},${e["SUB_SEQ"]}'>취소</button>
 				</c:if>
 				</td>		
 				
 				<td style="text-align:center">
-				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null or applyDay["PLAN_NO_SEQ"] ne ""}'>
+				<c:if test='${applyDay["PLAN_NO_SEQ"] ne null and applyDay["PLAN_NO_SEQ"] ne ""}'>
 				수업신청대기중
 				</c:if>
+
 				
 				<c:if test='${applyDay["PLAN_NO_SEQ"] eq null or applyDay["PLAN_NO_SEQ"] eq ""}'>
+				<c:if test='${e.DEPT_OPEN eq "Y"}'>
 				수업신청확정
 				</c:if>
-				
+				<c:if test='${e.DEPT_OPEN eq "N"}'>
+				폐강되었습니다.
+				</c:if>
+				</c:if>
 				</td>
 				</tr>
-				
 				</c:forEach>
 				</c:if>
 				</table>
+				<c:if test='${empty list}'>
+				
+				<table style="width:100%">
+				<tr>
+				<td style="text-align:center">
+				
+				<img id="LoadImg" height="300px" width="500px" style="padding:20px" src="${path}/resources/images/image/selectNothing.jpg"/>
+			
+				</td>
+				</tr>
+				</table>
+				</c:if>
 				<br><br>
 				${pageBar}
 				<form name="popForm">
@@ -251,7 +259,7 @@
 	
 	<div id = "Progress_Loading"><!-- 로딩바 -->
 	<img id="LoadImg" height="50px" width="50px" src="${path }/resources/images/image/prograssLoading.gif"/>
-</div>
+	</div>
 
 
  	
