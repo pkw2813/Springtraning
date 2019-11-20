@@ -72,23 +72,24 @@ pre {
 													<td><c:out value="${l.rcvCredits}" /></td>
 												
 												<c:if test="${l.evalPoint eq null and l.evalComment eq null}">
-													<td colspan="4"><button type="button" id="profassess${s.count}" class="btn btn-warning btn-xs" style="font-size:13px; font-weight:bold; width:250px;">수강평가</button></td>
+													<td colspan="4"><button type="button" id="profassess${s.count}" class="btn btn-warning btn-xs" style="font-size:13px; font-weight:bold; width:300px;">강 의 평 가</button></td>
 												</c:if>	
 												<c:if test="${l.evalPoint ne null and l.evalComment ne null}">
 													<td><c:out value="${l.grade}" /></td>
 													<td><c:out value="${l.retake}" /></td>
 													<c:if test="${l.reqDate eq null }">
-														<td><button type="button" id="appeal${s.count}" class="btn btn-danger btn-xs" style="font-size:13px">이의신청</button></td>
-														<td></td>
+														<td><button type="button" id="appeal${s.count}" class="btn btn-danger btn-xs" style="font-size:11px; font-weight:bold;">이의 신청</button></td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 													</c:if>
-													<c:if test="${l.reqDate ne null}">
-														<td><button type="button" id="appeal${s.count}" class="btn btn-danger btn-xs" style="font-size:13px">이의신청중</button></td>
+													<c:if test="${l.reqDate ne null and l.reqAwswer eq null}">
+														<td><button type="button" id="appeal${s.count}" class="btn btn-danger btn-xs" style="font-size:11px; font-weight:bold;">이의 신청중</button></td>
 													</c:if>
 													<c:if test="${l.reqDate ne null and l.reqAwswer eq null }">
-														<td><button type="button" id="answer${s.count}" class="btn btn-primary btn-xs" style="font-size:13px">답변 대기중</button></td>
+														<td><button type="button" id="answer${s.count}" class="btn btn-primary btn-xs" style="font-size:11px; font-weight:bold;">답변 대기중</button></td>
 													</c:if>
 													<c:if test="${l.reqDate ne null and l.reqAwswer ne null }">
-														<td><button type="button" id="answer${s.count}" class="btn btn-primary btn-xs" style="font-size:13px">답변 확인</button></td>
+														<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+														<td><button type="button" id="answer${s.count}" class="btn btn-primary btn-xs" style="font-size:11px; font-weight:bold;">답변 확인</button></td>
 													</c:if>
 												</c:if>
 												</tr>									
@@ -109,7 +110,7 @@ pre {
 				<div id="topCloseBotton" style="text-align: right">
 					<span class="close" id="closeTopAppeal" Style="width: 50px;">&times;</span>
 				</div>
-				<form name="myAppealFrm" action="${path}/myAppeal.hd" method="post">
+				<form name="myAppealFrm" action="${path}/myAppeal.hd" method="post" onsubmit="return checkreqContent();">
 					<p style="font-family: jua; font-size: 30px; font-style:">성적이의신청</p>
 					<p style="font-family: jua; font-size: 15px; color:red; font-style:">이의신청기간은 학기 종료 후 3일</p>
 					<hr>
@@ -156,10 +157,10 @@ pre {
 						</div>
 						
 						<p style="font-family: jua; font-size: 15px; font-style:">이의신청제목</p>
-						<input type="text" name="reqTitle" id="reqTitle_s" class="form-control" required="required" placeholder="이의신청 제목을 작성하세요."/>
+						<input type="text" name="reqTitle" id="reqTitle_s" class="form-control"  placeholder="이의신청 제목을 작성하세요."/>
 						<hr>
 						<p style="font-family: jua; font-size: 15px; font-style:">이의신청내용</p>
-						<textarea class="form-control" rows="5" cols="90" name="reqContent" id="reqContent_s" placeholder="이의신청 내용을 작성하세요." required="required"></textarea>
+						<textarea class="form-control" rows="5" cols="90" name="reqContent" id="reqContent_s" placeholder="이의신청 내용을 작성하세요." ></textarea>
 						<hr>
 						
 						<input type="hidden" name="stuNo" id="stuNo_s" value="${loginMember.stuNo}" readonly="readonly"/>
@@ -325,7 +326,7 @@ pre {
                         </div>
 						<hr>
 						<p style="font-family: jua; font-size: 15px;">강의평가</p>
-						<textarea class="form-control" rows="5" cols="90" name="evalComment" id="evalConmment"></textarea>	
+						<textarea class="form-control" rows="5" cols="90" name="evalComment" id="evalConmment" placeholder="강의평가에 대해 작성하여 주세요."></textarea>	
 						
 						<input type="hidden" name="stuNo" id="stuNo_pfa" value="${loginMember.stuNo}" readonly="readonly"/>
 						<input type="hidden" name="acaYearSem" id="acaYearSem_pfa" value="acaYearSem" readonly="readonly"/>
@@ -356,17 +357,34 @@ function checkContent(){
 		}
 	});
 	if(!flag){
-		alert("평점을 입력해주세요!");
+		alert("평점을 입력해주세요.");
 		return false;
 	}
 	var content=$("#evalConmment").val();
 
 	if(content.trim().length<1){
-		alert("평가내용을 입력해야합니다.");
+		alert("평가내용을 작성하세요.");
 		$("#evalConmment").focus();
+		return false;
+	}	
+}
+
+function checkreqContent(){
+	
+	var reqcontent=$("#reqTitle_s").val();
+	var reqcontent=$("#reqContent_s").val();
+
+	if(reqcontent.trim().length<1){
+		alert("제목을 입력하세요.");
+		$("#reqTitle_s").focus();
 		return false;
 	}
 	
+	if(reqcontent.trim().length<1){
+		alert("내용을 입력하세요.");
+		$("#reqContent_s").focus();
+		return false;
+	}
 }
 
 /* function taeyoug1(event) {
@@ -406,15 +424,9 @@ function checkContent(){
     closeTopAnswer.onclick = function() {
     	AnswerModal.style.display = "none";
     }
-    
-    submitAppeal.onclick = function() {
-    	AppealModal.style.display = "none";
-    }
     resetAppeal.onclick = function() {
     	AppealModal.style.display = "none";
     }
-    
-
     resetProfassess.onclick = function() {
     	ProfassessModal.style.display = "none";
     }
@@ -445,30 +457,32 @@ function checkContent(){
         <%-- AppealheaderBtn<%=(i+1)%>.onclick = function() {
         	AppealModal.style.display = "block";
         } --%>
-        AppealheaderBtn<%=(i+1)%>.addEventListener('click', function(e){
-        	/* alert(this.id); */
-        	<% if(gradeList.get(i).getReqDate()==null) { %>
-        	alert("유의사항 : 시스템을 통한 성적이의신청 및 회신은 한 과목당 1회에 한합니다.");
-            AppealModal.style.display = "block";
-            $("#subName_s").val(""); // 초기화
-            $("#subName_s").val("<%=gradeList.get(i).getSubName()%>");
-            $("#profName_s").val("");
-            $("#profName_s").val("<%=gradeList.get(i).getProfName()%>"+"교수");
-            $("#grade_s").val("");
-            $("#grade_s").val("<%=gradeList.get(i).getGrade()%>");
-            $("#reqDate_s").val("");
-            $("#reqDate_s").val(year+"/"+month+"/"+date);
-            
-            $("#acaYearSem_s").val("");
-            $("#acaYearSem_s").val("<%=gradeList.get(i).getAcaYearSem()%>");
-            $("#subCode_s").val("");
-            $("#subCode_s").val("<%=gradeList.get(i).getSubCode()%>");
-            $("#profId_s").val("");
-            $("#profId_s").val("<%=gradeList.get(i).getProfId()%>");
-            <% }else { %>
-            	alert("이미 이의신청 되었습니다.");
-            <% } %>
-        });
+        <% if(gradeList.get(i).getReqAwswer()==null) { %>
+	        AppealheaderBtn<%=(i+1)%>.addEventListener('click', function(e){
+	        	/* alert(this.id); */
+	        	<% if(gradeList.get(i).getReqDate()==null) { %>
+	        	alert("유의사항 : 시스템을 통한 성적이의신청 및 회신은 한 과목당 1회에 한합니다.");
+	            AppealModal.style.display = "block";
+	            $("#subName_s").val(""); // 초기화
+	            $("#subName_s").val("<%=gradeList.get(i).getSubName()%>");
+	            $("#profName_s").val("");
+	            $("#profName_s").val("<%=gradeList.get(i).getProfName()%>"+"교수");
+	            $("#grade_s").val("");
+	            $("#grade_s").val("<%=gradeList.get(i).getGrade()%>");
+	            $("#reqDate_s").val("");
+	            $("#reqDate_s").val(year+"/"+month+"/"+date);
+	            
+	            $("#acaYearSem_s").val("");
+	            $("#acaYearSem_s").val("<%=gradeList.get(i).getAcaYearSem()%>");
+	            $("#subCode_s").val("");
+	            $("#subCode_s").val("<%=gradeList.get(i).getSubCode()%>");
+	            $("#profId_s").val("");
+	            $("#profId_s").val("<%=gradeList.get(i).getProfId()%>");
+	            <% }else if(gradeList.get(i).getReqDate()==null){ %>
+	            	alert("이미 이의신청 되었습니다.");
+	            <% } %>
+	        });
+        <% } %>
         
         <% if(gradeList.get(i).getReqDate()==null) { %>
 		$("AnswerheaderBtn<%=(i+1)%>").html("");

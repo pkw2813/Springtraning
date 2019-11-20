@@ -39,12 +39,12 @@ public class StudentController2 {
 		
 		Date date=new Date();
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-		System.out.println("오늘날짜:"+df.format(date));
+//		System.out.println("오늘날짜:"+df.format(date));
 		String today=df.format(date);
 		
-		System.out.println("금년도:"+today.substring(0, 4));
+//		System.out.println("금년도:"+today.substring(0, 4));
 		int todayMonth=Integer.parseInt(today.substring(5, 7));
-		System.out.println("금월:"+todayMonth);
+//		System.out.println("금월:"+todayMonth);
 		String semester="";
 		if(todayMonth>=1&&todayMonth<=6) {
 			semester="1";
@@ -53,8 +53,8 @@ public class StudentController2 {
 		}
 		
 		String acaYearSem=today.substring(0, 4)+"-"+semester;
-		System.out.println("acaYearSem:"+acaYearSem);
-		System.out.println("deptCode"+deptCode);
+//		System.out.println("acaYearSem:"+acaYearSem);
+//		System.out.println("deptCode"+deptCode);
 		InfoForSearchGrade ifsg=new InfoForSearchGrade();
 		ifsg.setStuNo(stuNo);
 		ifsg.setAcaYearSem(acaYearSem);		
@@ -91,15 +91,15 @@ public class StudentController2 {
 		for(Grade e : gradeAll) {
 			if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
 				e.setSubType("타전공");
-				System.out.println("전체학기 성적 타전공 분류"+e);
+//				System.out.println("전체학기 성적 타전공 분류"+e);
 			}
 		}
 		model.addAttribute("gradeAll", gradeAll);
-		System.out.println("전체학기 성적"+gradeAll);
+//		System.out.println("전체학기 성적"+gradeAll);
 		
 		List<Map> gradeSubType = service.gradeSearchSubType(ifsg);
 		model.addAttribute("gradeSubType",gradeSubType);
-		System.out.println("f가 안나와"+gradeSubType);
+//		System.out.println("f가 안나와"+gradeSubType);
 		
 //	학생 학기, 취득학점, 이수학점, 총평점f미포함, 총평점f포함, 등수, 총원
 //		List<Map> gradeAYS = service.gradeAYS(ifsg);
@@ -120,19 +120,19 @@ public class StudentController2 {
 	  @RequestMapping("/student/gradeSearchAll1.hd")
 	  @ResponseBody 
 	  public String selectListMene(@RequestParam String GradeMenu, HttpSession session) {
-	  System.out.println("받냐고!"+GradeMenu);
+//	  System.out.println("받냐고!"+GradeMenu);
 	  Student student = (Student)session.getAttribute("loginMember");
 	  String stuNo=student.getStuNo();
 	  String deptCode=student.getStuNo().substring(5,8);
 	  
 	  Date date=new Date();
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-		System.out.println("오늘날짜:"+df.format(date));
+//		System.out.println("오늘날짜:"+df.format(date));
 		String today=df.format(date);
 		
-		System.out.println("금년도:"+today.substring(0, 4));
+//		System.out.println("금년도:"+today.substring(0, 4));
 		int todayMonth=Integer.parseInt(today.substring(5, 7));
-		System.out.println("금월:"+todayMonth);
+//		System.out.println("금월:"+todayMonth);
 		String semester="";
 		if(todayMonth>=1&&todayMonth<=6) {
 			semester="1";
@@ -152,7 +152,7 @@ public class StudentController2 {
 	  
 	  if(GradeMenu.equals("sub_type")) {
 		  subTypeList = service.selectsubType(ifsg);
-		  System.out.println("이건??"+subTypeList);
+//		  System.out.println("이건??"+subTypeList);
 		  for(int i=0; i<subTypeList.size(); i++) {
 				String grade=subTypeList.get(i).getGrade();
 				if(grade.equals("4.5")) {
@@ -182,12 +182,12 @@ public class StudentController2 {
 			for(Grade e : subTypeList) {
 				if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
 					e.setSubType("타전공");
-					System.out.println("전체학기 성적 타전공 분류"+e);
+//					System.out.println("전체학기 성적 타전공 분류"+e);
 				}
 			}
 	  	} else if(GradeMenu.equals("sub_name")) {
 	  		subNameList = service.selectsubName(ifsg);
-			  System.out.println("이건??"+subNameList);
+//			  System.out.println("이건??"+subNameList);
 			  for(int i=0; i<subNameList.size(); i++) {
 					String grade=subNameList.get(i).getGrade();
 					if(grade.equals("4.5")) {
@@ -217,12 +217,10 @@ public class StudentController2 {
 				for(Grade e : subNameList) {
 					if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
 						e.setSubType("타전공");
-						System.out.println("전체학기 성적 타전공 분류"+e);
 					}
 				}
 	  	} else if(GradeMenu.equals("aca_year_sem")) {
 	  		acaYearSemList = service.selectacaYearSem(ifsg);
-			  System.out.println("이건??"+acaYearSemList);
 			  for(int i=0; i<acaYearSemList.size(); i++) {
 					String grade=acaYearSemList.get(i).getGrade();
 					if(grade.equals("4.5")) {
@@ -252,7 +250,6 @@ public class StudentController2 {
 				for(Grade e : acaYearSemList) {
 					if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
 						e.setSubType("타전공");
-						System.out.println("전체학기 성적 타전공 분류"+e);
 					}
 				}
 	  	}
@@ -277,7 +274,6 @@ public class StudentController2 {
 			  e.printStackTrace();
 		  }
 	  }
-	  System.out.println("뭐가 나오누"+jsonStr);
 	  return jsonStr;
 	  }
 	 
@@ -292,12 +288,9 @@ public class StudentController2 {
 		String deptCode=student.getStuNo().substring(5,8);
 		Date date=new Date();
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-		System.out.println("오늘날짜:"+df.format(date));
 		String today=df.format(date);
 		
-		System.out.println("금년도:"+today.substring(0, 4));
 		int todayMonth=Integer.parseInt(today.substring(5, 7));
-		System.out.println("금월:"+todayMonth);
 		String semester="";
 		if(todayMonth>=1&&todayMonth<=6) {
 			semester="1";
@@ -306,8 +299,6 @@ public class StudentController2 {
 		}
 		
 		String acaYearSem=today.substring(0, 4)+"-"+semester;
-		System.out.println("acaYearSem:"+acaYearSem);
-		System.out.println("deptCode"+deptCode);
 		InfoForSearchGrade ifsg=new InfoForSearchGrade();
 		ifsg.setStuNo(stuNo);
 		ifsg.setAcaYearSem(acaYearSem);
@@ -342,7 +333,6 @@ public class StudentController2 {
 			for(Grade e : gradeNow) {
 					if(!deptCode.equals(e.getSubCode().substring(0,3)) && (e.getSubType().equals("전공선택")||e.getSubType().equals("전공필수"))) {
 						e.setSubType("타전공");
-						System.out.println("현재학기 타전공 분류"+e);
 					}
 			}
 		/*
@@ -355,7 +345,6 @@ public class StudentController2 {
 		 * 
 		 * } }
 		 */
-			System.out.println("gradeNow:"+gradeNow);
 			model.addAttribute("gradeNow", gradeNow);
 		/*
 		 * List<Request> requestList = service.selectRequest();
@@ -376,7 +365,6 @@ public class StudentController2 {
 	@RequestMapping("/myAppeal.hd")
 	public String insertAppeal(Request request, HttpSession session, Model model) {
 		
-		System.out.println("나옴?"+request);		
 		int result = service.insertAppeal(request); //이의신청 버튼을 눌러서 이의신청을 함.
 		String msg="";
 		String loc="/student/gradeSearchNow.hd";
@@ -395,7 +383,6 @@ public class StudentController2 {
 	@RequestMapping("/myProfAssess.hd")
 	public String insertProfAssess(ProfAssess profassess, HttpSession session, Model model) {
 		
-		System.out.println("평가!"+profassess);
 		int result = service.insertProfAssess(profassess); //이의신청 버튼을 눌러서 이의신청을 함.
 		String msg="";
 		String loc="/student/gradeSearchNow.hd";
