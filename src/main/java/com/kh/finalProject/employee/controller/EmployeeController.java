@@ -80,7 +80,7 @@ public class EmployeeController {
 		try {
 			int result = service.insertNewStu(s, beforeStu);
 			handler.forSendEmail(s.getStuEmail(), "KH 대학교에 입학 하신것을 축하드려요!",
-					"아이디 : " + s.getStuNo() + "   \r\n    비밀번호 : " + enc.decrypt(bs.getBeforeNo() + "").substring(0, 6)
+					"아이디 : " + s.getStuNo() + "   \r\n    비밀번호 : " + enc.decrypt(s.getStuSsn() + "").substring(0, 6)
 							+ " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.",
 					req);
 		} catch (Exception e) {
@@ -139,15 +139,13 @@ public class EmployeeController {
 
 	@RequestMapping("/employee/insertEmp.hd")
 	public String insertEmp(Employee emp, HttpServletRequest req) {
-		System.out.println("emp : " + emp);
 		String msg = "";
 		String loc = "";
 		Employee e = settingNewEmployee(emp);
-		System.out.println("e:" + e);
 		try {
 			int result = service.insertNewEmp(e);
 			handler.forSendEmail(e.getEmail(), "KH 대학교에 근무 하게 된 것을 축하드려요!",
-					"아이디 : " + e.getEmpId() + "   \r\n    비밀번호 : " + (enc.decrypt(e.getEmpSsn()+"").subSequence(0, 6))
+					"아이디 : " + e.getEmpId() + "   \r\n    비밀번호 : " + (enc.decrypt(e.getEmpSsn()+"").substring(0, 6))
 							+ " 입니다 .  \r\n 최초 로그인 이후 비밀번호를 수정해 주세요.",
 					req);
 			loc = "/enrollemployee.hd";
@@ -429,9 +427,6 @@ public class EmployeeController {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
 			s.setStuPw(enc.decrypt(bs.getBeforeNo()).substring(0, 6));
 			// 패스워드 초기 패스워드 단방향 암호화함
-			System.out.println("암호화전 pw : " + s.getStuPw());
-			System.out.println("암호화전pw : " + bEnc.encode(s.getStuPw()));
-
 			s.setStuPw(bEnc.encode(s.getStuPw()));
 
 			// 성별땜에
@@ -444,10 +439,6 @@ public class EmployeeController {
 
 			// 다시 암호화
 			bs.setBeforeNo(enc.encrypt(bs.getBeforeNo()));
-
-			// 로그인 matches 양식
-//String su = "911010";
-//System.out.println("매치 :" + s.getStuPw().matches(su));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -469,7 +460,6 @@ public class EmployeeController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String sysdate = sdf.format(date);
 		int empNum = service.selectEmpLastNum(e.getDeptCode());
-		System.out.println("lastNum : " + empNum);
 		String empNo = "E" + sysdate.substring(0, 4) + e.getDeptCode() + String.format("%02d", empNum + 1);
 		emp.setEmpId(empNo);
 		emp.setEmpName(e.getEmpName());
@@ -477,7 +467,7 @@ public class EmployeeController {
 			// 암호화된 주민등록번호 디코딩해서 생년월일만 패스워드로 저장함
 			emp.setEmpPw(e.getEmpSsn().substring(0, 6));
 			// 패스워드 초기 패스워드 암호화함
-			emp.setEmpPw(bEnc.encode((e.getEmpSsn() + "").substring(0, 5)));
+			emp.setEmpPw(bEnc.encode((e.getEmpSsn() + "").substring(0, 6)));
 			// 성별땜에
 			// 성별 설정
 			emp.setGender(e.getEmpSsn().substring(6, 7).equals("1") || e.getEmpSsn().substring(6, 7).equals("3") ? "남"
@@ -487,10 +477,6 @@ public class EmployeeController {
 			// 다시 암호화
 			emp.setEmpSsn(enc.encrypt(e.getEmpSsn()));
 
-			// 로그인 matches 양식
-//			String su = "911010";
-//			System.out.println("매치 :" + s.getStuPw().matches(su));
-
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
@@ -498,7 +484,6 @@ public class EmployeeController {
 		emp.setAddress(e.getAddress());
 		emp.setDeptCode(e.getDeptCode());
 		emp.setEmail(e.getEmail());
-//		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-1" : "미정");
 		return emp;
 	}
 
@@ -508,7 +493,6 @@ public class EmployeeController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String sysdate = sdf.format(date);
 		int profNum = service.selectProfLastNum(p.getDeptCode());
-		System.out.println(profNum);
 		String rofNo = "P" + sysdate.substring(0, 4) + p.getDeptCode() + String.format("%02d", profNum + 1);
 		prof.setProfId(rofNo);
 		prof.setProfName(p.getProfName());
@@ -528,10 +512,6 @@ public class EmployeeController {
 			// 다시 암호화
 			prof.setProfSsn(enc.encrypt(p.getProfSsn()));
 
-			// 로그인 matches 양식
-//			String su = "911010";
-//			System.out.println("매치 :" + s.getStuPw().matches(su));
-
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
@@ -539,7 +519,6 @@ public class EmployeeController {
 		prof.setAddress(p.getAddress());
 		prof.setDeptCode(p.getDeptCode());
 		prof.setEmail(p.getEmail());
-		System.out.println(prof.getAddress());
 //		s.setStuYearSem(bs.getBeforeType().equals("정시") || bs.getBeforeType().equals("수시") ? "1-1" : "미정");
 
 		return prof;

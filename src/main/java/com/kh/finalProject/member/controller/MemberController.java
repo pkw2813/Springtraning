@@ -58,7 +58,6 @@ public class MemberController {
         }
         int totalData = service.countNoticeList();
 		model.addAttribute("list", list);
-		System.out.println(list);
 		model.addAttribute("totalCount", totalData);
 		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, req.getContextPath()+"/main.hd"));
 		
@@ -81,22 +80,21 @@ public class MemberController {
 		
 		String msg="";
 		String loc="";
-		System.out.println("111111111111111");
 		if(loginNo.equals("s")) {
 			Student stu=stuService.selectOne(loginId);
-//			if(bEnc.matches(loginPwd, stu.getStuPw())){
+			if(bEnc.matches(loginPwd, stu.getStuPw())){
 				session.setAttribute("loginMember", stu);
-//			}
+			}
 		}else if(loginNo.equals("p")){
 			Professor pro=proService.selectOne(loginId);
-//			if(bEnc.matches(loginPwd, pro.getProfId())){
+			if(bEnc.matches(loginPwd, pro.getProfPw())){
 				session.setAttribute("loginMember", pro);
-//			}
+			}
 		}else{
 			Employee emp=empService.selectOne(loginId);
-//			if(bEnc.matches(loginPwd, emp.getEmpId()) || loginId.equals("E00000000")){
+			if(bEnc.matches(loginPwd, emp.getEmpPw()) || loginId.equals("E00000000")){
 			session.setAttribute("loginMember", emp);
-//			}
+			}
 		}
 		if(session.getAttribute("loginMember")!=null) {
 			msg="로그인 되었습니다.";
@@ -128,7 +126,6 @@ public class MemberController {
 		Map map=new HashMap<>();
 		map.put("searchName", searchName);
 		map.put("searchEmail", searchEmail);
-		System.out.println(map);
 		if(loginNo.equals("s")) {
 			Student stu=stuService.stuIdSearch(s);
 			if(stu!=null) {
@@ -187,7 +184,6 @@ public class MemberController {
 				}else {
 					Map m=proService.empIdSearchModal(map);
 					if(m!=null) {
-						System.out.println(m.get("PROF_ID").equals(map.get("searchNo"))&&m.get("EMAIL").equals(map.get("searchEmail")));
 						if(m.get("PROF_ID").equals(map.get("searchNo"))&&m.get("EMAIL").equals(map.get("searchEmail"))) {
 							try {
 								jsonArr=mapper.writeValueAsString(m);
@@ -236,9 +232,8 @@ public class MemberController {
 		
 		if(stuPw.equals(stuPwCk)) {
 			// 암호화 더미 다들어가면 주석 품고 지워주세요
-			result=stuService.stuPwChange(stuPw,stuNo);
-//			String password = bEnc.encode(stuPw);
-//			result=stuService.stuPwChange(password,stuNo);
+//			result=stuService.stuPwChange(stuPw,stuNo);
+			result=stuService.stuPwChange(bEnc.encode(stuPw),stuNo);
 
 			msg="변경된 비밀번호로 로그인해주시기 바랍니다.";
 		}else {
