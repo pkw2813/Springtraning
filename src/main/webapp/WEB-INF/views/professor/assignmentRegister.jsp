@@ -30,13 +30,13 @@
 		<div class="row">
 			<div class="col-12 grid-margin stretch-card">
 				<div class="card">
-					<form class="forms" name="boardFrm" action="${path}/prof/assignmentRegisterEnd.do" method="post" onsubmit="return validate();"  enctype="multipart/form-data" >
+					<form class="forms" name="asgmtRegFrm" id="asgmtRegFrm" action="${path}/prof/assignmentRegisterEnd.do" method="post" enctype="multipart/form-data" >
 						<div class="card-body">
-							<div class="row">
+							<div class="row" id="asgmtContentDiv">
 								<div class="form-group col-5">
 									<label for="exampleInputName1">과제 제목</label>
 									<input type="text" class="form-control" name="asgmtTitle" id="asgmtTitle" placeholder="과제 제목을 입력해주세요.">
-									<input type="hidden" name="subSeq" value="<c:out value='${subSeq}'/>"/>
+									<input type="hidden" name="subSeq" id="subSeq" value="<c:out value='${subSeq}'/>"/>
 								</div>
 								<div class="form-group col-7">
 			                      <label>첨부파일</label>
@@ -52,14 +52,13 @@
 
 							<div class="form-group">
 								<label for="asgmtContent">과제 설명</label>
-								<textarea class="form-control"  name="asgmtContent" id="asgmtContent" rows="25"></textarea>
+								<textarea class="form-control" name="asgmtContent" id="asgmtContent" rows="25"></textarea>
 							</div>
 						</div>
 
 						<div class="card-footer" style="text-align:center;">
-							<input type="submit" class="btn btn-primary mr-2" value="등록"/>
-							<button class="btn btn-inverse-dark btn-fw" onclick="cancel();">취소</button>
-
+							<input type="button" class="btn btn-primary mr-2" onclick="asgmtValidate();"  value="등록"/>
+							<input type="button" class="btn btn-inverse-dark btn-fw" onclick="cancel();" value="취소"/>
 						</div>
 					</form>
 				</div>
@@ -72,8 +71,45 @@
 	function asgmtRegister() { // 과제 등록 버튼이 눌리면 호출됨
 		alert("과제 등록 버튼이 눌림!");
 	}
+	
 	function cancel() {
-		history.back();
+		var ans1=confirm("과제 등록을 취소하시겠습니까?");
+		if(ans1==true) {
+			// history.back();
+			location.href="${path}/prof/assignmentBoard.hd?subSeq="+$("#subSeq").val();
+		}
+	}
+	
+	function asgmtValidate() {
+		if($.trim($("#asgmtTitle").val())=="") {
+			alert("과제 제목을 입력해주세요.");
+			document.getElementById("asgmtTitle").scrollIntoView(true);
+			$("#asgmtTitle").focus(); // 마우스 포인터 이동
+			$('html, body').stop().animate({
+		        scrollTop: $("#assignmentTitle").offset().top
+		    }, 500); // 스크롤로 이동, 0.5초
+			// location.hash='assignmentTitle';
+			//return false;
+		}else if($.trim($("#asgmtContent").val())==""){
+			alert("과제 내용을 입력해주세요.");	
+			$("#asgmtContent").focus(); // 마우스 포인터 이동
+			$('html, body').stop().animate({
+		        scrollTop: $("#asgmtContentDiv").offset().top
+		    }, 500); // 스크롤로 이동, 0.5초
+			//return false;
+		}else {
+			console.log($("#asgmtTitle").val());
+			console.log($.trim($("#asgmtTitle").val()));
+			$("#asgmtTitle").val($.trim($("#asgmtTitle").val()));
+			$("#asgmtContent").val($.trim($("#asgmtContent").val()));
+			var ans2=confirm("과제를 등록하시겠습니까?");
+			if(ans2==true) {
+				$("#asgmtRegFrm").submit();
+				//return true;
+			}else {
+				//return false;
+			}
+		}
 	}
 
 </script>

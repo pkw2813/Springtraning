@@ -118,7 +118,7 @@ List<ProfSubject> profSubjectList=null;
 										<td style="width:70px;"><fmt:formatDate value="${arL.asgmtRegdDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
 										<td style="width:100px;">
 											<c:if test="${ arL.asgmtRegdOrifileName ne null}">
-												<c:out value="${ arL.asgmtRegdOrifileName}"/>
+												<div style="color:#ac6969; font-weight:bold;"><c:out value="${ arL.asgmtRegdOrifileName}"/></div>
 											</c:if>
 											<c:if test="${ arL.asgmtRegdOrifileName eq null}">
 												파일 없음

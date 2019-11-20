@@ -181,7 +181,9 @@ public class ProfessorController4 { // 황준순 전용
 		File dir=new File(saveDir);
 		if(!dir.exists()) logger.debug("폴더생성 "+dir.mkdirs());
 		// 다중파일 서버에 저장 로직
-		if(upFile!=null) { // upFile이 null이 아니면
+		System.out.println("upFile:"+upFile);
+		System.out.println("upFile.getOriginalFilename():"+upFile.getOriginalFilename()+"끝");
+		if(!upFile.getOriginalFilename().equals("")) { // 첨부파일이 있으면
 			// 파일명 설정(renamed)
 			String oriFileName=upFile.getOriginalFilename();
 			// 파일명에서 확장자 빼기
@@ -199,10 +201,14 @@ public class ProfessorController4 { // 황준순 전용
 			// 서버에 실제 파일 저장완료!
 			ar.setAsgmtRegdOrifileName(oriFileName);
 			ar.setAsgmtRegdRefileName(reName);
+		}else { // 첨부파일이 없으면
+			ar.setAsgmtRegdOrifileName(""); // 첨부파일 원본 이름 빈칸으로 설정
+			ar.setAsgmtRegdRefileName(""); // 첨부파일 새로운 이름 빈칸으로 설정
 		}
 		
 		Professor prof=(Professor)session.getAttribute("loginMember");
-		ar.setAsgmtSeq(Integer.parseInt(req.getParameter("subSeq")));
+		String subSeq=req.getParameter("subSeq");
+		ar.setAsgmtSeq(Integer.parseInt(subSeq));
 		ar.setProfId(prof.getProfId()); // 교수 아이디 저장
 		
 		//////////////////////이번 학년도 학기 조회
@@ -236,9 +242,12 @@ public class ProfessorController4 { // 황준순 전용
 		ar.setAsgmtRegdTitle((String)req.getParameter("asgmtTitle")); // 과제 제목 저장
 		ar.setAsgmtRegdContent((String)req.getParameter("asgmtContent")); // 과제 내용 저장
 		
-			
+		
+		int result=0;
+		String msg="";
+		String loc="/prof/assignmentBoard.hd?subSeq="+subSeq;
 		try {
-			service.insertAssignment(ar);
+			result=service.insertAssignment(ar);
 		}catch(Exception e) {
 			// 파일 삭제 로직
 			// 에러 메세지 출력 로직
@@ -249,8 +258,17 @@ public class ProfessorController4 { // 황준순 전용
 				del.delete(); // 방금 업로드한 파일 삭제하기
 			}
 		}
+		if(result==1) {
+			msg="정상적으로 등록되었습니다.";
+		}else if(result==0) {
+			msg="등록이 실패하였습니다.";
+		}
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
 			
-		mv.setViewName("redirect:/prof/assignmentBoard.hd");
+//		mv.setViewName("redirect:/prof/assignmentBoard.hd");
+//		return "common/msg";
+		mv.setViewName("common/msg");
 		return mv;
 	}
 	

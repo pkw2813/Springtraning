@@ -97,7 +97,7 @@
 										<div id="attachFile">
 											<c:if test="${ar ne null}">
 												<c:if test="${ar.asgmtRegdOrifileName ne null}">
-												<i class="ti-file" style="cursor: pointer" onclick="fileDownload('${ar.asgmtRegdOrifileName}','${ar.asgmtRegdRefileName }');">
+												<i class="ti-file" style="cursor:pointer; color:#ac6969; font-weight:bold;" onclick="fileDownload('${ar.asgmtRegdOrifileName}','${ar.asgmtRegdRefileName }');">
 												${ar.asgmtRegdOrifileName }
 												</i>
 												</c:if>
