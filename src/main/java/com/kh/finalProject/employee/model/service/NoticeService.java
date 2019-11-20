@@ -12,7 +12,7 @@ public interface NoticeService {
 	int countNoticeList();
 	
 	//공지사항 입력
-	int insertNotice(NoticeVo noticeVo);
+	int insertNotice(NoticeVo noticeVo, List<NoticeVo> list) throws RuntimeException;
 	
 	//게시글 검색
 	List<NoticeVo> selectNoticeByCode(NoticeVo noticeVo);

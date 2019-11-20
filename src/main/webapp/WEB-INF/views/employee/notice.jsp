@@ -51,7 +51,7 @@
 	                </c:forEach>
 	            </tbody>
 	        </table>
-    	</form>
+    				</form>
     	<div class="card-body">
     		${pageBar }
     	</div>
@@ -66,7 +66,7 @@ function fn_write(){
     
     var form = document.getElementById("noticeForm");
     
-    form.action = "<c:url value='/notice/writeForm.hd'/>";
+    form.action = "<c:url value='/notice/noticeForm.hd'/>";
     form.submit();
     
 }

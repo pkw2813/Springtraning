@@ -10,6 +10,17 @@
 		SELECT COUNT(*) FROM HD_BOARD_TB
 	</select>
 	
+	<insert id="insertNotice" parameterType="notice">
+		INSERT INTO HD_PROF_BOARD_TB VALUES(SEQ_PROF_BOARD_NO.NEXTVAL,#{profName},#{profBoardType},#{profBoardTitle},#{profBoardContent},SYSDATE)
+		<selectKey keyProperty="profBoardNo" resultType="_int" order="AFTER">
+			SELECT SEQ_PROF_BOARD_NO.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<insert id="insertNoticeAttachment" parameterType="notice">
+		INSERT INTO HD_PROF_ATTACHMENT_TB VALUES(SEQ_PROF_BOARD_FILENO.NEXTVAL,#{profBoardNo},#{boardOrifilename},#{boardRefilename},DEFAULT)
+	</insert>
+	
+	
 	<resultMap type="notice" id="noticeResult">
 		<result column="board_No" property="boardNo"/>
 		<result column="board_Title" property="boardTitle"/>

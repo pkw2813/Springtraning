@@ -28,8 +28,13 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public int insertNotice(SqlSessionTemplate session, NoticeVo noticeVo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.insert("notice.insertNotice", noticeVo);
+	}
+	
+
+	@Override
+	public int insertNoticeAttachment(SqlSessionTemplate session, NoticeVo nVo) {
+		return session.insert("notice.insertNoticeAttachment",nVo);
 	}
 
 	@Override

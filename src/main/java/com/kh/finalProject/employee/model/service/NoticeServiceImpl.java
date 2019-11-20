@@ -37,8 +37,16 @@ public class NoticeServiceImpl implements NoticeService {
 
 
 	@Override
-	public int insertNotice(NoticeVo noticeVo) {
+	public int insertNotice(NoticeVo noticeVo,List<NoticeVo> list) throws RuntimeException {
 		int result = dao.insertNotice(session, noticeVo);
+		
+		for(NoticeVo nVo : list) {
+			nVo.setBoardNo(noticeVo.getBoardNo());
+			result = dao.insertNoticeAttachment(session,nVo);
+			if(result == 0) {
+				throw new RuntimeException();
+			}
+		}
 		return result;
 	}
 
