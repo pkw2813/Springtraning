@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.finalProject.professor.model.dao.ProfessorDao2;
 import com.kh.finalProject.professor.model.vo.AttendStudent;
@@ -102,6 +103,7 @@ public class ProfessorServiceImpl2 implements ProfessorService2{
 	}
 
 	@Override
+	@Transactional
 	public int insertAttend(SelectAttendList sal) {
 		int result = dao.insertAttend(session, sal);
 		
@@ -122,6 +124,7 @@ public class ProfessorServiceImpl2 implements ProfessorService2{
 	}
 
 	@Override
+	@Transactional
 	public int updateAnswer(Request req) {
 		return dao.updateAnswer(session, req);
 	}

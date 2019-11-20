@@ -16,6 +16,6 @@ public class NoticeVo {
     private String boardWriter;
     private String regDate;
     private int hitCount;
-    private String oriFileName;
-    private String reFileName;
+//    private String oriFileName;
+//    private String reFileName;
 }

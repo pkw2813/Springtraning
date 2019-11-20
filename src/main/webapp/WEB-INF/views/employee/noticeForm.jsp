@@ -32,7 +32,7 @@
 								</div>
 								<div class="form-group col-7">
 			                      <label>첨부파일</label>
-			                      <input type="file" name="fileName" class="file-upload-default">
+			                      <input type="file" name="upFile" class="file-upload-default">
 			                      <div class="input-group col-12">
 			                        <input type="text" class="form-control file-upload-info" disabled="" placeholder="업로드할 파일을 선택해주세요.">
 			                        <span class="input-group-append">

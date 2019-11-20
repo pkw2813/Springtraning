@@ -2,6 +2,7 @@ package com.kh.finalProject.employee.model.service;
 
 import java.util.List;
 
+import com.kh.finalProject.employee.model.vo.NoticeAttachment;
 import com.kh.finalProject.employee.model.vo.NoticeVo;
 
 public interface NoticeService {
@@ -12,10 +13,11 @@ public interface NoticeService {
 	int countNoticeList();
 	
 	//공지사항 입력
-	int insertNotice(NoticeVo noticeVo, List<NoticeVo> list) throws RuntimeException;
+	int insertNotice(NoticeVo noticeVo, List<NoticeAttachment> list) throws RuntimeException;
 	
 	//게시글 검색
-	List<NoticeVo> selectNoticeByCode(NoticeVo noticeVo);
+	NoticeVo viewNoticeDetail(int noticeNo, boolean hasRead) throws RuntimeException;
+	List<NoticeAttachment> selectNoticeAttachment(int noticeNo);
 	
 	//게시글 수정
 	int updateNotice(NoticeVo noticeVo);

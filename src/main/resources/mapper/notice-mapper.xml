@@ -3,7 +3,7 @@
 <mapper namespace="noticeMapper">
   
 	<select id="selectNoticeList" resultMap="noticeResult">
-		SELECT * FROM HD_BOARD_TB
+		SELECT * FROM HD_BOARD_TB ORDER BY BOARD_NO DESC
 	</select>
 	
 	<select id="countNoticeList" resultType="_int">
@@ -11,19 +11,32 @@
 	</select>
 	
 	<insert id="insertNotice" parameterType="notice">
-		INSERT INTO HD_PROF_BOARD_TB VALUES(SEQ_PROF_BOARD_NO.NEXTVAL,#{profName},#{profBoardType},#{profBoardTitle},#{profBoardContent},SYSDATE)
-		<selectKey keyProperty="profBoardNo" resultType="_int" order="AFTER">
-			SELECT SEQ_PROF_BOARD_NO.CURRVAL FROM DUAL
+		INSERT INTO HD_BOARD_TB VALUES(NOTICE_SEQ.NEXTVAL,#{boardTitle},#{boardContent},'관리자',DEFAULT,DEFAULT)
+		<selectKey keyProperty="boardNo" resultType="_int" order="AFTER">
+			SELECT NOTICE_SEQ.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
-	<insert id="insertNoticeAttachment" parameterType="notice">
-		INSERT INTO HD_PROF_ATTACHMENT_TB VALUES(SEQ_PROF_BOARD_FILENO.NEXTVAL,#{profBoardNo},#{boardOrifilename},#{boardRefilename},DEFAULT)
+	
+	<insert id="insertNoticeAttachment" parameterType="com.kh.finalProject.employee.model.vo.NoticeAttachment">
+		INSERT INTO HD_NOTICE_ATTACHMENT_TB VALUES(SEQ_NOTICE_FILE.NEXTVAL,#{noticeNo},#{oriFileName},#{reFileName},DEFAULT)
 	</insert>
+	
+	<select id="viewNoticeDetail" parameterType="_int" resultMap="noticeResult">
+		SELECT * FROM HD_BOARD_TB WHERE BOARD_NO = #{noticeNo}
+	</select>
+	
+	<update id="updateReadCount" parameterType="_int">
+		UPDATE HD_BOARD_TB SET HIT_COUNT = HIT_COUNT+1 WHERE BOARD_NO = #{noticeNo}
+	</update>
+	
+	<select id="selectNoticeAttachment" parameterType="_int" resultType="com.kh.finalProject.employee.model.vo.NoticeAttachment">
+		SELECT * FROM HD_NOTICE_ATTACHMENT_TB WHERE NOTICE_NO = #{noticeNo}	
+	</select>	
 	
 	
 	<resultMap type="notice" id="noticeResult">
-		<result column="board_No" property="boardNo"/>
-		<result column="board_Title" property="boardTitle"/>
+		<result column="BOARD_NO" property="boardNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
 		<result column="board_Content" property="boardContent"/>
 		<result column="board_Writer" property="boardWriter"/>
 		<result column="reg_Date" property="regDate"/>

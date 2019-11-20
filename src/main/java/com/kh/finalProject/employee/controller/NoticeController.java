@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.finalProject.employee.model.service.NoticeService;
+import com.kh.finalProject.employee.model.vo.NoticeAttachment;
 import com.kh.finalProject.employee.model.vo.NoticeVo;
 import com.kh.finalProject.professor.common.PageFactory;
 
@@ -56,13 +59,13 @@ public class NoticeController {
 	    @RequestMapping(value="/notice/insertNotice.hd")
 	    public String write(@ModelAttribute("noticeVo") NoticeVo noticeVo, Model model, MultipartFile[] upFile, HttpServletRequest req) throws Exception{
         	String msg = "";
-	        String loc = "";
+	        String loc = "/notice.hd";
 	        //----다중 파일업로드 처리-----
 	        
 			ModelAndView mv = new ModelAndView();
 			String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/NoticeFile");
 			
-			List<NoticeVo> list = new ArrayList<NoticeVo>();
+			List<NoticeAttachment> list = new ArrayList<NoticeAttachment>();
 					
 			File dir = new File(saveDir);
 			if(!dir.exists()) {
@@ -79,11 +82,11 @@ public class NoticeController {
 					String reName = sdf.format(System.currentTimeMillis())+"_"+random+ext;
 					
 					f.transferTo(new File(saveDir+"/"+reName));
-					NoticeVo nVo = new NoticeVo();
-					nVo.setOriFileName(oriFileName);
-					nVo.setReFileName(reName);
+					NoticeAttachment na = new NoticeAttachment();
+					na.setOriFileName(oriFileName);
+					na.setReFileName(reName);
 					
-					list.add(nVo);
+					list.add(na);
 				}
 				
 			}
@@ -91,11 +94,9 @@ public class NoticeController {
 			try {
 				service.insertNotice(noticeVo,list);
 				msg = "등록 성공";
-				loc = "";
 			} catch(RuntimeException e) {
 				e.printStackTrace();
 				msg = "등록 실패";
-				loc = "";
 			}
 			
 			model.addAttribute("msg", msg);
@@ -105,17 +106,47 @@ public class NoticeController {
 	    }
 	    
 	    //게시글 조회
-	    @RequestMapping(value="/notice/viewContent.hd")
-	    public String viewForm(@ModelAttribute("noticeVo") NoticeVo noticeVo,  Model model, HttpServletRequest request) throws Exception{
+	    @RequestMapping(value="/notice/viewNoticeDetail.hd")
+	    public ModelAndView viewForm(@ModelAttribute("noticeVo") NoticeVo noticeVo,  Model model, HttpServletRequest req, HttpServletResponse res) {
+	    	int noticeNo = noticeVo.getBoardNo();
+	    	ModelAndView mv = new ModelAndView();
+	    	
+	    	//쿠키값
+	        Cookie[] cookies = req.getCookies();
+	        String boardCookieVal = "";
+	        boolean hasRead = false;
 	        
-	        int code = Integer.parseInt(request.getParameter("code"));
-	        noticeVo.setBoardNo(code);
+	        if(cookies != null) {
+	           for(Cookie c : cookies) {
+	              String name = c.getName();
+	              String value = c.getValue();
+	              if("boardCookie".equals(name)) {
+	                 boardCookieVal = value; //이전값 보관
+	                 if(value.contains("|"+noticeVo.getBoardNo()+"|")) {
+	                    hasRead = true;
+	                    break;
+	                 }
+	              }
+	           }
+	        }   
+	              
+	        //안읽었을때 쿠키에 조회수 추가
+	        //현재 profBoardNo에 기록
+	        if(!hasRead) {
+	           Cookie c = new Cookie("boardCookie",boardCookieVal+"|"+noticeVo.getBoardNo()+"|");
+	           c.setMaxAge(-1); //로그아웃시 삭제됨
+	           res.addCookie(c);
+	        }
 	        
-	        List<NoticeVo> resultVo = service.selectNoticeByCode(noticeVo);
+	        try {
+	           mv.addObject("noticeVo",service.viewNoticeDetail(noticeNo,hasRead));
+	           mv.addObject("noticeAttachment",service.selectNoticeAttachment(noticeVo.getBoardNo()));
+	        }catch(RuntimeException e) {
+	           e.printStackTrace();
+	        }
 	        
-	        model.addAttribute("result", resultVo);
 	        
-	        return "notice/viewForm";
+	        return mv;
 	    }
 	    
 	    //게시글 수정

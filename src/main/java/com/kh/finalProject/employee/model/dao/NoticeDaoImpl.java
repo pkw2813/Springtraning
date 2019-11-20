@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalProject.employee.model.vo.NoticeAttachment;
 import com.kh.finalProject.employee.model.vo.NoticeVo;
 
 
@@ -28,19 +29,27 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public int insertNotice(SqlSessionTemplate session, NoticeVo noticeVo) {
-		return session.insert("notice.insertNotice", noticeVo);
+		return session.insert("noticeMapper.insertNotice", noticeVo);
 	}
 	
 
 	@Override
-	public int insertNoticeAttachment(SqlSessionTemplate session, NoticeVo nVo) {
-		return session.insert("notice.insertNoticeAttachment",nVo);
+	public int insertNoticeAttachment(SqlSessionTemplate session, NoticeAttachment nVo) {
+		return session.insert("noticeMapper.insertNoticeAttachment",nVo);
 	}
 
 	@Override
-	public List<NoticeVo> selectNoticeByCode(SqlSessionTemplate session, NoticeVo noticeVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public NoticeVo viewNoticeDetail(SqlSessionTemplate session, int noticeNo) {
+		return session.selectOne("noticeMapper.viewNoticeDetail",noticeNo);
+	}
+	@Override
+	public int updateReadCount(SqlSessionTemplate session, int noticeNo) {
+		return session.update("noticeMapper.updateReadCount",noticeNo);
+	}
+
+	@Override
+	public List<NoticeAttachment> selectNoticeAttachment(SqlSessionTemplate session, int noticeNo) {
+		return session.selectList("noticeMapper.selectNoticeAttachment",noticeNo);
 	}
 
 	@Override
