@@ -30,39 +30,30 @@
 			<div class="col-md-12 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-header">
-	    <form id="boardForm" name="boardForm" method="post">
-	        <table class="table table-striped table-hover">
+	    <form id="noticeForm" name="noticeForm" method="post">
+	        <table class="table table-striped table-hover table-sm">
 	            <thead>
 	                <tr>
-	                    <th>번호</th>
-	                    <th>제목</th>
-	                    <th>작성자</th>
-	                    <th>날짜</th>
-	                    <th>조회수</th>
+	                    <th style="width : 16.66%;">번호</th>
+	                    <th style="width : 50%;">제목</th>
+	                    <th style="width : 25%;">날짜</th>
+	                    <th style="width : 8.33%;">조회수</th>
 	                </tr>
 	            </thead>
 	            <tbody>
-	                <%-- <c:forEach var="result" items="${list }" varStatus="status"> --%>
+	                <c:forEach var="l" items="${list }" varStatus="status">
 	                    <tr>
-	                        <td><c:out value="1"/></td>
-	                        <td><a href='#' onClick='fn_view();'><c:out value="제목"/></a></td>
-	                        <td><c:out value="작성자"/></td>
-	                        <td><c:out value="작성일"/></td>
-	                        <td></td>
+	                        <td style="width : 16.66%;"><c:out value="${l.boardNo }"/></td>
+	                        <td style="width : 50%;"><a class="btn btn-warning" style="width : 100%;" href='#' onClick='fn_view(${l.boardNo});'><c:out value="${l.boardTitle}"/></a></td>
+	                        <td style="width : 25%;"><c:out value="${l.regDate }"/></td>
+	                        <td style="width : 8.33%"><c:out value="${l.hitCount }"/></td>
 	                    </tr>
-	                    <tr>
-	                        <td><c:out value="1"/></td>
-	                        <td><a href='#' onClick='fn_view();'><c:out value="제목"/></a></td>
-	                        <td><c:out value="작성자"/></td>
-	                        <td><c:out value="작성일"/></td>
-	                        <td></td>
-	                    </tr>
-	                <%-- </c:forEach> --%>
+	                </c:forEach>
 	            </tbody>
 	        </table>
     	</form>
     	<div class="card-body">
-    	
+    		${pageBar }
     	</div>
     	<div class="card-footer" style="text-align : left;">
             <a href='#' onClick='fn_write()' class="btn btn-success">공지사항 작성</a>            
@@ -70,22 +61,22 @@
       </div>
    </div> 
 <script>
-//글쓰기
+//공지쓰기
 function fn_write(){
     
-    var form = document.getElementById("boardForm");
+    var form = document.getElementById("noticeForm");
     
-    form.action = "<c:url value='/board/writeForm.do'/>";
+    form.action = "<c:url value='/notice/writeForm.hd'/>";
     form.submit();
     
 }
  
-//글조회
-function fn_view(code){
+//공지조회
+function fn_view(boardNo){
     
-    var form = document.getElementById("boardForm");
-    var url = "<c:url value='/board/viewContent.do'/>";
-    url = url + "?code=" + code;
+    var form = document.getElementById("noticeForm");
+    var url = "<c:url value='/notice/viewContent.hd'/>";
+    url = url + "?boardNo=" + boardNo;
     
     form.action = url;    
     form.submit(); 

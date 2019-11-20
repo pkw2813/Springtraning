@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalProject.employee.model.service.NoticeService;
 import com.kh.finalProject.employee.model.vo.NoticeVo;
+import com.kh.finalProject.professor.common.PageFactory;
 
 @Controller
 public class NoticeController {
@@ -21,15 +22,22 @@ public class NoticeController {
 
 	    //공지사항  조회
 	    @RequestMapping(value="/notice.hd")
-	    public String noticeList(Model model,
+	    public String noticeList(Model model, HttpServletRequest req, 
 	    		@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage
 	    		) throws Exception{
 	        int numPerPage = 5;         
 	        
 	        List<NoticeVo> list = service.selectNoticeList(cPage, numPerPage);
-	        int totalDate = service.countNoticeList();
+	        for(NoticeVo n : list) {
+	        	n.setRegDate(n.getRegDate().substring(0, 10));
+	        }
+	        int totalData = service.countNoticeList();
 	        model.addAttribute("list", list);
-	        
+			model.addAttribute("list", list);
+			model.addAttribute("totalCount", totalData);
+			model.addAttribute("pageBar",
+					PageFactory.getPageBar(totalData, cPage, numPerPage, req.getContextPath()+"/notice.hd"));
+
 	        return "employee/notice";
 	    }
 	    

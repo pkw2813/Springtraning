@@ -15,13 +15,13 @@ public class NoticeDaoImpl implements NoticeDao {
 	@Override
 	public List<NoticeVo> selectNoticeList(SqlSessionTemplate session, int cPage, int numPerPage) {
 		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return session.selectList("notice.selectNoticeList","",row);
+		return session.selectList("noticeMapper.selectNoticeList","",row);
 	}
 
 	@Override
 	public int countNoticeList(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
-		return session.selectOne("notice.countNoticeList");
+		return session.selectOne("noticeMapper.countNoticeList");
 	}
 
 

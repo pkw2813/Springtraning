@@ -11,8 +11,9 @@ public class NoticeVo {
 
 	
     private int boardNo;
-    private String boardTitle = "";
-    private String boardContent = "";
-    private String boardWriter = "";
-    private String regDate = "";
+    private String boardTitle;
+    private String boardContent;
+    private String boardWriter;
+    private String regDate;
+    private int hitCount;
 }
