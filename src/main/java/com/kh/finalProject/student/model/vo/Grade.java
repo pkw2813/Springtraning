@@ -29,4 +29,8 @@ public class Grade {
 	private String reqContent;
 	private String reqAwswer;
 	private String reqYn;
+	
+	private String evalDate;
+	private String evalComment;
+	private String evalPoint;
 }

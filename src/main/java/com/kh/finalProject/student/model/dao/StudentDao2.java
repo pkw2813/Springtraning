@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.finalProject.student.model.vo.Grade;
 import com.kh.finalProject.student.model.vo.InfoForSearchGrade;
+import com.kh.finalProject.student.model.vo.ProfAssess;
 import com.kh.finalProject.student.model.vo.Request;
 
 public interface StudentDao2 {
@@ -21,6 +22,7 @@ public interface StudentDao2 {
 	List<Map> SemesterGrades(SqlSessionTemplate session, InfoForSearchGrade ifsg);
 	
 	int insertAppeal(SqlSessionTemplate session, Request request);
+	int insertProfAssess(SqlSessionTemplate session, ProfAssess profassess);
 	
 	/* List<Request> selectRequestList(SqlSessionTemplate session); */
 	

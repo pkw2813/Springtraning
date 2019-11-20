@@ -48,6 +48,11 @@ public class StudentServiceImpl2 implements StudentService2 {
 		return dao.insertAppeal(session,request);
 	}
 	
+	@Override
+	public int insertProfAssess(ProfAssess profassess) {
+		return dao.insertProfAssess(session,profassess);
+	}
+	
 	/*
 	 * @Override public List<Request> selectRequest(){ return
 	 * dao.selectRequestList(session); }
@@ -72,6 +77,7 @@ public class StudentServiceImpl2 implements StudentService2 {
 	public List<Grade> selectacaYearSem(InfoForSearchGrade ifsg) {
 		return dao.selectacaYearSem(session, ifsg);
 	}
+
 
 //	@Override
 //	public List<ProfAssess> insertProfAssess(InfoForSearchGrade ifsg) {

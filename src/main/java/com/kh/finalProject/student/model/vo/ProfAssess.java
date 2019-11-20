@@ -17,5 +17,6 @@ public class ProfAssess {
 	private String profId;
 	private Date evalDate;
 	private String evalComment;
-	private int evalPoint;
+	private String evalPoint;
+	private String stuNo;
 }
