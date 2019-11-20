@@ -88,8 +88,20 @@ public class ScheduleController {
 	
 	@RequestMapping("/deleteCalendar.hd")
 	@ResponseBody
-//	public int deleteCalendar(String title, String start, String end) {
 	public int deleteCalendar(String title, String start, String end, String deptCode) {
+		if(title.contains("[")) {
+			String[] strs = title.split(" ");
+			String str= "";
+			for(int i = 1;i < strs.length; i++) {
+				if(strs.length -1 == i) {
+					str += strs[i];
+				}else {
+					str += strs[i] +" ";
+				}
+			}
+			title = str;
+		}
+		
 		Map map = new HashMap();
 		int result = 0;
 		map.put("title", title);
