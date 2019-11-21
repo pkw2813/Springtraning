@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -116,7 +117,19 @@
 				<table class="spacing">
 					<tr>
 						<th>강의시간</th>
-						<td><input type='text' value="${selectSubjectView.SUB_TIME }" readonly/></td>
+						<td>
+						
+							<%-- <input type='text' value="${selectSubjectView.SUB_TIME }" readonly/> --%>
+							<c:set var="subTime" value="${selectSubjectView.SUB_TIME }"/>
+					
+							<c:if test="${fn:length(subTime) == 11}">
+								<input type='text' value='<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,6,11) }"/>' readonly/>
+							</c:if>
+							<c:if test="${fn:length(subTime) == 17}">
+								<input type='text' value='<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,12,17) }"/>' readonly/>
+							</c:if>
+							
+						</td>
 					</tr>
 					<tr>
 						<th>강의요일</th>

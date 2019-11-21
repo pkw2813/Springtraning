@@ -73,7 +73,7 @@
 							
 							<c:choose>
 							<c:when test="${loginProfId eq planResult.PROF_ID }">
-								<tr style="background-color:#ececec;">
+								<tr style="background-color:skyblue;"><!-- #ececec -->
 									<th><c:out value="${planResult.PROF_NAME}" /></th>
 									<td>
 										<a href="javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode=${planResult.SUB_CODE}&profId=${planResult.PROF_ID}&subTime=${planResult.SUB_TIME}','개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))">

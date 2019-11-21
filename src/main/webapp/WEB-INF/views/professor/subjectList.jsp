@@ -44,6 +44,7 @@
 		</tr>
 		<c:forEach items="${list }" var="subject">
 			<tr>
+				<input class="subTime" type='hidden' value="${subject.SUB_TIME }"/>
 				<td>${subject.SUB_YEAR }</td>
 				<td>${subject.TARGET_GRADE }학년</td>
 				<td>${subject.SUB_SEMESTER }학기</td>
@@ -57,15 +58,15 @@
 				<td>${subject.SUB_ROOM }</td>
 				<td>${subject.SUB_DATE }</td>
 				<td>
-					<%-- <c:set var="subTime" value="${subject.SUB_TIME }"/>
+					<c:set var="subTime" value="${subject.SUB_TIME }"/>
 					
 					<c:if test="${fn:length(subTime) == 11}">
 					<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,6,11) }"/>
 					</c:if>
 					<c:if test="${fn:length(subTime) == 17}">
 					<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,12,17) }"/>
-					</c:if> --%>
-					${subject.SUB_TIME }
+					</c:if>
+					<%-- ${subject.SUB_TIME } --%>
 					
 				</td>
 			</tr>
@@ -82,7 +83,8 @@
 $(function(){
 	$(".selectSubject").click(function(){
 		var subCode = $(this).parent().next().next().html();
-		var subTime = $(this).parent().next().next().next().next().next().next().next().next().next().html();
+		/* var subTime = $(this).parent().next().next().next().next().next().next().next().next().next().html(); */
+		var subTime = $(this).parent().parent().find($(".subTime")).val(); 
 		console.log(subCode);
 		console.log(subTime);
 		window.opener.selectSubject(subCode,subTime);

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@  taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 	<jsp:include page = "/WEB-INF/views/common/header.jsp">
@@ -21,7 +22,13 @@
 			</div>
 			</div>
 <!-- Main Content start -->	
-<div class="row">
+
+<div class="col-6">
+	<button type="button" id="subjectGo" style="background-color:skyblue;color:black;border:none;">개설강좌</button>
+	<button type="button" id="subjectTime" style="background-color:lightgray;border:none;">시간표</button>
+</div>
+
+<div id="ajaxContent" class="row">
 	<div class="col-12 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
@@ -50,7 +57,19 @@
 											${cv.SUB_NAME }
 											</a>
 										</td>
-										<td style="text-align:center;">${cv.SUB_TIME }</td>
+										<td style="text-align:center;width:150px;">
+										
+											<%-- ${cv.SUB_TIME } --%>
+											<c:set var="subTime" value="${cv.SUB_TIME }"/>
+					
+											<c:if test="${fn:length(subTime) == 11}">
+											<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,6,11) }"/>
+											</c:if>
+											<c:if test="${fn:length(subTime) == 17}">
+											<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,12,17) }"/>
+											</c:if>
+										
+										</td>
 										<td style="text-align:center;">${cv.DEPT_CODE }</td>
 										<td style="text-align:center;">${cv.TARGET_GRADE }</td>
 										<td style="text-align:center;">${cv.SUB_SEMESTER }</td>
@@ -91,7 +110,21 @@
 											${cv.SUB_NAME }
 											</a>
 										</td>
-										<td style="text-align:center;">${cv.SUB_TIME }</td>
+										
+										<td style="text-align:center;">
+										
+											<%-- ${cv.SUB_TIME } --%>
+											<c:set var="subTime" value="${cv.SUB_TIME }"/>
+					
+											<c:if test="${fn:length(subTime) == 11}">
+											<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,6,11) }"/>
+											</c:if>
+											<c:if test="${fn:length(subTime) == 17}">
+											<c:out value="${fn:substring(subTime,0,5) }"/> ~ <c:out value="${fn:substring(subTime,12,17) }"/>
+											</c:if>
+										
+										</td>
+										
 										<td style="text-align:center;">${cv.DEPT_CODE }</td>
 										<td style="text-align:center;">${cv.TARGET_GRADE }</td>
 										<td style="text-align:center;">${cv.SUB_SEMESTER }</td>
@@ -110,8 +143,7 @@
 				<div class="row" style="height:7px;border-top:0.5px solid black;"></div>
 				<div class="row">
 					<div class="col-6">
-						<button type="button" id="subjectGo" style="background-color:skyblue;border:none;">개설강좌</button>
-						<button type="button" id="subjectTime" style="background-color:skyblue;border:none;">시간표</button>
+						
 					</div>
 					<div class="col-6">
 						<input id="insertButton" type='button' style="float:right;" value="강의 등록"/>
@@ -130,7 +162,7 @@
 								</tr>
 								<tr>
 									<th>교수명</th>
-									<input type='hidden' name="profId" value="${loginMember.profId }"/>
+									<input id="profId" type='hidden' name="profId" value="${loginMember.profId }"/>
 									<td><input name="profName" type='text' value="${loginMember.profName }" readonly/></td>
 								</tr>
 								<tr>
@@ -281,10 +313,23 @@
 <script>
 
 $("#subjectGo").click(function(){
+	$("#subjectGo").css({"background-color":"skyblue","color":"black"});
 	location.href="${pageContext.request.contextPath}/professor/insertSubject";
 });
 $("#subjectTime").click(function(){
-	location.href="${pageContext.request.contextPath}/professor/profSchedule?profId=${loginMember.profId}";
+	var profId = $("#profId").val();
+	$("#subjectTime").css({"background-color":"skyblue","color":"black"});
+	$("#subjectGo").css({"background-color":"lightgray","color":"black"});
+	$.ajax({
+		url:"${pageContext.request.contextPath}/professor/profSchedule",
+		data:{profId:profId},
+		success:function(data){
+			$("#ajaxContent").html(data);
+		}
+	});
+	
+	/* window.open("${pageContext.request.contextPath}/professor/profSchedule?profId="+profId, "시간표", "width=400, height=300, left=100, top=50");	 */
+	
 });
 
 //yn check
@@ -420,7 +465,7 @@ $(function(){
 					var tr= $("<tr>");
 					var td="<td>"+d[0]["SUB_TYPE"]+"</td>";
 					td+="<td style='text-align:center;font-size:5px;'>"+"<a href='javascript:void(window.open('${pageContext.request.contextPath }/professor/subjectView?subCode='+d[0]['SUB_CODE'],'개설과목 조회','width=660,height=635,top=50,left=400,resizable=no'))'>"+d[0]["SUB_NAME"]+"</a>"+"</td>";
-					td+="<td>"+d[0]["SUB_TIME"]+"</td>";
+					td+="<td style='width:150px;'>"+d[0]["SUB_TIME"]+"</td>";
 					td+="<td>"+d[0]["DEPT_CODE"]+"</td>";
 					td+="<td>"+d[0]["TARGET_GRADE"]+"</td>";
 					//td+="<td>"+d[0]["T_DEPT"]+"</td>";

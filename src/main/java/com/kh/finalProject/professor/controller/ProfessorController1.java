@@ -228,7 +228,19 @@ public class ProfessorController1 {
 	}
 	//교수 정보 수정
 	@RequestMapping("/professor/updateProf")
-	public String updateProfessor(Model model, String profId) {
+	public String updateProfessor(Model model, String profId, HttpSession session) {
+		
+		Professor pro = new Professor();
+		pro = (Professor)session.getAttribute("loginMember");
+		
+		//복호화
+		try {
+			String jumin = enc.decrypt(pro.getProfSsn()).subSequence(0, 8)+"******";
+			model.addAttribute("jumin",jumin);
+			logger.info("주민번호 : "+jumin);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		List<Subject> p = service.professorView(profId);
 		
@@ -258,7 +270,19 @@ public class ProfessorController1 {
 	}
 	//교수 비밀번호 변경
 	@RequestMapping("/professor/updatePwd")
-	public String profUpdatePwd(Model model, HttpServletRequest req) {
+	public String profUpdatePwd(Model model, HttpServletRequest req, HttpSession session) {
+		
+		Professor pro = new Professor();
+		pro = (Professor)session.getAttribute("loginMember");
+		
+		//복호화
+		try {
+			String profPw = enc.decrypt(pro.getProfPw());
+			model.addAttribute("profPw",profPw);
+			logger.info("비밀번호 복호화 : "+profPw);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		String profId = req.getParameter("profId");
 		
@@ -748,19 +772,32 @@ public class ProfessorController1 {
 	
 	//교수 시간표
 	@RequestMapping("/professor/profSchedule")
-	public String profSchedule(String profId, Model model) {
+//	@ResponseBody
+	public ModelAndView profSchedule(String profId, Model model, HttpServletResponse res) {
 //		Map<String,String> map = new HashMap<String,String>();
 //		map.put("profId",profId);
 		
+		ModelAndView mv = new ModelAndView();
 		
 		logger.info("profId : "+profId);
 		
 		List<Map<String,String>> schedule = service.profSchedule(profId);
 		logger.info("스케줄map : "+schedule);
 		
-		model.addAttribute("schedule",schedule);
+		mv.addObject("schedule",schedule);
 		
-		return "professor/profSchedule";
+		mv.setViewName("/professor/profScheduleAjaxPage");
+		
+//		ObjectMapper mapper = new ObjectMapper();
+//		String jsonStr = "";
+//		try {
+//			jsonStr = mapper.writeValueAsString(schedule);
+//		}catch(JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
+//		res.setContentType("application/json;charset=UTF-8");
+		
+		return mv;
 	}
 	//교수별 강의시간표
 	@RequestMapping("/professor/deptProfSchedule")
@@ -910,65 +947,6 @@ public class ProfessorController1 {
 		return jsonStr;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
