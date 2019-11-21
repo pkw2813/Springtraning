@@ -190,14 +190,24 @@
 
 		<script>
 		
+		/* $(".tP").keyup(function(){
+			var a=$(".tpHidden").val($(".tP").val());		
+			console.log($(".tpHidden").val($(".tP").val()));
+		}); */
+		
 		
 		function tuiUpdateBtn(year,deCo){
-			var tP=$(".tP").val();
-			var tpHidden=$(".tpHidden").val(tP);
+			
+			console.log(year + " / " + deCo);
+			var tp=$(".tP").val();
+			var newParam = tp.replace(/[^0-9]/g,"");
+			console.log("tp >> " + tp);
+			var tpHidden=$(".tpHidden").val(tp);
 			var as=encodeURI(tpHidden);
 			console.log(as);
-			
-			location.href="${path}/tuitionUpdate.hd?tuiYear="+year+"&deptCode="+deCo+"&tuiPay="+encodeURI(tpHidden);
+			console.log(JSON.stringify(as))
+			console.log("${path}/tuitionUpdate.hd?tuiYear="+year+"&deptCode="+deCo+"&tuiPay="+newParam);
+			location.href="${path}/tuitionUpdate.hd?tuiYear="+year+"&deptCode="+deCo+"&tuiPay="+newParam;
 		}
 		
               $(function() {

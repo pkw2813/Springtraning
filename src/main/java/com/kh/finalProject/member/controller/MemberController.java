@@ -83,21 +83,27 @@ public class MemberController {
 		String loc="";
 		if(loginNo.equals("s")) {
 			Student stu=stuService.selectOne(loginId);
-			if(bEnc.matches(loginPwd, stu.getStuPw())){
-				session.setAttribute("loginMember", stu);
+			if(stu!=null) {
+				if(bEnc.matches(loginPwd, stu.getStuPw())){
+					session.setAttribute("loginMember", stu);
+				}
 			}
 		}else if(loginNo.equals("p")){
 			Professor pro=proService.selectOne(loginId);
-			if(bEnc.matches(loginPwd, pro.getProfPw())){
-				session.setAttribute("loginMember", pro);
+			if(pro!=null) {
+				if(bEnc.matches(loginPwd, pro.getProfPw())){
+					session.setAttribute("loginMember", pro);
+				}
 			}
 		}else{
 			Employee emp=empService.selectOne(loginId);
-			if(bEnc.matches(loginPwd, emp.getEmpPw()) || loginId.equals("E00000000")){
-			session.setAttribute("loginMember", emp);
+			if(emp!=null) {
+				if(bEnc.matches(loginPwd, emp.getEmpPw()) || loginId.equals("E00000000")){
+				session.setAttribute("loginMember", emp);
+				}
 			}
 		}
-		if(session.getAttribute("loginMember")!=null) {
+		if(session != null && session.getAttribute("loginMember")!=null) {
 			msg="로그인 되었습니다.";
 			loc="/main.hd";
 		}else {

@@ -16,7 +16,7 @@
 	</select>
 	
 	<update id="tuitionUpdate" parameterType="tuition">
-		UPDATE HD_TUITION_TB SET TUI_PAY=#{tuiPay} WHERE TUI_YEAR=#{tuiYear} AND DEPT_CODE=#{deptCode}
+		UPDATE HD_TUITION_TB SET TUI_PAY= TRIM(TO_CHAR( #{tuiPay} , '999,999,999,999,999')) WHERE TUI_YEAR=#{tuiYear} AND DEPT_CODE=#{deptCode}
 	</update>
 	
 	<resultMap type="tuition" id="tuitionResult">
