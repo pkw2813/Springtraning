@@ -16,6 +16,12 @@
 	.searchBtn{
 		text-align:center;
 	}
+	.form-control{
+		height:40px !important;
+	}
+	.row{
+		height:65px !important;
+	}
 </style>
 <div class="main-panel">
 	<div class="content-wrapper">
@@ -399,6 +405,9 @@
 						currArr+="<td>"+re[i]["subDate"]+"요일</td>";
 						currArr+="<td>"+re[i]["subRoom"]+"</td>";
 						currArr+="<td>"+subT[0]+"~"+subT[subT.length-1]+"</td></tr>";
+					}
+					if(re==""){
+						currArr="<tr><td>커리큘럼 내역이 존재하지 않습니다.</td></tr>";
 					}
 					$("#curTb").html(currArr);
 				}
