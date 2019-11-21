@@ -111,7 +111,7 @@
 											</a>
 										</td>
 										
-										<td style="text-align:center;">
+										<td style="text-align:center;width:150px;">
 										
 											<%-- ${cv.SUB_TIME } --%>
 											<c:set var="subTime" value="${cv.SUB_TIME }"/>
