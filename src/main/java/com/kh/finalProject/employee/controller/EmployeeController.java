@@ -151,7 +151,8 @@ public class EmployeeController {
 			loc = "/enrollemployee.hd";
 			msg = "직원 등록 성공!";
 		} catch (Exception x) {
-			x.printStackTrace();
+			loc = "/enrollemployee.hd";
+			msg = "직원 등록 실패!";
 		}
 		HttpSession session = req.getSession();
 		session.setAttribute("msg", msg);
@@ -175,7 +176,8 @@ public class EmployeeController {
 			msg = "교수 등록 성공!";
 			loc = "/enrollprofessor.hd";
 		} catch (Exception x) {
-			x.printStackTrace();
+			msg = "교수 등록실패!";
+			loc = "/enrollprofessor.hd";
 		}
 		HttpSession session = req.getSession();
 		session.setAttribute("msg", msg);

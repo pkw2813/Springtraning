@@ -27,7 +27,7 @@
 										<i class="ti-search"></i>
 									  </span>
 									</div>
-									<input type="text" class="form-control" id="searchStu" placeholder="Search now" aria-label="search" aria-describedby="search">
+									<input type="text" class="form-control" id="searchStu" placeholder="학번 / 이름으로 검색" aria-label="search" aria-describedby="search">
 								  </div>
 								  </div>
 						<!-- <input type='text' class="form-control" id='searchStu'>	navbar-search-input -->
