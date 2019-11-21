@@ -84,8 +84,8 @@ $('#searchStu').on('keyup', function(){
 		data:{'search':search},
 		success: function(data){
 			let profList = "";
+			profList +="<tr><th>학과 명</th><th>교수 번호</th><th>교수 이름</th><th>전화 번호</th><th>이메일</th><th> 주소</th></tr>";
 			for(let i = 0; i < data['list'].length; i++) {
-
 			profList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
 			profList += "<td>"+data['list'][i].PHONE+"</td><td>"+data['list'][i].EMAIL+"</td><td>"+data['list'][i].ADDRESS+"</td>";
 			profList += "<td><input type='button' class='btn btn-outline-success btn-fw' onclick='detailProf("+data['list'][i].PROF_ID+");' value='상세 정보'/></td>";				
@@ -107,8 +107,8 @@ $('#searchStu').on('keyup', function(){
 				  'cPage':pageNo},
 			success: function(data){
 				let profList = "";
+				profList +="<tr><th>학과 명</th><th>교수 번호</th><th>교수 이름</th><th>전화 번호</th><th>이메일</th><th> 주소</th></tr>";
 				for(let i = 0; i < data['list'].length; i++) {
-
 				profList += "<tr><td class='mName'>"+data['list'][i].DEPT_NAME+"</td><td class='mId'>"+data['list'][i].PROF_ID+"</td><td>"+data['list'][i].PROF_NAME+"</td>";
 				profList += "<td>"+data['list'][i].PHONE+"</td><td>"+data['list'][i].EMAIL+"</td><td>"+data['list'][i].ADDRESS+"</td>";
 				profList += "<td><input type='button' class='btn btn-outline-success btn-fw' onclick='detailProf("+data['list'][i].PROF_ID+");' value='상세 정보'/></td>";				

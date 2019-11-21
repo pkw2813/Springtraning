@@ -173,7 +173,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int searchProfCount(SqlSessionTemplate session, String search) {
-		return session.selectOne("employee.searchstuCount", search);
+		return session.selectOne("employee.searchProfCount", search);
 	}
 
 	@Override
@@ -184,7 +184,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int searchEmpCount(SqlSessionTemplate session, String search) {
-		return session.selectOne("employee.searchstuCount", search);
+		return session.selectOne("employee.searchEmpCount", search);
 	}
 	
 	

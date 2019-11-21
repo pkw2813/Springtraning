@@ -217,7 +217,7 @@ function setJumin(obj) {
 
 
 function insertNewProf() {
-   $(".modal").css("display","block");
+   $("#myModal").css("display","block");
 
 }
 
@@ -227,13 +227,13 @@ function deleteProf(result) {
 
 $(function(){
 	$(".btn_close").click(function(){
-		$(".modal").css("display","none");
+		$("#myModal").css("display","none");
 	});
 });
 
 $(function(){
 	$(".close").click(function(){
-		$(".modal").css("display","none");
+		$("#myModal").css("display","none");
 	});
 });
 
