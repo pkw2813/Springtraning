@@ -57,7 +57,7 @@ public class ProfessorController1 {
 	//과목선택
 	@RequestMapping(value="/professor/selectSubject", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String seletcSubject(String subCode,String subTime,HttpServletResponse res) {
+	public String seletcSubject(String subCode,String subTime,@RequestParam String subYear,@RequestParam String targetGrade,@RequestParam String subSemester, HttpServletResponse res) {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		logger.info("subCode : "+subCode);
@@ -66,6 +66,9 @@ public class ProfessorController1 {
 		Map<String,String> param = new HashMap<String,String>();
 		param.put("subCode",subCode);
 		param.put("subTime",subTime.trim());
+		param.put("subYear",subYear);
+		param.put("targetGrade",targetGrade);
+		param.put("subSemester",subSemester);
 		
 		logger.info("param : "+param);
 		
@@ -632,7 +635,6 @@ public class ProfessorController1 {
 		model.addAttribute("list",list);
 		model.addAttribute("totalCount",totalData);
 		model.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/professor/subjectList"));
-		
 		
 		return "professor/subjectList";
 	}

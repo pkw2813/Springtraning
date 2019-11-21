@@ -110,7 +110,7 @@
 							<td style="background-color:skyblue;"><div class="className"></div></td>
 						</tr>
 						<tr>
-							<th>4교시 (13:00~13:50)</th>
+							<th>4교시 (12:00~12:50)</th>
 							<td><div id="mon4"></div></td>
 							<td><div id="tue4"></div></td>
 							<td><div id="wed4"></div></td>
@@ -120,7 +120,7 @@
 							<td style="background-color:skyblue;"><div class="className"></div></td>
 						</tr>
 						<tr>
-							<th>5교시 (14:00~14:50)</th>
+							<th>5교시 (13:00~13:50)</th>
 							<td><div id="mon5"></div></td>
 							<td><div id="tue5"></div></td>
 							<td><div id="wed5"></div></td>
@@ -130,7 +130,7 @@
 							<td style="background-color:skyblue;"><div class="className"></div></td>
 						</tr>
 						<tr>
-							<th>6교시 (15:00~15:50)</th>
+							<th>6교시 (14:00~14:50)</th>
 							<td><div id="mon6"></div></td>
 							<td><div id="tue6"></div></td>
 							<td><div id="wed6"></div></td>
@@ -140,7 +140,7 @@
 							<td style="background-color:skyblue;"><div class="className"></div></td>
 						</tr>
 						<tr>
-							<th>7교시 (16:00~16:50)</th>
+							<th>7교시 (15:00~15:50)</th>
 							<td><div id="mon7"></div></td>
 							<td><div id="tue7"></div></td>
 							<td><div id="wed7"></div></td>
@@ -150,7 +150,7 @@
 							<td style="background-color:skyblue;"><div class="className"></div></td>
 						</tr>
 						<tr>
-							<th>8교시 (17:00~17:50)</th>
+							<th>8교시 (16:00~16:50)</th>
 							<td><div id="mon8"></div></td>
 							<td><div id="tue8"></div></td>
 							<td><div id="wed8"></div></td>
@@ -160,7 +160,7 @@
 							<td style="background-color:skyblue;"><div class="className"></div></td>
 						</tr>
 						<tr>
-							<th>9교시 (19:00~19:50)</th>
+							<th>9교시 (17:00~17:50)</th>
 							<td><div id="mon9"></div></td>
 							<td><div id="tue9"></div></td>
 							<td><div id="wed9"></div></td>
@@ -170,7 +170,7 @@
 							<td style="background-color:skyblue;"><div class="className"></div></td>
 						</tr>
 						<tr>
-							<th>10교시 (20:00~20:50)</th>
+							<th>10교시 (18:00~18:50)</th>
 							<td><div id="mon10"></div></td>
 							<td><div id="tue10"></div></td>
 							<td><div id="wed10"></div></td>
@@ -257,25 +257,25 @@ function profSchedule(subDate, subCode, subName, subTime, subYear, subRoom, prof
 		if(subTime.includes("11:00")){
 			$("#mon3").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("13:00")){
+		if(subTime.includes("12:00")){
 			$("#mon4").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("14:00")){
+		if(subTime.includes("13:00")){
 			$("#mon5").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("15:00")){
+		if(subTime.includes("14:00")){
 			$("#mon6").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("16:00")){
+		if(subTime.includes("15:00")){
 			$("#mon7").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("17:00")){
+		if(subTime.includes("16:00")){
 			$("#mon8").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("19:00")){
+		if(subTime.includes("17:00")){
 			$("#mon9").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("20:00")){
+		if(subTime.includes("18:00")){
 			$("#mon10").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
 	}
@@ -289,25 +289,25 @@ function profSchedule(subDate, subCode, subName, subTime, subYear, subRoom, prof
 		if(subTime.includes("11:00")){
 			$("#tue3").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("13:00")){
+		if(subTime.includes("12:00")){
 			$("#tue4").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("14:00")){
+		if(subTime.includes("13:00")){
 			$("#tue5").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("15:00")){
+		if(subTime.includes("14:00")){
 			$("#tue6").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("16:00")){
+		if(subTime.includes("15:00")){
 			$("#tue7").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("17:00")){
+		if(subTime.includes("16:00")){
 			$("#tue8").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("19:00")){
+		if(subTime.includes("17:00")){
 			$("#tue9").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("20:00")){
+		if(subTime.includes("18:00")){
 			$("#tue10").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
 	}
@@ -321,25 +321,25 @@ function profSchedule(subDate, subCode, subName, subTime, subYear, subRoom, prof
 		if(subTime.includes("11:00")){
 			$("#wed3").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("13:00")){
+		if(subTime.includes("12:00")){
 			$("#wed4").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("14:00")){
+		if(subTime.includes("13:00")){
 			$("#wed5").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("15:00")){
+		if(subTime.includes("14:00")){
 			$("#wed6").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("16:00")){
+		if(subTime.includes("15:00")){
 			$("#wed7").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("17:00")){
+		if(subTime.includes("16:00")){
 			$("#wed8").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("19:00")){
+		if(subTime.includes("17:00")){
 			$("#wed9").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("20:00")){
+		if(subTime.includes("18:00")){
 			$("#wed10").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
 	}
@@ -353,25 +353,25 @@ function profSchedule(subDate, subCode, subName, subTime, subYear, subRoom, prof
 		if(subTime.includes("11:00")){
 			$("#thu3").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("13:00")){
+		if(subTime.includes("12:00")){
 			$("#thu4").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("14:00")){
+		if(subTime.includes("13:00")){
 			$("#thu5").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("15:00")){
+		if(subTime.includes("14:00")){
 			$("#thu6").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("16:00")){
+		if(subTime.includes("15:00")){
 			$("#thu7").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("17:00")){
+		if(subTime.includes("16:00")){
 			$("#thu8").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("19:00")){
+		if(subTime.includes("17:00")){
 			$("#thu9").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("20:00")){
+		if(subTime.includes("18:00")){
 			$("#thu10").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
 	}
@@ -385,25 +385,25 @@ function profSchedule(subDate, subCode, subName, subTime, subYear, subRoom, prof
 		if(subTime.includes("11:00")){
 			$("#fri3").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("13:00")){
+		if(subTime.includes("12:00")){
 			$("#fri4").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("14:00")){
+		if(subTime.includes("13:00")){
 			$("#fri5").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("15:00")){
+		if(subTime.includes("14:00")){
 			$("#fri6").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("16:00")){
+		if(subTime.includes("15:00")){
 			$("#fri7").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("17:00")){
+		if(subTime.includes("16:00")){
 			$("#fri8").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("19:00")){
+		if(subTime.includes("17:00")){
 			$("#fri9").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
-		if(subTime.includes("20:00")){
+		if(subTime.includes("18:00")){
 			$("#fri10").html(profName+"<br/>"+subName+"<br/>("+subRoom+"호)").parent().css(scheduleCSS);
 		}
 	}

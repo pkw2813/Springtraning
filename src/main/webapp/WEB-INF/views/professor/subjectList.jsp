@@ -23,7 +23,7 @@
 <meta charset="UTF-8">
 <title>개설 과목 조회</title>
 </head>
-<body style="overflow-y:hidden;overflow-x:hidden;">
+<body style="overflow-y:auto;overflow-x:hidden;">
 
 <div class="row gap1"></div>
 	<table class="table table-hover">
@@ -45,7 +45,10 @@
 		<c:forEach items="${list }" var="subject">
 			<tr>
 				<input class="subTime" type='hidden' value="${subject.SUB_TIME }"/>
-				<td>${subject.SUB_YEAR }</td>
+				<input class="subYear" type='hidden' value="${subject.SUB_YEAR }"/>
+				<input class="targetGrade" type='hidden' value="${subject.TARGET_GRADE }"/>
+				<input class="subSemester" type='hidden' value="${subject.SUB_SEMESTER }"/>
+				<td class="subYear">${subject.SUB_YEAR }</td>
 				<td>${subject.TARGET_GRADE }학년</td>
 				<td>${subject.SUB_SEMESTER }학기</td>
 				<td><input style="color:blue;" type='button' class="btn btn-default selectSubject" value="${subject.SUB_NAME }"/></td>
@@ -75,7 +78,7 @@
 
 	</table>
 
-<div>${pageBar }</div>
+<%-- <div>${pageBar }</div> --%>
 
 </body>
 
@@ -84,10 +87,16 @@ $(function(){
 	$(".selectSubject").click(function(){
 		var subCode = $(this).parent().next().next().html();
 		/* var subTime = $(this).parent().next().next().next().next().next().next().next().next().next().html(); */
-		var subTime = $(this).parent().parent().find($(".subTime")).val(); 
+		var subTime = $(this).parent().parent().find($(".subTime")).val();
+		var subYear = $(this).parent().parent().find($(".subYear")).val();
+		var targetGrade = $(this).parent().parent().find($(".targetGrade")).val();
+		var subSemester = $(this).parent().parent().find($(".subSemester")).val();
 		console.log(subCode);
 		console.log(subTime);
-		window.opener.selectSubject(subCode,subTime);
+		console.log(subYear);
+		console.log(targetGrade);
+		console.log(subSemester);
+		window.opener.selectSubject(subCode,subTime,subYear,targetGrade,subSemester);
 		self.close();
 	});
 });

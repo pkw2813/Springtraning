@@ -116,7 +116,7 @@
 		<!-- SELECT * FROM HD_SUBJECT_TB S JOIN HD_CLASS_TB C USING (SUB_CODE) JOIN HD_DEPARTMENT_TB D USING(DEPT_CODE) JOIN HD_PROFESSOR_TB USING (PROF_ID) WHERE PROF_ID=#{profId} -->
 	</select>
 	<select id="selectSubject" resultType="map" parameterType="map">
-		SELECT * FROM HD_SUBJECT_TB S JOIN HD_DEPARTMENT_TB USING (DEPT_CODE) WHERE SUB_CODE=#{subCode} AND SUB_TIME=#{subTime}
+		SELECT * FROM HD_SUBJECT_TB S JOIN HD_DEPARTMENT_TB USING (DEPT_CODE) WHERE SUB_CODE=#{subCode} AND SUB_TIME=#{subTime} AND SUB_YEAR=#{subYear} AND TARGET_GRADE=#{targetGrade} AND SUB_SEMESTER=#{subSemester}
 	</select>
 	<!-- 과목코드 눌렀을때 보이는 뷰 -->
 	<select id="selectSubjectCode" resultType="_int" parameterType="string">

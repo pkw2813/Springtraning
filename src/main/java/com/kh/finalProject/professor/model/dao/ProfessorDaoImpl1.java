@@ -142,8 +142,9 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 //	subject
 	@Override
 	public List<Subject> subjectCodeView(SqlSessionTemplate session,int cPage, int numPerPage, String profId){
-		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return session.selectList("professor1.subjectCodeView",profId,row);
+//		RowBounds row = new RowBounds((cPage-1)*numPerPage,numPerPage);
+//		return session.selectList("professor1.subjectCodeView",profId,row);
+		return session.selectList("professor1.subjectCodeView",profId);
 	}
 	@Override
 	public Map<String,String> selectSubject(SqlSessionTemplate session, Map<String,String> param) {

@@ -375,6 +375,8 @@ $(function(){
 		console.log($("#noBook").val());
 		if($("#noBook").val()=="N"){
 			$("#noBookName").attr("readonly",true).css("color","red").val("교재 사용 안함");
+		}else if($("#noBook").val()=="Y"){
+			$("#noBookName").attr("readonly",false).css("color","black").val("");
 		}
 	})
 });
@@ -388,10 +390,10 @@ $(function(){
 	});
 });
 
-function selectSubject(subCode,subTime){
+function selectSubject(subCode,subTime,subYear,targetGrade,subSemester){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/professor/selectSubject",
-		data:{"subCode":subCode,"subTime":subTime},
+		data:{"subCode":subCode,"subTime":subTime,"subYear":subYear,"targetGrade":targetGrade,"subSemester":subSemester},
 		async:false,
 		success:function(data){
 			console.log("성공");
