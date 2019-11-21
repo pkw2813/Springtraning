@@ -1,10 +1,15 @@
 package com.kh.finalProject.employee.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +32,7 @@ import com.kh.finalProject.professor.common.PageFactory;
 public class NoticeController {
 	@Autowired
 	private NoticeService service;
-
+	
 	    //공지사항  조회
 	    @RequestMapping(value="/notice.hd")
 	    public String noticeList(Model model, HttpServletRequest req, 
@@ -137,7 +142,6 @@ public class NoticeController {
 	           c.setMaxAge(-1); //로그아웃시 삭제됨
 	           res.addCookie(c);
 	        }
-	        
 	        try {
 	           mv.addObject("noticeVo",service.viewNoticeDetail(noticeNo,hasRead));
 	           mv.addObject("noticeAttachment",service.selectNoticeAttachment(noticeVo.getBoardNo()));
@@ -145,7 +149,7 @@ public class NoticeController {
 	           e.printStackTrace();
 	        }
 	        
-	        
+	        mv.setViewName("employee/detailNotice");
 	        return mv;
 	    }
 	    
@@ -168,6 +172,53 @@ public class NoticeController {
 	    	int result = service.deleteNotice(noticeVo);
 	    	
 	    	return "";
+	    }
+	    
+	  //파일 다운로드용
+	    @RequestMapping("/notice/fileDownLoad.hd")
+	    public void fileDownload(String oName, String rName, HttpServletRequest req, HttpServletResponse res) {
+	       BufferedInputStream bis = null;
+	       ServletOutputStream sos = null;
+	       
+	       String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/NoticeFile");
+	       
+	       File downFile = new File(saveDir+"/"+rName);
+	       
+	       try {
+	          FileInputStream fis = new FileInputStream(downFile);
+	          bis = new BufferedInputStream(fis);
+	          
+	          sos = res.getOutputStream();
+	          String resFileName = "";
+	          
+	          boolean isMSIE = req.getHeader("user-agent").indexOf("MSIE")!=-1 || req.getHeader("user-agent").indexOf("Trident")!=-1;
+	          
+	          if(isMSIE) {
+	             resFileName = URLEncoder.encode(oName, "UTF-8");
+	             resFileName = resFileName.replaceAll("\\+", "%20");
+	          }else {
+	             resFileName = new String(oName.getBytes("UTF-8"),"ISO-8859-1");
+	          }
+	          res.setContentType("application/octet-stream;charset=utf-8");
+	          res.addHeader("Content-Disposition", "attachment;filename=\""+resFileName+"\"");
+	          
+	          res.setContentLength((int)downFile.length());
+	          int read = 0;
+	          
+	          while((read=bis.read())!=-1) {
+	             sos.write(read);
+	          }
+	       }catch(Exception e) {
+	          e.printStackTrace();
+	       }finally {
+	          try {
+	             sos.close();
+	             bis.close();
+	          }catch(IOException e) {
+	             e.printStackTrace();
+	          }
+	       }
+	       
 	    }
 	
 		

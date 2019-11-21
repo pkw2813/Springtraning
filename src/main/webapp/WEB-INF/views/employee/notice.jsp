@@ -44,7 +44,7 @@
 	                <c:forEach var="l" items="${list }" varStatus="status">
 	                    <tr>
 	                        <td style="width : 16.66%;"><c:out value="${l.boardNo }"/></td>
-	                        <td style="width : 50%;"><a class="btn btn-warning" style="width : 100%;" href='#' onClick="fn_view('${l.boardNo}');"><c:out value="${l.boardTitle}"/></a></td>
+	                        <td style="width : 50%;"><a href="${path }/notice/viewNoticeDetail.hd?boardNo=${l.boardNo}" class="btn btn-dark" style="width : 100%;" href='#'"><c:out value="${l.boardTitle}"/></a></td>
 	                        <td style="width : 25%;"><c:out value="${l.regDate }"/></td>
 	                        <td style="width : 8.33%"><c:out value="${l.hitCount }"/></td>
 	                    </tr>
@@ -72,7 +72,7 @@ function fn_write(){
 }
  
 //공지조회
-function fn_view(boardNo){
+/* function fn_view(boardNo){
     
     var form = document.getElementById("noticeForm");
     var url = "<c:url value='/notice/viewNoticeDetail.hd'/>";
@@ -80,7 +80,7 @@ function fn_view(boardNo){
     
     form.action = url;    
     form.submit(); 
-}
+} */
 </script>
 					<div class="card-footer">
 					</div>

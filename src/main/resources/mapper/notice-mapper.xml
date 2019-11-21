@@ -29,10 +29,19 @@
 		UPDATE HD_BOARD_TB SET HIT_COUNT = HIT_COUNT+1 WHERE BOARD_NO = #{noticeNo}
 	</update>
 	
-	<select id="selectNoticeAttachment" parameterType="_int" resultType="com.kh.finalProject.employee.model.vo.NoticeAttachment">
+	<select id="selectNoticeAttachment" parameterType="_int" resultMap="noticeAttachmentResult">
 		SELECT * FROM HD_NOTICE_ATTACHMENT_TB WHERE NOTICE_NO = #{noticeNo}	
 	</select>	
 	
+	<resultMap id="noticeAttachmentResult" type="com.kh.finalProject.employee.model.vo.NoticeAttachment">
+		<result column="NOTICE_FILENO" property="noticeFileNo"/>
+		<result column="NOTICE_NO" property="noticeNo"/>
+		<result column="NOTICE_ORI_FILENAME" property="oriFileName"/>
+		<result column="NOTICE_RE_FILENAME" property="reFileName"/>
+		<result column="NOTICE_UPLOAD_DATE" property="noticeUploadDate"/>
+	
+	
+	</resultMap>
 	
 	<resultMap type="notice" id="noticeResult">
 		<result column="BOARD_NO" property="boardNo"/>

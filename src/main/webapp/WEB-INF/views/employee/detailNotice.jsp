@@ -1,116 +1,87 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="path" value="${pageContext.request.contextPath}" />
-<c:set value='${noticeVo}' var='r'/>
-<!DOCTYPE html>
-<html>
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- plugins:css -->
-<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link href='http://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'/>
-  <link rel="stylesheet" href="${path }/resources/assets/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="${path }/resources/assets/vendors/base/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="${path }/resources/assets/css/style.css">
-  <link rel="stylesheet" href="${path }/resources/css/modal.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="${path }/resources/assets/images/favicon.png" />
-  
-  <script src="${path }/resources/js/jquery-3.4.1.min.js"></script>
-  
-    <!-- 웹소켓 js파일 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.js"></script>
-  <title>${r.stuName } : ${r.reqTitle } / 작성일  : ${r.reqDate }</title>
-</head>
+    pageEncoding="UTF-8"%>
+<%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+<%@ page import="com.kh.finalProject.student.model.vo.Student" %>
+<%@ page import="com.kh.finalProject.employee.model.vo.Employee" %>
+<%@ page import="com.kh.finalProject.professor.model.vo.Professor" %>
+<% if(session.getAttribute("loginMember") instanceof Professor){%>
+<c:set var="userId" value="${loginMember.profId }"/>
+<%} else if(session.getAttribute("loginMember") instanceof Student){%>
+<c:set var="userId" value="${loginMember.stuNo }"/>
+<%} else if(session.getAttribute("loginMember") instanceof Employee){%> 
+<c:set var="userId" value="${loginMember.empId }"/>
+<%} %>
 
-<!-- Body section Start -->	
-<!-- Main Content start -->
-	
-<section>
-			<div class="row" style="height : 100%;">
-				<div class="col-md-12 grid-margin stretch-card">
-					<div class="card">
-						<div class="card-header">
-						<div class="alert alert-primary" style="text-align : center;">
-						  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-						  	<h3>공지사항 제목</h3>
-						</div>
-						</div>
-						<div class="card-body" style="text-align : center;">
-						<hr/>
-						<textarea rows=20 style="resize : none; width : 70em;"  readonly></textarea>
-						</div>
-						<div class="card-footer" style="text-align : right;">
-						<h6><span>작성자 : </span> / <span>작성일 : </span></h6>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-12 grid-margin stretch-card">
-              <div class="card">
+<c:set var="r" value="${noticeVo }"/>
+<style>
+	th{
+		text-align:center !important;
+	}
+	td{
+		heigth:20px !important;
+		text-align:center !important;
+	}
+	.firsttd{
+		width:30px !important;
+	}
+</style>
+<jsp:include page = "/WEB-INF/views/common/header.jsp"/>
+
+<div class="main-panel">
+	<div class="content-wrapper">
+			   <div class="card">
                 <div class="card-body">
-                  
-              	   <c:if test="${r.reqAnswer eq null or r.reqAnswer eq ''}">	
-                  <h4 class="card-title">댓글 입력</h4>
-                  <p class="card-description">
-                    <hr/>
-                  </p>
-                  <form action="${path }/prof/updateAnswer.hd" method="post" class="forms-sample">
-                    <div class="form-group">
-                      <label for="exampleTextarea1">댓글 내용</label>
-                      <textarea name="reqAnswer" class="form-control" id="exampleTextarea1" rows="4"></textarea>
-                    </div>
-                    <input type="hidden" name="profId" value="${r.profId }"/>
-                    <input type="hidden" name="subCode" value="${r.subCode }"/>
-                    <input type="hidden" name="stuNo" value="${r.stuNo }"/>
-                    <input type="hidden" name="acaYearSem" value="${r.acaYearSem }"/>
-                    <button type="submit" class="btn btn-primary mr-2">댓글등록</button>
-                    <button type="reset" class="btn btn-danger">취소</button>
-                  </form>
-                  </c:if>
-                  
-                  <!--  답변이 이미 등록된 경우 -->
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <td>제목</td>
+                          <td >${r.boardTitle}</td>
+                        </tr>
+                        <c:if test="${noticeAttachment ne null and !empty noticeAttachment }">
+                        <tr>
+                        	<td>첨부파일</td>
+                        	<c:forEach items="${noticeAttachment }" var="a">
+                        	<td><button class="btn btn-info" type="button" onclick="fileDownload('${a.oriFileName}', '${a.reFileName }');">${a.oriFileName }</a></td>
+                        	</c:forEach>
+                        </tr>
+                        </c:if>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="width : 10%;">내용</td>
+                          <td style="justify-content : center;">
+                          <textarea style="width : 80%; "name="boardContent" cols="20" rows="25" class="form-control" readonly="readonly" disabled>${r.boardContent }</textarea>
+                          </td>
+                        </tr>
+                        <tr>
+	                        	<td colspan="2">
+	                        		<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/notice.hd'">목록으로</button>
+	                        	</td>
+		                     <%--    <td colspan="2">
+		                        	<button class="btn btn-inverse-info btn-fw" onclick="location.href='${path}/reqAnswer.hd?userId=${userId }'">목록으로</button>
+		                        </td> --%>
+                        </tr>
+                      </tbody>
+                    </table>
+                    
+                  </div>
                 </div>
               </div>
-            </div>
-</section>
-	<script>
-		$('#addReply').mouseup(function(){
-			$('#addReply').attr("class", "btn btn-primary mr-2 addReplyAfter");
-			$('#addReply').html("답변등록");
-			$(document).ready(function(){
-			 $('#addReply').attr("type", "submit");
-			})
-		});
-		
-		
-	</script>
-  <!-- plugins:js -->
- <script src="${path }/resources/assets/vendors/base/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <script src="${path }/resources/assets/vendors/chart.js/Chart.min.js"></script>
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="${path }/resources/assets/js/off-canvas.js"></script>
-  <script src="${path }/resources/assets/js/hoverable-collapse.js"></script>
-  <script src="${path }/resources/assets/js/template.js"></script>
-  <script src="${path }/resources/assets/js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="${path }/resources/assets/js/dashboard.js"></script>
-  <script src="${path }/resources/assets/js/file-upload.js"></script>
-  <!-- End custom js for this page-->
-</body>
+              
+<script>
+/* 파일 다운로드 */
+function fileDownload(oName, rName){
+   oName = encodeURIComponent(oName);
+   location.href="${pageContext.request.contextPath}/notice/fileDownLoad.hd?oName="+oName+"&rName="+rName;
+}
 
-</html>
+</script>
+<%-- 	                        <c:if test="${userId == 'E00000000'}">
+	                        </c:if>
+	                        <c:if test="${userId != 'E00000000'}">
+	                        </c:if> --%>
+              
+<jsp:include page = "/WEB-INF/views/common/footer.jsp"/>
