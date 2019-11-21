@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.finalProject.common.encrypt.MyEncrypt;
 import com.kh.finalProject.student.model.service.StudentService3;
 import com.kh.finalProject.student.model.vo.Student;
 import com.kh.finalProject.student.model.vo.GraduationCon;
@@ -32,6 +33,8 @@ public class StudentController3 {
 	private Logger logger = LoggerFactory.getLogger(StudentController3.class);
 	@Autowired
 	private StudentService3 service;
+	@Autowired
+	private MyEncrypt enc;
 	
 	@RequestMapping("/student/tuitionBill.hd")
 	public String selectTuition(HttpSession session, Model model) {
@@ -67,7 +70,43 @@ public class StudentController3 {
 		}else {
 			student.setStuPostcode(""); // 우편번호 저장
 		}
+		
+		try {
+			String stuBirthDay = enc.decrypt(student.getBirthday()); // 복호화 하기
+			int birthYear=Integer.parseInt((stuBirthDay.substring(0, 2)));
+			String birthMonth=stuBirthDay.substring(2, 4);
+			String birthDate=stuBirthDay.substring(4, 6);
+			if(birthYear>50&&birthYear<=99) { // 태어난 해가 50~100 사이 이면
+				stuBirthDay="19"+birthYear+"년 "+birthMonth+"월 "+birthDate+"일";
+			}else if(birthYear<=50&&birthYear>=0) {
+				stuBirthDay="20"+birthYear+"년 "+birthMonth+"월 "+birthDate+"일";
+			}
+			student.setBirthday(stuBirthDay);
+			System.out.println("student.getBirthday():"+student.getBirthday());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		StuTuition result=service.selectTuitionOne(tuition);
+		
+		try {
+			String stuBirthDay = enc.decrypt(result.getBirthday()); // 복호화 하기
+			int birthYear=Integer.parseInt((stuBirthDay.substring(0, 2)));
+			String birthMonth=stuBirthDay.substring(2, 4);
+			String birthDate=stuBirthDay.substring(4, 6);
+			if(birthYear>50&&birthYear<=99) { // 태어난 해가 50~100 사이 이면
+				stuBirthDay="19"+birthYear+"년 "+birthMonth+"월 "+birthDate+"일";
+			}else if(birthYear<=50&&birthYear>=0) {
+				stuBirthDay="20"+birthYear+"년 "+birthMonth+"월 "+birthDate+"일";
+			}
+			result.setBirthday(stuBirthDay);
+			System.out.println("student.getBirthday():"+result.getBirthday());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		System.out.println("result:"+result);
 		model.addAttribute("student", student); // 학생 기본 정보 보내기
 		model.addAttribute("tuition", result);
@@ -106,6 +145,24 @@ public class StudentController3 {
 		tuition.setStuNo(studentNo);
 		tuition.setAcaYearSem(selectYearSem);
 		StuTuition student=service.selectBasicStudentInfo(studentNo);
+		
+		try {
+			String stuBirthDay = enc.decrypt(student.getBirthday()); // 복호화 하기
+			int birthYear=Integer.parseInt((stuBirthDay.substring(0, 2)));
+			String birthMonth=stuBirthDay.substring(2, 4);
+			String birthDate=stuBirthDay.substring(4, 6);
+			if(birthYear>50&&birthYear<=99) { // 태어난 해가 50~100 사이 이면
+				stuBirthDay="19"+birthYear+"년 "+birthMonth+"월 "+birthDate+"일";
+			}else if(birthYear<=50&&birthYear>=0) {
+				stuBirthDay="20"+birthYear+"년 "+birthMonth+"월 "+birthDate+"일";
+			}
+			student.setBirthday(stuBirthDay);
+			System.out.println("student.getBirthday():"+student.getBirthday());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if(student.getStuAddr()!=null&&student.getStuAddr().contains("PSTC")&&student.getStuAddr().split("PSTC").length==2) {
 			student.setStuPostcode(student.getStuAddr().split("PSTC")[0]); // 우편번호 저장
 		}else {
@@ -229,10 +286,21 @@ public class StudentController3 {
 		System.out.println("graduationCon:"+graduationCon);
 		String birthday="";
 		if(graduationCon!=null) {
-			String year=graduationCon.getStuSSn().substring(0, 2);
-			String month=graduationCon.getStuSSn().substring(2, 4);
-			String day=graduationCon.getStuSSn().substring(4, 6);
-			birthday=year+"년 "+month+"월"+day+"일";
+			try {
+				String stuBirthDay = enc.decrypt(graduationCon.getStuSSn()); // 복호화 하기
+				int birthYear=Integer.parseInt((stuBirthDay.substring(0, 2)));
+				String birthMonth=stuBirthDay.substring(2, 4);
+				String birthDate=stuBirthDay.substring(4, 6);
+				if(birthYear>50&&birthYear<=99) { // 태어난 해가 50~100 사이 이면
+					stuBirthDay="19"+birthYear+"년 "+birthMonth+"월 "+birthDate+"일";
+				}else if(birthYear<=50&&birthYear>=0) {
+					stuBirthDay="20"+birthYear+"년 "+birthMonth+"월 "+birthDate+"일";
+				}
+				birthday=stuBirthDay;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		model.addAttribute("graduationCon", graduationCon); // 학생 졸업조건 넘기기
