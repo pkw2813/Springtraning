@@ -124,7 +124,11 @@ public class ProfessorServiceImpl1 implements ProfessorService1 {
 		
 		return result;
 	}
-	
+	@Override
+	public Professor selectPwd(String profId) {
+		Professor p = dao.selectPwd(session,profId);
+		return p;
+	}
 	@Override
 	public int profUpdatePwdEnd(Map<String,String> map) {
 		

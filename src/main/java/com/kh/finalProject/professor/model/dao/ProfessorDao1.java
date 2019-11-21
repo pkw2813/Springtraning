@@ -40,6 +40,7 @@ public interface ProfessorDao1 {
 	//교수 정보수정
 	int updateProfessorEnd(SqlSessionTemplate session, Professor p);
 	//교수 비번
+	Professor selectPwd(SqlSessionTemplate session, String profId);
 	int profUpdatePwdEnd(SqlSessionTemplate session, Map<String,String> map);
 	//게시판뷰
 	List<ProfessorBoard> boardView(SqlSessionTemplate session,int cPage,int numPerPage);

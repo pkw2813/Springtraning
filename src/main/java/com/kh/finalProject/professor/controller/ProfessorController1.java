@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,8 @@ public class ProfessorController1 {
 	@Autowired
 	private MyEncrypt enc;
 	
+	@Autowired
+	private BCryptPasswordEncoder bcp;
 	
 	//과목선택
 	@RequestMapping(value="/professor/selectSubject", produces = "application/text; charset=utf8")
@@ -210,7 +213,7 @@ public class ProfessorController1 {
 		
 		//복호화
 		try {
-			String jumin = enc.decrypt(pro.getProfSsn()).subSequence(0, 8)+"******";
+			String jumin = enc.decrypt(pro.getProfSsn()).subSequence(0, 7)+"******";
 			model.addAttribute("jumin",jumin);
 			logger.info("주민번호 : "+jumin);
 		} catch (Exception e) {
@@ -237,7 +240,7 @@ public class ProfessorController1 {
 		try {
 			String jumin = enc.decrypt(pro.getProfSsn()).subSequence(0, 8)+"******";
 			model.addAttribute("jumin",jumin);
-			logger.info("주민번호 : "+jumin);
+			logger.info("주민번호1 : "+jumin);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -249,10 +252,21 @@ public class ProfessorController1 {
 		return "professor/updateProfessor";
 	}
 	@RequestMapping("/professor/updateProfessorEnd")
-	public String updateProfessorEnd(Model model, HttpServletRequest req, Professor p) {
+	public String updateProfessorEnd(Model model, HttpServletRequest req, Professor p, HttpSession session) {
 		
 		String msg = "";
 		String loc ="/";
+		
+		Professor pro = new Professor();
+		pro = (Professor)session.getAttribute("loginMember");
+		//복호화
+		try {
+			String jumin = enc.decrypt(pro.getProfSsn()).subSequence(0, 8)+"******";
+			model.addAttribute("jumin",jumin);
+			logger.info("주민번호2 : "+jumin);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		int result = service.updateProfessorEnd(p);
 		if(result>0) {
@@ -276,13 +290,13 @@ public class ProfessorController1 {
 		pro = (Professor)session.getAttribute("loginMember");
 		
 		//복호화
-		try {
-			String profPw = enc.decrypt(pro.getProfPw());
-			model.addAttribute("profPw",profPw);
-			logger.info("비밀번호 복호화 : "+profPw);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			String profPw = enc.decrypt(pro.getProfPw());
+//			model.addAttribute("profPw",profPw);
+//			logger.info("비밀번호 복호화 : "+profPw);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
 		String profId = req.getParameter("profId");
 		
@@ -294,19 +308,27 @@ public class ProfessorController1 {
 	public String profUpdatePwdEnd(Model model, HttpServletRequest req, Professor p, HttpSession session) {
 		
 		String profId = req.getParameter("profId");
-		String profPw = req.getParameter("profPw");
-		String profPwdUpdate = req.getParameter("profPwdUpdate");
+		logger.info("아이디 : "+profId);
+		String profPw = req.getParameter("profPw"); //현재비밀번호
+		String profPwdUpdate = req.getParameter("profPwdUpdate"); //바꿀비밀번호
 		
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("profId",profId);
-		map.put("profPw",profPw);
-		map.put("profPwdUpdate",profPwdUpdate);
+		Professor profPwd = new Professor();
+		profPwd = service.selectPwd(profId);
 		
+		logger.info("비밀번호 : "+profPwd.getProfPw());
+		
+		int result=0;
+		
+		if(bcp.matches(profPw, profPwd.getProfPw())) { // 왼쪽은 view에서 입력받은 현재 암호, 오른쪽 매개변수는 DB에 저장된 암호
+			map.put("profPwdUpdate",bcp.encode(profPwdUpdate));
+			result = service.profUpdatePwdEnd(map);
+		}
 		
 		String msg = "";
 		String loc ="/";
 		
-		int result = service.profUpdatePwdEnd(map);
 		
 		if(result>0) {
 			msg = "비밀번호 변경완료! 다시 로그인 해주세요.";
@@ -314,7 +336,6 @@ public class ProfessorController1 {
 			session.invalidate();
 		}else {
 			msg = "비밀번호가 다릅니다!";
-//			loc = "/professor/profUpdatePwdEnd?profId="+profId;
 			loc = "/professor/updatePwd?profId="+profId;
 		}
 		

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@  taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 	<jsp:include page = "/WEB-INF/views/common/header.jsp">
@@ -44,7 +45,11 @@
 								</tr>
 								<tr>
 									<th>주민번호</th>
-									<td><input name="profSsn" class="btn form-control" type="text" value="${loginMember.profSsn }" readonly/></td>
+									<td>
+									
+					<input name="profSsn" class="btn form-control" type="text" value='<c:out value="${fn:substring(jumin,0,6) }"/> - <c:out value="${fn:substring(jumin,6,7) }******"/>' readonly/>
+									
+									</td>
 								</tr>
 								<tr>
 									<th>학과번호</th>

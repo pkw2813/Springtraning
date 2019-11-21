@@ -53,14 +53,16 @@
 <!-- 	<insert id="updateProfessor" parameterType="string">
 		UPDATE HD_PROFESSOR_TB SET EMAIL=#{email}, PHONE=#{phone}, ADDRESS=#{address} WHERE PROF_ID=#{profId}
 	</insert> -->
-	
 	<update id="updateProfessor" parameterType="professor">
 		UPDATE HD_PROFESSOR_TB SET EMAIL=#{email}, PHONE=#{phone}, ADDRESS=#{address} WHERE PROF_ID=#{profId}
 	</update>
 
 	<!-- 비번 -->
+	<select id="selectPwd" parameterType="string" resultMap="professorResult1">
+		SELECT PROF_PW FROM HD_PROFESSOR_TB WHERE PROF_ID=#{profId}
+	</select>
 	<update id="profUpdatePwdEnd" parameterType="map">
-		UPDATE HD_PROFESSOR_TB SET PROF_PW=${profPwdUpdate} WHERE PROF_ID=#{profId} AND PROF_PW=#{profPw}
+		UPDATE HD_PROFESSOR_TB SET PROF_PW=#{profPwdUpdate} WHERE PROF_ID=#{profId}
 	</update>
 	<!-- 게시판뷰 -->
 	<select id="boardView" resultType="map">

@@ -74,7 +74,10 @@ public class ProfessorDaoImpl1 implements ProfessorDao1 {
 	public List<Subject> professorView(SqlSessionTemplate session, String profId) {
 		return session.selectList("professor1.professorView",profId);
 	}
-
+	@Override
+	public Professor selectPwd(SqlSessionTemplate session, String profId) {
+		return session.selectOne("professor1.selectPwd",profId);
+	}
 	@Override
 	public int updateProfessorEnd(SqlSessionTemplate session, Professor p) {
 		

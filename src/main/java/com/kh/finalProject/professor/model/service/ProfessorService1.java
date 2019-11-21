@@ -34,6 +34,7 @@ public interface ProfessorService1 {
 	//교수 정보수정
 	int updateProfessorEnd(Professor p);
 	//교수 비번변경
+	Professor selectPwd(String profId);
 	int profUpdatePwdEnd(Map<String,String> map);
 	//게시판뷰
 	List<ProfessorBoard> boardView(int cPage,int numPerPage);
