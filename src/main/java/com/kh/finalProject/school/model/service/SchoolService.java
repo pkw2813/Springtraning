@@ -16,7 +16,7 @@ public interface SchoolService {
 	List<Map> deptList(int cPage, int numPerPage);
 	List<Department> deptList(String colCode);
 	int colInsert(College c);
-	int deptInsert(Department d);
+	int deptInsert(Department d) throws Exception;
 	List<Map> deptList1(String colCode);
 	int deleteCol(String colCode);
 	int deleteDept(String deptCode);

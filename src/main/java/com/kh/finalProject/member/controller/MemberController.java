@@ -65,7 +65,8 @@ public class MemberController {
 	}
 	
 	@RequestMapping("login")
-	public String login() {
+	public String login(HttpSession session) {
+		session.invalidate();
 		return "redirect:/index.jsp";
 	}
 

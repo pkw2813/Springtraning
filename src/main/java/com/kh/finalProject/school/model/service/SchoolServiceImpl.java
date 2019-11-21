@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.finalProject.professor.model.vo.Department;
 import com.kh.finalProject.professor.model.vo.Subject;
@@ -56,8 +57,14 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public int deptInsert(Department d) {
-		return dao.deptInsert(session,d);
+	@Transactional(rollbackFor=Exception.class)
+	public int deptInsert(Department d) throws Exception{
+		int result=dao.deptInsert(session,d);
+		
+		if(result==0) {
+			throw new Exception();
+		}
+		return result;
 	}
 	
 	@Override

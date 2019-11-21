@@ -11,6 +11,11 @@ import com.kh.finalProject.tuition.model.vo.Tuition;
 public class TuitionDaoImpl implements TuitionDao {
 
 	@Override
+	public List<Tuition> tuitionList(SqlSessionTemplate session) {
+		return session.selectList("tuition.tuitionListFirst");
+	}
+
+	@Override
 	public Tuition selectOne(SqlSessionTemplate session, String tuiYear, String deptCode) {
 		Tuition t=new Tuition();
 		t.setTuiYear(tuiYear);

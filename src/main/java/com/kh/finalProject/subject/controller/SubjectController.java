@@ -83,8 +83,12 @@ public class SubjectController {
 		if(count>0) {
 			msg="이미 사용중인 강의장입니다.";
 		}else {
-			msg="정상적으로 등록되었습니다.";
-			int result=service.subInsert(s);
+			try {
+				msg="정상적으로 등록되었습니다.";
+				int result=service.subInsert(s);
+			} catch (Exception e) {
+				msg="다시 확인후 작성바랍니다.";
+			}
 		}
 		model.addAttribute("msg",msg);
 		model.addAttribute("loc",loc);

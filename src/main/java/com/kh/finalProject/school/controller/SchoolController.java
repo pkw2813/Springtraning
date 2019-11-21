@@ -71,7 +71,6 @@ public class SchoolController {
 		String colCode=d.getColCode();
 		List<Department> list=service.deptList(colCode);
 		String strDeptCode="";
-		System.out.println(list);
 		if(list!=null && !list.isEmpty()) {	
 			String str=list.get(list.size()-1).getDeptCode();
 			String deptStr= str.substring(str.length()-2, str.length());
@@ -88,10 +87,13 @@ public class SchoolController {
 		}
 			
 		d.setDeptCode(strDeptCode);
-		
-		System.out.println(d);
-		int result=service.deptInsert(d);
-		String msg="정상적으로 등록되었습니다.";
+		String msg="";
+		try {
+			int result=service.deptInsert(d);			
+			msg="정상적으로 등록되었습니다.";
+		}catch(Exception e) {
+			msg="학부를 선택해주세요.";
+		}
 		String loc="/school.hd";
 		
 		model.addAttribute("msg",msg);
@@ -175,7 +177,6 @@ public class SchoolController {
 	@RequestMapping("subRoomUse.hd")
 	@ResponseBody
 	public String subRoomUseList(Subject s) {
-		System.out.println(s);
 		List<Map> list=service.subRoomUseList(s);
 		ObjectMapper mapper=new ObjectMapper();
 		String jsonStr="";

@@ -21,7 +21,7 @@
 	<div class="content-wrapper">
 		<div class="card">
                 <div class="card-body">
-                  <form class="form-sample" action="${path }/subInsert.hd">
+                  <form class="form-sample" id="subForm">
                     <h4 class="card-title">커리큘럼 등록</h4>
                     <div class="row">
                       <div class="col-md-4">
@@ -188,7 +188,7 @@
                           <label class="col-sm-3 col-form-label">강의 시작시간</label>
                           <div class="col-sm-9">
                             <select class="form-control" id="roomTime">
-                            	<option id="roomTimec">시간선택</option>
+                            	<!-- <option id="roomTimec">시간선택</option> -->
                             	<option value="09:00" class="roomT">09:00</option>
                             	<option value="10:00" class="roomT">10:00</option>
                             	<option value="11:00" class="roomT">11:00</option>
@@ -349,6 +349,34 @@
 
 	<script>
 	
+		$("#submitBtn").click(function(){
+			var a=$(".selectColleage").val();
+			var b=$(".selectDepartment").val();
+			var c=$("#targetSubject").val();
+			var d=$("#roomTitle").val();
+			var e=$("#classRoom").val();
+			var f=$("#endTime").val();
+			
+			if(a==null || b==null || c==null || d==null || e==null || f==null){
+				alert("빈칸없이 작성해주세요.");
+			}else{
+				var rt=$("#roomTime").val();
+				var cp=$("#comPt").val();
+				var intrt=parseInt(rt);
+				
+				if(cp==3){
+					$("#subTime").val(rt+","+(intrt+1)+":00,"+(intrt+2)+":00");
+				}
+				else if(cp==2){
+					$("#subTime").val(rt+","+(intrt+1)+":00");
+				}
+				
+				$("#subForm").attr("action","${path }/subInsert.hd");
+				
+			}
+			
+		});
+	
 		$("#inquiry").click(function(){
 			var year=$("#year1").val();
 			var grade=$("#grade1").val();
@@ -378,7 +406,7 @@
 		});
 	
 		 $("#submitBtn").click(function(){
-			var rt=$("#roomTime").val();
+			/* var rt=$("#roomTime").val();
 			var cp=$("#comPt").val();
 			var intrt=parseInt(rt);
 			
@@ -387,7 +415,7 @@
 			}
 			else if(cp==2){
 				$("#subTime").val(rt+","+(intrt+1)+":00");
-			}
+			} */
 			
 			
 		}); 
@@ -422,7 +450,7 @@
 		 
 		 
 			 $("#roomTime").change(function(){
-					$("#roomTimec").attr('disabled',true);
+					/* $("#roomTimec").attr('disabled',true); */
 					timePlue();
 			 });
 		 function timePlue(){
@@ -638,6 +666,10 @@
 	        		}
 	        	});
 	        });
+	        
+	        $(document).ready(function() { 
+                $('input').attr('required', true); 
+             });
        
         
 	</script>

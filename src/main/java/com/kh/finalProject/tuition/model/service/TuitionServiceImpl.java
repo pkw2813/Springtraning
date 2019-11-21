@@ -36,6 +36,11 @@ public class TuitionServiceImpl implements TuitionService {
 	}
 
 	@Override
+	public List<Tuition> tuitionList() {
+		return Dao.tuitionList(session);
+	}
+
+	@Override
 	public List<Tuition> tuitionList(String tuiYear) {
 		List<Tuition> list=Dao.tuitionList(session,tuiYear);
 		return list;

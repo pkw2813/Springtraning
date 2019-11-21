@@ -148,7 +148,7 @@
 				         <span class="close" id="deptModalclose">&times;</span>
 				         <p>학부개설</p>
 				         <div class="form-group">
-                            <select class="form-control selectColleage" name='colCode'>
+                            <select class="form-control selectColleage" name='colCode' required>
                             </select><br>
 				         <input type="text" id="reqTitle" name="deptName" placeholder="개설할 학과명을 입력해주세요" class="form-control" autocomplete="off"/>
 				         </div>
@@ -277,12 +277,11 @@
         	deptModal.style.display = "none";
         }
  
-        // When the user clicks anywhere outside of the modal, close it
-        /* window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        } */
+    
+        
+        $(document).ready(function() { 
+	    	   $('input').attr('required', true); 
+	       });
 
         </script>
       

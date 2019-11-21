@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.finalProject.employee.model.vo.Curriculum;
 import com.kh.finalProject.professor.model.vo.Subject;
@@ -37,8 +38,12 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	public int subInsert(Subject s) {
+	@Transactional(rollbackFor=Exception.class)
+	public int subInsert(Subject s) throws Exception{
 		int result=dao.subInsert(session, s);
+		if(result==0) {
+			throw new Exception();
+		}
 		return result;
 	}
 

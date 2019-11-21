@@ -232,10 +232,9 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/insertSubject">개설과목 입력</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lecturePlan">강의 계획서</a></li>
-                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lecturePlanWeek">주별 강의계획서</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/lectureData">강의자료 업로드</a></li>
                 <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/profPlanResult">강의내역</a></li>
-                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/deptProfSchedule?deptCode=${loginMember.deptCode}">교수별 강의시간표</a></li>
+                <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath }/professor/deptProfSchedule?deptCode=${loginMember.deptCode}">학과별 강의시간표</a></li>
               </ul>
             </div>
           </li>
@@ -501,6 +500,8 @@
                 modal.style.display = "none";
             }
         } */
+        
+        	
 
         </script>
       

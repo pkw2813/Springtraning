@@ -9,5 +9,6 @@ public interface TuitionService {
 	Tuition selectOne(String tuiYear,String deptCode);
 	int insertTuition(Tuition t) throws Exception;
 	List<Tuition> tuitionList(String tuiYear);
+	List<Tuition> tuitionList();
 	int tuitionUpdate(Tuition t) throws Exception;
 }

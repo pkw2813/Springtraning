@@ -11,7 +11,7 @@ public interface SubjectService {
 	List<Map> selectRoom(String roomValue);
 	List<Subject> selectTime(Subject s);
 	List<Map> selectCurri(String deptCode);
-	int subInsert(Subject s);
+	int subInsert(Subject s) throws Exception;
 	List<Subject> subAllSelect();
 	List<Subject> curriSearch(Subject s);
 	Curriculum subTarget(String subName);

@@ -22,16 +22,18 @@ public class TuitionController {
 	private TuitionService service;
 	
 	@RequestMapping("/tuition.hd")
-	public String tuition() {
+	public String tuition(Model model) {
+		List<Tuition> list=service.tuitionList();
+		model.addAttribute("list",list);
 		return "admin/tuitionInsert";
 	}
 	
 	@RequestMapping("/tuitonInsert.hd")
 	public String tutionInsert(
-			@RequestParam String tuiYear,
-			@RequestParam String deptCode,
-			@RequestParam String tuiPay,
-			@RequestParam String tuiPayDate,
+			@RequestParam(value="tuiYear",required=false,defaultValue="1") String tuiYear,
+			@RequestParam(value="deptCode",required=false,defaultValue="1") String deptCode,
+			@RequestParam(value="tuiPay",required=false,defaultValue="1") String tuiPay,
+			@RequestParam(value="tuiPayDate",required=false,defaultValue="1") String tuiPayDate,
 			Model model
 			) {
 		Tuition t=new Tuition();
@@ -39,27 +41,27 @@ public class TuitionController {
 		t.setDeptCode(deptCode);
 		t.setTuiPay(tuiPay);
 		t.setTuiPayDate(tuiPayDate);
-		
 		String msg="";
 		String loc="/tuition.hd";
 		Tuition tui=service.selectOne(tuiYear,deptCode);
+		
 		if(tui!=null) {
 			if(!(tui.getTuiYear()==t.getTuiYear() && tui.getDeptCode()==t.getDeptCode())) {
-				msg="이미 등록되어 있습니다.";
+					msg="이미 등록되어 있습니다.";
 			}else {
 				try {
-					int result=service.insertTuition(t);					
+					int result=service.insertTuition(t);
 					msg="정상적으로 등록 되었습니다.";
-				}catch(Exception e) {
-					msg="등록중 에러가 발생했습니다.";
+				} catch (Exception e) {
+					msg="빈칸없이 작성바랍니다.";
 				}
 			}
 		}else {
 			try {
-				int result=service.insertTuition(t);				
+				int result=service.insertTuition(t);
 				msg="정상적으로 등록 되었습니다.";
-			}catch(Exception e) {
-				msg="등록중 에러가 발생했습니다.";
+			} catch (Exception e) {
+				msg="빈칸없이 작성바랍니다.";
 			}
 		}
 		

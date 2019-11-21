@@ -11,5 +11,6 @@ public interface TuitionDao {
 	Tuition selectOne(SqlSessionTemplate session,String tuiYear,String deptCode);
 	int insertTuition(SqlSessionTemplate session,Tuition t);
 	List<Tuition> tuitionList(SqlSessionTemplate session,String tuiYear);
+	List<Tuition> tuitionList(SqlSessionTemplate session);
 	int tuitionUpdate(SqlSessionTemplate session,Tuition t);
 }

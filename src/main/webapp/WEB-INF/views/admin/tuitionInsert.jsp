@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@  taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@  taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page = "/WEB-INF/views/common/header.jsp"/>
@@ -108,7 +109,6 @@
 	                    <div class="col-sm-12">
 	                    	<input type="submit" value="저장" class="btn btn-inverse-info btn-fw" id="insBtn"/>&nbsp&nbsp
 	                    	<input type="reset" value="초기화" class="btn btn-inverse-info btn-fw"/>
-	                    	<button></button>
 	                    </div>
                   </form>
                 </div>
@@ -170,15 +170,18 @@
                         </tr>
                       </thead>
                       <tbody id="tuiList">
+                      <c:forEach var="l" items="${list }">
+                      <c:set var="year" value="${l.TUI_YEAR }" />
                         <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                          <td>${fn:substring(year,0,4)}년</td>
+                          <td>${fn:substring(year,6,8)}학기</td>
+                          <td>${l.COL_NAME }</td>
+                          <td>${l.DEPT_NAME }</td>
+                          <td><input type="text" class="form-control payUpdate tuipay tP" value="${l.TUI_PAY }" onkeyup='inputNumberFormat(this)'/></td>
+                          <td><input type="button" class="btn btn-inverse-info btn-fw" value="수정완료" onclick="tuiUpdateBtn('${l.TUI_YEAR }','${l.DEPT_CODE }')"/></td>
                         </tr>
-
-                        
+                          <input type="hidden" class="tpHidden" value="" />
+					  </c:forEach>  
                       </tbody>
                     </table>
                   </div>
@@ -186,6 +189,17 @@
               </div>
 
 		<script>
+		
+		
+		function tuiUpdateBtn(year,deCo){
+			var tP=$(".tP").val();
+			var tpHidden=$(".tpHidden").val(tP);
+			var as=encodeURI(tpHidden);
+			console.log(as);
+			
+			location.href="${path}/tuitionUpdate.hd?tuiYear="+year+"&deptCode="+deCo+"&tuiPay="+encodeURI(tpHidden);
+		}
+		
               $(function() {
             		$(document).ready(function(){
             			$.ajax({
