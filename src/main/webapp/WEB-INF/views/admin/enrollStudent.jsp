@@ -12,7 +12,10 @@
    		<div class="content-wrapper">
 <div class="container-fluid">
 <div class="row">
-		<div class="col-6">
+	<div class="card">
+		<div ckass="card-body">
+			<div class="col-sm-12">
+					<div class="table-responsive">
 			<table class="table">
 				<tr>
 					<th>번호</th>
@@ -37,14 +40,16 @@
 					<td>${stu.beforeDeptName }</td>
 					<td>
 					<input type="button" class="btn btn-outline-success btn-fw" onclick="insertNewStu(${stu.beforeStu});" value="승인"/>
-					<input type="button" class="btn btn-outline-danger btn-fw" onclick="deleteBeforeStu(${stu.beforeStu});" value="거절"/>	
+<%-- 					<input type="button" class="btn btn-outline-danger btn-fw" onclick="deleteBeforeStu(${stu.beforeStu});" value="거절"/> --%>	
 					</td>					
 				</tr>
 				</c:forEach>
 			</table>
+			</div>
 		</div>
 	</div>
-	
+	</div>
+</div>
 </div>
 
 <script>
