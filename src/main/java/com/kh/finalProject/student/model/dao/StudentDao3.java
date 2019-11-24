@@ -26,4 +26,5 @@ public interface StudentDao3 {
 	List<AssignmentRegister> selectAsgmtBoardList(SqlSessionTemplate session, int cPage, int numPerPage, MyScheduleForInfo msfi);
 	int selectAsgmtBoardCount(SqlSessionTemplate session, MyScheduleForInfo msfi);
 	AssignmentRegister selectAssignment(SqlSessionTemplate session, MyScheduleForInfo msfi);
+	int updateAsgmtReadCount(SqlSessionTemplate session, MyScheduleForInfo msfi);
 }

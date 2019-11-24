@@ -124,6 +124,18 @@
 		AND AR.ASGMT_NO=${asgmtNo}
   	</select>
   	
+  	<update id="updateAsgmtReadCount" parameterType="myScheduleForInfo">
+  		UPDATE 
+		(SELECT AR.*, S.SUB_NAME 
+		FROM (SELECT SUB_SEQ, ASGMT_NO, READ_COUNT FROM HD_ASGMT_REGD_TB WHERE SUB_SEQ=#{subSeq} AND ASGMT_NO=${asgmtNo}) AR 
+		JOIN HD_CLASS_TB C
+		ON C.SUB_SEQ=AR.SUB_SEQ
+		JOIN HD_SUBJECT_TB S 
+		ON S.SUB_YEAR=#{acaYear}
+		AND S.SUB_SEMESTER=#{acaSemester}
+		AND C.SUB_SEQ=S.SUB_SEQ) TOTAL
+		SET TOTAL.READ_COUNT=READ_COUNT+1
+  	</update>
   	
   	<resultMap id="tuitionResult" type="stuTuition">
 		<result column="STU_NO" property="stuNo" />

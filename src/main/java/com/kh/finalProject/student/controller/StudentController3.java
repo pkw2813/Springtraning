@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,15 +31,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.common.encrypt.MyEncrypt;
 import com.kh.finalProject.professor.common.PageFactory;
 import com.kh.finalProject.professor.model.vo.AssignmentRegister;
-import com.kh.finalProject.professor.model.vo.InfoForProfAssignment;
-import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.student.model.service.StudentService3;
-import com.kh.finalProject.student.model.vo.Student;
 import com.kh.finalProject.student.model.vo.GraduationCon;
 import com.kh.finalProject.student.model.vo.MyClass;
 import com.kh.finalProject.student.model.vo.MySchedule;
 import com.kh.finalProject.student.model.vo.MyScheduleForInfo;
 import com.kh.finalProject.student.model.vo.StuTuition;
+import com.kh.finalProject.student.model.vo.Student;
 
 
 @Controller
@@ -426,6 +425,7 @@ public class StudentController3 {
 		model.addAttribute("arList", arList);
 		model.addAttribute("totalCount", totalData);
 		model.addAttribute("curSubSeq", msfi.getSubSeq());
+		model.addAttribute("cPage", cPage);
 		model.addAttribute("pageBar", PageFactory.getPageBarAsgmt(totalData, cPage, numPerPage, req.getContextPath()+"/student/classBoard.hd", msfi.getSubSeq()));
 		///////////////////////// 과제 게시판 하나 조회 끝
 		
@@ -435,7 +435,8 @@ public class StudentController3 {
 	
 	// 과제 한개 보기
 	@RequestMapping("/student/selectAssignment")
-	public ModelAndView selectAssignment(HttpSession session, String acaYear, String acaSemester, String subSeq, String asgmtNo) {
+	public ModelAndView selectAssignment(HttpSession session, HttpServletRequest request, String acaYear, String acaSemester, 
+			String subSeq, String asgmtNo, HttpServletResponse response, String cPage) {
 		
 		ModelAndView mv = new ModelAndView();
 		System.out.println("/student/selectAssignment 들어옴.");
@@ -444,6 +445,29 @@ public class StudentController3 {
 
 		System.out.println("acaYear:"+acaYear);
 		System.out.println("acaSemester:"+acaSemester);
+		
+		Cookie[] cookies=request.getCookies();
+		String boardCookieVal="";
+		boolean hasRead=false; // 읽었는지(true) 안 읽었는지(false) 구분하는 기준
+		
+		if(cookies!=null) {
+			for(Cookie c : cookies) {
+				String value=c.getValue();
+				if(c.getName().equals("boardCookie")) {
+					boardCookieVal=value; // 이전값 보관
+					if(value.contains("("+subSeq+"|"+asgmtNo+")")) { // 해당 번호의 게시판을 조회한 적이 있을 때(읽었을 때)
+						hasRead=true;	// 조회했으면 true 대입
+						break; // 반복문 나가기
+					}
+				}
+			}
+		}
+		if(!hasRead) { // 해당 번호의 게시판을 조회한 적이 없을 때(안 읽었을 때 조회수를 추가하고 cookie에 현재 boardNo 기록)
+			Cookie c=new Cookie("boardCookie", boardCookieVal+"("+subSeq+"|"+asgmtNo+")");
+			c.setMaxAge(-1); // 브라우저가 닫히거나 로그아웃 됬을 때
+			response.addCookie(c); // 쿠키 저장
+		}
+		
 		/////////////////////
 		MyScheduleForInfo msfi=new MyScheduleForInfo();
 		msfi.setStuNo(stuNo);
@@ -451,7 +475,7 @@ public class StudentController3 {
 		msfi.setAcaSemester(acaSemester);
 		msfi.setSubSeq(subSeq);
 		msfi.setAsgmtNo(asgmtNo);
-		AssignmentRegister ar = service.selectAssignment(msfi);
+		AssignmentRegister ar = service.selectAssignment(msfi, hasRead);
 
 		System.out.println("ar:"+ar);
 		mv.addObject("subSeq",subSeq);
@@ -459,6 +483,7 @@ public class StudentController3 {
 		mv.addObject("acaYear",acaYear);
 		mv.addObject("acaSemester",acaSemester);
 		mv.addObject("ar",ar);
+		mv.addObject("cPage",cPage);
 		
 		mv.setViewName("student/selectAssignment");
 		
@@ -468,7 +493,7 @@ public class StudentController3 {
 	// 파일 다운로드하기
 	@RequestMapping("student/asgmtFiledownLoad.do")
 	public ModelAndView fileDownLoad(String oName, String rName, HttpServletRequest req, HttpServletResponse res
-			, String subSeq, String asgmtNo, String acaYear, String acaSemester) { // 페이지에서 rName 받아온다.
+			, String subSeq, String asgmtNo, String acaYear, String acaSemester, String cPage) { // 페이지에서 rName 받아온다.
 		// 파일 입출력을 위한 Stream을 선언
 		BufferedInputStream bis=null;
 		ServletOutputStream sos=null;
@@ -509,7 +534,7 @@ public class StudentController3 {
 			}
 		}else { // 파일이 존재하지 않으면
 			String msg="죄송합니다.\\n서버에 파일이 존재하지 않습니다.";
-			String loc="/student/selectAssignment?subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear="+acaYear+"&acaSemester="+acaSemester;
+			String loc="/student/selectAssignment?subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear="+acaYear+"&acaSemester="+acaSemester+"&cPage="+cPage;
 			
 			mv.addObject("msg", msg);
 			mv.addObject("loc", loc);

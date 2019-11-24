@@ -101,6 +101,7 @@ public class ProfessorController4 { // 황준순 전용
 		model.addAttribute("arList", arList);
 		model.addAttribute("totalCount", totalData);
 		model.addAttribute("curSubSeq", ifps.getSubSeq());
+		model.addAttribute("cPage", cPage);
 		model.addAttribute("pageBar", PageFactory.getPageBarAsgmt(totalData, cPage, numPerPage, req.getContextPath()+"/prof/assignmentBoard.hd", ifps.getSubSeq()));
 		///////////////////////// 과제 게시판 하나 조회 끝
 		
@@ -110,7 +111,7 @@ public class ProfessorController4 { // 황준순 전용
 	
 	// 과제 한개 보기
 	@RequestMapping("/prof/selectAssignment")
-	public ModelAndView selectAssignment(HttpSession session, String acaYear, String acaSemester, String subSeq, String asgmtNo) {
+	public ModelAndView selectAssignment(HttpSession session, String acaYear, String acaSemester, String subSeq, String asgmtNo, String cPage) {
 		
 		ModelAndView mv = new ModelAndView();
 		System.out.println("/prof/selectAssignment 들어옴.");
@@ -155,6 +156,7 @@ public class ProfessorController4 { // 황준순 전용
 		mv.addObject("acaYear",acaYear);
 		mv.addObject("acaSemester",acaSemester);
 		mv.addObject("ar",ar);
+		mv.addObject("cPage",cPage);
 		
 		mv.setViewName("professor/selectAssignment");
 		
@@ -163,13 +165,14 @@ public class ProfessorController4 { // 황준순 전용
 	
 	// 과제등록 하기 화면으로 이동
 	@RequestMapping("prof/assignmentRegister.hd")
-	public String upAssignment(HttpSession session, Model model, String acaYearSem, String subSeq, String subName) {
+	public String upAssignment(HttpSession session, Model model, String acaYearSem, String subSeq, String subName, String cPage) {
 		System.out.println("prof/assignmentRegister.hd 들어옴.");
 		Professor prof=(Professor)session.getAttribute("loginMember");
 		
 		model.addAttribute("acaYearSem", acaYearSem);
 		model.addAttribute("subSeq", subSeq);
 		model.addAttribute("subName", subName);
+		model.addAttribute("cPage", cPage);
 
 		return "professor/assignmentRegister";
 	}
@@ -178,7 +181,7 @@ public class ProfessorController4 { // 황준순 전용
 	// 과제 수정 하기 화면으로 이동
 	@RequestMapping("prof/assignmentModify.hd")
 	public String updateAssignment(HttpSession session, Model model, String acaYear, String acaSemester, String subSeq, String subName
-			, String asgmtNo) {
+			, String asgmtNo, String cPage) {
 		System.out.println("prof/assignmentModify.hd 들어옴.");
 		Professor prof=(Professor)session.getAttribute("loginMember");
 		
@@ -197,6 +200,7 @@ public class ProfessorController4 { // 황준순 전용
 		model.addAttribute("subSeq", subSeq);
 		model.addAttribute("asgmtNo", asgmtNo);
 		model.addAttribute("ar", ar);
+		model.addAttribute("cPage", cPage);
 
 		return "professor/updateAssignment";
 	}
@@ -414,7 +418,7 @@ public class ProfessorController4 { // 황준순 전용
 	// 파일 다운로드하기
 	@RequestMapping("prof/asgmtFiledownLoad.do")
 	public ModelAndView fileDownLoad(String oName, String rName, HttpServletRequest req, HttpServletResponse res
-			, String subSeq, String asgmtNo, String acaYear, String acaSemester) { // 페이지에서 rName 받아온다.
+			, String subSeq, String asgmtNo, String acaYear, String acaSemester, String cPage) { // 페이지에서 rName 받아온다.
 		// 파일 입출력을 위한 Stream을 선언
 		BufferedInputStream bis=null;
 		ServletOutputStream sos=null;
@@ -455,7 +459,8 @@ public class ProfessorController4 { // 황준순 전용
 			}
 		}else { // 파일이 존재하지 않으면
 			String msg="죄송합니다.\\n서버에 파일이 존재하지 않습니다.";
-			String loc="/prof/selectAssignment?subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear="+acaYear+"&acaSemester="+acaSemester;
+			String loc="/prof/selectAssignment?subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear="+acaYear+"&acaSemester="+acaSemester
+					+"&cPage="+cPage;
 			
 			mv.addObject("msg", msg);
 			mv.addObject("loc", loc);

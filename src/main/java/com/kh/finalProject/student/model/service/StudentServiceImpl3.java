@@ -98,8 +98,12 @@ public class StudentServiceImpl3 implements StudentService3 {
 
 
 	@Override
-	public AssignmentRegister selectAssignment(MyScheduleForInfo msfi) {
-		return dao.selectAssignment(session, msfi);
+	public AssignmentRegister selectAssignment(MyScheduleForInfo msfi, boolean hasRead) {
+		AssignmentRegister ar=dao.selectAssignment(session, msfi);
+		if(!hasRead && ar!=null) { // hasRead가 false(읽은 적 없을 때)일때 그리고 과제가 조회되면
+			dao.updateAsgmtReadCount(session, msfi); // 조회수 올리기
+		}
+		return ar;
 	}
 
 	

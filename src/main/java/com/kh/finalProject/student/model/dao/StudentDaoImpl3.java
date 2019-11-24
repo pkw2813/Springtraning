@@ -81,6 +81,11 @@ public class StudentDaoImpl3 implements StudentDao3 {
 	public AssignmentRegister selectAssignment(SqlSessionTemplate session, MyScheduleForInfo msfi) {
 		return session.selectOne("student3.selectAssignment", msfi);
 	}
+
+	@Override
+	public int updateAsgmtReadCount(SqlSessionTemplate session, MyScheduleForInfo msfi) {
+		return session.update("student3.updateAsgmtReadCount", msfi);
+	}
 	
 	
 

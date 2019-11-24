@@ -136,17 +136,17 @@
 		function fileDownload(oName, rName, subSeq, asgmtNo)
 		{
 			oName=encodeURIComponent(oName);
-			location.href="${path}/prof/asgmtFiledownLoad.do?oName="+oName+"&rName="+rName+"&subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear=${acaYear}&acaSemester=${acaSemester}";
+			location.href="${path}/prof/asgmtFiledownLoad.do?oName="+oName+"&rName="+rName+"&subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear=${acaYear}&acaSemester=${acaSemester}&cPage=${cPage}";
 		}
 	
 	
 		function modifyBtn() {
 			// alert("수정 버튼이 눌림!!");
-			location.href="${path}/prof/assignmentModify.hd?subSeq=${subSeq }&asgmtNo=${asgmtNo }&subName=${ar.subName}&acaYear=${acaYear}&acaSemester=${acaSemester}";
+			location.href="${path}/prof/assignmentModify.hd?subSeq=${subSeq }&asgmtNo=${asgmtNo }&subName=${ar.subName}&acaYear=${acaYear}&acaSemester=${acaSemester}&cPage=${cPage}";
 		}
 		
 		function moveBoard() {
-			location.href="${path}/prof/assignmentBoard.hd?subSeq=${subSeq }";
+			location.href="${path}/prof/assignmentBoard.hd?subSeq=${subSeq}&cPage=${cPage}";
 		}
 
 </script>

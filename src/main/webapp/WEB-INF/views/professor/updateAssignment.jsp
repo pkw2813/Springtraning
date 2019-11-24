@@ -73,7 +73,7 @@
 		var ans1=confirm("과제 수정을 취소하시겠습니까?");
 		if(ans1==true) {
 			// history.back();
-			location.href="${path}/prof/assignmentBoard.hd?subSeq="+$("#subSeq").val();
+			location.href="${path}/prof/assignmentBoard.hd?subSeq="+$("#subSeq").val()+"&cPage=${cPage}";
 		}
 	}
 	

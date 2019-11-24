@@ -22,5 +22,5 @@ public interface StudentService3 {
 	List<MyClass> selectMyClassList(MyScheduleForInfo msfi);
 	List<AssignmentRegister> selectAsgmtBoardList(int cPage, int numPerPage, MyScheduleForInfo msfi);
 	int selectAsgmtBoardCount(MyScheduleForInfo msfi);
-	AssignmentRegister selectAssignment(MyScheduleForInfo msfi);
+	AssignmentRegister selectAssignment(MyScheduleForInfo msfi, boolean hasRead);
 }

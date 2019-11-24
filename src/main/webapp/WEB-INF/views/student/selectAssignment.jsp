@@ -134,12 +134,12 @@
 		function fileDownload(oName, rName, subSeq, asgmtNo)
 		{
 			oName=encodeURIComponent(oName);
-			location.href="${path}/student/asgmtFiledownLoad.do?oName="+oName+"&rName="+rName+"&subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear=${acaYear}&acaSemester=${acaSemester}";
+			location.href="${path}/student/asgmtFiledownLoad.do?oName="+oName+"&rName="+rName+"&subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear=${acaYear}&acaSemester=${acaSemester}&cPage=${cPage}";
 		}
 	
 		
 		function moveBoard() {
-			location.href="${path}/student/classBoard.hd?subSeq=${subSeq }";
+			location.href="${path}/student/classBoard.hd?subSeq=${subSeq}&cPage=${cPage}";
 		}
 
 </script>
