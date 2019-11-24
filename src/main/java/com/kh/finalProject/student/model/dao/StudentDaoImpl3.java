@@ -2,11 +2,14 @@ package com.kh.finalProject.student.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalProject.student.model.vo.Student;
+import com.kh.finalProject.professor.model.vo.AssignmentRegister;
 import com.kh.finalProject.student.model.vo.GraduationCon;
+import com.kh.finalProject.student.model.vo.MyClass;
 import com.kh.finalProject.student.model.vo.MySchedule;
 import com.kh.finalProject.student.model.vo.MyScheduleForInfo;
 import com.kh.finalProject.student.model.vo.StuTuition;
@@ -54,6 +57,29 @@ public class StudentDaoImpl3 implements StudentDao3 {
 	@Override
 	public List<MySchedule> selectMySchedule(SqlSessionTemplate session, MyScheduleForInfo msfi) {
 		return session.selectList("student3.selectMySchedule", msfi);
+	}
+
+	@Override
+	public List<MyClass> selectMyClassList(SqlSessionTemplate session, MyScheduleForInfo msfi) {
+		return session.selectList("student3.selectMyClassList", msfi);
+	}
+
+	@Override
+	public List<AssignmentRegister> selectAsgmtBoardList(SqlSessionTemplate session, int cPage, int numPerPage,
+			MyScheduleForInfo msfi) {
+		RowBounds row=new RowBounds((cPage-1)*numPerPage, numPerPage); // 시작위치, 범위
+		System.out.println("dao.selectAsgmtBoardList 들어옴");
+		return session.selectList("student3.selectAsgmtBoardList", msfi, row);
+	}
+
+	@Override
+	public int selectAsgmtBoardCount(SqlSessionTemplate session, MyScheduleForInfo msfi) {
+		return session.selectOne("student3.selectAsgmtBoardCount", msfi);
+	}
+
+	@Override
+	public AssignmentRegister selectAssignment(SqlSessionTemplate session, MyScheduleForInfo msfi) {
+		return session.selectOne("student3.selectAssignment", msfi);
 	}
 	
 	

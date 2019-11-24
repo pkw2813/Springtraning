@@ -1,7 +1,5 @@
 package com.kh.finalProject.student.model.vo;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,11 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MyScheduleForInfo {
+public class MyClass {
 
 	private String stuNo;
-	private String acaYear;
-	private String acaSemester;
 	private String subSeq;
-	private String asgmtNo;
+	private String subName;
+	private String subCode;
+	private String subYear;
+	private String subSemester;
+	private String subDate;
+	private String subTime;
 }

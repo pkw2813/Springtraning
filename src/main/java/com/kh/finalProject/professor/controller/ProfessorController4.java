@@ -88,6 +88,7 @@ public class ProfessorController4 { // 황준순 전용
 				ifps.setSubSeq(subSeq);
 			}
 		}
+		
 		System.out.println("subSeq:"+subSeq);
 		System.out.println("ifps.getSubSeq():"+ifps.getSubSeq());
 		if(ifps.getSubSeq()==null) {
@@ -99,8 +100,8 @@ public class ProfessorController4 { // 황준순 전용
 		System.out.println("arList:"+arList);
 		model.addAttribute("arList", arList);
 		model.addAttribute("totalCount", totalData);
-		model.addAttribute("curSubSeq", subSeq);
-		model.addAttribute("pageBar", PageFactory.getPageBar(totalData, cPage, numPerPage, req.getContextPath()+"/prof/assignmentBoard.hd"));
+		model.addAttribute("curSubSeq", ifps.getSubSeq());
+		model.addAttribute("pageBar", PageFactory.getPageBarAsgmt(totalData, cPage, numPerPage, req.getContextPath()+"/prof/assignmentBoard.hd", ifps.getSubSeq()));
 		///////////////////////// 과제 게시판 하나 조회 끝
 		
 
@@ -142,6 +143,7 @@ public class ProfessorController4 { // 황준순 전용
 		ifpa.setSubSeq(Integer.parseInt(subSeq));
 		ifpa.setAsgmtNo(Integer.parseInt(asgmtNo));
 		AssignmentRegister ar = service.selectAssignment(ifpa);
+		
 		// 날짜 시간 초 포맷 변경하기
 //		SimpleDateFormat df2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //		System.out.println("오늘날짜, 시간, 초:"+df2.format(date));
@@ -410,58 +412,58 @@ public class ProfessorController4 { // 황준순 전용
 	}
 	
 	// 파일 다운로드하기
-		@RequestMapping("prof/asgmtFiledownLoad.do")
-		public ModelAndView fileDownLoad(String oName, String rName, HttpServletRequest req, HttpServletResponse res
-				, String subSeq, String asgmtNo, String acaYear, String acaSemester) { // 페이지에서 rName 받아온다.
-			// 파일 입출력을 위한 Stream을 선언
-			BufferedInputStream bis=null;
-			ServletOutputStream sos=null;
-			ModelAndView mv=new ModelAndView();
-			
-			// 파일을 가져올 경로
-			String saveDir=req.getSession().getServletContext().getRealPath("/resources/upload/asgmtBoard");
-			File downFile=new File(saveDir+"/"+rName); // 페이지에서 rName 받아온다.
-			if(downFile.exists()) { // 파일이 존재하면
-				try {
-					FileInputStream fis=new FileInputStream(downFile);
-					bis=new BufferedInputStream(fis);
-					sos=res.getOutputStream();
-					String resFileName="";
-					boolean isMSIE=req.getHeader("user-agent").indexOf("MSIE")!=-1||req.getHeader("user-agent").indexOf("Trident")!=-1; // 인터넷 익스플로러는 표준을 안지키므로 별도로 설정
-					if(isMSIE) { // 브라우저가 인터넷 익스플로러 이면
-						resFileName=URLEncoder.encode(oName, "UTF-8"); // utf-8로 인코딩
-						resFileName=resFileName.replaceAll("\\+", "%20");	// 띄어쓰기를 %20으로 바꾼다.
-					}else { // 아니면
-						resFileName=new String(oName.getBytes("UTF-8"), "ISO-8859-1");
-					}
-					res.setContentType("application/octet-stream;charset=utf-8"); // 응답을 바이너리 파일로 준다.
-					res.addHeader("Content-Disposition", "attachment;filename=\""+resFileName+"\""); // 바이너리 파일 이름 지정, attachment: 팝업창 띄우기!!
-					res.setContentLength((int)downFile.length());
-					int read=0;
-					while((read=bis.read())!=-1) { // 모두 다운로드가 안되었으면
-						sos.write(read); // 스트림을 이용해서 바이트 단위로 보낸다.
-					}
-				}catch(Exception e) {
-					e.printStackTrace();
-				}finally {
-					try {
-						sos.close();
-						bis.close();
-					}catch(IOException e) {
-						e.printStackTrace();
-					}
+	@RequestMapping("prof/asgmtFiledownLoad.do")
+	public ModelAndView fileDownLoad(String oName, String rName, HttpServletRequest req, HttpServletResponse res
+			, String subSeq, String asgmtNo, String acaYear, String acaSemester) { // 페이지에서 rName 받아온다.
+		// 파일 입출력을 위한 Stream을 선언
+		BufferedInputStream bis=null;
+		ServletOutputStream sos=null;
+		ModelAndView mv=new ModelAndView();
+		
+		// 파일을 가져올 경로
+		String saveDir=req.getSession().getServletContext().getRealPath("/resources/upload/asgmtBoard");
+		File downFile=new File(saveDir+"/"+rName); // 페이지에서 rName 받아온다.
+		if(downFile.exists()) { // 파일이 존재하면
+			try {
+				FileInputStream fis=new FileInputStream(downFile);
+				bis=new BufferedInputStream(fis);
+				sos=res.getOutputStream();
+				String resFileName="";
+				boolean isMSIE=req.getHeader("user-agent").indexOf("MSIE")!=-1||req.getHeader("user-agent").indexOf("Trident")!=-1; // 인터넷 익스플로러는 표준을 안지키므로 별도로 설정
+				if(isMSIE) { // 브라우저가 인터넷 익스플로러 이면
+					resFileName=URLEncoder.encode(oName, "UTF-8"); // utf-8로 인코딩
+					resFileName=resFileName.replaceAll("\\+", "%20");	// 띄어쓰기를 %20으로 바꾼다.
+				}else { // 아니면
+					resFileName=new String(oName.getBytes("UTF-8"), "ISO-8859-1");
 				}
-			}else { // 파일이 존재하지 않으면
-				String msg="죄송합니다.\\n서버에 파일이 존재하지 않습니다.";
-				String loc="/prof/selectAssignment?subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear="+acaYear+"&acaSemester="+acaSemester;
-				
-				mv.addObject("msg", msg);
-				mv.addObject("loc", loc);
-				
-				mv.setViewName("common/msg");
-				
+				res.setContentType("application/octet-stream;charset=utf-8"); // 응답을 바이너리 파일로 준다.
+				res.addHeader("Content-Disposition", "attachment;filename=\""+resFileName+"\""); // 바이너리 파일 이름 지정, attachment: 팝업창 띄우기!!
+				res.setContentLength((int)downFile.length());
+				int read=0;
+				while((read=bis.read())!=-1) { // 모두 다운로드가 안되었으면
+					sos.write(read); // 스트림을 이용해서 바이트 단위로 보낸다.
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					sos.close();
+					bis.close();
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
 			}
+		}else { // 파일이 존재하지 않으면
+			String msg="죄송합니다.\\n서버에 파일이 존재하지 않습니다.";
+			String loc="/prof/selectAssignment?subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear="+acaYear+"&acaSemester="+acaSemester;
 			
-			return mv;
+			mv.addObject("msg", msg);
+			mv.addObject("loc", loc);
+			
+			mv.setViewName("common/msg");
+			
 		}
+		
+		return mv;
+	}
 }

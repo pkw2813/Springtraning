@@ -1,9 +1,15 @@
 package com.kh.finalProject.student.controller;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,14 +21,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.finalProject.common.encrypt.MyEncrypt;
+import com.kh.finalProject.professor.common.PageFactory;
+import com.kh.finalProject.professor.model.vo.AssignmentRegister;
+import com.kh.finalProject.professor.model.vo.InfoForProfAssignment;
+import com.kh.finalProject.professor.model.vo.Professor;
 import com.kh.finalProject.student.model.service.StudentService3;
 import com.kh.finalProject.student.model.vo.Student;
 import com.kh.finalProject.student.model.vo.GraduationCon;
+import com.kh.finalProject.student.model.vo.MyClass;
 import com.kh.finalProject.student.model.vo.MySchedule;
 import com.kh.finalProject.student.model.vo.MyScheduleForInfo;
 import com.kh.finalProject.student.model.vo.StuTuition;
@@ -348,5 +361,163 @@ public class StudentController3 {
 		model.addAttribute("myScheduleList", myScheduleList); // 학생 시간표 넘기기
 		
 		return "student/mySchedule";
+	}
+	
+	@RequestMapping("/student/classBoard.hd")
+	public String selectClassBoard(@RequestParam(value="cPage", required=false, defaultValue="1")int cPage, 
+			HttpSession session, Model model, HttpServletRequest req, String subSeq) {
+		System.out.println("/student/classBoard.hd가 호출됨");
+		
+		Student stu=(Student)session.getAttribute("loginMember");
+		String studentNo=stu.getStuNo();
+		
+		//////////////////////
+		Date date=new Date();
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("오늘날짜:"+df.format(date));
+		String today=df.format(date);
+		
+		System.out.println("금년도:"+today.substring(0, 4));
+		int todayMonth=Integer.parseInt(today.substring(5, 7));
+		System.out.println("금월:"+todayMonth);
+		String acaYear=today.substring(0, 4);
+		String acaSemester="";
+		if(todayMonth>=1&&todayMonth<=6) {
+			acaSemester="1";
+		}else if(todayMonth>=7&&todayMonth<=12) {
+			acaSemester="2";
+		}
+		
+		System.out.println("acaYear:"+acaYear);
+		System.out.println("acaSemester:"+acaSemester);
+		/////////////////////
+		MyScheduleForInfo msfi=new MyScheduleForInfo();
+		msfi.setStuNo(studentNo);
+		msfi.setAcaYear(acaYear);
+		msfi.setAcaSemester(acaSemester);
+		
+		System.out.println("msfi:"+msfi);
+		List<MyClass> myClassList=service.selectMyClassList(msfi);
+		System.out.println("myClassList:"+myClassList);
+		
+		model.addAttribute("acaYear", acaYear); 
+		model.addAttribute("acaSemester", acaSemester); 
+		model.addAttribute("myClassList", myClassList); // 학생 수강 과목 리스트 넘기기
+		
+		///////////////////////// 과제 게시판 하나 조회
+		System.out.println("쿼리스트링으로 받은 subSeq:"+subSeq);
+		if(!myClassList.isEmpty()) { // 학생의 과목 리스트가 비어 있지 않으면
+			if(subSeq==null||subSeq=="") {
+				msfi.setSubSeq(myClassList.get(0).getSubSeq()); // 과목 일련번호 저장하기
+			}else {
+				msfi.setSubSeq(subSeq);
+			}
+		}
+
+		System.out.println("subSeq:"+subSeq);
+		System.out.println("msfi.getSubSeq():"+msfi.getSubSeq());
+		if(msfi.getSubSeq()==null) {
+			msfi.setSubSeq("0");
+		}
+		int numPerPage=5;
+		List<AssignmentRegister> arList=service.selectAsgmtBoardList(cPage, numPerPage, msfi);
+		int totalData=service.selectAsgmtBoardCount(msfi);
+		System.out.println("arList:"+arList);
+		model.addAttribute("arList", arList);
+		model.addAttribute("totalCount", totalData);
+		model.addAttribute("curSubSeq", msfi.getSubSeq());
+		model.addAttribute("pageBar", PageFactory.getPageBarAsgmt(totalData, cPage, numPerPage, req.getContextPath()+"/student/classBoard.hd", msfi.getSubSeq()));
+		///////////////////////// 과제 게시판 하나 조회 끝
+		
+		return "student/classBoard";
+	}
+	
+	
+	// 과제 한개 보기
+	@RequestMapping("/student/selectAssignment")
+	public ModelAndView selectAssignment(HttpSession session, String acaYear, String acaSemester, String subSeq, String asgmtNo) {
+		
+		ModelAndView mv = new ModelAndView();
+		System.out.println("/student/selectAssignment 들어옴.");
+		Student stu=(Student)session.getAttribute("loginMember");
+		String stuNo=stu.getStuNo();
+
+		System.out.println("acaYear:"+acaYear);
+		System.out.println("acaSemester:"+acaSemester);
+		/////////////////////
+		MyScheduleForInfo msfi=new MyScheduleForInfo();
+		msfi.setStuNo(stuNo);
+		msfi.setAcaYear(acaYear);
+		msfi.setAcaSemester(acaSemester);
+		msfi.setSubSeq(subSeq);
+		msfi.setAsgmtNo(asgmtNo);
+		AssignmentRegister ar = service.selectAssignment(msfi);
+
+		System.out.println("ar:"+ar);
+		mv.addObject("subSeq",subSeq);
+		mv.addObject("asgmtNo",asgmtNo);
+		mv.addObject("acaYear",acaYear);
+		mv.addObject("acaSemester",acaSemester);
+		mv.addObject("ar",ar);
+		
+		mv.setViewName("student/selectAssignment");
+		
+		return mv;
+	}
+	
+	// 파일 다운로드하기
+	@RequestMapping("student/asgmtFiledownLoad.do")
+	public ModelAndView fileDownLoad(String oName, String rName, HttpServletRequest req, HttpServletResponse res
+			, String subSeq, String asgmtNo, String acaYear, String acaSemester) { // 페이지에서 rName 받아온다.
+		// 파일 입출력을 위한 Stream을 선언
+		BufferedInputStream bis=null;
+		ServletOutputStream sos=null;
+		ModelAndView mv=new ModelAndView();
+		
+		// 파일을 가져올 경로
+		String saveDir=req.getSession().getServletContext().getRealPath("/resources/upload/asgmtBoard");
+		File downFile=new File(saveDir+"/"+rName); // 페이지에서 rName 받아온다.
+		if(downFile.exists()) { // 파일이 존재하면
+			try {
+				FileInputStream fis=new FileInputStream(downFile);
+				bis=new BufferedInputStream(fis);
+				sos=res.getOutputStream();
+				String resFileName="";
+				boolean isMSIE=req.getHeader("user-agent").indexOf("MSIE")!=-1||req.getHeader("user-agent").indexOf("Trident")!=-1; // 인터넷 익스플로러는 표준을 안지키므로 별도로 설정
+				if(isMSIE) { // 브라우저가 인터넷 익스플로러 이면
+					resFileName=URLEncoder.encode(oName, "UTF-8"); // utf-8로 인코딩
+					resFileName=resFileName.replaceAll("\\+", "%20");	// 띄어쓰기를 %20으로 바꾼다.
+				}else { // 아니면
+					resFileName=new String(oName.getBytes("UTF-8"), "ISO-8859-1");
+				}
+				res.setContentType("application/octet-stream;charset=utf-8"); // 응답을 바이너리 파일로 준다.
+				res.addHeader("Content-Disposition", "attachment;filename=\""+resFileName+"\""); // 바이너리 파일 이름 지정, attachment: 팝업창 띄우기!!
+				res.setContentLength((int)downFile.length());
+				int read=0;
+				while((read=bis.read())!=-1) { // 모두 다운로드가 안되었으면
+					sos.write(read); // 스트림을 이용해서 바이트 단위로 보낸다.
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					sos.close();
+					bis.close();
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}else { // 파일이 존재하지 않으면
+			String msg="죄송합니다.\\n서버에 파일이 존재하지 않습니다.";
+			String loc="/student/selectAssignment?subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear="+acaYear+"&acaSemester="+acaSemester;
+			
+			mv.addObject("msg", msg);
+			mv.addObject("loc", loc);
+			
+			mv.setViewName("common/msg");
+			
+		}
+		
+		return mv;
 	}
 }

@@ -2,14 +2,17 @@ package com.kh.finalProject.student.model.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.finalProject.professor.model.vo.AssignmentRegister;
 import com.kh.finalProject.student.model.dao.StudentDao3;
 import com.kh.finalProject.student.model.vo.Student;
 import com.kh.finalProject.student.model.vo.GraduationCon;
+import com.kh.finalProject.student.model.vo.MyClass;
 import com.kh.finalProject.student.model.vo.MySchedule;
 import com.kh.finalProject.student.model.vo.MyScheduleForInfo;
 import com.kh.finalProject.student.model.vo.StuTuition;
@@ -73,6 +76,30 @@ public class StudentServiceImpl3 implements StudentService3 {
 	@Override
 	public List<MySchedule> selectMySchedule(MyScheduleForInfo msfi) {
 		return dao.selectMySchedule(session, msfi);
+	}
+
+
+	@Override
+	public List<MyClass> selectMyClassList(MyScheduleForInfo msfi) {
+		return dao.selectMyClassList(session, msfi);
+	}
+
+
+	@Override
+	public List<AssignmentRegister> selectAsgmtBoardList(int cPage, int numPerPage, MyScheduleForInfo msfi) {
+		return dao.selectAsgmtBoardList(session, cPage, numPerPage, msfi);
+	}
+
+
+	@Override
+	public int selectAsgmtBoardCount(MyScheduleForInfo msfi) {
+		return dao.selectAsgmtBoardCount(session, msfi);
+	}
+
+
+	@Override
+	public AssignmentRegister selectAssignment(MyScheduleForInfo msfi) {
+		return dao.selectAssignment(session, msfi);
 	}
 
 	

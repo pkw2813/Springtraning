@@ -1,6 +1,6 @@
+<%@page import="com.kh.finalProject.student.model.vo.MyClass"%>
 <%@page import="com.kh.finalProject.professor.model.vo.AssignmentRegister"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.kh.finalProject.professor.model.vo.ProfSubject"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -10,12 +10,12 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <%
 List<AssignmentRegister> arList=null;
-List<ProfSubject> profSubjectList=null;
+List<MyClass> myClassList=null;
 	if(request.getAttribute("arList")!=null) {
 		arList=(ArrayList)request.getAttribute("arList");
 	}
-	if(request.getAttribute("profSubjectList")!=null) { 
-		profSubjectList=(ArrayList)request.getAttribute("profSubjectList");
+	if(request.getAttribute("myClassList")!=null) { 
+		myClassList=(ArrayList)request.getAttribute("myClassList");
 	}
 	
 	String curSubSeq=(String)request.getAttribute("curSubSeq");
@@ -42,17 +42,17 @@ List<ProfSubject> profSubjectList=null;
 						<h4 class="font-weight-bold mb-0">
 						<c:out value="${acaYear}"/>학년도 <c:out value="${acaSemester}"/>학기
 						<input type="hidden" id="acaYearSem" value="<c:out value='${acaYear}'/>학년도 <c:out value='${acaSemester}'/>학기"/>
-						<% for(int i=0; i<profSubjectList.size(); i++) { 
+						<% for(int i=0; i<myClassList.size(); i++) { 
 							if(curSubSeq!=null) {
-								if(profSubjectList.get(i).getSubSeq().equals(curSubSeq)) { %>
-								[<%=profSubjectList.get(i).getSubName() %>] <%=profSubjectList.get(i).getSubDate()%>(<%=profSubjectList.get(i).getSubTime()%>)&nbsp;과제 게시판
-								<input type="hidden" id="subSeq" value="<%=profSubjectList.get(i).getSubSeq()%>"/>
-								<input type="hidden" id="subName" value="<%=profSubjectList.get(i).getSubName()%>"/>
+								if(myClassList.get(i).getSubSeq().equals(curSubSeq)) { %>
+								[<%=myClassList.get(i).getSubName() %>] <%=myClassList.get(i).getSubDate() %>(<%=myClassList.get(i).getSubTime()%>)&nbsp;과제 게시판
+								<input type="hidden" id="subSeq" value="<%=myClassList.get(i).getSubSeq()%>"/>
+								<input type="hidden" id="subName" value="<%=myClassList.get(i).getSubName()%>"/>
 						<% 		}
 							}else { %>
-								[<%=profSubjectList.get(i).getSubName() %>] <%=profSubjectList.get(i).getSubDate()%>(<%=profSubjectList.get(i).getSubTime()%>)&nbsp;과제 게시판
-								<input type="hidden" id="subSeq" value="<%=profSubjectList.get(0).getSubSeq()%>"/>
-								<input type="hidden" id="subName" value="<%=profSubjectList.get(0).getSubName()%>"/>
+								[<%=myClassList.get(0).getSubName() %>] <%=myClassList.get(0).getSubDate() %>(<%=myClassList.get(0).getSubTime()%>)&nbsp;과제 게시판
+								<input type="hidden" id="subSeq" value="<%=myClassList.get(0).getSubSeq()%>"/>
+								<input type="hidden" id="subName" value="<%=myClassList.get(0).getSubName()%>"/>
 						<% 		break;
 							}
 						} %>
@@ -72,15 +72,15 @@ List<ProfSubject> profSubjectList=null;
 							<label for="choiceClass" class="text-warning fontBlack" style="font-weight:bold;">강의 선택</label>
 								<select class="form-control" style="color:black;" id="subjectName">
 								<% 
-								for(int i=0; i<profSubjectList.size(); i++) {
+								for(int i=0; i<myClassList.size(); i++) {
 									if(curSubSeq!=null) { 
-										if(profSubjectList.get(i).getSubSeq().equals(curSubSeq)) { // curSubSeq과 같으면 %>
-										<option value="<%=profSubjectList.get(i).getSubSeq()%>" selected="selected">[<%=profSubjectList.get(i).getSubName() %>] <%=profSubjectList.get(i).getSubDate()%>(<%=profSubjectList.get(i).getSubTime()%>)</option>
+										if(myClassList.get(i).getSubSeq().equals(curSubSeq)) { // curSubSeq과 같으면 %>
+										<option value="<%=myClassList.get(i).getSubSeq()%>" selected="selected">[<%=myClassList.get(i).getSubName() %>] <%=myClassList.get(i).getSubDate() %>(<%=myClassList.get(i).getSubTime()%>)</option>
 									<% 	}else { // curSubSeq과 같지 않으면 %>
-										<option value="<%=profSubjectList.get(i).getSubSeq()%>">[<%=profSubjectList.get(i).getSubName() %>] <%=profSubjectList.get(i).getSubDate()%>(<%=profSubjectList.get(i).getSubTime()%>)</option>
+										<option value="<%=myClassList.get(i).getSubSeq()%>">[<%=myClassList.get(i).getSubName() %>] <%=myClassList.get(i).getSubDate() %>(<%=myClassList.get(i).getSubTime()%>)</option>
 									<%	}
 									}else { // curSubSeq가 null이면 %>
-										<option value="<%=profSubjectList.get(i).getSubSeq()%>">[<%=profSubjectList.get(i).getSubName() %>] <%=profSubjectList.get(i).getSubDate()%>(<%=profSubjectList.get(i).getSubTime()%>)</option>
+										<option value="<%=myClassList.get(i).getSubSeq()%>">[<%=myClassList.get(i).getSubName() %>] <%=myClassList.get(i).getSubDate() %>(<%=myClassList.get(i).getSubTime()%>)</option>
 								<% 	}
 									%>
 								<%	
@@ -113,7 +113,7 @@ List<ProfSubject> profSubjectList=null;
 									<c:if test="${arL!=null }">
 									<tr>
 										<td style="width:80px;">${arL.asgmtNo}</td>
-										<td style="width:100px;"><a href="${path }/prof/selectAssignment?subSeq=${arL.subSeq}&asgmtNo=${arL.asgmtNo}&acaYear=${acaYear}&acaSemester=${acaSemester}">${arL.asgmtRegdTitle}</a></td>
+										<td style="width:100px;"><a href="${path }/student/selectAssignment?subSeq=${arL.subSeq}&asgmtNo=${arL.asgmtNo}&acaYear=${acaYear}&acaSemester=${acaSemester}">${arL.asgmtRegdTitle}</a></td>
 										<td style="width:100px;">${arL.profName}</td>
 										<td style="width:70px;"><fmt:formatDate value="${arL.asgmtRegdDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
 										<td style="width:100px;">
@@ -130,7 +130,7 @@ List<ProfSubject> profSubjectList=null;
 									</c:forEach>
 									<c:if test="${empty arList}">
 									<tr>
-										<td colspan="6">등록한 과제가 아직 없습니다.</td>
+										<td colspan="6">등록된 과제가 아직 없습니다.</td>
 									</tr>
 									</c:if>
 								</table>
@@ -144,13 +144,6 @@ List<ProfSubject> profSubjectList=null;
 							<input type='submit' class='btn btn-dark' value='검색'/>
 							</form> -->
 							</div>
-							<div class="col-6">
-							<c:if test="${!empty profSubjectList }">
-								<button onclick="assignmentReg();" class="btn btn-dark" style="float:right;">과제 등록하기</button>
-							</c:if>
-							<c:if test="${empty profSubjectList }">
-							</c:if>
-							</div>
 						</div>
 					</div>
 					<!----------------------- 게시판  끝 --------------->
@@ -161,21 +154,13 @@ List<ProfSubject> profSubjectList=null;
 	</div>
 
 <script>
-	<c:if test="${!empty profSubjectList }">
+	<c:if test="${!empty myClassList }">
 	$("#subjectName").change(function() {
 		alert($("#subjectName option:selected").text()+" 과목 게시판을 조회합니다."); 
 		$("#assignmentTitle").html("<h3 class='font-weight-bold mb-0'><c:out value='${acaYear}'/>학년도 <c:out value='${acaSemester}'/>학기 "+$("#subjectName option:selected").text()+" 과제 게시판"+"</h3>");
-		location.href="${path}/prof/assignmentBoard.hd?subSeq="+$(this).val();
+		location.href="${path}/student/classBoard.hd?subSeq="+$(this).val();
 	});
 	
-	
-	function test() {
-		alert("버튼이 눌림!");
-	}
-	
-	function assignmentReg() {
-		location.href="${path}/prof/assignmentRegister.hd?acaYearSem="+$("#acaYearSem").val()+"&subSeq="+$("#subSeq").val()+"&subName="+$("#subName").val();
-	}
 	</c:if>
 </script>
 

@@ -5,7 +5,9 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.finalProject.student.model.vo.Student;
+import com.kh.finalProject.professor.model.vo.AssignmentRegister;
 import com.kh.finalProject.student.model.vo.GraduationCon;
+import com.kh.finalProject.student.model.vo.MyClass;
 import com.kh.finalProject.student.model.vo.MySchedule;
 import com.kh.finalProject.student.model.vo.MyScheduleForInfo;
 import com.kh.finalProject.student.model.vo.StuTuition;
@@ -20,4 +22,8 @@ public interface StudentDao3 {
 	GraduationCon selectGraduationCon(SqlSessionTemplate session, String studentNo);
 	String selectStuYearSem(SqlSessionTemplate session, String studentNo);
 	List<MySchedule> selectMySchedule(SqlSessionTemplate session, MyScheduleForInfo msfi);
+	List<MyClass> selectMyClassList(SqlSessionTemplate session, MyScheduleForInfo msfi);
+	List<AssignmentRegister> selectAsgmtBoardList(SqlSessionTemplate session, int cPage, int numPerPage, MyScheduleForInfo msfi);
+	int selectAsgmtBoardCount(SqlSessionTemplate session, MyScheduleForInfo msfi);
+	AssignmentRegister selectAssignment(SqlSessionTemplate session, MyScheduleForInfo msfi);
 }

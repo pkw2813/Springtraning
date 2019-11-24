@@ -4,7 +4,7 @@
 
 
 	<select id="selectProfSubject" parameterType="infoForProfSubject" resultMap="profSubjectResult">
-		SELECT C.*, S.SUB_NAME
+		SELECT C.*, S.SUB_NAME, S.SUB_DATE, S.SUB_TIME
 		FROM (SELECT SUB_SEQ, SUB_CODE, PROF_ID
 		FROM HD_CLASS_TB
 		WHERE PROF_ID=#{profId}) C
@@ -81,6 +81,8 @@
 		<result column="SUB_CODE" property="subCode" />
 		<result column="PROF_ID" property="profId" />
 		<result column="SUB_NAME" property="subName" />
+		<result column="SUB_DATE" property="subDate" />
+		<result column="SUB_TIME" property="subTime" />
 	</resultMap>
 	
 	<resultMap id="assignmentRegisterResult" type="assignmentRegister">
