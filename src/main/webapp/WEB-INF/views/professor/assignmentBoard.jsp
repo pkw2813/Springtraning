@@ -113,7 +113,7 @@ List<ProfSubject> profSubjectList=null;
 									<c:if test="${arL!=null }">
 									<tr>
 										<td style="width:80px;">${arL.asgmtNo}</td>
-										<td style="width:100px;"><a href="${path }/prof/selectAssignment?subSeq=${arL.subSeq}&asgmtNo=${arL.asgmtNo}">${arL.asgmtRegdTitle}</a></td>
+										<td style="width:100px;"><a href="${path }/prof/selectAssignment?subSeq=${arL.subSeq}&asgmtNo=${arL.asgmtNo}&acaYear=${acaYear}&acaSemester=${acaSemester}">${arL.asgmtRegdTitle}</a></td>
 										<td style="width:100px;">${arL.profName}</td>
 										<td style="width:70px;"><fmt:formatDate value="${arL.asgmtRegdDate }" pattern="yyyy/MM/dd HH:mm:ss"/></td>
 										<td style="width:100px;">

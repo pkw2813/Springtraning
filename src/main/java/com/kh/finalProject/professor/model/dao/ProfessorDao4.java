@@ -16,4 +16,6 @@ public interface ProfessorDao4 {
 	int selectAsgmtBoardCount(SqlSessionTemplate session, InfoForProfSubject ifps);
 	AssignmentRegister selectAssignment(SqlSessionTemplate session, InfoForProfAssignment ifpa);
 	int insertAssignment(SqlSessionTemplate session, AssignmentRegister ar);
+	int updateAssignment(SqlSessionTemplate session, AssignmentRegister ar);
+				
 }

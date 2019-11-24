@@ -46,6 +46,11 @@ public class ProfessorServiceImpl4 implements ProfessorService4{
 	public int insertAssignment(AssignmentRegister ar) {
 		return dao.insertAssignment(session, ar);
 	}
+
+	@Override
+	public int updateAssignment(AssignmentRegister ar) {
+		return dao.updateAssignment(session, ar);
+	}
 	
 	
 	

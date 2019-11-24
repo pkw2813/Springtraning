@@ -97,7 +97,7 @@
 										<div id="attachFile">
 											<c:if test="${ar ne null}">
 												<c:if test="${ar.asgmtRegdOrifileName ne null}">
-												<i class="ti-file" style="cursor:pointer; color:#ac6969; font-weight:bold;" onclick="fileDownload('${ar.asgmtRegdOrifileName}','${ar.asgmtRegdRefileName }');">
+												<i class="ti-file" style="cursor:pointer; color:#ac6969; font-weight:bold;" onclick="fileDownload('${ar.asgmtRegdOrifileName}','${ar.asgmtRegdRefileName }', '${subSeq }', '${asgmtNo }');">
 												${ar.asgmtRegdOrifileName }
 												</i>
 												</c:if>
@@ -133,19 +133,20 @@
 
 <script>
 		
-		function fileDownload(oName, rName)
+		function fileDownload(oName, rName, subSeq, asgmtNo)
 		{
 			oName=encodeURIComponent(oName);
-			location.href="${path}/prof/asgmtFiledownLoad.do?oName="+oName+"&rName="+rName;
+			location.href="${path}/prof/asgmtFiledownLoad.do?oName="+oName+"&rName="+rName+"&subSeq="+subSeq+"&asgmtNo="+asgmtNo+"&acaYear=${acaYear}&acaSemester=${acaSemester}";
 		}
 	
 	
 		function modifyBtn() {
-			alert("수정 버튼이 눌림!!");
+			// alert("수정 버튼이 눌림!!");
+			location.href="${path}/prof/assignmentModify.hd?subSeq=${subSeq }&asgmtNo=${asgmtNo }&subName=${ar.subName}&acaYear=${acaYear}&acaSemester=${acaSemester}";
 		}
 		
 		function moveBoard() {
-			history.back();
+			location.href="${path}/prof/assignmentBoard.hd?subSeq=${subSeq }";
 		}
 
 </script>

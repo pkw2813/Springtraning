@@ -19,8 +19,8 @@
 				<div class="d-flex justify-content-between align-items-center">
 					<div id="assignmentTitle">
 						<h4 class="font-weight-bold mb-0">
-							<c:out value="${acaYearSem}"/>
-							[<c:out value="${subName }"/>]&nbsp;과제 등록하기
+							<c:out value="${acaYear}"/>학년도 <c:out value="${acaSemester}"/>학기 
+							[<c:out value="${subName }"/>]&nbsp;과제 수정하기
 						</h4>
 					</div>
 				</div>
@@ -30,19 +30,20 @@
 		<div class="row">
 			<div class="col-12 grid-margin stretch-card">
 				<div class="card">
-					<form class="forms" name="asgmtRegFrm" id="asgmtRegFrm" action="${path}/prof/assignmentRegisterEnd.do" method="post" enctype="multipart/form-data" >
+					<form class="forms" name="asgmtRegFrm" id="asgmtRegFrm" action="${path}/prof/assignmentModifyEnd.hd" method="post" enctype="multipart/form-data" >
 						<div class="card-body">
 							<div class="row" id="asgmtContentDiv">
 								<div class="form-group col-5">
 									<label for="exampleInputName1">과제 제목</label>
-									<input type="text" class="form-control" name="asgmtTitle" id="asgmtTitle" placeholder="과제 제목을 입력해주세요.">
+									<input type="text" class="form-control" name="asgmtTitle" id="asgmtTitle" placeholder="과제 제목을 입력해주세요." value="<c:out value='${ar.asgmtRegdTitle}'/>">
 									<input type="hidden" name="subSeq" id="subSeq" value="<c:out value='${subSeq}'/>"/>
+									<input type="hidden" name="asgmtNo" id="asgmtNo" value="<c:out value='${asgmtNo}'/>"/>
 								</div>
 								<div class="form-group col-7">
-			                      <label>첨부파일</label>
-			                      <input type="file" name="asgmtFile" class="file-upload-default">
+			                      <label for="asgmtFile">첨부파일</label>
+			                      <input type="file" name="asgmtFile" id="asgmtFile" class="file-upload-default">
 			                      <div class="input-group col-12">
-			                        <input type="text" class="form-control file-upload-info" disabled="" placeholder="업로드할 파일을 선택해주세요.">
+			                        <input type="text" class="form-control file-upload-info" disabled="" placeholder="업로드할 파일을 선택해주세요." value="<c:out value='${ar.asgmtRegdOrifileName }'/>">
 			                        <span class="input-group-append">
 			                          <button class="file-upload-browse btn btn-primary" type="button">첨부파일 선택</button>
 			                        </span>
@@ -52,12 +53,12 @@
 
 							<div class="form-group">
 								<label for="asgmtContent">과제 설명</label>
-								<textarea class="form-control" name="asgmtContent" id="asgmtContent" rows="25"></textarea>
+								<textarea class="form-control" name="asgmtContent" id="asgmtContent" rows="25"><c:out value="${ar.asgmtRegdContent }"></c:out></textarea>
 							</div>
 						</div>
 
 						<div class="card-footer" style="text-align:center;">
-							<input type="button" class="btn btn-primary mr-2" onclick="asgmtValidate();"  value="등록"/>
+							<input type="button" class="btn btn-primary mr-2" onclick="asgmtValidate();"  value="수정"/>
 							<input type="button" class="btn btn-inverse-dark btn-fw" onclick="cancel();" value="취소"/>
 						</div>
 					</form>
@@ -69,7 +70,7 @@
 <script>
 	
 	function cancel() {
-		var ans1=confirm("과제 등록을 취소하시겠습니까?");
+		var ans1=confirm("과제 수정을 취소하시겠습니까?");
 		if(ans1==true) {
 			// history.back();
 			location.href="${path}/prof/assignmentBoard.hd?subSeq="+$("#subSeq").val();
@@ -98,7 +99,7 @@
 			console.log($.trim($("#asgmtTitle").val()));
 			$("#asgmtTitle").val($.trim($("#asgmtTitle").val()));
 			$("#asgmtContent").val($.trim($("#asgmtContent").val()));
-			var ans2=confirm("과제를 등록하시겠습니까?");
+			var ans2=confirm("과제를 수정하시겠습니까?");
 			if(ans2==true) {
 				$("#asgmtRegFrm").submit();
 				//return true;

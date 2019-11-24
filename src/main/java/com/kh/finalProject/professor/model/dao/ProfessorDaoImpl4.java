@@ -42,6 +42,11 @@ public class ProfessorDaoImpl4 implements ProfessorDao4 {
 		return session.insert("prof4.insertAssignment", ar);
 	}
 
+	@Override
+	public int updateAssignment(SqlSessionTemplate session, AssignmentRegister ar) {
+		return session.update("prof4.updateAssignment", ar);
+	}
+
 	
 	
 	

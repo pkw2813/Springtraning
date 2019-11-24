@@ -66,6 +66,14 @@
 		(SEQ_ASGMT_SEQ.NEXTVAL, ${asgmtSeq}, #{profId}, #{asgmtNo}, #{asgmtRegdTitle}, 
 		#{asgmtRegdContent}, SYSTIMESTAMP, 0, #{asgmtRegdOrifileName}, #{asgmtRegdRefileName})
 	</insert>
+	
+	<update id="updateAssignment" parameterType="assignmentRegister">
+		UPDATE HD_ASGMT_REGD_TB SET ASGMT_REGD_TITLE=#{asgmtRegdTitle}, ASGMT_REGD_CONTENT=#{asgmtRegdContent}, 
+		<if test="asgmtRegdOrifileName !=''">
+		ASGMT_REGD_ORIFILE_NAME=#{asgmtRegdOrifileName}, ASGMT_REGD_REFILE_NAME=#{asgmtRegdRefileName}, 		
+		</if>
+		ASGMT_REGD_DATE=SYSTIMESTAMP WHERE SUB_SEQ=${subSeq} AND ASGMT_NO=${asgmtNo}
+	</update>
 
 
   	<resultMap id="profSubjectResult" type="profSubject">
