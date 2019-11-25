@@ -82,13 +82,13 @@
 	</update>
 	
 	<select id="studyList" parameterType="string" resultType="map">
-			SELECT ROWNUM,T.* from(SELECT DISTINCT E.SUB_NAME,A.SUB_SEQ,F.ACA_YEAR_SEM FROM HD_CLASS_TB A
+			SELECT DISTINCT E.SUB_NAME from hd_class_tb a
         LEFT JOIN HD_SUB_REQ_TB B ON A.SUB_SEQ=B.SUB_SEQ
         JOIN HD_STUDENT_TB C ON B.STU_NO=C.STU_NO
         JOIN HD_DEPARTMENT_TB D ON C.DEPT_CODE=D.DEPT_CODE 
         JOIN HD_SUBJECT_TB E ON A.SUB_SEQ=E.SUB_SEQ
         JOIN HD_GRADE_TB F ON A.SUB_SEQ=F.SUB_SEQ 
-        where A.PROF_ID=#{profId}) T
+        where A.PROF_ID=#{profId}
 	</select>
 	
 	

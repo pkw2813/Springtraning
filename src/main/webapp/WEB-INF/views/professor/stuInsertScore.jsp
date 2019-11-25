@@ -401,7 +401,8 @@ $(document).ready(function(){
 	.ajaxStop(function(){
 		$('#Progress_Loading').hide(); //ajax종료시 로딩바를 숨겨준다.
 	});
-
+	
+//점수 0~100 유효성 검사
 $("#ASSIGN_1").keyup(function(){
 	
 		if($("#ASSIGN_1").val()<0||$("#ASSIGN_1").val()>100){
@@ -410,12 +411,60 @@ $("#ASSIGN_1").keyup(function(){
 			$("#ASSIGN_1").focus;
 		}
 }); 
-
-
-
-
+$("#ASSIGN_2").keyup(function(){
 	
+	if($("#ASSIGN_2").val()<0||$("#ASSIGN_2").val()>100){
+		alert("점수는 0~100점까지만 입력가능합니다")
+		$("#ASSIGN_2").val("");
+		$("#ASSIGN_2").focus;
+	}
+}); 
+
+$("#ASSIGN_3").keyup(function(){
 	
+	if($("#ASSIGN_3").val()<0||$("#ASSIGN_3").val()>100){
+		alert("점수는 0~100점까지만 입력가능합니다")
+		$("#ASSIGN_3").val("");
+		$("#ASSIGN_3").focus;
+	}
+}); 
+
+$("#ASSIGN_4").keyup(function(){
+	
+	if($("#ASSIGN_4").val()<0||$("#ASSIGN_4").val()>100){
+		alert("점수는 0~100점까지만 입력가능합니다")
+		$("#ASSIGN_4").val("");
+		$("#ASSIGN_4").focus;
+	}
+}); 
+
+$("#MTERM").keyup(function(){
+	
+	if($("#MTERM").val()<0||$("#MTERM").val()>100){
+		alert("점수는 0~100점까지만 입력가능합니다")
+		$("#MTERM").val("");
+		$("#MTERM").focus;
+	}
+}); 
+
+$("#FTERM").keyup(function(){
+	
+	if($("#FTERM").val()<0||$("#FTERM").val()>100){
+		alert("점수는 0~100점까지만 입력가능합니다")
+		$("#FTERM").val("");
+		$("#FTERM").focus;
+	}
+}); 
+
+$("#STATUS_GRADE").keyup(function(){
+	
+	if($("#STATUS_GRADE").val()<0||$("#STATUS_GRADE").val()>100){
+		alert("점수는 0~100점까지만 입력가능합니다")
+		$("#STATUS_GRADE").val("");
+		$("#STATUS_GRADE").focus;
+	}
+}); 
+
 
 
 var viewflag="";

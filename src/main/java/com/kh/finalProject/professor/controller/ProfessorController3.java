@@ -50,7 +50,7 @@ public class ProfessorController3 {
 		
 		
 		m.addAttribute("totalCount",totalData);
-		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/editClassPoint.hd"));
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/${path}/prof/editClassPoint.hd"));
 		m.addAttribute("studyList",studyList);
 		m.addAttribute("list",list);
 	
@@ -81,7 +81,7 @@ public class ProfessorController3 {
 		
 		
 		m.addAttribute("totalCount",totalData);
-		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/prof/choiceClass.hd"));
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/${path}/prof/choiceClass.hd"));
 		m.addAttribute("studyList",studyList);
 		m.addAttribute("list",list);
 	

@@ -49,7 +49,7 @@ public class ClassController {
 		m.addAttribute("applyDay",planList);
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
-		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/applyClass.hd"));
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/${path}/student/applyClass.hd"));
 		
 		return "student/applyClass";
 
@@ -82,7 +82,7 @@ public class ClassController {
 		
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
-		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/selectClass.hd"));
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/${path}/student/selectClass.hd"));
 		return "student/applyClass";
 		
 	}
@@ -210,7 +210,7 @@ public class ClassController {
 		m.addAttribute("applyDay",planList);
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
-		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/applyClass.hd"));
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/${path}/student/applyClass.hd"));
 		return "student/myApplyClass";
 	
 	}
@@ -255,7 +255,7 @@ public class ClassController {
 		m.addAttribute("applyDay",planList);
 		m.addAttribute("list",list);
 		m.addAttribute("totalCount",totalData);
-		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/finalProject/student/selectClass.hd"));
+		m.addAttribute("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage, "/${path}/student/selectClass.hd"));
 		return "student/myApplyClass";
 		
 	}
